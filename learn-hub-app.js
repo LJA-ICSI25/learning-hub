@@ -75,6 +75,7 @@ function learnHubRunApp() {
   "use strict";
 
   const PROGRESS_KEY = "learn-hub-progress-v8";
+  const TEACH_COLLAPSED_KEY = "learn-hub-teach-collapsed";
   const INDENT = "  ";
 
   const el = {
@@ -90,6 +91,7 @@ function learnHubRunApp() {
     btnContinue: document.getElementById("btn-continue"),
     sidebar: document.getElementById("sidebar"),
     menuToggle: document.getElementById("menu-toggle"),
+    btnToggleTeach: document.getElementById("btn-toggle-teach"),
     lessonPicker: document.getElementById("lesson-picker"),
     contentGrid: document.getElementById("content-grid"),
     wsWeb: document.getElementById("ws-web"),
@@ -100,6 +102,7 @@ function learnHubRunApp() {
     webCss: document.getElementById("web-css"),
     webJs: document.getElementById("web-js"),
     webIframe: document.getElementById("web-iframe"),
+    webPreviewHint: document.getElementById("web-preview-hint"),
     webStatus: document.getElementById("web-status"),
     pyInput: document.getElementById("py-input"),
     pyOutput: document.getElementById("py-output"),
@@ -392,6 +395,26 @@ function learnHubRunApp() {
     if (el.wsTech) el.wsTech.classList.toggle("hidden", which !== "tech");
   }
 
+  function syncTeachCollapsedUi() {
+    if (!el.btnToggleTeach) return;
+    const on = document.body.classList.contains("teach-collapsed");
+    el.btnToggleTeach.setAttribute("aria-pressed", on ? "true" : "false");
+    el.btnToggleTeach.textContent = on ? "Show This step" : "Hide This step";
+  }
+
+  function applyTeachCollapsedPreference(isTechLearn) {
+    if (isTechLearn) {
+      document.body.classList.remove("teach-collapsed");
+      if (el.btnToggleTeach) el.btnToggleTeach.style.display = "none";
+      return;
+    }
+    if (el.btnToggleTeach) el.btnToggleTeach.style.display = "";
+    try {
+      document.body.classList.toggle("teach-collapsed", localStorage.getItem(TEACH_COLLAPSED_KEY) === "1");
+    } catch (_) {}
+    syncTeachCollapsedUi();
+  }
+
   function buildSrcdoc(html, css, js) {
     const safeJs = String(js || "").replace(/<\/script>/gi, "<\\/script>");
     return (
@@ -405,9 +428,18 @@ function learnHubRunApp() {
     );
   }
 
+  function updateWebPreviewHint() {
+    if (!el.webPreviewHint) return;
+    const h = el.webHtml && el.webHtml.value.trim();
+    const c = el.webCss && el.webCss.value.trim();
+    const j = el.webJs && el.webJs.value.trim();
+    el.webPreviewHint.hidden = !!(h || c || j);
+  }
+
   function refreshWebPreview() {
     el.webIframe.srcdoc = buildSrcdoc(el.webHtml.value, el.webCss.value, el.webJs.value);
     el.webStatus.textContent = "Preview updated";
+    updateWebPreviewHint();
   }
 
   function normalizeCell(v) {
@@ -921,6 +953,8 @@ function learnHubRunApp() {
     const cg = document.getElementById("content-grid");
     if (cg) cg.classList.toggle("single-pane", !!isTechLearn);
 
+    applyTeachCollapsedPreference(!!isTechLearn);
+
     const strict = Ls.kind === "challenge" || (Ls.check && Ls.check.strict);
     el.footerHint.textContent = learn && !isTech
       ? "Experiment in the editor, then Continue. Reference is optional."
@@ -1205,6 +1239,14 @@ function learnHubRunApp() {
 
     on(el.menuToggle, "click", () => {
       if (el.sidebar) el.sidebar.classList.toggle("open");
+    });
+
+    on("btn-toggle-teach", "click", () => {
+      document.body.classList.toggle("teach-collapsed");
+      try {
+        localStorage.setItem(TEACH_COLLAPSED_KEY, document.body.classList.contains("teach-collapsed") ? "1" : "0");
+      } catch (_) {}
+      syncTeachCollapsedUi();
     });
 
     on("btn-reset-all", "click", () => {

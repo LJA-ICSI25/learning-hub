@@ -30,9 +30,15 @@
       box-sizing: border-box;
     }
 
+    html {
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
+      height: 100%;
+      overflow: hidden;
       font-family: system-ui, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
@@ -45,18 +51,21 @@
 
     .app {
       display: flex;
-      min-height: 100vh;
+      height: 100%;
+      max-height: 100vh;
+      max-height: 100dvh;
+      min-height: 0;
     }
 
     /* ---------- Sidebar ---------- */
     .sidebar {
       width: min(100vw, 320px);
       flex-shrink: 0;
+      align-self: stretch;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      max-height: 100vh;
       position: sticky;
       top: 0;
       min-height: 0;
@@ -284,9 +293,11 @@
       display: flex;
       flex-direction: column;
       min-width: 0;
+      min-height: 0;
     }
 
     .topbar {
+      flex-shrink: 0;
       padding: 0.65rem 1.25rem;
       border-bottom: 1px solid var(--border);
       background: var(--surface);
@@ -337,7 +348,6 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
-      min-height: min(calc(100vh - 120px), 900px);
       border-right: 1px solid var(--border);
       background: var(--bg);
     }
@@ -350,9 +360,18 @@
       grid-template-columns: 1fr;
     }
 
+    /* Hide This step column — full-width practice (saved in localStorage) */
+    body.teach-collapsed:not(.learn-only) #content-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    body.teach-collapsed:not(.learn-only) #teach {
+      display: none !important;
+    }
+
     .practice-column .workspace {
       flex: 1;
-      min-height: 280px;
+      min-height: 0;
     }
 
     .practice-column-header {
@@ -543,7 +562,7 @@
       }
 
       .practice-column {
-        min-height: min(48vh, 480px);
+        min-height: 0;
         border-right: none;
         border-bottom: 1px solid var(--border);
       }
@@ -576,9 +595,6 @@
         max-height: min(44vh, 360px);
       }
 
-      .web-split {
-        grid-template-columns: 1fr;
-      }
     }
 
     .topbar-mid {
@@ -602,11 +618,18 @@
       cursor: pointer;
     }
 
+    .btn-teach-toggle {
+      flex-shrink: 0;
+      white-space: nowrap;
+      font-size: 0.72rem !important;
+      padding: 0.35rem 0.55rem !important;
+    }
+
     /* ---------- Lesson / teach column prose ---------- */
     .teach {
       padding: 0;
-      overflow: hidden;
-      max-height: calc(100vh - 56px);
+      overflow-x: hidden;
+      overflow-y: auto;
       border-right: none;
       background: #0f1318;
       display: flex;
@@ -850,18 +873,23 @@
       color: var(--muted);
     }
 
+    /* Code on top, Result below (single column) */
     .web-split {
+      flex: 1;
+      min-height: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(160px, 1fr) minmax(140px, 1fr);
       gap: 0;
-      min-height: 340px;
     }
 
     .web-editors {
       display: flex;
       flex-direction: column;
-      border-right: 1px solid var(--border);
+      border-right: none;
+      border-bottom: 1px solid var(--border);
       min-height: 0;
+      overflow: hidden;
     }
 
     .editor-tabs {
@@ -924,7 +952,8 @@
     .web-preview {
       display: flex;
       flex-direction: column;
-      min-height: 180px;
+      min-height: 0;
+      overflow: hidden;
       background: #fff;
     }
 
@@ -934,10 +963,40 @@
       border-color: #cbd5e1;
     }
 
+    .web-preview-body {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .web-preview-hint {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1rem 1.25rem;
+      text-align: center;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: #64748b;
+      background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+      border-top: 1px solid #cbd5e1;
+      pointer-events: none;
+    }
+
+    .web-preview-hint[hidden] {
+      display: none !important;
+    }
+
     .web-preview iframe {
       flex: 1;
       width: 100%;
-      min-height: 180px;
+      min-height: 120px;
       border: none;
       background: #fff;
     }
@@ -1085,6 +1144,7 @@
 
     /* ---------- Footer, toast, learn-only, quiz ---------- */
     .footer-actions {
+      flex-shrink: 0;
       padding: 0.75rem 1.15rem;
       display: flex;
       flex-wrap: wrap;
@@ -1214,6 +1274,15 @@
           <select id="lesson-picker" aria-label="Jump to a lesson in this track"></select>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <button
+          type="button"
+          class="tool ghost btn-teach-toggle"
+          id="btn-toggle-teach"
+          style="display: none"
+          aria-pressed="false"
+        >
+          Hide This step
+        </button>
       </div>
       <div class="content" id="content-grid">
         <div class="practice-column" id="practice-column">
@@ -1241,7 +1310,12 @@
             </div>
             <div class="web-preview">
               <div class="panel-head"><span>Result</span><span id="web-status">—</span></div>
-              <iframe id="web-iframe" title="Preview" sandbox="allow-scripts"></iframe>
+              <div class="web-preview-body">
+                <p class="web-preview-hint" id="web-preview-hint">
+                  Your page renders here. Edit HTML, CSS, or JavaScript above, then press <strong>Run</strong> (or Ctrl+Enter).
+                </p>
+                <iframe id="web-iframe" title="Preview" sandbox="allow-scripts"></iframe>
+              </div>
             </div>
           </div>
         </div>
