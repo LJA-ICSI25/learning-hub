@@ -6,6 +6,9 @@
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <title>Learn Hub — HTML, CSS, JavaScript, Python, SQL &amp; Tech+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <style>
     /* ---------- Design tokens ---------- */
     :root {
@@ -23,6 +26,20 @@
       --tech: #6ee7ff;
       --py: #ffd43b;
       --mono: "Cascadia Code", "Fira Code", Consolas, monospace;
+      /* Tech+ reading — same tokens as Notes/CCNA_Notes.html */
+      --notes-font: "Space Grotesk", system-ui, "Segoe UI", sans-serif;
+      --notes-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+      --notes-accent: #39c5cf;
+      --notes-text: #e6edf3;
+      --notes-text-soft: #b1bac4;
+      --notes-muted: #7d8a99;
+      --notes-orange: #ff9f43;
+      --notes-purple: #a371f7;
+      --notes-green: #3dd68c;
+      --notes-card: #12171e;
+      --notes-elevated: #1a2129;
+      --notes-border: #2a3542;
+      --notes-glow: rgba(57, 197, 207, 0.15);
     }
 
     /* ---------- Base ---------- */
@@ -33,12 +50,14 @@
     html {
       height: 100%;
       overflow: hidden;
+      overscroll-behavior: none;
     }
 
     body {
       margin: 0;
       height: 100%;
       overflow: hidden;
+      overscroll-behavior: none;
       font-family: system-ui, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
@@ -55,6 +74,7 @@
       max-height: 100vh;
       max-height: 100dvh;
       min-height: 0;
+      overflow: hidden;
     }
 
     /* ---------- Sidebar ---------- */
@@ -62,16 +82,21 @@
       width: min(100vw, 320px);
       flex-shrink: 0;
       align-self: stretch;
+      height: 100%;
+      max-height: 100vh;
+      max-height: 100dvh;
       background: var(--surface);
       border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      position: sticky;
-      top: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
       min-height: 0;
+      overflow: hidden;
+      overscroll-behavior: none;
     }
 
     .sidebar-head {
+      flex-shrink: 0;
       padding: 1rem 1rem 0.75rem;
       border-bottom: 1px solid var(--border);
     }
@@ -155,9 +180,10 @@
     }
 
     .nav-scroll {
-      flex: 1;
       min-height: 0;
+      overflow-x: hidden;
       overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 0.35rem 0 0.75rem;
       -webkit-overflow-scrolling: touch;
     }
@@ -181,9 +207,15 @@
       font-size: 0.78rem;
     }
 
+    .sidebar-lessons-kicker {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
     #sidebar-lesson-nav {
-      flex: 1;
-      min-height: 120px;
+      flex: 1 1 auto;
+      min-height: 0;
     }
 
     .unit {
@@ -248,7 +280,8 @@
 
     .lesson-btn .lbl {
       flex: 1;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
+      line-height: 1.35;
     }
 
     .lesson-btn .tag {
@@ -266,6 +299,7 @@
     }
 
     .sidebar-foot {
+      flex-shrink: 0;
       padding: 0.45rem 1rem 0.65rem;
       border-top: 1px solid var(--border);
     }
@@ -294,6 +328,7 @@
       flex-direction: column;
       min-width: 0;
       min-height: 0;
+      overflow: hidden;
     }
 
     .topbar {
@@ -398,6 +433,27 @@
       font-size: 0.68rem;
     }
 
+    .practice-where-narrow {
+      display: none;
+    }
+
+    @media (max-width: 960px) {
+      .practice-where-wide {
+        display: none;
+      }
+      .practice-where-narrow {
+        display: inline;
+      }
+    }
+
+    body[data-lh-track="html"] #teach,
+    body[data-lh-track="css"] #teach,
+    body[data-lh-track="js"] #teach,
+    body[data-lh-track="py"] #teach,
+    body[data-lh-track="sql"] #teach {
+      box-shadow: inset 0 3px 0 0 var(--gold);
+    }
+
     /* ---------- Lesson shell (practice column body) ---------- */
     .lesson-shell {
       display: flex;
@@ -417,12 +473,20 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .teach.teach-notes .lesson-shell-head {
+      background: linear-gradient(90deg, rgba(57, 197, 207, 0.09), transparent);
+    }
+
     .lesson-shell-badge {
       font-size: 0.72rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.09em;
       color: var(--accent);
+    }
+
+    .teach.teach-notes .lesson-shell-badge {
+      color: var(--notes-accent);
     }
 
     .lesson-shell-sub {
@@ -493,6 +557,213 @@
       line-height: 1.5;
     }
 
+    .fcc-strip-chapter,
+    .fcc-strip-studyguide {
+      border-left-color: var(--notes-accent) !important;
+      background: linear-gradient(135deg, rgba(57, 197, 207, 0.07), var(--notes-card));
+    }
+
+    .fcc-strip-chapter .fcc-kind-pill,
+    .fcc-strip-studyguide .fcc-kind-pill {
+      background: rgba(57, 197, 207, 0.14);
+      color: var(--notes-accent);
+      border-color: rgba(57, 197, 207, 0.35);
+    }
+
+    .teach.teach-notes .fcc-strip:not(.fcc-strip-chapter):not(.fcc-strip-studyguide) {
+      border-left-color: var(--notes-accent);
+      background: linear-gradient(135deg, rgba(57, 197, 207, 0.06), var(--notes-card));
+    }
+
+    .teach.teach-notes .fcc-strip:not(.fcc-strip-chapter):not(.fcc-strip-studyguide) .fcc-kind-pill {
+      background: rgba(57, 197, 207, 0.12);
+      color: var(--notes-accent);
+      border-color: rgba(57, 197, 207, 0.32);
+    }
+
+    .teach.teach-notes .fcc-title {
+      font-family: var(--notes-font);
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+
+    .teach.teach-notes .fcc-hint {
+      font-family: var(--notes-font);
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--notes-text-soft);
+    }
+
+    .lh-full-chapter {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .lh-notes-chapter-tip {
+      margin: 0 0 0.5rem;
+      padding: 0.75rem 1rem;
+      font-family: var(--notes-font);
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--notes-muted);
+      background: rgba(57, 197, 207, 0.06);
+      border: 1px solid rgba(57, 197, 207, 0.22);
+      border-radius: 10px;
+      border-left: 3px solid var(--notes-accent);
+    }
+
+    .lh-notes-chapter-tip strong {
+      color: var(--notes-text-soft);
+    }
+
+    .lh-tech-reading {
+      min-height: 80px;
+    }
+
+    .lh-tech-reading.lh-notes-surface {
+      background: linear-gradient(145deg, var(--notes-card) 0%, rgba(22, 28, 36, 0.95) 100%);
+      border: 1px solid var(--notes-border);
+      border-radius: 20px;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+      line-height: 1.7;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .lh-tech-reading .lh-ref-body {
+      max-width: none;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .lh-chapter-toc {
+      margin: 0 0 1.75rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(135deg, rgba(163, 113, 247, 0.12) 0%, rgba(163, 113, 247, 0.04) 100%);
+      border: 1px solid rgba(163, 113, 247, 0.35);
+      border-radius: 12px;
+      font-family: var(--notes-font);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .lh-chapter-toc strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--notes-purple);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .lh-chapter-toc ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      columns: 1;
+      column-gap: 1.5rem;
+      list-style: disc;
+    }
+
+    @media (min-width: 720px) {
+      .lh-chapter-toc ul {
+        columns: 2;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .lh-chapter-toc ul {
+        columns: 3;
+      }
+    }
+
+    .lh-chapter-toc li {
+      margin: 0.2rem 0;
+      break-inside: avoid;
+    }
+
+    .lh-chapter-toc a {
+      color: var(--notes-accent);
+      text-decoration: none;
+    }
+
+    .lh-chapter-toc a:hover {
+      text-decoration: underline;
+      color: var(--notes-text-soft);
+    }
+
+    .lh-toc-h3 {
+      font-size: 0.76rem;
+      margin-left: 0.35rem;
+      opacity: 0.92;
+    }
+
+    .lh-reference-tech .lh-reference-inner-tech {
+      max-height: none;
+      box-sizing: border-box;
+    }
+
+    .lh-reference-tech .lh-reference-inner-tech.lh-notes-surface {
+      background: linear-gradient(145deg, var(--notes-card) 0%, rgba(22, 28, 36, 0.95) 100%);
+      border: none;
+      border-radius: 0 0 16px 16px;
+      padding: clamp(1.1rem, 3vw, 2.25rem);
+      line-height: 1.7;
+      box-shadow: none;
+    }
+
+    .lh-reference-tech .lh-ref-body {
+      max-width: none;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .lh-reference-tech.lh-reference {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .lh-reference-tech summary {
+      background: var(--notes-elevated);
+      color: var(--notes-text-soft);
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+    }
+
+    .lh-reference-tech[open] summary {
+      color: var(--notes-accent);
+    }
+
+    @media (max-width: 720px) {
+      .lh-chapter-toc ul {
+        columns: 1;
+      }
+    }
+
+    /* Desktop: sidebar height = viewport only (never stretches with main column) */
+    @media (min-width: 721px) {
+      .sidebar {
+        align-self: flex-start;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        max-height: 100dvh;
+      }
+
+      .main {
+        max-height: 100vh;
+        max-height: 100dvh;
+        align-self: stretch;
+      }
+    }
+
     .lh-reference {
       margin-top: 0.25rem;
       border: 1px solid var(--border);
@@ -523,8 +794,16 @@
       color: var(--blue);
     }
 
+    .lh-reference.lh-reference-tech[open] summary {
+      color: var(--notes-accent);
+    }
+
     .lh-reference summary:hover {
       background: #243044;
+    }
+
+    .lh-reference-tech summary:hover {
+      background: rgba(57, 197, 207, 0.08);
     }
 
     .lh-ref-cue {
@@ -542,9 +821,13 @@
       color: var(--blue);
     }
 
+    .lh-reference-tech[open] .lh-ref-cue {
+      color: var(--notes-accent);
+    }
+
     .lh-reference-inner {
       padding: 0.85rem 1rem 1.1rem;
-      max-height: min(50vh, 420px);
+      max-height: min(56vh, 472px);
       overflow-y: auto;
       font-size: 0.9rem;
     }
@@ -553,6 +836,64 @@
       opacity: 0.42;
       cursor: not-allowed;
       filter: grayscale(0.2);
+    }
+
+    /* Non–Tech+ only: compact the right “This step” column (#teach), not the left sidebar */
+    body.lh-compact-teach #teach.teach {
+      overflow-y: hidden;
+    }
+
+    body.lh-compact-teach #teach .lesson-shell-head {
+      padding: 0.32rem 0.55rem;
+    }
+
+    body.lh-compact-teach #teach .lesson-shell-badge {
+      font-size: 0.58rem;
+    }
+
+    body.lh-compact-teach #teach .lesson-shell-sub {
+      font-size: 0.62rem;
+    }
+
+    body.lh-compact-teach #teach .lesson-shell-body {
+      padding: 0.45rem 0.55rem 0.7rem;
+    }
+
+    body.lh-compact-teach #teach .fcc-strip {
+      margin: 0 0 0.55rem;
+      padding: 0.48rem 0.55rem;
+      border-radius: 8px;
+    }
+
+    body.lh-compact-teach #teach .fcc-kind-pill {
+      font-size: 0.58rem;
+      padding: 0.16rem 0.38rem;
+    }
+
+    body.lh-compact-teach #teach .fcc-unit-pill {
+      font-size: 0.6rem;
+    }
+
+    body.lh-compact-teach #teach .fcc-title {
+      margin: 0 0 0.32rem;
+      font-size: 0.88rem;
+    }
+
+    body.lh-compact-teach #teach .fcc-hint {
+      font-size: 0.74rem;
+      line-height: 1.42;
+    }
+
+    body.lh-compact-teach #teach .lh-reference summary {
+      padding: 0.4rem 0.55rem;
+      font-size: 0.74rem;
+    }
+
+    body.lh-compact-teach #teach .lh-reference-inner {
+      padding: 0.4rem 0.5rem 0.55rem;
+      max-height: min(68vh, 506px);
+      font-size: 0.78rem;
+      line-height: 1.45;
     }
 
     /* ---------- Responsive: main grid ---------- */
@@ -581,18 +922,22 @@
       .sidebar {
         width: 100%;
         max-height: min(44vh, 360px);
+        height: min(44vh, 360px);
         position: relative;
         top: auto;
         border-right: none;
         border-bottom: 1px solid var(--border);
+        overflow: hidden;
+        align-self: stretch;
       }
 
       .sidebar.open {
         position: relative;
         left: auto;
         box-shadow: none;
-        height: auto;
         max-height: min(44vh, 360px);
+        height: min(44vh, 360px);
+        overflow: hidden;
       }
 
     }
@@ -699,6 +1044,28 @@
       opacity: 0.85;
     }
 
+    /* Tech+ reading: layout matches CCNA_Notes.html chapter card + .chapter-content */
+    .teach .tech-prose.lh-ref-body,
+    .teach .lh-tg-root.lh-chapter-markdown {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .teach.teach-full-chapter .lesson-shell-body {
+      padding-left: clamp(0.5rem, 2vw, 1.25rem);
+      padding-right: clamp(0.5rem, 2vw, 1.25rem);
+    }
+
+    .teach.teach-notes .lh-notes-prose p,
+    .teach.teach-notes .lh-notes-prose li,
+    .teach.teach-notes .lh-notes-prose td {
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+
     .study-frame {
       margin: 0 0 1.15rem;
       padding: 0.9rem 1rem;
@@ -735,117 +1102,483 @@
       color: var(--muted);
     }
 
-    .tech-prose h3 {
-      color: var(--tech) !important;
+    /* ---------- Tech+ reading — CCNA_Notes.html layout (grid bg + 17px Space Grotesk) ---------- */
+    .teach.teach-notes {
+      position: relative;
+      background: #0a0e14;
     }
 
-    /* ---------- Tech+ generated prose (tables, recap) ---------- */
-    .lh-tg-source {
-      font-size: 0.82rem;
-      color: var(--muted);
+    .teach.teach-notes::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(57, 197, 207, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 197, 207, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .teach.teach-notes .lesson-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .teach.teach-notes .lesson-shell-body {
+      font-family: var(--notes-font);
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .lh-ref-body.lh-notes-prose > .lh-tg-source {
       margin: 0 0 1rem;
-      line-height: 1.5;
+      padding: 0;
+      background: transparent;
+      border: none;
+      font-family: var(--notes-font);
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--notes-muted);
     }
 
-    .lh-tg-root {
+    .lh-ref-body.lh-notes-prose .lh-tg-chapter {
+      font-weight: 600;
+      color: var(--notes-text-soft);
+    }
+
+    .lh-notes-prose .lh-tg-root {
       margin-top: 0.25rem;
     }
 
-    .lh-tg-root table {
+    .lh-notes-prose .lh-tg-root table {
       border-collapse: collapse;
       width: 100%;
-      margin: 0 0 1rem;
-      font-size: 0.82rem;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--notes-border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     }
 
-    .lh-tg-root th,
-    .lh-tg-root td {
-      border: 1px solid var(--border);
-      padding: 0.4rem 0.5rem;
+    .lh-notes-prose .lh-tg-root th,
+    .lh-notes-prose .lh-tg-root td {
+      padding: 0.85rem 1.15rem;
       text-align: left;
       vertical-align: top;
+      border-bottom: 1px solid var(--notes-border);
+      border-right: 1px solid var(--notes-border);
     }
 
-    .lh-tg-root th {
-      background: var(--surface2);
-      color: var(--muted);
+    .lh-notes-prose .lh-tg-root th:last-child,
+    .lh-notes-prose .lh-tg-root td:last-child {
+      border-right: none;
+    }
+
+    .lh-notes-prose .lh-tg-root tr:last-child td {
+      border-bottom: none;
+    }
+
+    .lh-notes-prose .lh-tg-root tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lh-notes-prose .lh-tg-root tbody tr:hover {
+      background: rgba(57, 197, 207, 0.06);
+    }
+
+    .lh-notes-prose .lh-tg-root th {
+      font-family: var(--notes-font);
+      background: linear-gradient(180deg, var(--notes-elevated) 0%, rgba(26, 33, 41, 0.9) 100%);
+      color: var(--notes-accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .lh-notes-prose .lh-tg-summary {
+      background: linear-gradient(135deg, rgba(163, 113, 247, 0.12) 0%, rgba(163, 113, 247, 0.04) 100%);
+      border: 1px solid rgba(163, 113, 247, 0.35);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin: 0 0 2rem;
+    }
+
+    .lh-notes-prose .lh-tg-summary h3 {
+      margin-top: 0;
+      margin-bottom: 0.65rem;
+      font-family: var(--notes-font);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--notes-purple);
+    }
+
+    .lh-notes-prose .lh-tg-summary h3::before {
+      content: "📋 ";
+      font-family: inherit;
+    }
+
+    .lh-notes-prose .lh-tg-summary p {
+      margin: 1rem 0;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-summary p:first-of-type {
+      margin-top: 0;
+    }
+
+    .lh-notes-prose .lh-tg-summary p:last-child {
+      margin-bottom: 0;
+    }
+
+    .lh-notes-prose .lh-tg-example {
+      background: linear-gradient(135deg, var(--notes-elevated) 0%, rgba(26, 33, 41, 0.8) 100%);
+      border: 1px solid var(--notes-border);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      border-left: 4px solid var(--notes-orange);
+      font-size: inherit;
+      line-height: 1.7;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-example strong {
+      color: var(--notes-orange);
+    }
+
+    .lh-notes-prose .lh-tg-note {
+      background: linear-gradient(135deg, rgba(57, 197, 207, 0.1) 0%, rgba(57, 197, 207, 0.04) 100%);
+      border: 1px solid rgba(57, 197, 207, 0.3);
+      border-left: 4px solid var(--notes-accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 12px 12px 0;
+      font-size: inherit;
+      line-height: 1.7;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-note strong {
+      color: var(--notes-accent);
+    }
+
+    .lh-notes-prose .lh-tg-key {
+      background: linear-gradient(135deg, rgba(61, 214, 140, 0.1) 0%, rgba(61, 214, 140, 0.04) 100%);
+      border: 1px solid rgba(61, 214, 140, 0.3);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--notes-green);
+      font-size: inherit;
+      line-height: 1.7;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-key strong {
+      color: var(--notes-green);
+    }
+
+    .lh-notes-prose .lh-tg-markdown,
+    .lh-notes-prose .lh-chapter-markdown {
+      font-family: var(--notes-font);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--notes-text);
+      padding-bottom: 1.5rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h1 {
+      font-family: var(--notes-font);
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--notes-text);
+      margin: 0 0 1.25rem;
+      padding: 0.75rem 0;
+      padding-left: 1rem;
+      border-left: 4px solid var(--notes-accent);
+      border-radius: 0 8px 8px 0;
+      background: linear-gradient(90deg, rgba(57, 197, 207, 0.08) 0%, transparent 100%);
+      letter-spacing: -0.02em;
+      scroll-margin-top: 0.75rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h2 {
+      font-family: var(--notes-font);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--notes-text);
+      margin: 2.5rem 0 1rem;
+      padding: 0.75rem 0;
+      padding-left: 1rem;
+      border-left: 4px solid var(--notes-accent);
+      border-radius: 0 8px 8px 0;
+      background: linear-gradient(90deg, rgba(57, 197, 207, 0.08) 0%, transparent 100%);
+      letter-spacing: -0.02em;
+      scroll-margin-top: 0.75rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h2:first-child {
+      margin-top: 0;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--notes-font);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--notes-text-soft);
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 0.75rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h3::before {
+      content: "/";
+      font-family: var(--notes-mono);
+      font-size: 0.85em;
+      font-weight: 600;
+      color: var(--notes-accent);
+    }
+
+    .lh-notes-prose .lh-tg-summary h3::before {
+      content: "📋 ";
+      font-family: inherit;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown h4 {
+      font-family: var(--notes-font);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--notes-text-soft);
+      margin: 1.35rem 0 0.5rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown strong {
+      color: var(--notes-text);
       font-weight: 600;
     }
 
-    .lh-tg-summary {
+    .lh-notes-prose .lh-md-meta {
+      margin: 0 0 1.25rem !important;
+      padding: 0.65rem 0.9rem !important;
+      font-family: var(--notes-font) !important;
+      font-size: 0.875rem !important;
+      line-height: 1.55 !important;
+      color: var(--notes-text-soft) !important;
+      background: var(--notes-elevated);
+      border-radius: 8px;
+      border-left: 3px solid rgba(148, 163, 184, 0.45);
+    }
+
+    .lh-notes-prose .lh-md-start,
+    .lh-notes-prose .lh-chapter-markdown > hr,
+    .lh-notes-prose hr.teach-hr.lh-md-start {
+      border: none;
+      border-top: 1px solid var(--notes-border);
+      margin: 1.75rem 0;
+      height: 0;
+      background: none;
+      opacity: 1;
+    }
+
+    .lh-notes-prose .lh-md-objectives-banner {
       margin: 0 0 1.25rem;
-      padding: 0.85rem 1rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
+      padding: 0.75rem 0.95rem;
+      background: rgba(57, 197, 207, 0.08);
+      border: 1px solid rgba(57, 197, 207, 0.22);
       border-radius: 10px;
-      border-left: 4px solid var(--tech);
     }
 
-    .lh-tg-summary h3 {
-      margin: 0 0 0.5rem;
-      font-size: 0.95rem;
-      color: var(--tech);
-    }
-
-    .lh-tg-example {
-      margin: 0 0 1rem;
-      padding: 0.65rem 0.85rem;
-      border-left: 4px solid var(--gold);
-      background: rgba(255, 200, 0, 0.06);
-      border-radius: 0 8px 8px 0;
-      font-size: 0.88rem;
-      color: #c5ced9;
-    }
-
-    .lh-tg-note {
-      margin: 0 0 1rem;
-      padding: 0.65rem 0.85rem;
-      background: rgba(28, 180, 246, 0.08);
-      border: 1px solid rgba(28, 180, 246, 0.25);
-      border-radius: 8px;
-      font-size: 0.88rem;
-      color: #c5ced9;
-    }
-
-    .lh-tg-key {
-      margin: 0 0 1rem;
-      padding: 0.65rem 0.85rem;
-      border: 1px solid var(--border);
-      background: var(--surface2);
-      border-radius: 8px;
-      font-size: 0.88rem;
-      color: #c5ced9;
-    }
-
-    .lh-tg-recap {
-      margin: 1.25rem 0 1rem;
-      padding: 1rem 1.1rem;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(255, 184, 107, 0.08), transparent);
-    }
-
-    .lh-tg-recap-head {
-      font-size: 0.7rem;
-      font-weight: 700;
+    .lh-notes-prose .lh-md-objectives-banner p {
+      margin: 0 0 0.4rem !important;
+      font-family: var(--notes-font) !important;
+      font-size: 0.82rem !important;
+      line-height: 1.5 !important;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #fbbf77;
-      margin: 0 0 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.06em;
+      color: var(--notes-accent);
     }
 
-    .lh-tg-recap h4 {
-      margin: 1rem 0 0.4rem;
-      font-size: 0.92rem;
-      color: var(--text);
+    .lh-notes-prose .lh-md-objectives-banner p:last-child {
+      margin-bottom: 0 !important;
     }
 
-    .lh-tg-recap .src {
-      margin: 0.65rem 0 0;
+    .lh-notes-prose .lh-chapter-markdown > p,
+    .lh-notes-prose .lh-chapter-markdown li > p {
+      margin: 1rem 0;
+      text-wrap: pretty;
+      color: var(--notes-text);
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown ul,
+    .lh-notes-prose .lh-chapter-markdown ol {
+      margin: 1rem 0;
+      padding-left: 1.75rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown ul ul,
+    .lh-notes-prose .lh-chapter-markdown ol ul {
+      margin: 0.4rem 0;
+      padding-left: 1.5rem;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown ul > li,
+    .lh-notes-prose .lh-chapter-markdown ol > li {
+      margin: 0.5rem 0;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown li::marker {
+      color: var(--notes-accent);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown pre {
+      margin: 1.25rem 0;
+      padding: 1rem 1.1rem;
+      background: #0a0e14;
+      border: 1px solid var(--notes-border);
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: var(--notes-mono);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #b8e0ff;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown code {
+      font-family: var(--notes-mono);
+      font-size: 0.9em;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      background: rgba(57, 197, 207, 0.12);
+      color: var(--notes-accent);
+      padding: 0.3em 0.6em;
+      border-radius: 6px;
+      border: 1px solid rgba(57, 197, 207, 0.2);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown pre code {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown blockquote {
+      margin: 1.25rem 0;
+      padding: 1rem 1.15rem;
+      border-left: 4px solid var(--notes-orange);
+      background: rgba(255, 159, 67, 0.06);
+      border-radius: 0 12px 12px 0;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--notes-border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown th,
+    .lh-notes-prose .lh-chapter-markdown td {
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--notes-border);
+      border-right: 1px solid var(--notes-border);
+      vertical-align: top;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown th:last-child,
+    .lh-notes-prose .lh-chapter-markdown td:last-child {
+      border-right: none;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown tr:last-child td {
+      border-bottom: none;
+    }
+
+    .lh-notes-prose .lh-chapter-markdown tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown tbody tr:hover {
+      background: rgba(57, 197, 207, 0.06);
+    }
+
+    .lh-notes-prose .lh-chapter-markdown th {
+      font-family: var(--notes-font);
+      background: linear-gradient(180deg, var(--notes-elevated) 0%, rgba(26, 33, 41, 0.9) 100%);
+      color: var(--notes-accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .lh-notes-prose .lh-tg-recap {
+      background: linear-gradient(135deg, rgba(163, 113, 247, 0.12) 0%, rgba(163, 113, 247, 0.04) 100%);
+      border: 1px solid rgba(163, 113, 247, 0.35);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin: 2.5rem 0 0;
+      box-shadow: 0 0 40px rgba(163, 113, 247, 0.08);
+      font-size: inherit;
+      line-height: 1.7;
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-recap h2 {
+      margin-top: 0;
+      padding-left: 0;
+      border: none;
+      background: none;
+      color: var(--notes-purple);
+      font-size: 1.2rem;
+    }
+
+    .lh-notes-prose .lh-tg-recap h2::before {
+      content: "✦ ";
+    }
+
+    .lh-notes-prose .lh-tg-recap-head {
+      color: var(--notes-purple);
+      border-bottom-color: rgba(163, 113, 247, 0.35);
+    }
+
+    .lh-notes-prose .lh-tg-recap h4 {
+      color: var(--notes-text);
+    }
+
+    .lh-notes-prose .lh-tg-recap .src {
+      font-size: 0.85rem;
+      color: var(--notes-muted);
+    }
+
+    .lh-md-fallback {
+      white-space: pre-wrap;
+      word-break: break-word;
       font-size: 0.78rem;
-      color: var(--muted);
+      line-height: 1.5;
+      max-height: 70vh;
+      overflow: auto;
+      padding: 0.75rem;
+      background: var(--surface2);
+      border-radius: 10px;
     }
 
     /* ---------- Workspaces (web / py / sql / tech) ---------- */
@@ -1154,8 +1887,25 @@
       border-top: 1px solid var(--border);
     }
 
+    .footer-learn-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
     .footer-actions .spacer {
       flex: 1;
+    }
+
+    #btn-skip-chapter {
+      border-color: rgba(110, 231, 255, 0.35);
+      color: #b8e8f5;
+    }
+
+    #btn-skip-chapter:hover {
+      background: rgba(110, 231, 255, 0.1);
+      border-color: var(--tech);
     }
 
     #menu-toggle {
@@ -1255,12 +2005,12 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-head">
         <h1>Learn Hub</h1>
-        <p class="sub"><strong>1.</strong> Pick a track · <strong>2.</strong> Choose a lesson · <strong>3.</strong> Use the <em>Practice</em> column, then <em>This step</em> (open <strong>Reference</strong> when stuck). Details: <a href="README.md">README.md</a>. Python/SQL load runtimes from a CDN on first use.</p>
+        <p class="sub"><strong>1.</strong> Pick a track · <strong>2.</strong> Choose a lesson · <strong>3.</strong> Use the <em>Practice</em> column, then <em>This step</em> (open <strong>Reference</strong> when stuck). Details: <a href="README.md">README.md</a>. Python/SQL load runtimes from a CDN on first use. <span class="sub-sql-note">The <strong>SQL</strong> track’s first lesson cites <cite>Structured Query Language</cite> v1.2 (Relational Systems Corp., 2001) and maps its table of contents to these steps.</span></p>
         <div class="course-pills" id="course-pills"></div>
         <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
         <div class="xp-label" id="xp-label">0 XP</div>
       </div>
-      <div class="sidebar-lessons-head">Lessons · <span id="sidebar-track-name">—</span></div>
+      <div class="sidebar-lessons-head"><span class="sidebar-lessons-kicker">Lesson list</span> · <span id="sidebar-track-name">—</span></div>
       <nav class="nav-scroll" id="sidebar-lesson-nav" aria-label="Lessons in the selected track"></nav>
       <div class="sidebar-foot">
         <button type="button" id="btn-reset-all">Reset all saved progress</button>
@@ -1287,8 +2037,8 @@
       <div class="content" id="content-grid">
         <div class="practice-column" id="practice-column">
           <div class="practice-column-header">
-            <span>Practice</span>
-            <span>Editor · Run · Check</span>
+            <span>Practice — editor &amp; Run</span>
+            <span><span class="practice-where-wide">Instructions are in <strong>This step</strong> on the <strong>right</strong> →</span><span class="practice-where-narrow"><strong>This step</strong> is <strong>below</strong> — scroll down after the editor</span></span>
           </div>
           <div class="workspace" id="ws-web">
           <div class="panel-head"><span>Web · HTML / CSS / JS</span><span>Ctrl+Enter run · Shift+Ctrl+Enter check</span></div>
@@ -1355,17 +2105,23 @@
         </div>
         <article class="teach" id="teach">
           <noscript>
-            <p class="msg err">Turn on JavaScript to use Learn Hub. For SQL-only (same layout as this site’s SQL course), open <a href="../SQL/index.html">SQL/index.html</a> in this folder.</p>
+            <p class="msg err">Turn on JavaScript to use Learn Hub. For SQL-only (same layout as this site’s SQL course), open <a href="../../SQL/index.html">SQL/index.html</a> (under your <code>G:\\</code> drive).</p>
           </noscript>
           <div id="teach-boot-placeholder">
             <h2>Welcome</h2>
             <p><strong>Practice</strong> is the left column (or the block above on small screens). <strong>This step</strong> on the right explains what to do — open <strong>Reference</strong> inside that panel when you need the full notes.</p>
+            <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1.</p>
             <p class="msg info">If this never disappears, check that every <code>learn-hub-*.js</code> file loaded (Network tab). Use a local server if previews fail.</p>
           </div>
         </article>
       </div>
       <div class="footer-actions">
-        <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
+        <div class="footer-learn-actions" id="footer-learn-actions">
+          <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
+          <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
+            Skip lesson
+          </button>
+        </div>
         <span class="spacer"></span>
         <span style="font-size:0.7rem;color:var(--muted)" id="footer-hint"></span>
       </div>
@@ -1381,15 +2137,16 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, and <code>learn-hub-app.js</code> beside this HTML.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, and <code>learn-hub-app.js</code> beside this HTML.</p>'
           );
       },
       true
     );
   </script>
-  <script src="learn-hub-courses.js"></script>
+  <script src="learn-hub-courses.js?v=904892f5d271"></script>
   <script src="learn-hub-depth.js"></script>
   <script src="learn-hub-techplus.js"></script>
+  <script src="learn-hub-techplus-md.js?v=b1dfda08cdd5"></script>
   <script src="learn-hub-deep.js"></script>
   <script src="learn-hub-playground.js"></script>
   <script src="learn-hub-app.js"></script>

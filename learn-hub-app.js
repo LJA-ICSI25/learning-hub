@@ -24,7 +24,7 @@ var COURSES;
             kind: "learn",
             title: "Curriculum did not load",
             narrative:
-              "<h2>What happened</h2><p>The curriculum could not be read. You can still use the <strong>SQL Path</strong> course, which uses the same layout.</p><p><a href=\"../SQL/index.html\">Open SQL/index.html</a> (interactive SQL lessons).</p><h3>Fix Learn Hub</h3><ul><li>Hard-refresh (Ctrl+F5). If you use split script files, keep every <code>.js</code> next to <code>index.html</code> and check the Network tab for 404s.</li><li>Open <code>Learn-Hub/index.html</code> from your drive (not an old copy).</li><li>Use Chrome or Edge with JavaScript enabled.</li></ul>",
+              "<h2>What happened</h2><p>The curriculum could not be read. You can still use the <strong>SQL Path</strong> course, which uses the same layout.</p><p><a href=\"../../SQL/index.html\">Open SQL/index.html</a> (interactive SQL lessons).</p><h3>Fix Learn Hub</h3><ul><li>Hard-refresh (Ctrl+F5). If you use split script files, keep every <code>.js</code> next to <code>index.html</code> and check the Network tab for 404s.</li><li>Open <code>Learn-Hub/index.html</code> from your drive (not an old copy).</li><li>Use Chrome or Edge with JavaScript enabled.</li></ul>",
           },
         ],
       },
@@ -33,6 +33,10 @@ var COURSES;
   try {
     const Dstub = typeof window !== "undefined" && window.LEARN_HUB_DEPTH && typeof window.LEARN_HUB_DEPTH === "object" ? window.LEARN_HUB_DEPTH : null;
     const T = typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS && typeof window.LEARN_HUB_TECHPLUS === "object" ? window.LEARN_HUB_TECHPLUS : null;
+    const Tmd =
+      typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS_MD && typeof window.LEARN_HUB_TECHPLUS_MD === "object"
+        ? window.LEARN_HUB_TECHPLUS_MD
+        : null;
     const Deep = typeof window !== "undefined" && window.LEARN_HUB_DEEP && typeof window.LEARN_HUB_DEEP === "object" ? window.LEARN_HUB_DEEP : null;
     if (Array.isArray(COURSES)) {
       for (const c of COURSES) {
@@ -50,6 +54,10 @@ var COURSES;
           if (T) {
             const addT = T[L.id];
             if (addT) read += addT;
+          }
+          if (Tmd) {
+            const addMd = Tmd[L.id];
+            if (addMd) read += addMd;
           }
           L.readHtml = read;
           L.narrative = "";
@@ -74,7 +82,7 @@ window.addEventListener("error", function (ev) {
 function learnHubRunApp() {
   "use strict";
 
-  const PROGRESS_KEY = "learn-hub-progress-v8";
+  const PROGRESS_KEY = "learn-hub-progress-v9";
   const TEACH_COLLAPSED_KEY = "learn-hub-teach-collapsed";
   const INDENT = "  ";
 
@@ -89,6 +97,7 @@ function learnHubRunApp() {
     xpLabel: document.getElementById("xp-label"),
     footerHint: document.getElementById("footer-hint"),
     btnContinue: document.getElementById("btn-continue"),
+    btnSkipChapter: document.getElementById("btn-skip-chapter"),
     sidebar: document.getElementById("sidebar"),
     menuToggle: document.getElementById("menu-toggle"),
     btnToggleTeach: document.getElementById("btn-toggle-teach"),
@@ -212,6 +221,48 @@ function learnHubRunApp() {
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  /** Study-guide readings from Markdown: tech-sg-01-01 … (was full chapters tech-sg-01 …). */
+  function isFullChapterTechLesson(lessonId) {
+    return typeof lessonId === "string" && /^tech-sg-\d{2}(?:-\d{2})?$/.test(lessonId);
+  }
+
+  /**
+   * Insert “On this page” links for long chapter HTML (h1–h3 inside the reading pane).
+   */
+  function buildChapterToc(readingRoot, lessonId) {
+    if (!readingRoot || !lessonId) return;
+    const old = readingRoot.querySelector(".lh-chapter-toc");
+    if (old) old.remove();
+    const headings = readingRoot.querySelectorAll("h1, h2, h3");
+    if (headings.length < 2) return;
+    const nav = document.createElement("nav");
+    nav.className = "lh-chapter-toc";
+    nav.setAttribute("aria-label", "On this page");
+    const cap = document.createElement("strong");
+    cap.textContent = "On this page";
+    nav.appendChild(cap);
+    const ul = document.createElement("ul");
+    let n = 0;
+    const max = 48;
+    headings.forEach(function (h) {
+      if (n >= max) return;
+      const text = (h.textContent || "").replace(/\s+/g, " ").trim();
+      if (text.length < 2) return;
+      if (!h.id) h.id = "lh-ch-" + lessonId + "-" + n;
+      n++;
+      const li = document.createElement("li");
+      li.className = h.tagName === "H3" ? "lh-toc-h3" : h.tagName === "H2" ? "lh-toc-h2" : "lh-toc-h1";
+      const a = document.createElement("a");
+      a.href = "#" + h.id;
+      a.textContent = text.length > 110 ? text.slice(0, 107) + "…" : text;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    if (!ul.childElementCount) return;
+    nav.appendChild(ul);
+    readingRoot.insertBefore(nav, readingRoot.firstChild);
   }
 
   function toast(msg) {
@@ -848,7 +899,7 @@ function learnHubRunApp() {
       return;
     }
     let h =
-      "<p class=\"msg info\" style=\"font-size:0.78rem;margin:0 0 0.65rem;line-height:1.45\">Local curriculum only — answers are checked in your browser. Use Reference on learn steps if you need the Tech+ excerpt.</p>";
+      "<p class=\"msg info\" style=\"font-size:0.78rem;margin:0 0 0.65rem;line-height:1.45\">Local curriculum only — answers are checked in your browser. On <strong>Learn</strong> steps, re-read the chapter or topic notes in the right column if you miss a question.</p>";
     qs.forEach((q, qi) => {
       h += `<div class="quiz-q" data-q="${qi}"><p>${escapeHtml(q.q)}</p>`;
       (q.choices || []).forEach((c, ci) => {
@@ -869,7 +920,10 @@ function learnHubRunApp() {
     }
     return {
       ok: wrong === 0,
-      msg: wrong === 0 ? "All correct." : wrong + " answer(s) need review — re-read the lesson on the left.",
+      msg:
+        wrong === 0
+          ? "All correct."
+          : wrong + " answer(s) need work — go back to the matching <strong>study guide lesson</strong> or <strong>Lesson reading</strong> step and study it again.",
     };
   }
 
@@ -879,15 +933,49 @@ function learnHubRunApp() {
     const ws = c.ws || "";
     let hint = "";
     if (kind === "learn" && ws === "tech") {
-      hint =
-        "Open <strong>Reference</strong> for the Tech+ guide. Later steps use the <strong>Check-in</strong> quiz panel. Press <strong>Continue</strong> when ready.";
+      if (isFullChapterTechLesson(Ls.id)) {
+        hint =
+          "This step is a <strong>study guide lesson</strong> (one section of the book) bundled inside Learn Hub. Use <strong>On this page</strong> when it appears to jump headings. When you are done reading, press <strong>Continue</strong>. If you already know this material, use <strong>Skip lesson</strong> in the footer—it marks the step complete and moves on (same progress as Continue).";
+      } else {
+        hint =
+          "Your <strong>lesson reading</strong> is expanded below (topic notes, tables, and drills from the study guide). Read it completely before Continuing. Later steps use the <strong>Check-in</strong> quiz column.";
+      }
     } else if (kind === "learn") {
-      hint =
-        "Use <strong>Run</strong> in the left panel. No autograde here — open <strong>Reference</strong> if you need help. Then <strong>Continue</strong>.";
+      if (ws === "sql") {
+        hint =
+          "Open <strong>Reference</strong> when a term is new. Try <strong>Run</strong> on any sample queries shown there — this step is not graded. When the ideas make sense, press <strong>Continue</strong>.";
+      } else if (ws === "py") {
+        hint =
+          "Expand <strong>Reference</strong> (right column) when a keyword confuses you. Try <strong>Run</strong> on examples from the notes. Press <strong>Continue</strong> when you are ready — nothing to grade here.";
+      } else if (ws === "web") {
+        hint =
+          "Use the <strong>HTML / CSS / JavaScript</strong> tabs on the left and <strong>Run</strong> (Ctrl+Enter). The full explanation lives under <strong>Reference</strong> in this column — then <strong>Continue</strong>.";
+      } else {
+        hint = "Use <strong>Run</strong> in the left panel. No autograde here — open <strong>Reference</strong> if you need help. Then <strong>Continue</strong>.";
+      }
     } else if (kind === "practice") {
-      hint = "Meet the requirements in <strong>Reference</strong> (task block), then press <strong>Check</strong>.";
+      if (ws === "sql") {
+        hint =
+          "Use <strong>Reference</strong> for the task wording. Write SQL on the left, <strong>Run</strong> to see results, then <strong>Check</strong>. If data looks wrong, use <strong>Reset lesson DB</strong> and try again.";
+      } else if (ws === "py") {
+        hint =
+          "Read the <strong>Task</strong> in <strong>Reference</strong>, write code on the left, <strong>Run</strong> to test, then <strong>Check</strong>.";
+      } else if (ws === "web") {
+        hint =
+          "Follow the <strong>Reference</strong> task. Edit the tabs on the left, <strong>Run</strong> the preview, then <strong>Check</strong>. Use <strong>Reset starter</strong> if you need the original files back.";
+      } else {
+        hint = "Meet the requirements in <strong>Reference</strong> (task block), then press <strong>Check</strong>.";
+      }
     } else if (kind === "challenge") {
-      hint = "Solo lab — <strong>Check</strong> is strict. Use Reference for the spec.";
+      if (ws === "sql") {
+        hint =
+          "Solo lab: work in small steps (tables → inserts → views), <strong>Run</strong> after each step, then <strong>Check</strong> when you meet the spec.";
+      } else if (ws === "py" || ws === "web") {
+        hint =
+          "Solo step: treat <strong>Reference</strong> as the spec. Work in small slices, <strong>Run</strong> often, then <strong>Check</strong>.";
+      } else {
+        hint = "Solo lab — <strong>Check</strong> is strict. Use Reference for the spec.";
+      }
     } else if (kind === "quiz") {
       hint = "Answer from what you studied; everything runs locally in the browser.";
     } else {
@@ -895,8 +983,12 @@ function learnHubRunApp() {
     }
     const kindLabel =
       kind === "learn" ? "Learn" : kind === "practice" ? "Practice" : kind === "challenge" ? "Challenge" : kind === "quiz" ? "Quiz" : kind;
+    const chapterStrip =
+      kind === "learn" && ws === "tech" && isFullChapterTechLesson(Ls.id) ? " fcc-strip-studyguide" : "";
     return (
-      '<section class="fcc-strip">' +
+      '<section class="fcc-strip' +
+      chapterStrip +
+      '">' +
       '<div class="fcc-strip-top">' +
       '<span class="fcc-kind-pill">' +
       escapeHtml(kindLabel) +
@@ -920,24 +1012,51 @@ function learnHubRunApp() {
     if (!c || !Ls) {
       if (el.title) el.title.textContent = "Lesson unavailable";
       if (el.teach) el.teach.innerHTML = '<p class="msg err">Missing lesson data for this track or index.</p>';
+      const cc = courseById[activeCourseId];
+      document.body.classList.toggle("lh-compact-teach", !!(cc && cc.ws !== "tech"));
       return;
     }
+    document.body.setAttribute("data-lh-track", c.id || "");
+    document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
     el.title.textContent = Ls.title;
     const isTech = c.ws === "tech";
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
+    const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
     const read = (Ls.readHtml != null ? Ls.readHtml : Ls.narrative) || "";
-    const refBody = isTech ? '<div class="tech-prose lh-ref-body">' + read + "</div>" : read;
-    const refBlock =
-      read && String(read).trim()
-        ? '<details class="lh-reference"><summary><span class="lh-ref-cue" aria-hidden="true">▶</span> Reference — theory, tables &amp; drills</summary><div class="lh-reference-inner">' +
+    const refBody = isTech ? '<div class="tech-prose lh-ref-body lh-notes-prose">' + read + "</div>" : read;
+    let refBlock = "";
+    if (read && String(read).trim()) {
+      if (isFullChapterTechLearn) {
+        refBlock =
+          '<div class="lh-full-chapter">' +
+          '<p class="lh-notes-chapter-tip" role="note">The study guide text for this lesson is below. Use <strong>On this page</strong> when it shows up. <strong>Continue</strong> or <strong>Skip lesson</strong> when you are finished—both mark this step complete.</p>' +
+          '<article class="lh-tech-reading lh-full-chapter-body lh-notes-surface" aria-label="Study guide reading">' +
           refBody +
-          "</div></details>"
-        : "";
+          "</article></div>";
+      } else if (isTech) {
+        refBlock =
+          '<details class="lh-reference lh-reference-tech" open>' +
+          '<summary><span class="lh-ref-cue" aria-hidden="true">▶</span> Notes</summary>' +
+          '<div class="lh-reference-inner lh-reference-inner-tech lh-notes-surface">' +
+          refBody +
+          "</div></details>";
+      } else {
+        refBlock =
+          '<details class="lh-reference" open><summary><span class="lh-ref-cue" aria-hidden="true">▶</span> Reference — full lesson notes</summary><div class="lh-reference-inner">' +
+          refBody +
+          "</div></details>";
+      }
+    }
     el.teach.classList.remove("tech-prose");
+    el.teach.classList.toggle("teach-full-chapter", !!isFullChapterTechLearn);
+    el.teach.classList.toggle("teach-notes", !!isTechLearn);
+    const stepBadge = isFullChapterTechLearn ? "Reading" : !isTech ? "This step" : "Notes";
     el.teach.innerHTML =
       '<div class="lesson-shell">' +
-      '<header class="lesson-shell-head"><span class="lesson-shell-badge">This step</span><span class="lesson-shell-sub">' +
+      '<header class="lesson-shell-head"><span class="lesson-shell-badge">' +
+      stepBadge +
+      '</span><span class="lesson-shell-sub">' +
       escapeHtml(c.name) +
       "</span></header>" +
       '<div class="lesson-shell-body">' +
@@ -957,9 +1076,17 @@ function learnHubRunApp() {
 
     const strict = Ls.kind === "challenge" || (Ls.check && Ls.check.strict);
     el.footerHint.textContent = learn && !isTech
-      ? "Experiment in the editor, then Continue. Reference is optional."
+      ? c.ws === "sql"
+        ? "Open Reference when a term is new. Try Run on sample SQL, then Continue."
+        : c.ws === "py"
+          ? "Reference on the right has the notes. Use Run to experiment, then Continue."
+          : c.ws === "web"
+            ? "Reference on the right has the full lesson. Use Run on the left, then Continue."
+            : "Experiment in the editor, then Continue."
       : learn && isTech
-        ? "Skim Reference (study guide), then Continue."
+        ? isFullChapterTechLearn
+          ? "Scroll the reading below. Continue or Skip lesson when you are ready—both complete this step."
+          : "Lesson reading is open below—study it, then Continue."
         : isTech && Ls.kind === "quiz"
           ? "Select the best answer for each question, then Check."
           : strict
@@ -967,6 +1094,7 @@ function learnHubRunApp() {
             : "Run freely, then Check when you are ready.";
 
     el.btnContinue.style.display = learn ? "inline-flex" : "none";
+    if (el.btnSkipChapter) el.btnSkipChapter.style.display = learn && isFullChapterTechLearn ? "inline-flex" : "none";
 
     const w = workspaceForCourse(c);
     const PG = typeof window !== "undefined" && window.LEARN_HUB_PLAYGROUND && typeof window.LEARN_HUB_PLAYGROUND === "object" ? window.LEARN_HUB_PLAYGROUND : null;
@@ -1020,6 +1148,13 @@ function learnHubRunApp() {
     if (sb) sb.disabled = !!(noAutocheck && w === "sql");
 
     updateChrome();
+
+    if (isFullChapterTechLearn) {
+      requestAnimationFrame(function () {
+        const reading = el.teach && el.teach.querySelector(".lh-tech-reading");
+        if (reading) buildChapterToc(reading, Ls.id);
+      });
+    }
   }
 
   function goLesson(i) {
@@ -1236,6 +1371,7 @@ function learnHubRunApp() {
     on("btn-tech-check", "click", () => completePractice());
 
     on(el.btnContinue, "click", completeLearn);
+    on(el.btnSkipChapter, "click", completeLearn);
 
     on(el.menuToggle, "click", () => {
       if (el.sidebar) el.sidebar.classList.toggle("open");
@@ -1299,6 +1435,8 @@ function learnHubRunApp() {
         el.teach.innerHTML =
           "<p class='msg err'>This track has no lessons in the loaded curriculum.</p><p class='msg info'>Try resetting progress or redownloading <code>Learn-Hub</code>.</p>";
       if (el.sidebarTrackName) el.sidebarTrackName.textContent = courseById[activeCourseId] ? courseById[activeCourseId].name : "—";
+      const cEmpty = courseById[activeCourseId];
+      document.body.classList.toggle("lh-compact-teach", !!(cEmpty && cEmpty.ws !== "tech"));
     } else {
       goLesson(idx);
       if (el.title && el.title.textContent === "Loading…") {
