@@ -1,6 +1,72 @@
 # Learn Hub
 
-Self-hosted, **practice-first** study app (FreeCodeCamp-style): **editor and Run/Check on top**, optional **Reference** fold-out for theory on most tracks. **Tech+** ships the **FC0-U71 study guide** as many small **learn steps** (IDs `tech-sg-01-01` … through chapter 12). The Markdown build currently emits **110** study-guide segments (**12** chapter sources); you can produce a finer split (e.g. **190** segments) by changing how the build chunks lessons. Content is bundled in **`learn-hub-techplus-md.js`**—**no runtime dependency** on any other drive path. Segment HTML is passed through a **post-build polish** pass (PDF/OCR fixes, safe code samples, list structure) via `scripts/techplus-html-polish.mjs`, both when you run **`npm run build:techplus`** and when you re-run **`npm run polish:techplus-md`** on the existing bundle. One `index.html` plus companion scripts—no backend.
+## Current file paths (for GitHub / uploads)
+
+| Role | Path |
+|------|------|
+| **Canonical project** (edit here, run `index.html`, run `npm run build:techplus`) | `G:\Hubs\Learn-Hub` |
+| **Latest full mirror** (same tree, no `node_modules`; good for drag-and-drop or zip upload) | `G:\All_Learn-hub\Learn-hub_recent` |
+
+Refresh the mirror after you change the canonical copy (PowerShell):
+
+```powershell
+robocopy "G:\Hubs\Learn-Hub" "G:\All_Learn-hub\Learn-hub_recent" /MIR /XD node_modules
+```
+
+**Flat lists:** see **`PATHS_FOR_GITHUB.txt`** in the project root (absolute + relative paths, one file per line). The same file is copied into the mirror folder when you re-run `robocopy` above.
+
+### Absolute paths — `G:\Hubs\Learn-Hub\…`
+
+```
+G:\Hubs\Learn-Hub\add-more-lessons.mjs
+G:\Hubs\Learn-Hub\build-split.mjs
+G:\Hubs\Learn-Hub\content\techplus-chapters\01_Core_Hardware_Components.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\02_Peripherals_and_Connectors.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\03_Computing_Devices_and_the_Internet_of_Things.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\04_Operating_Systems.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\05_Software_Applications.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\06_Software_Development.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\07_Database_Fundamentals.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\08_Networking_Concepts_and_Technologies.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\09_Cloud_Computing_and_Artificial_Intelligence.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\10_Security_Concepts_and_Threats.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\11_Security_Best_Practices.md
+G:\Hubs\Learn-Hub\content\techplus-chapters\12_Data_Continuity_and_Computer_Support.md
+G:\Hubs\Learn-Hub\expand-capstone-and-quiz-bank.mjs
+G:\Hubs\Learn-Hub\expand-tracks-more.mjs
+G:\Hubs\Learn-Hub\index.html
+G:\Hubs\Learn-Hub\learn-hub.css
+G:\Hubs\Learn-Hub\learn-hub-app.js
+G:\Hubs\Learn-Hub\learn-hub-courses.js
+G:\Hubs\Learn-Hub\learn-hub-deep.js
+G:\Hubs\Learn-Hub\learn-hub-depth.js
+G:\Hubs\Learn-Hub\learn-hub-playground.js
+G:\Hubs\Learn-Hub\learn-hub-techplus.js
+G:\Hubs\Learn-Hub\learn-hub-techplus-md.js
+G:\Hubs\Learn-Hub\package-lock.json
+G:\Hubs\Learn-Hub\package.json
+G:\Hubs\Learn-Hub\PATHS_FOR_GITHUB.txt
+G:\Hubs\Learn-Hub\README.md
+G:\Hubs\Learn-Hub\scripts\_dump-segments.mjs
+G:\Hubs\Learn-Hub\scripts\apply-techplus-html-polish.mjs
+G:\Hubs\Learn-Hub\scripts\apply-techplus-readability-ps1.ps1
+G:\Hubs\Learn-Hub\scripts\audit-techplus-consistency.mjs
+G:\Hubs\Learn-Hub\scripts\build-techplus-from-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\build-techplus-import.mjs
+G:\Hubs\Learn-Hub\scripts\fold-depth-into-courses.mjs
+G:\Hubs\Learn-Hub\scripts\format-techplus-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\migrate-fcc-deep-playground.mjs
+G:\Hubs\Learn-Hub\scripts\normalize-techplus-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\print-learn-hub-manifest.mjs
+G:\Hubs\Learn-Hub\scripts\rebuild-techplus.cmd
+G:\Hubs\Learn-Hub\scripts\techplus-html-polish.mjs
+G:\Hubs\Learn-Hub\scripts\techplus-pdf-fixes.mjs
+G:\Hubs\Learn-Hub\scripts\validate-techplus-html.mjs
+G:\Hubs\Learn-Hub\scripts\vendor\marked.esm.mjs
+G:\Hubs\Learn-Hub\WORKING_COPY.txt
+```
+
+Self-hosted, **practice-first** study app (FreeCodeCamp-style): **editor and Run/Check on top**, optional **Reference** fold-out for theory on most tracks. **Tech+** ships the **FC0-U71 study guide** as many small **learn steps** (IDs `tech-sg-01-01` … through chapter 12). The Markdown build currently emits **223** study-guide segments (**12** chapter sources); you can change how the build chunks lessons if you want more or fewer steps per chapter. Content is bundled in **`learn-hub-techplus-md.js`**—**no runtime dependency** on any other drive path. Segment HTML is passed through a **post-build polish** pass (PDF/OCR fixes, safe code samples, list structure) via `scripts/techplus-html-polish.mjs`, both when you run **`npm run build:techplus`** and when you re-run **`npm run polish:techplus-md`** on the existing bundle. One `index.html` plus companion scripts—no backend.
 
 ## Which folder is the working, correct copy?
 
@@ -10,6 +76,7 @@ Use this table so you always know what to open, serve, and edit.
 |------|------------|
 | **`G:\Hubs\Learn-Hub`** | **Canonical working project.** This is the copy you run (`index.html`), edit, and rebuild. The committed **`learn-hub-techplus-md.js`** here must show real English in lesson `tech-sg-01-01` (e.g. **`Lesson 1: Core Hardware Components`** in the `<h1>`). **`learn-hub-courses.js`** must stay in sync with the segment IDs in that file. **`index.html`** `?v=` query strings bust cache for those two scripts. |
 | **`G:\Learn-Hub_Backup`** | **Point-in-time mirror** of `Hubs\Learn-Hub` (last full robocopy). Restore from here if the working tree is corrupted; after restoring, redo any edits made after the backup. Re-run a folder mirror when you want an updated snapshot. |
+| **`G:\All_Learn-hub\Learn-hub_recent`** | **Upload-friendly mirror** of **`G:\Hubs\Learn-Hub`** (same files and folders, **`node_modules` excluded**). Regenerate with `robocopy "G:\Hubs\Learn-Hub" "G:\All_Learn-hub\Learn-hub_recent" /MIR /XD node_modules` before zipping or pointing GitHub Desktop at a clean tree. |
 | **`G:\Hubs\TechPlus_Lessons\learning-hub-main`** | **Reference / donor tree** that held a known-good study-guide bundle used to repair Learn-Hub. Unless you maintain that repo on purpose, **do not treat it as your primary app**—day-to-day work lives under **`Hubs\Learn-Hub`**. |
 
 **Sanity check:** Search `learn-hub-techplus-md.js` for `eerroe` or `oorpueoeg`. If either appears, the Tech+ Markdown bundle is corrupted or was built with a broken toolchain—fix Markdown sources and run `npm run build:techplus`, or copy a known-good `learn-hub-techplus-md.js` + matching `learn-hub-courses.js` from `learning-hub-main`, then run **`npm run polish:techplus-md`** and **`npm run validate:techplus-md`**, and refresh `index.html` `?v=` hashes.
@@ -43,6 +110,7 @@ Load **order matters** (see `index.html`):
 | File | Purpose |
 |------|---------|
 | `index.html` | Shell, styles, script tags. |
+| `learn-hub.css` | App layout, teach column, workspace, Tech+ reading styles. |
 | `learn-hub-courses.js` | `window.LEARN_HUB_COURSES` — lesson list, kinds, titles, starters, checks, quiz questions. Lesson `narrative` fields are kept **empty** for most lessons; reading is supplied by merged bundles (see below). |
 | `learn-hub-depth.js` | Stub: `window.LEARN_HUB_DEPTH = {}` (reserved for optional future append-only snippets). |
 | `learn-hub-techplus.js` | `window.LEARN_HUB_TECHPLUS` — HTML excerpts from the local Tech+ study guide for selected Tech+ lesson IDs (topic notes, tables, drills). |
@@ -50,6 +118,7 @@ Load **order matters** (see `index.html`):
 | `learn-hub-deep.js` | `window.LEARN_HUB_DEEP` — per-lesson **full reference HTML** plus shared drill blocks and external doc links. |
 | `learn-hub-playground.js` | `window.LEARN_HUB_PLAYGROUND` — default **sandbox starters** for **learn** steps on web / Python / SQL. |
 | `learn-hub-app.js` | UI, progress, merging `readHtml`, workspaces, Run/Check logic, Tech+ study-guide layout (TOC, full-pane reading, Skip lesson). |
+| `package.json` / `package-lock.json` | Node metadata and lockfile; **`npm install`** pulls **`marked`** for `npm run build:techplus`. Not loaded by the browser. |
 
 ## How content is merged at runtime
 
@@ -166,42 +235,42 @@ Paste the command output **over the table below** (from the header row through t
 
 | File | Lines | UTF-8 bytes | Unicode scalar values* |
 |------|------:|-------------:|-------------------------:|
-| `README.md` | 209 | 17,801 | 17,699 |
+| `README.md` | 278 | 21,989 | 21,887 |
 | `index.html` | 170 | 10,312 | 10,270 |
 | `learn-hub-app.js` | 1,537 | 60,107 | 60,034 |
-| `learn-hub-courses.js` | 2 | 339,011 | 338,531 |
+| `learn-hub-courses.js` | 2 | 343,544 | 343,002 |
 | `learn-hub-deep.js` | 439 | 996,504 | 986,700 |
 | `learn-hub-depth.js` | 3 | 160 | 158 |
 | `learn-hub-playground.js` | 3 | 71,367 | 70,539 |
 | `learn-hub-techplus.js` | 3 | 128,256 | 127,156 |
-| `learn-hub-techplus-md.js` | 194 | 1,275,897 | 1,273,103 |
-| `content/techplus-chapters/01_Core_Hardware_Components.md` | 1,453 | 107,303 | 107,018 |
-| `content/techplus-chapters/02_Peripherals_and_Connectors.md` | 1,434 | 106,096 | 105,873 |
-| `content/techplus-chapters/03_Computing_Devices_and_the_Internet_of_Things.md` | 1,395 | 106,676 | 106,509 |
-| `content/techplus-chapters/04_Operating_Systems.md` | 1,649 | 124,818 | 124,616 |
-| `content/techplus-chapters/05_Software_Applications.md` | 1,607 | 120,315 | 120,024 |
-| `content/techplus-chapters/06_Software_Development.md` | 815 | 61,199 | 61,041 |
-| `content/techplus-chapters/07_Database_Fundamentals.md` | 829 | 62,297 | 62,143 |
-| `content/techplus-chapters/08_Networking_Concepts_and_Technologies.md` | 1,561 | 119,482 | 119,203 |
-| `content/techplus-chapters/09_Cloud_Computing_and_Artificial_Intelligence.md` | 787 | 59,203 | 59,073 |
-| `content/techplus-chapters/10_Security_Concepts_and_Threats.md` | 1,338 | 105,226 | 104,978 |
-| `content/techplus-chapters/11_Security_Best_Practices.md` | 1,243 | 90,981 | 90,703 |
-| `content/techplus-chapters/12_Data_Continuity_and_Computer_Support.md` | 1,565 | 121,553 | 121,347 |
+| `learn-hub-techplus-md.js` | 227 | 1,320,233 | 1,317,163 |
+| `content/techplus-chapters/01_Core_Hardware_Components.md` | 1,972 | 111,344 | 110,535 |
+| `content/techplus-chapters/02_Peripherals_and_Connectors.md` | 1,929 | 109,180 | 108,327 |
+| `content/techplus-chapters/03_Computing_Devices_and_the_Internet_of_Things.md` | 1,913 | 110,958 | 110,235 |
+| `content/techplus-chapters/04_Operating_Systems.md` | 2,154 | 127,604 | 126,694 |
+| `content/techplus-chapters/05_Software_Applications.md` | 2,158 | 124,102 | 123,135 |
+| `content/techplus-chapters/06_Software_Development.md` | 1,179 | 63,136 | 62,576 |
+| `content/techplus-chapters/07_Database_Fundamentals.md` | 1,151 | 63,823 | 63,351 |
+| `content/techplus-chapters/08_Networking_Concepts_and_Technologies.md` | 2,170 | 123,400 | 122,435 |
+| `content/techplus-chapters/09_Cloud_Computing_and_Artificial_Intelligence.md` | 1,098 | 61,056 | 60,586 |
+| `content/techplus-chapters/10_Security_Concepts_and_Threats.md` | 1,760 | 107,795 | 106,889 |
+| `content/techplus-chapters/11_Security_Best_Practices.md` | 1,666 | 93,696 | 92,940 |
+| `content/techplus-chapters/12_Data_Continuity_and_Computer_Support.md` | 2,033 | 125,549 | 124,347 |
 | `add-more-lessons.mjs` | 751 | 30,172 | 30,138 |
 | `build-split.mjs` | 64 | 2,724 | 2,722 |
 | `expand-capstone-and-quiz-bank.mjs` | 527 | 22,791 | 22,764 |
 | `expand-tracks-more.mjs` | 517 | 29,791 | 29,725 |
-| `scripts/build-techplus-from-markdown.mjs` | 1,060 | 46,467 | 46,174 |
+| `scripts/build-techplus-from-markdown.mjs` | 1,061 | 46,529 | 46,236 |
 | `scripts/build-techplus-import.mjs` | 126 | 4,759 | 4,757 |
-| `scripts/apply-techplus-html-polish.mjs` | 38 | 1,661 | 1,659 |
-| `scripts/techplus-html-polish.mjs` | 230 | 24,671 | 24,611 |
+| `scripts/apply-techplus-html-polish.mjs` | 50 | 2,061 | 2,059 |
+| `scripts/techplus-html-polish.mjs` | 280 | 31,361 | 31,273 |
 | `scripts/validate-techplus-html.mjs` | 66 | 2,337 | 2,335 |
 | `scripts/fold-depth-into-courses.mjs` | 81 | 3,353 | 3,351 |
 | `scripts/migrate-fcc-deep-playground.mjs` | 155 | 6,501 | 6,469 |
 | `scripts/print-learn-hub-manifest.mjs` | 75 | 3,174 | 3,174 |
-| **Total (listed files)** | **21,926** | **4,262,965** | **4,244,597** |
+| **Total (listed files)** | **27,598** | **4,359,668** | **4,333,962** |
 
-\*Same as “Unicode scalar values” column header above. Last aligned with `node scripts/print-learn-hub-manifest.mjs` on **2026-04-07** (UTC calendar date).
+\*Same as “Unicode scalar values” column header above. Last aligned with `node scripts/print-learn-hub-manifest.mjs` on **2026-04-07** (UTC calendar date). The manifest script omits `learn-hub.css`, `package.json`, `PATHS_FOR_GITHUB.txt`, and several helper scripts under `scripts/`; see [Current file paths](#current-file-paths-for-github--uploads) for the full upload list.
 
 ## License / data
 
