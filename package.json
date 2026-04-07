@@ -1,0 +1,18 @@
+{
+  "name": "learn-hub",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "normalize:techplus": "node scripts/normalize-techplus-markdown.mjs",
+    "build:techplus": "node scripts/build-techplus-from-markdown.mjs",
+    "polish:techplus-md": "node scripts/apply-techplus-html-polish.mjs",
+    "validate:techplus-md": "node scripts/validate-techplus-html.mjs",
+    "verify:techplus": "node scripts/audit-techplus-consistency.mjs && node scripts/validate-techplus-html.mjs",
+    "rebuild:techplus": "node scripts/normalize-techplus-markdown.mjs && node scripts/build-techplus-from-markdown.mjs"
+  },
+  "devDependencies": {
+    "marked": "^17.0.6"
+  }
+}
