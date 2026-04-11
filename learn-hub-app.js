@@ -645,32 +645,50 @@ function learnHubRunApp() {
       el.pyLoadNote.textContent = "Loading Python runtime (first time may take a minute)…";
       pyodidePromise = loadPyodide({
         indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/",
-      }).then((p) => {
-        pyodideInstance = p;
-        el.pyLoadNote.textContent = "";
-        return p;
-      });
+      })
+        .then((p) => {
+          pyodideInstance = p;
+          el.pyLoadNote.textContent = "";
+          return p;
+        })
+        .catch((err) => {
+          pyodidePromise = null;
+          pyodideInstance = null;
+          el.pyLoadNote.textContent = "";
+          throw err;
+        });
     }
     return pyodidePromise;
   }
 
+  function pyStreamSink(chunks) {
+    const dec = new TextDecoder("utf-8");
+    return {
+      write: function (buf) {
+        chunks.push(dec.decode(buf));
+        return buf.length;
+      },
+    };
+  }
+
   async function runPythonCode(code) {
     const py = await ensurePyodide();
-    const lines = [];
-    py.setStdout({ batched: (s) => lines.push(s) });
-    py.setStderr({ batched: (s) => lines.push(s) });
+    const chunks = [];
+    const sink = pyStreamSink(chunks);
+    py.setStdout(sink);
+    py.setStderr(sink);
     try {
       await py.runPythonAsync(code);
-      return { out: lines.join(""), err: null };
+      return { out: chunks.join(""), err: null };
     } catch (e) {
-      return { out: lines.join(""), err: e.message || String(e) };
+      return { out: chunks.join(""), err: e.message || String(e) };
     }
   }
 
   async function captureUserPython(userCode) {
     const py = await ensurePyodide();
     const wrapped =
-      "import sys, io\n" +
+      "import sys, io, json\n" +
       "_buf = io.StringIO()\n" +
       "_old_out, _old_err = sys.stdout, sys.stderr\n" +
       "sys.stdout = sys.stderr = _buf\n" +
@@ -683,11 +701,25 @@ function learnHubRunApp() {
       "    _user_err = repr(_e)\n" +
       "finally:\n" +
       "    sys.stdout, sys.stderr = _old_out, _old_err\n" +
-      "OUT = _buf.getvalue()\n";
-    await py.runPythonAsync(wrapped);
-    const out = py.globals.get("OUT");
-    const uerr = py.globals.get("_user_err");
-    return { out: out == null ? "" : String(out), userErr: uerr == null || uerr === "None" ? null : String(uerr) };
+      "OUT = _buf.getvalue()\n" +
+      "_lh_cap = json.dumps({\"out\": OUT, \"userErr\": _user_err})\n" +
+      "_lh_cap\n";
+    let capRaw;
+    try {
+      capRaw = await py.runPythonAsync(wrapped);
+    } catch (e) {
+      return { out: "", userErr: e.message || String(e) };
+    }
+    const capStr = typeof capRaw === "string" ? capRaw : capRaw != null ? String(capRaw) : "";
+    let cap;
+    try {
+      cap = JSON.parse(capStr);
+    } catch (_) {
+      return { out: "", userErr: "Could not read captured Python output." };
+    }
+    const out = cap && cap.out != null ? String(cap.out) : "";
+    const userErr = cap && cap.userErr != null && cap.userErr !== "" ? String(cap.userErr) : null;
+    return { out, userErr };
   }
 
   function normalizeOut(s, mode) {
@@ -1335,9 +1367,21 @@ function learnHubRunApp() {
 
     on("btn-py-run", "click", async () => {
       if (el.pyOutput) el.pyOutput.textContent = "Running…";
-      const r = await runPythonCode(el.pyInput ? el.pyInput.value : "");
-      if (el.pyOutput) el.pyOutput.textContent = r.err ? r.out + "\n" + r.err : r.out || "(no output)";
-      if (el.pyStatus) el.pyStatus.textContent = r.err ? "Error" : "Done";
+      if (el.pyStatus) el.pyStatus.textContent = "…";
+      try {
+        const r = await runPythonCode(el.pyInput ? el.pyInput.value : "");
+        if (el.pyOutput) el.pyOutput.textContent = r.err ? r.out + (r.out ? "\n" : "") + r.err : r.out || "(no output)";
+        if (el.pyStatus) el.pyStatus.textContent = r.err ? "Error" : "Done";
+      } catch (e) {
+        const msg = e && e.message ? e.message : String(e);
+        if (el.pyOutput)
+          el.pyOutput.textContent =
+            "Could not run Python.\n\n" +
+            msg +
+            "\n\nIf you opened this page as a file, use a local server (e.g. python -m http.server) and try again, or check your network for the Pyodide CDN.";
+        if (el.pyStatus) el.pyStatus.textContent = "Error";
+        console.error("Learn Hub Python:", e);
+      }
     });
     on("btn-py-reset", "click", () => {
       const Ls = currentLesson();
