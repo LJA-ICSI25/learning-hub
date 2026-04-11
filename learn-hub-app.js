@@ -309,6 +309,8 @@ function learnHubRunApp() {
   }
 
   function lessonLocked(i) {
+    /* Tech+ (course id "tech"): open navigation — any lesson from the list or picker, any time. */
+    if (activeCourseId === "tech") return false;
     if (i === 0) return false;
     const Ls = lessons()[i - 1];
     if (!Ls || !Ls.id) return false;
