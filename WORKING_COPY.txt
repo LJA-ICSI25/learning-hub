@@ -1,0 +1,20 @@
+Learn Hub — which copy is correct?
+==================================
+
+CANONICAL (edit and run this):
+  G:\Hubs\Learn-Hub
+
+  Open: G:\Hubs\Learn-Hub\index.html
+  Runtime bundles: assets\learn-hub-*.js and assets\learn-hub.css
+  Tech+ study guide HTML: assets\learn-hub-techplus-md.js (bundled segments; large file)
+  Lesson list (must match segment IDs): assets\learn-hub-courses.js
+  Chapter Markdown sources (build input): chapters\*.md
+
+  Good bundle check: tech-sg-01-01 contains "Lesson 1: Core Hardware Components"
+  Bad bundle sign: text like "eerroe" or "oorpueoeg" in the HTML
+
+BACKUP (restore only; refresh with robocopy when you want a new snapshot):
+  G:\Learn-Hub_Backup
+
+REFERENCE / DONOR (not the primary working tree):
+  G:\Hubs\TechPlus_Lessons\learning-hub-main

@@ -1,0 +1,80 @@
+Learn Hub — flat file list for uploads (2026-04-11)
+Canonical root: G:\Hubs\Learn-Hub
+Snapshot mirror: G:\All_Learn-hub\Learn-hub_recent (robocopy /XD node_modules)
+
+Layout: index.html at repo root; runtime CSS/JS under assets/; Tech+ Markdown sources under chapters/; Node tooling under scripts/.
+
+--- Absolute paths (G:\Hubs\Learn-Hub) ---
+
+G:\Hubs\Learn-Hub\index.html
+G:\Hubs\Learn-Hub\package.json
+G:\Hubs\Learn-Hub\package-lock.json
+G:\Hubs\Learn-Hub\PATHS_FOR_GITHUB.txt
+G:\Hubs\Learn-Hub\README.md
+G:\Hubs\Learn-Hub\WORKING_COPY.txt
+
+G:\Hubs\Learn-Hub\assets\learn-hub.css
+G:\Hubs\Learn-Hub\assets\learn-hub-app.js
+G:\Hubs\Learn-Hub\assets\learn-hub-courses.js
+G:\Hubs\Learn-Hub\assets\learn-hub-deep.js
+G:\Hubs\Learn-Hub\assets\learn-hub-depth.js
+G:\Hubs\Learn-Hub\assets\learn-hub-playground.js
+G:\Hubs\Learn-Hub\assets\learn-hub-techplus.js
+G:\Hubs\Learn-Hub\assets\learn-hub-techplus-md.js
+
+G:\Hubs\Learn-Hub\chapters\01_Core_Hardware_Components.md
+G:\Hubs\Learn-Hub\chapters\02_Peripherals_and_Connectors.md
+G:\Hubs\Learn-Hub\chapters\03_Computing_Devices_and_the_Internet_of_Things.md
+G:\Hubs\Learn-Hub\chapters\04_Operating_Systems.md
+G:\Hubs\Learn-Hub\chapters\05_Software_Applications.md
+G:\Hubs\Learn-Hub\chapters\06_Software_Development.md
+G:\Hubs\Learn-Hub\chapters\07_Database_Fundamentals.md
+G:\Hubs\Learn-Hub\chapters\08_Networking_Concepts_and_Technologies.md
+G:\Hubs\Learn-Hub\chapters\09_Cloud_Computing_and_Artificial_Intelligence.md
+G:\Hubs\Learn-Hub\chapters\10_Security_Concepts_and_Threats.md
+G:\Hubs\Learn-Hub\chapters\11_Security_Best_Practices.md
+G:\Hubs\Learn-Hub\chapters\12_Data_Continuity_and_Computer_Support.md
+
+G:\Hubs\Learn-Hub\scripts\add-more-lessons.mjs
+G:\Hubs\Learn-Hub\scripts\build-split.mjs
+G:\Hubs\Learn-Hub\scripts\expand-capstone-and-quiz-bank.mjs
+G:\Hubs\Learn-Hub\scripts\expand-tracks-more.mjs
+G:\Hubs\Learn-Hub\scripts\learn-hub-paths.mjs
+G:\Hubs\Learn-Hub\scripts\techplus-chapter-io.mjs
+(plus other scripts under scripts\ — see folder)
+
+--- Relative paths (repo root = folder that contains index.html) ---
+
+index.html
+package.json
+package-lock.json
+PATHS_FOR_GITHUB.txt
+README.md
+WORKING_COPY.txt
+
+assets/learn-hub.css
+assets/learn-hub-app.js
+assets/learn-hub-courses.js
+assets/learn-hub-deep.js
+assets/learn-hub-depth.js
+assets/learn-hub-playground.js
+assets/learn-hub-techplus.js
+assets/learn-hub-techplus-md.js
+
+chapters/01_Core_Hardware_Components.md
+chapters/02_Peripherals_and_Connectors.md
+chapters/03_Computing_Devices_and_the_Internet_of_Things.md
+chapters/04_Operating_Systems.md
+chapters/05_Software_Applications.md
+chapters/06_Software_Development.md
+chapters/07_Database_Fundamentals.md
+chapters/08_Networking_Concepts_and_Technologies.md
+chapters/09_Cloud_Computing_and_Artificial_Intelligence.md
+chapters/10_Security_Concepts_and_Threats.md
+chapters/11_Security_Best_Practices.md
+chapters/12_Data_Continuity_and_Computer_Support.md
+
+scripts/add-more-lessons.mjs
+scripts/build-split.mjs
+scripts/expand-capstone-and-quiz-bank.mjs
+scripts/expand-tracks-more.mjs
