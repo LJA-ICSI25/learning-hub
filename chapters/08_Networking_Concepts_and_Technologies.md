@@ -6,7 +6,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 
 ## Chapter 8 Networking Concepts and Technologies
 
-**THE FOLLOWING COMPTIA TECH+ FC0- U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
+**THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
  ✓ 1.0 IT Concepts and T erminology
  ✓ 1.3 Compar
 e and contrast common units of measure.
@@ -77,27 +77,29 @@ wireless network.
 - Wireless Protected Access 2 (WPA2)
 - Wireless Protected Access 3 (WPA3)
 
+### Introduction
+
 It seems like nearly everyone is on the Internet these days.
 Media used to be restricted to desktop and laptop computers
 but is now accessible by small handheld devices such as smartphones and even smartwatches. This chapter is called “Networking Concepts and Technologies,” but it could just as easily be called “Getting on the Internet.”
 Now, to be fair, this chapter is about setting up a small network for your small office/
-home office (SOHO) environment, which means it’s about connecting computers to each
+home office (SOHO) environment, which means it's about connecting computers to each
 other and not just the Internet. It just happens that many of us get twitchy when we have to
-go more than a few hours without getting our update on what’s going on in the world.
-To start off this chapter, I’ll cover network connection types and features. If you’re new
+go more than a few hours without getting our update on what's going on in the world.
+To start off this chapter, I'll cover network connection types and features. If you're new
 to networking, this will be a good primer for you to understand the different types of connections that you can make both within a network and when connecting your network to
-the outside world. As part of that discussion, I’ll compare and contrast the different types of
+the outside world. As part of that discussion, I'll compare and contrast the different types of
 connections so that you can make the best decision possible for your needs.
 The second major section of this chapter will discuss key networking concepts. This
 includes devices to make the network function, protocols and addressing, and the basics of
 data transmission.
 The third major section of this chapter will focus on setting up a small wireless network.
-First, I’ll show you some key steps to take in order to set up and configure the network. I will
+First, I'll show you some key steps to take in order to set up and configure the network. I will
 then take that base of information and dive into securing the network. All of this is designed to
 give you what you really want: a reliable connection to other computers (and the Internet!).
 
 and Features
-There are a lot of analogies that we can make between humans and computers. You’ve
+There are a lot of analogies that we can make between humans and computers. You've
 already heard analogies for hardware, such as the motherboard being the nervous system
 of a computer and the processor the brain. These comparisons continue when it comes to
 connecting computers together.
@@ -112,7 +114,7 @@ some apparently crazy individual walks down the street seemingly talking loudly 
 he might actually be talking to a good friend halfway around the world by using a small
 wireless device in his ear. The line between insanity and technologyenabled has blurred a bit
 possibly,
- but that’s not the point of this section.
+ but that's not the point of this section.
 The point is that computers need to be connected to each other to communicate as well.
 The same also holds true for our other mobile electronic devices. The first computer networks relied on wired physical connections, and technology has evolved to provide relatively
 high- speed wireless communications as well.
@@ -123,20 +125,20 @@ to cover these in terms of connections that you might make to the external world
 Internet) and then connections that you might make on an internal network.
 There are two reasons for organizing the chapter this way. First, later in this chapter you
 will learn how to set up and configure a small wireless network using a SOHO router. The
-assumption is that you’re setting up a network because you will have computers (or mobile
+assumption is that you're setting up a network because you will have computers (or mobile
 devices) connected to this router, and you will also have this router connected to the rest of
-the world. It’s hard to know how to make these connections without the right background.
+the world. It's hard to know how to make these connections without the right background.
 Second, wired and wireless technologies have different pros and cons, which make some
 better suited for external connections than for internal connections, and vice versa.
 Finally, you also need to think about the future. When choosing a connection type, think
 not only about what your needs are today but also what they could be in two or three years.
-There is no sense in going overboard and buying a topoftheline solution if it’s not needed,
+There is no sense in going overboard and buying a topoftheline solution if it's not needed,
 
-but you do want to plan for expansion if that’s a possibility.
+but you do want to plan for expansion if that's a possibility.
 The goal is that by the end of this section, you will be able to make informed decisions on
 which type of connection is best for any situation.
 
-By “external” connection, I really mean “Internet” connection because that’s the most
+By “external” connection, I really mean “Internet” connection because that's the most
 common connection type, by a significant margin. Historically, Internet connections were
 always wired and could be broadly broken into two categories: dialup and broadband, such
 as DSL or cable Internet.
@@ -146,7 +148,7 @@ throughput and cost.
 Your Internet connection will give you online service through an Internet service provider
 (ISP). The type of service that you want will often determine your ISP choices. For example,
 if you want cable Internet, your choices are limited to your local cable companies and a few
-national providers. I’ll outline some of the features of each type of service and discuss why
+national providers. I'll outline some of the features of each type of service and discuss why
 you might or might not want a specific connection type based on the situation.
 Dialup/POTS
 One of the oldest ways of communicating with ISPs and remote networks is through dialup
@@ -164,36 +166,35 @@ cannot compare to speeds possible with broadband.
  In 2000, about 74 percent of American
 households used dialup Internet connections. By 2021 that number had dropped to about
 0.1 percent.
- Most of the people who still use dialup do it because high- speed access isn’t
+ Most of the people who still use dialup do it because high- speed access isn't
 available where they live.
-The biggest advantage to dialup is that it’s cheap and relatively easy to configure.
+The biggest advantage to dialup is that it's cheap and relatively easy to configure.
  The
 only hardware that you need is a modem and a phone cable. You dial into a server (such as
-an ISP’s server), provide a username and a password, and you’re on the Internet.
+an ISP's server), provide a username and a password, and you're on the Internet.
 Companies also have the option to grant users dialup access to their networks.
 As with
 Internet connections, this option used to be a lot more popular than it is today. Microsoft
 offers a serverside product to facilitate this called Remote Access Service (RAS),
  as do many
 other companies. Today, you might still hear people talking about connecting remotely to
-your company’s network as “remote access.”
+your company's network as “remote access.”
 It seems that dialup is considered to be a relic from the Stone Age of Internet access.
  But
 these are some reasons why it might be the right solution:
 - The only hardware it requires is a modem and a phone cord.
-- It’s relatively easy to set up and configure.
-- It’s the cheapest online solution (usually $10 to $20 per month).
+- It's relatively easy to set up and configure.
+- It's the cheapest online solution (usually $10 to $20 per month).
 - You can use it wherever there is phone service, which is just about everywhere.
 Of course, there are reasons why a dialup connection might not be appropriate.
 The big
 one is speed. If you need to download files or have substantial data requirements, dialup is
 probably too slow.
- In addition, with limited bandwidth, it’s really good only for one computer. It is possible to share a dialup Internet connection by using software tools, but it’
-s
+ In addition, with limited bandwidth, it's really good only for one computer. It is possible to share a dialup Internet connection by using software tools, but it's
 also possible to push a stalled car up a muddy hill. Neither option sounds like much fun.
 Reviewing Throughput Speeds
 In Chapter 2, “Peripherals and Connectors, ” you were introduced to throughput units as part
-of Tech+ exam objective 1.3, “Compare and contrast common units of measure. ” Here’s a
+of Tech+ exam objective 1.3, “Compare and contrast common units of measure. ” Here's a
 reminder of that concept.
 The most basic measure of throughput is in bits per second (bps)—  that is, how many bits
 are transmit
@@ -228,10 +229,10 @@ very high bitrate DSL (VDSL)
 , rateadaptiv
 e DSL (RADSL), symmetric DSL (SDSL), and
 asymmetric DSL (ADSL). The most popular in- home form of DSL is ADSL.
- It’s asymmetrical because it supports download speeds that are faster than upload speeds. Dividing up
+ It's asymmetrical because it supports download speeds that are faster than upload speeds. Dividing up
 the total available bandwidth this way makes sense because most Internet traffic is downloaded, not uploaded. Imagine a 10- lane highway.
  If you knew that 8 out of 10 cars that
-drove on the highway went south, wouldn’t you make 8 lanes southbound and only 2 lanes
+drove on the highway went south, wouldn't you make 8 lanes southbound and only 2 lanes
 northbound? That is essentially what ADSL does.
 FIGURE 8.2  The back of the DSL modem
 
@@ -241,14 +242,14 @@ The first ADSL standard was approved in 1998 and offered maximum download speeds
 of 8 Mbps and upload speeds of 1 Mbps. Today, you will see telephone companies offer
 maximum DSL download speeds of around 30 Mbps with 5 Mbps uploads. The speed you
 actually get will vary depending on a lot of factors, including the distance you are from the
-phone company’s equipment.
+phone company's equipment.
 You will probably see Internet providers offering broadband speeds of
 1 Gbps or faster, and they might call it DSL. Technically, though, speeds
 that fast are fiberop
 tic connections, which are covered later. Over the last
 few years, the lines between DSL and fiberop
 tic Internet have blurred
-considerably. It used to be that you ordered one or the other. Today, it’s
+considerably. It used to be that you ordered one or the other. Today, it's
 more common to order a broadband speed and the provider figures out
 if they will give it to you via traditional copper wires (DSL) or fiberop
 tic.
@@ -261,12 +262,12 @@ tic cabling but no
 copper. Ultimately, the DSL provider will tell you what speeds are available to you based on the wiring type available at your location.
 One major advantage that DSL providers tout is that with DSL you do not share bandwidth with other customers, whereas that may not be true with cable modems.
 To summarize, here are some advantages to using DSL:
-- It’s much faster than dialup.
+- It's much faster than dialup.
 - Your bandwidth is not shared with other users.
-- It’s generally very reliable (depending on your ISP).
+- It's generally very reliable (depending on your ISP).
 There are some potential disadvantages of using DSL:
 - DSL may not be available in your area. There are distance limitations as to how far
-away from the phone company’s central office you can be to get DSL. Usually this isn’t a
+away from the phone company's central office you can be to get DSL. Usually this isn't a
 problem in metro areas, but it could be a problem in rural areas.
 - DSL requires more hardware than dialup: a network card, a network cable,  a DSL
 modem, a phone cord, and line filters for each phone in the home. And you usually pay
@@ -276,8 +277,8 @@ but the ones advertised with great data rates can easily run you $100 a month or
 - If you are in a house or building with older wiring, the older phone lines may not be
 able to support the full speed for which you were paying.
 
-That said, DSL is a popular choice for both small businesses and home users. If it’s available, it’s easy to get the phone company to bundle your service with your landline and bill
-you at the same time. Often, you’ll also get a package discount for having multiple services.
+That said, DSL is a popular choice for both small businesses and home users. If it's available, it's easy to get the phone company to bundle your service with your landline and bill
+you at the same time. Often, you'll also get a package discount for having multiple services.
 Most important, you can hook up the DSL modem to your router or wireless router and
 share the Internet connection among several computers.
 To see whether DSL is available in your area, go to
@@ -286,7 +287,7 @@ You can also talk to your local telephone service provider.
 With many people using their mobile phones as their home phones and landlines slowly
 fading into history, you may wonder whether this causes a problem if you want DSL. Not
 really. Many phone providers will provide you DSL without a landline (called naked DSL).
-Of course, you are going to have to pay a surcharge for the use of the phone line if you don’t
+Of course, you are going to have to pay a surcharge for the use of the phone line if you don't
 already use one.
 Tech+ exam objective 2.7, “Compare and contrast common internet service types,” wants you to be familiar with DSL, cable, and fiberop
 tic
@@ -302,7 +303,7 @@ via a specification known as Data Over Cable Service Internet Specification (DOC
 Anyone who can get a cable TV connection should be able to get the service.
 As advertised, cable Internet connections are generally faster than DSL connections. While
 cable is generally regarded as faster than DSL, a big caveat to these speeds is that they are
-not guaranteed, and they can vary. And again, with many phone companies not really differentiating between DSL and fiberoptic, it can be difficult to understand exactly what you’re
+not guaranteed, and they can vary. And again, with many phone companies not really differentiating between DSL and fiberoptic, it can be difficult to understand exactly what you're
 comparing.
 One of the reasons that speeds may vary is that you are sharing available bandwidth
 within your distribution network.
@@ -314,20 +315,19 @@ fast speeds, one of the technical details is that they boost your download speed
 10 MB or 20 MB of a file transfer, and then they throttle your speed back down to your
 normal rate.
 
-It may seem as though I am a bit negative about cable modems, but you need to under-
-stand exactly what you are getting. In practice, the speeds of cable modems are pretty
+It may seem as though I am a bit negative about cable modems, but you need to understand exactly what you are getting. In practice, the speeds of cable modems are pretty
 comparable to those of DSL. Both have pros and cons when it comes to reliability and speed
-of service, but most of that varies by service provider and isn’t necessarily reflective of the
+of service, but most of that varies by service provider and isn't necessarily reflective of the
 technology. When it comes right down to it, the choice you make between DSL and cable (if
 both are available in your area) may depend on which company offers the best package deal:
 phone and DSL through your telephone company or cable TV and cable modem from your
 cable provider.
 To summarize, here are the advantages to using cable:
-- It’s much faster than dialup, and it can be faster than DSL (particularly for uploads).
-- You’re not required to have or use a telephone landline.
-- It’s generally very reliable (depending on your ISP).
+- It's much faster than dialup, and it can be faster than DSL (particularly for uploads).
+- You're not required to have or use a telephone landline.
+- It's generally very reliable (depending on your ISP).
 As with anything else, there are possible disadvantages to using cable.
-- Cable may not be available in your area. In metro areas this normally isn’t a problem,
+- Cable may not be available in your area. In metro areas this normally isn't a problem,
 but it could be in rural areas.
 - Cable requires more hardware than dialup: a network card, a network cable,  and a
 cable modem. Most ISPs will charge you a onetime fee or a monthly lease fee for the
@@ -346,9 +346,8 @@ For detailed information about broadband Internet availability and
 performance, check out www.highspeedinternet.com.
 FiberOptic Internet
 Fiberoptic cable is pretty impressive with the speed and bandwidth it delivers. For nearly all
-of fiber
-- optic cable’s existence,
- it’s been used mostly for high- speed telecommunications and
+of Fiber-optic cable's existence,
+ it's been used mostly for high- speed telecommunications and
 for network backbones.
 This is because it is much more expensive than copper to install and
 operate. The cables themselves are pricier, and so is the hardware at the end of the cables.
@@ -362,14 +361,14 @@ An example of one such option is Fios, offered by Verizon. It offers FibertotheH
 to your home. As of this writing, the fastest speeds offered were 2.3 Gbps download and
 1.5 Gbps upload. That means you could download a twohour HD movie in just about
 25 seconds.
- That’s ridiculous.
+ That's ridiculous.
 Are there any downsides to a fiber Internet connection? Really only two come to mind.
-The first is availability. It’s more limited than cable or DSL, although phone companies are
+The first is availability. It's more limited than cable or DSL, although phone companies are
 rapidly installing fiber throughout the country. More rural areas will likely be the last to see
 it. The second is price. That great fast connection can cost you about $200 a month.
 
 The four Internet service types covered so far are all wired options. In some cases, wired
-isn’t an option. Perhaps someone lives on a mountainside without wired choices, or maybe
+isn't an option. Perhaps someone lives on a mountainside without wired choices, or maybe
 someone simply wants the convenience of not being tethered to a location for Internet. The
 next three options covered are wireless.
 The wireless Internet options you need to know for exam objective 2.7 are
@@ -386,7 +385,7 @@ occasional problems due to weather and satellite alignment. You must keep the sa
 dish aimed precisely at the satellite or your signal strength (and thus your connection reliability and speed) will suffer. Plus, cloudy or stormy days can cause interference with the
 signal, especially if there are high winds that could blow the satellite dish out of alignment. Receivers are typically small satellite dishes (like the ones used for DIRECTV or Dish
  Network) but can also be portable satellite modems (modems the size of a briefcase) or portable satellite phones.
-Satellite Internet is often referred to as lineof - s ight wireless because it
+Satellite Internet is often referred to as line-of-sight wireless because it
 does require a clear line of sight between the user and the transmitter.
 Another drawback to satellite technology is the delay (also called connection delay), or
 latency. The delay occurs because of the length of time required to transmit the data and
@@ -403,15 +402,15 @@ response time in the game. It sometimes means the difference between
 winning and losing an online game.
 Finally, installation can be tricky. When installing a satellite system, you need to ensure
 that the satellite dish on the ground is pointed at precisely the right spot in the sky to ensure
-line of sight. This can be tricky to do if you’re not trained, but some have a utility that helps
-you see how close you are to being right on (you’re getting warmer... warmer...).
+line of sight. This can be tricky to do if you're not trained, but some have a utility that helps
+you see how close you are to being right on (you're getting warmer... warmer...).
 Of course, satellite also has advantages or no one would use it. First, satellite connections
-are incredibly useful when you are in an area where it’s difficult or impossible to run a cable
-or if your Internet access needs are mobile and cellular data rates just don’t cut it.
+are incredibly useful when you are in an area where it's difficult or impossible to run a cable
+or if your Internet access needs are mobile and cellular data rates just don't cut it.
 The second advantage is due to the nature of the connection. This type of connection is
-called pointtomultipoint
+called point-to-multipoint
  because one satellite can provide a signal to a number of receivers
-simultaneously. It’s used in a variety of applications from telecommunications and handheld
+simultaneously. It's used in a variety of applications from telecommunications and handheld
 GPSs to television and radio broadcasts and a host of others.
 All in the Name of Entertainment
 As a teenager, I worked for a local television station during the summer. Each summer, the
@@ -426,7 +425,7 @@ and two others would board ATVs and journey up the remote mountainside. Once in 
 antennas. The engineers at the truck would adjust their directional microwave transmitter
 until the relay station received a strong signal. Then the engineers on the mountainside
 would perform the arduous task of pointing their transmitter at the satellite.
-It was a long and tedious process, and that’s really the point of the story. Satellite was the
+It was a long and tedious process, and that's really the point of the story. Satellite was the
 only option available to complete the network, but satellite networks can be a challenge to
 set up and configure.
 
@@ -435,7 +434,7 @@ Cellular Internet connections were for years relegated to serving only one mobil
 because connection speeds were limited. Now with fifth generation (5G) cellular available,
 speeds are good enough that cellular can be considered a legitimate wireless Internet option.
 5G started to become available in early 2019, replacing the earlier fourth generation (4G)
-standard, which of course replaced thirdgeneration (3G) cellular in about 2011. If you’ve
+standard, which of course replaced third-generation (3G) cellular in about 2011. If you've
 learned anything so far from this book,
  it might be that newer generations of technology
 are always faster than older ones, and cellular is no different. 3G technology was limited to
@@ -444,7 +443,7 @@ The sixth generation (6G) of cellular networking is currently under
 development, with standardization expected sometime between 2025
 and 2029. Experts in the field suggest it will become commercially available around the year 2030.
 Because 5G is so fast, many users choose to connect laptops or similar devices to the
-Internet through their smartphones or cellularenabled tablets.
+Internet through their smartphones or cellular-enabled tablets.
 This is called using the smartphone as a mobile hotspot. Once enabled on the smartphone, the laptop makes a Wi-Fi connection to the phone and then has Internet access.
  In iOS, a hotspot is enabled in Settings ➢
 Personal Hotspot, as shown in Figure 8.3a. Toggle the Allow Others To Join option on, and
@@ -454,7 +453,7 @@ option in Settings ➢ Connections ➢ Mobile Hotspot And Tethering ➢ Mobile H
 Configure.
 Before enabling a phone as a hotspot, be sure to understand if the
 wireless plan supports it and under what conditions. Hotspot usage can
-quickly consume significant amounts of data and you don’t want to be hit
+quickly consume significant amounts of data and you don't want to be hit
 with surprise charges!
 Radio Frequency Internet
 Wireless radio frequency (RF) broadband Internet access is one of the newest options
@@ -503,18 +502,18 @@ be 5G or 4G.
 
 EXERCISE 8.1
 
-If you’re unsure which websites to visit to perform this exercise, visit www
+If you're unsure which websites to visit to perform this exercise, visit www
 . highspeedinternet.com to see who offers service in your area.
 1. Visit the website for a telephone provider in your area, and see what offers are available for DSL. What is the most basic package that you can get, and what does it cost?
 What is the fastest package that you can get, and what does it cost?
 2. Visit the website for a cable television provider in your area, and see what offers are
 available for cable Internet. What is the most basic package that you can get, and what
 does it cost? What is the fastest package that you can get, and what does it cost?
-3. Visit the website for a satellite Internet provider. If you’re not familiar with one, www
+3. Visit the website for a satellite Internet provider. If you're not familiar with one, www
 .hughesnet.com is a popular provider. What is the fastest package that you can get,
 and what does it cost?
 4. (Optional) Can you find a dialup ISP in your area? How much does it cost?
-Choosing Internal Network Connections
+### Choosing Internal Network Connections
 Along with deciding how your computers will get to the outside world, you need to think
 about how your computers will communicate with each other on your internal network.
 The choices you make will depend on the speed you need, distance and security requirements, and cost involved with installation and maintenance. It may also depend some on the
@@ -525,7 +524,7 @@ groups: wired and wireless.
 Many networks today are a hybrid of wired and wireless connections.
 Understand the fundamentals of how each works separately; then you
 can understand how they work together. Every wireless connection eventually connects back to a wired network point somehow.
-Wired Network Connections
+### Wired Network Connections
 Wired connections form the backbone of nearly every network in existence. Even as wireless
 becomes more popular, the importance of wired connections remains strong. In general,
 wired networks are faster and more secure than their wireless counterparts.
@@ -534,10 +533,10 @@ When it comes to choosing a wired network connection type, you need to think abo
 speed, distance, and cost. Your two choices are unshielded twisted pair (UTP), which is
 copper and transmits using electrical pulses, and fiberoptic
 , which is made of glass or plastic
-and transmits using light. You’ll run one of the two (or maybe a combination of the two),
+and transmits using light. You'll run one of the two (or maybe a combination of the two),
 with UTP being by far the most popular choice. The most common configuration when you
 use either of these is to connect all computers to a central connectivity device, such as a
-switch. If you’re using a wireless router with some wired ports, that works too.
+switch. If you're using a wireless router with some wired ports, that works too.
 The first question you need to ask yourself is, “How fast does this network need to be?”
 For home networks, the 1 Gbps provided by UTP running Gigabit Ethernet is probably
 sufficient. If you have higher throughput requirements, then you can start looking into faster
@@ -546,7 +545,7 @@ What Is Ethernet?
 Ethernet is a standard for wired computer network communications, as defined by the
 Institute of Electrical and Electronics Engineers (IEEE) 802.3 specification. It specifies that
 only one computer can talk on a wired network at one time; a computer will listen on the
-network cable, and if it doesn’t hear any traffic, it will transmit. If two or more computers
+network cable, and if it doesn't hear any traffic, it will transmit. If two or more computers
 attempt to talk at once, the network packets will collide, and no communication will get to
 its destination. The sending computers will detect this, wait a short random amount of time,
 and then resend their data. This whole process is called Carrier Sense Multiple Access with
@@ -562,34 +561,34 @@ The Cat 5e (enhanced) cable standard was introduced in 2001 and could handle spe
 along in 2008, supporting speeds of 10 Gbps (10- Gigabit Ethernet).
 The most current version is Cat 8. It was ratified in 2016 and supports speeds up to 40 Gbps at up to 30 meters
 or 10 Gbps at up to 100 meters. It will be used mostly in server rooms for the foreseeable future.
-In the real world, you’ll hear people ask if you have an Ethernet cable, which is typically
+In the real world, you'll hear people ask if you have an Ethernet cable, which is typically
 synonymous with the words network cable and twistedpair
 cable. Most of the time, people
-don’t differentiate between the standards, assuming that you just have Cat 5e or better. It’s
-usually a good assumption, considering it’s hard to find anything older. If you know that
-you’re running 10- Gig E, then you might want to specify at least a Cat 6a cable.
+don't differentiate between the standards, assuming that you just have Cat 5e or better. It's
+usually a good assumption, considering it's hard to find anything older. If you know that
+you're running 10- Gig E, then you might want to specify at least a Cat 6a cable.
 
 When referring to UTP cable types, there is no consensus on how to
 abbreviate category names. For example, you will see Cat 8, Cat- 8, C
 AT 8,
 and CAT- 8 al
 l used. None of them are right or wrong, and it makes no
-difference in the cable’s performance.
-The second question is then, “What is the maximum distance I’ll need to run any one
+difference in the cable's performance.
+The second question is then, “What is the maximum distance I'll need to run any one
 cable?” In most office environments, you can configure your network in such a way that
 100 meters will get you from any connectivity device to the end user. If you need to go
-longer than that, you’ll definitely need fiber for that connection unless you want to mess
+longer than that, you'll definitely need fiber for that connection unless you want to mess
 with signal repeaters.
-As you’re thinking about what type of cable to use, also consider the hardware that you’ll
-need. If you are going to run fiber to the desktop, you’ll need fiber network cards, routers,
-and switches. If you are running UTP, you’ll need network cards, routers, and switches with
-RJ45 connectors. If you’re going to run gigabit, all of your devices will need to support it.
+As you're thinking about what type of cable to use, also consider the hardware that you'll
+need. If you are going to run fiber to the desktop, you'll need fiber network cards, routers,
+and switches. If you are running UTP, you'll need network cards, routers, and switches with
+RJ45 connectors. If you're going to run gigabit, all of your devices will need to support it.
 The third question to ask yourself is, “How big of a deal is security?” Most of the time,
 the answer lies somewhere between “very” and “extremely”! Copper cable is pretty secure,
 but it does emit a signal that can be intercepted, meaning that people can tap into your
 transmissions (hence the term wiretap). Fiberoptic cables are immune to wiretapping.
 Normally
-, this isn’t a big deal because copper cables don’t exactly broadcast your data all
+, this isn't a big deal because copper cables don't exactly broadcast your data all
 over as a wireless connection does. But if security is of the utmost concern, then fiber is the
 way to go.
 Fourth, “Is there a lot of electrical interference in the area?” Transmissions across a
@@ -602,105 +601,73 @@ of each.
 Understand that the costs shown in Table 8.2 are approximate and are for
 illustrative purposes only. The cost for this equipment in your area may
 differ. Fiber has gotten considerably cheaper in the last 10 to 15 years, but
-it’s still far more expensive than copper.
+it's still far more expensive than copper.
 Fiberoptic cabling has some obvious advantages over copper,  but as you can see, it may
 be prohibitively expensive to run fiber to the desktop. What a lot of organizations will do is
 to use fiber sparingly, where it is needed the most, and then run copper to the desktop. Fiber
 will be used in the server room and perhaps between floors of a building as well as any place
 where a very long cable run is needed.
 
-Wireless Network Connections
+### Wireless Network Connections
 People love wireless networks for one major reason: convenience. Wireless connections
-enable a sense of freedom in users. They’re not stuck to their desk— they can work from anywhere! (I’m not sure if this is actually a good thing.)
-Wireless isn’t as fast, and it tends to be
+enable a sense of freedom in users. They're not stuck to their desk— they can work from anywhere! (I'm not sure if this is actually a good thing.)
+Wireless isn't as fast, and it tends to be
 a bit more expensive than wired copper networks, but the convenience factor far outweighs
 these drawbacks.
 
 When thinking about using wireless for network communications, the only real technology
-option available today for a wireless local area network (WLAN) is IEEE 802.11. Bluetooth
-TABLE 8.2  Cable types and characteristics
-Characteristics T wistedpair Fiber - optic
-T
-ransmission rate Cat 5e: 1 Gbps
-Cat 6a: 10 Gbps
-Cat 8: 40 Gbps
-100 Mbps to 100 Gbps
-Maximum length 100 meters (328 feet) for up to
-10 Gbps
-30 meters (100 feet) for 40 Gbps
-∼100 kilometers (62 miles)
-Flexibility Very flexible Fair
-Ease of installation Very easy Difficult
-Connector RJ45 Special (SC, ST, and others)
-Interference
-(security)
-Susceptible Not susceptible
-Overall cost Inexpensive Expensive
-NIC cost 1 Gbps: $25–$40
-10 Gbps+: $70 and up
-$50–$150; easily $600–$800
-for server NICs
-10- foot cable cost Cat 6/6a: $8–$15
-Cat 8: $1
-0– $20
-Depends on mode and
-connector type, but generally
-$15–$30
-8- port switc
-h cost 10/100 Mbps: $30–$50
-1 Gbps: $70–$400
-10 Gbps: $200– $80
-0
-$350 and up
+option available today for a wireless local area network (WLAN) is IEEE 802.11.
 
-and infrared (which I’ll cover in just a bit) can help mobile devices communicate, but they
-aren’t designed for full WLAN use. Your choice becomes which 802.11 standard you want
+**Table 8.2** Cable types and characteristics
+
+| Characteristic | Twisted-pair | Fiber-optic |
+| --- | --- | --- |
+| Transmission rate | Cat 5e: 1 Gbps; Cat 6a: 10 Gbps; Cat 8: 40 Gbps | 100 Mbps to 100 Gbps |
+| Maximum length | 100 meters (328 feet) for up to 10 Gbps; 30 meters (100 feet) for 40 Gbps | ~100 kilometers (~62 miles) |
+| Flexibility | Very flexible | Fair |
+| Ease of installation | Very easy | Difficult |
+| Connector | RJ45 | Special (SC, ST, and others) |
+| Interference (security) | Susceptible | Not susceptible |
+| Overall cost | Inexpensive | Expensive |
+| NIC cost | 1 Gbps: $25–$40; 10 Gbps+: $70 and up | $50–$150; easily $600–$800 for server NICs |
+| 10-foot cable cost | Cat 6/6a: $8–$15; Cat 8: $10–$20 | Depends on mode and connector type, but generally $15–$30 |
+| 8-port switch cost | 10/100 Mbps: $30–$50; 1 Gbps: $70–$400; 10 Gbps: $200–$800 | $350 and up |
+
+Bluetooth and infrared (which I'll cover in just a bit) can help mobile devices communicate, but they
+aren't designed for full WLAN use. Your choice becomes which 802.11 standard you want
 to use. Table 8.3 summarizes the different standards.
 Tech+ exam objective 2.9, “Explain the basic capabilities of a small
-wireless network,” focuses on Wi-Fi s
-tandards and specifications. You
+wireless network,” focuses on Wi-Fi standards and specifications. You
 should be the most familiar with 802.11n/ac/ax, and understand basic
 speed differences and interference and attenuation factors. Also be
 familiar with the older standards, and understand implications of different frequency band options.
 Not So Fast...
 The maximum data rates and distances shown in Table 8.3 are theoretical maximums and
-should be taken with a large grain of salt. They’re estimates based on testing in ideal conditions. First, the distance from the wireless access point to your device makes a huge
+should be taken with a large grain of salt. They're estimates based on testing in ideal conditions. First, the distance from the wireless access point to your device makes a huge
 difference because wireless suffers from attenuation (the weakening of signals) more than
 wired signals. For example, Wi-Fi 5 users will only get the maximum data rate at a range of
-up to about 5 meter
-s from the access point. At about 20 meters, the data rate is cut in half,
-and it just gets worse from there. Also keep in mind that’s for a clear, unobstructed signal.
-TABLE 8.3  802.1 1 standards
-Standard
-Generation
-name Y ear Frequency
-Maximum data
-rate
-Indoor
-range
-Outdoor
-range
-a 1999 5 GHz 54 Mbps 35 m 120 m
-b 1999 2.4 GHz 1 1 Mbps 40 m 140 m
-g 2003 2.4 GHz 54 Mbps 40 m 140 m
-n 2008 2.4/5 GHz 600 Mbps 70 m 250 m
-ac Wi-Fi
-5 2014 5 GHz 3500 Mbps 35 m 120 m
-ax Wi-Fi
-6 2019 2.4/5 GHz 9600 Mbps 70 m 250 m
-ax Wi-Fi
-6E 2021 6 GHz 9600 Mbps 15 m 15 m
-be Wi-Fi
-7 2024 2.4/5/6 GHz 46 Gbps 30 m 100 m
+up to about 5 meters from the access point. At about 20 meters, the data rate is cut in half,
+and it just gets worse from there. Also keep in mind that's for a clear, unobstructed signal.
 
-Attenuation effects can’t be overstated as it affects all forms of wireless communication.
+**Table 8.3** 802.11 standards
+
+| Standard | Generation (name) | Year | Frequency | Maximum data rate | Indoor range | Outdoor range |
+| --- | --- | --- | --- | --- | --- | --- |
+| a | — | 1999 | 5 GHz | 54 Mbps | 35 m | 120 m |
+| b | — | 1999 | 2.4 GHz | 11 Mbps | 40 m | 140 m |
+| g | — | 2003 | 2.4 GHz | 54 Mbps | 40 m | 140 m |
+| n | — | 2008 | 2.4/5 GHz | 600 Mbps | 70 m | 250 m |
+| ac | Wi-Fi 5 | 2014 | 5 GHz | 3500 Mbps | 35 m | 120 m |
+| ax | Wi-Fi 6 | 2019 | 2.4/5 GHz | 9600 Mbps | 70 m | 250 m |
+| ax | Wi-Fi 6E | 2021 | 6 GHz | 9600 Mbps | 15 m | 15 m |
+| be | Wi-Fi 7 | 2024 | 2.4/5/6 GHz | 46 Gbps | 30 m | 100 m |
+
+Attenuation effects can't be overstated as it affects all forms of wireless communication.
 At higher frequencies, the maximum distance becomes shorter and attenuation problems
 are magnified. For example, Wi-Fi 6E, which operates at the highest licensed
-Wi-Fi frequency of 6 GHz, has a maximum range of about 1
-5 meters, and some users even report
+Wi-Fi frequency of 6 GHz, has a maximum range of about 15 meters, and some users even report
 losing connection if devices lose line of sight. Granted, Wi-Fi 6E routers have the option to
-fall bac
-k to lower frequencies to maintain longer connections, but the speed will be slower.
+fall back to lower frequencies to maintain longer connections, but the speed will be slower.
 As a second example of the effects of frequency on distance, consider terrestrial AM radio. In
 the United States, AM radio is regulated between 540 kHz and 1700 kHz. During the daytime,
 the maximum range is about 162 kilometers (100 miles). At night, AM radio signals can bounce
@@ -711,28 +678,27 @@ Second, interference from other electronics and obstructions will lower the data
 Radio frequency interference (RFI) from communications devices will degrade the signal.
 Microwave ovens and electrical motors are notoriously harsh on wireless signals. Solid
 objects, especially concrete block walls and steel, cut down on range as well.
-Third, wireless bandwidth is shared among all devices connecting on that wireless network. Realworld testing shows that Wi-Fi 5 devices usually deliver between 30
+Third, wireless bandwidth is shared among all devices connecting on that wireless network. Real-world testing shows that Wi-Fi 5 devices usually deliver between 30
 0 Mbps and
 1.7 Gbps, and Wi-Fi 6 will range from 600 Mbps to 4.8 Gbps.
 New generation
-Wi-Fi speeds are still incredibly fast. Just don
-’t be too disappointed if the
-wireless performance you’re expecting isn’t quite as great as advertised!
+Wi-Fi speeds are still incredibly fast. Just don't be too disappointed if the
+wireless performance you're expecting isn't quite as great as advertised!
 So, how do you choose which one is right for your situation? You can apply the same
 thinking that you would do for a wired network in that you need to consider speed, distance,
-security, and cost. Generally speaking, though, with wireless it’s best to start with the most
+security, and cost. Generally speaking, though, with wireless it's best to start with the most
 robust technology and work your way backward.
-Security concerns on wireless networks are similar regardless of your choice. Since you’re
+Security concerns on wireless networks are similar regardless of your choice. Since you're
 broadcasting network signals through air, there will always be some security concerns. It
 really comes down to speed and cost.
-In today’s environment, it’s silly to consider anything older than 802.11n, and good luck
+In today's environment, it's silly to consider anything older than 802.11n, and good luck
 finding hardware that old anyway. Deciding that you are going to install an 802.11g/n network from the ground up at this point is a bit like saying you are going to build a mud
 house in Manhattan. You could, but why?
 Earlier in the “Wired Network Connections” section you learned what
-Ethernet is, and it’s based on the CDMA/CD access method. Wireless
+Ethernet is, and it's based on the CDMA/CD access method. Wireless
 802.11 networks use a similar method to access the network medium (in
 this case, air), called Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA). The inner workings of these access methods is well
-beyond the scope of the Tech+ exam, but it’s interesting stuff to know.
+beyond the scope of the Tech+ exam, but it's interesting stuff to know.
 
 That brings you to your most likely choices: 802.11ac (Wi-Fi 5) and 802.11ax
 (Wi-Fi 6/6E). Devices are plentiful and are backward compatible with the previous versions,
@@ -755,7 +721,7 @@ As standards get newer, they provide faster speeds. Wi-Fi 7 is out but is not cu
 
 ### EXERCISE 8.2 — The Cost of Networking
 
-1. Visit the website for an electronics store. If you’re unfamiliar with any, try www.bestbuy.com or www.newegg.com.
+1. Visit the website for an electronics store. If you're unfamiliar with any, try www.bestbuy.com or www.newegg.com.
 2. Find a Wi-Fi 6 wireless router. How much is it?
 3. Find an older standard. See if you can find an 802.11n one. (Probably not, except for maybe on eBay.) If not, go for Wi-Fi 5. How much is it?
 4. Now price out wireless network cards. Find one supporting different standards. How much difference is there?
@@ -763,13 +729,13 @@ As standards get newer, they provide faster speeds. Wi-Fi 7 is out but is not cu
 ### Bluetooth
 
 Bluetooth is not designed to be a WLAN but rather a wireless personal area network
-(WPAN). In other words, it’s not the right technology to use if you want to set up a wireless
+(WPAN). In other words, it's not the right technology to use if you want to set up a wireless
 network for your office. It is, however, a great technology to use if you have wireless devices
 with which you want your computer to be able to communicate. Examples include smartphones, mice, keyboards, headsets, speakers, and printers.
 Every laptop comes with builtin W
 i- Fi capabilities, and most come Bluetooth-enabled.
 
-Desktops don’t always have it built in, though. To use Bluetooth devices, you might need to
+Desktops don't always have it built in, though. To use Bluetooth devices, you might need to
 add an adapter, such as the one shown in Figure 8.4.
 
 Almost all smartphones and other mobile devices today support
@@ -801,11 +767,11 @@ support “interoperable, low- cost infrared data interconnection standards that
  The key terms here are walkup
  and pointtopoint
 , meaning
-that you need to be at very close range to use infrared, and it’s designed for onetoone communication.
+that you need to be at very close range to use infrared, and it's designed for one-to-one communication.
  Infrared requires line of sight, and generally speaking, the two devices need to be
 pointed at each other to work. If you point your remote away from the television, how well
 does it work?
-You can find more information on the IrDA standard at the organization’s
+You can find more information on the IrDA standard at the organization's
 website: www.irda.org.
 Some laptops and mobile devices have a builtin infrared port, which is a small,  dark
 square of plastic, usually black or dark red. For easy access, infrared ports are located on the
@@ -817,7 +783,7 @@ maximum functional range of an IrDA device is about 1 meter, weather is not like
 you any problems.
 Security is not much of an issue with infrared. The maximum range is about 1 meter with
 an angle of about 30 degrees, and the signal does not go through walls, so hacking prospects
-are limited. If someone is making an attempt to intercept an infrared signal, it’s going to be
+are limited. If someone is making an attempt to intercept an infrared signal, it's going to be
 pretty obvious. The data is directional, and you choose when and where to send it.
 FIGURE 8.5  Infrared port
 
@@ -833,12 +799,12 @@ maximum distance is about 1 meter. There are methods that IR manufacturers can u
 modify this, but the general specification guarantees data rates at only 1 meter.
 Understanding Network
 
-The ultimate goal of this chapter is to teach you how to set up your own small wireless network successfully. To do it right and really understand what you’re doing, it’s important to
-know some critical details. After all, there’s a difference between plugging in a box and having it work and being able to make it work if things don’t quite go smoothly.
+The ultimate goal of this chapter is to teach you how to set up your own small wireless network successfully. To do it right and really understand what you're doing, it's important to
+know some critical details. After all, there's a difference between plugging in a box and having it work and being able to make it work if things don't quite go smoothly.
 In the first section of this chapter, you learned how to connect your computers physically
-to the Internet, as well as to each other via cables or wireless connections. That’s the first
-part. But now that they’re connected to each other, how do they communicate? That’s just as
-important, and that’s what I’ll cover here in the second part.
+to the Internet, as well as to each other via cables or wireless connections. That's the first
+part. But now that they're connected to each other, how do they communicate? That's just as
+important, and that's what I'll cover here in the second part.
 The “how” has two components. The first is the hardware involved, and the second is by
 using a protocol, which is the communication language. In the next section, you will learn
 about some common networking devices used to connect computers to each other. Then, the
@@ -847,25 +813,25 @@ language that most computers speak when they talk to each other on a network. Fi
 section will finish with a discussion of network storage concepts.
 
 It seems like devices on a network do a lot of talking to each other. Users tell their computers
-to connect to the Internet, send jobs to printers, and spam co- workers who are 5 feet away
+to connect to the Internet, send jobs to printers, and spam co-workers who are 5 feet away
 with emails.
-All of this happens even though the sending and receiving devices aren’t directly
-connected to each other. Instead, they use connectivity devices to manage the communication. In this section, we’ll talk about some of those connectivity devices, as well as a few
+All of this happens even though the sending and receiving devices aren't directly
+connected to each other. Instead, they use connectivity devices to manage the communication. In this section, we'll talk about some of those connectivity devices, as well as a few
 other important devices to know.
 
 Tech+ exam objective 2.8, “Identify basic networking concepts,” wants
 you to be familiar with several networking devices. They are modems,
 switches, access points, routers, and firewalls.
 Modem
-Chapter 1, “Core Hardware Components,” covered modems, so I won’t repeat too much
-here. Here’s a quick refresher: modems are used to connect to a network via telephone lines.
+Chapter 1, “Core Hardware Components,” covered modems, so I won't repeat too much
+here. Here's a quick refresher: modems are used to connect to a network via telephone lines.
 They do that by converting digital signals from a computer into analog signals that can be
 transmitted over phone lines and back again. As you learned earlier in this chapter, modems
-are dreadfully slow by today’s standards and essentially obsolete.
+are dreadfully slow by today's standards and essentially obsolete.
 
 A switch is the network connectivity device at the center of most networks. You might hear
-some people call them hubs, but a hub is a similar device that’s not quite as good as a switch.
-They often look similar to hubs, so it’s easy to confuse them. There are big performance differences, though. Hubs pass along all traffic, but switches examine the header (beginning portion)
+some people call them hubs, but a hub is a similar device that's not quite as good as a switch.
+They often look similar to hubs, so it's easy to confuse them. There are big performance differences, though. Hubs pass along all traffic, but switches examine the header (beginning portion)
 of the incoming data packet and forward it properly to the right port and only to that port.
 (Only one device is plugged into each port.) This greatly reduces overhead and thus improves
 performance because there is essentially a virtual connection between sender and receiver.
@@ -874,7 +840,7 @@ ports. Those are literally the physical holes the network cable plugs into
 on the device. Later in this chapter you will learn about ports in relation to
 TCP/IP communications (and they are an exam objective)— th
 ose are logical
-in nature and entirely different. Don’t let the terminology mess you up!
+in nature and entirely different. Don't let the terminology mess you up!
 Nearly every hub or switch that you will see has one or more status indicator lights on it.
 If there is a connection to a port of the switch, a light either above the connector or on an
 LED panel elsewhere on the device will light up. If traffic is crossing the port, the light may
@@ -883,7 +849,7 @@ problem in the connection. If a normal connection produces a green light, a bad 
 might produce an amber one. Figure 8.6 shows a basic eightport switch.
 FIGURE 8.6  Eightpor t switch
 
-Switches direct traffic based on the destination computer’s Media Access
+Switches direct traffic based on the destination computer's Media Access
 Control (MAC) address, which is its physical address built into the network card.
 
 An access point is any point that allows a user on to a network. The term is commonly
@@ -891,13 +857,13 @@ used in reference to a wireless access point, which lets users connect to your n
 an 802.11 technology. Wireless access points may connect to other wireless access points or
 wireless routers, but eventually they connect back to a wired connection with the rest of the
 network. Wireless access points look nearly identical to wireless routers and provide central
-connectivity like wireless routers, but they don’t have nearly as many features.
+connectivity like wireless routers, but they don't have nearly as many features.
 
 A router is a highly intelligent network connectivity device that can connect multiple network types to each other. Routers use routing tables to store network addresses and route
 packets based on the best path available.
 Routers are much more advanced than switches. One of the big differences between the
 two is that while switches direct traffic based on the physical MAC address, routers use the
-logical IP address to make decisions. (I’ll cover MAC and IP addresses in more depth later in
+logical IP address to make decisions. (I'll cover MAC and IP addresses in more depth later in
 this chapter.) Routers are also capable of connecting more devices to each other than switches
 can do. Figure 8.7 shows you how routers and switches might work together on a network.
 InternetSwitch
@@ -916,15 +882,14 @@ access points. Figure 8.8 shows the back of a wireless router with four wired po
 Functionally, wireless routers work just like their wired cousins.
 Firewall
 Firewalls were initially covered in Chapter 5, “Software Applications.” They are incredibly
-important devices for network security, though—  they’re gatekeepers that can help thwart
-hackers and malware. Here’
-s a review:
+important devices for network security, though—  they're gatekeepers that can help thwart
+hackers and malware. Here's a review:
 Firewalls filter network traffic. Firewalls filter inbound and outbound network traffic based
 on rules defined by the administrator.
  That list of rules is called an access control list (ACL).
 By default, most firewalls are configured as default deny, which means that all traffic is
 blocked unless specifically authorized by the administrator.
-Firewalls can be softwarebased, hard
+Firewalls can be software-based, hard
 warebased, or a combination of both. Firewalls can
 be standalone “black boxes,
 ” software installed on a server or router, or some combination
@@ -946,11 +911,11 @@ port for a second semi- internal network.
 This port is used to connect servers that can be considered
 both public and private, such as web and email servers. This intermediary network is known as a
 screened subnet. A screened subnet can also be configured as a space between two firewalls.
-Understanding LANs and WANs
-When talking with others about networks, you’re certain to hear the acronyms LAN and
+### Understanding LANs and WANs
+When talking with others about networks, you're certain to hear the acronyms LAN and
 WAN. What do they mean?
 A local area network (LAN) is a small network, usually confined to one office or building.
-While you need at least two devices to count it as a network, there’s no hard and fast limit
+While you need at least two devices to count it as a network, there's no hard and fast limit
 to the number of devices allowed on a LAN. Devices will be connected to each other with
 switches, hubs, and access points. A LAN might or might not have a router and might or
 might not be connected to the Internet.
@@ -964,11 +929,11 @@ Sometimes the lines between the two get a lit
 tle blurry. And to make things even more confusing, there are other network designations such as a metropolitan area network (MAN),
 which encompasses a town or city. The network depicted in Figure 8.7 would most likely be
 considered a WAN, but it depends on a few things. First, where are the network segments
-located? If they are all co- located, it’s more lik
+located? If they are all co- located, it's more lik
 ely a LAN. Second, what is the connection
-speed between the network segments? If it’s a fast connection, say, faster than broadband,
-it’s probably a LAN as well. If the network segments are in different places and connected
-via broadband or something slower, it’s a WAN.
+speed between the network segments? If it's a fast connection, say, faster than broadband,
+it's probably a LAN as well. If the network segments are in different places and connected
+via broadband or something slower, it's a WAN.
 There are different management considerations for each. For example, if you have a LAN,
 do you want to use a router to connect to the Internet or another network? And with a WAN,
 you need to worry about securing the connections between sites. For now, though, just be
@@ -976,47 +941,46 @@ able to classify a network based on the location of the site or sites and the sp
 Be sure to understand the difference between a LAN and a WAN, as they are part of Tech+
 exam objective 2.8.
 
-Networking Protocol Basics
+### Networking Protocol Basics
 Networking protocols are a lot like human languages in that they are the language that computers speak when talking to each other. Technically speaking, a protocol is a set of rules
-that govern communications. If computers don’t speak the same language, they won’t be
+that govern communications. If computers don't speak the same language, they won't be
 able to talk to each other. To complicate matters, there are dozens of different languages that
 computers can use. Just like humans, computers can understand and use multiple languages.
 Imagine that you are on the street and someone comes up to you and speaks in Spanish.
-If you know Spanish, you will likely reply in kind. It doesn’t matter if both of you know
-English as well because you’ve already established that you can communicate. On the other
-hand, it’s going to be a pretty quick conversation if you don’t know Spanish. This same concept applies to computers that are trying to communicate. They must have a network protocol in common for the conversation to be successful.
+If you know Spanish, you will likely reply in kind. It doesn't matter if both of you know
+English as well because you've already established that you can communicate. On the other
+hand, it's going to be a pretty quick conversation if you don't know Spanish. This same concept applies to computers that are trying to communicate. They must have a network protocol in common for the conversation to be successful.
 Throughout the years, hundreds of network protocols have been developed. As the advent
 of networking exploded, various companies developed their own networking hardware,
 software, and proprietary protocols. Although a few achieved long- term success, most have
 faded into oblivion.
  The one protocol suite that has sustained is TCP/IP. While it has some
-structural plusses such as its modularity, it didn’t necessarily succeed because it was inherently superior to other protocols. It succeeded because it is the protocol of the Internet.
-This is why I focus on TCP/IP. It is the protocol used on the Internet, but it’s also the protocol used by the vast majority of home and business networks today. I’ll start by taking a
-quick look at the history of TCP/IP, the model on which it’s based, and a few of the common
-protocols you’ll hear about. Then, I’ll spend some time on IP addressing, which is essential
-for proper communication. This chapter will give you the foundation you need to under-
-stand it well and set up your own network.
+structural plusses such as its modularity, it didn't necessarily succeed because it was inherently superior to other protocols. It succeeded because it is the protocol of the Internet.
+This is why I focus on TCP/IP. It is the protocol used on the Internet, but it's also the protocol used by the vast majority of home and business networks today. I'll start by taking a
+quick look at the history of TCP/IP, the model on which it's based, and a few of the common
+protocols you'll hear about. Then, I'll spend some time on IP addressing, which is essential
+for proper communication. This chapter will give you the foundation you need to understand it well and set up your own network.
 For a more detailed discussion of networking protocols and TCP/IP,
 read the CompTIA A+ Complete Study Guide by Quentin Docter and Jon
  Bu
 hagiar (Sybex, 2022). The A+ certification is a great one to get after you
 pass your CompTIA Tech+ exam!
 TCP/IP Essentials
-Every computer protocol that’s created needs to accomplish a specific set of tasks for communication to be successful. To give some structure to these tasks, theoretical networking
-models were developed in the 1970s. TCP/IP’s structure is based on a model created by the
+Every computer protocol that's created needs to accomplish a specific set of tasks for communication to be successful. To give some structure to these tasks, theoretical networking
+models were developed in the 1970s. TCP/IP's structure is based on a model created by the
 U.S. Department of Defense: the Department of Defense (DoD) model. The DoD model has
 four layers that specify the tasks that need to happen: Process/Application, HosttoHost,
 Internet,
  and Network Access.
 The Transmission Control Protocol/Internet Protocol (TCP/IP) suite is based on the
-DoD’s theoretical model. While the protocol suite is named after two of its hardestworking
+DoD's theoretical model. While the protocol suite is named after two of its hardestworking
 protocols,
 Transmission Control Protocol (TCP) and Internet Protocol (IP), TCP/IP actually
 contains dozens of protocols working together to help computers communicate with one
-another. Figure 8.9 shows the DoD model’s four layers and some of the TCP/IP protocols
+another. Figure 8.9 shows the DoD model's four layers and some of the TCP/IP protocols
 that correspond to those layers.
 
-Don’t feel the need to memorize the components of the TCP/IP suite— ye t.
+Don't feel the need to memorize the components of the TCP/IP suite— ye t.
 When you move on to more advanced exams, more detailed knowledge
 will be required.
 Think of TCP/IP as a puzzle. You need one item from each layer to make the puzzle fit
@@ -1034,8 +998,7 @@ both but will do so for different tasks.
 The most important protocol at the Internet layer is IP. This is the backbone of TCP/IP.
 Other protocols at this layer work in conjunction with IP, such as Internet Control  Message
 Protocol (ICMP) and Address Resolution Protocol (ARP).
-Y
-ou’ll notice that the Network Access layer doesn’t have any protocols per se. This
+You'll notice that the Network Access layer doesn't have any protocols per se. This
 layer describes the type of network access method you are using, such as Ethernet, Wi-Fi,
 or others.
 Host-to-Host
@@ -1061,9 +1024,9 @@ Access
 ICMP ARP RARP
 FIGURE 8.9  DoD model and the TCP/IP protocol suite
 
-If you’ve used the Internet, you’ve used HTTPS. Websites using the HTTPS protocol have
+If you've used the Internet, you've used HTTPS. Websites using the HTTPS protocol have
 https:// at the front of their addresses. Most of the time the browser hides it for simplicity. HTTPS replaced the older, unsecure HTTP, which did not encrypt data as it went
-back and forth between the web server and client’s browser. HTTPS does encrypt data in
+back and forth between the web server and client's browser. HTTPS does encrypt data in
 transit and makes things such as entering passwords or financial information into a website secure.
 If you download a file from a site, it might redirect you to a server dedicated to file downloads. Its website would possibly start with ftp:// because FTP is specifically designed for
 file downloads.
@@ -1079,12 +1042,12 @@ because they are part of Tech+ exam objective 2.8.
 
 To communicate on a TCP/IP network, each device needs to have a unique address, which is
 called an IP address. Any device with an IP address is referred to as a host. This can include
-servers, workstations, printers, and routers. If you can assign it an IP address, it’s a host.
+servers, workstations, printers, and routers. If you can assign it an IP address, it's a host.
 The material here focuses on the version of IP addresses called IPv4.
 There is a newer standard called IPv6, which will be covered shortly. Both
 are currently used. Assume people are talking about IPv4 when they say
 “IP address” unless they specify IPv6.
-An IP address is a 32- bit hierarchical address that identifies a host on the network. It’ s
+An IP address is a 32- bit hierarchical address that identifies a host on the network. it's
 typically written in dotted-decimal notation, such as 192.168.10.55.
  Each of the numbers in
 this example represents 8 bits (or 1 byte) of the address, also known as an octet. The same
@@ -1093,21 +1056,21 @@ address written in binary (how the computer thinks about it) would be 11000000 1
 
 way to write these numbers! The addresses are said to be hierarchical, as opposed to “flat,”
 because the numbers at the beginning of the address identify groups of computers that
-belong to the same network. Because of the hierarchical address structure, you’re able to do
+belong to the same network. Because of the hierarchical address structure, you're able to do
 really cool things like route packets between local networks and on the Internet.
 IP addresses are logical addresses that can be changed. Remember
 also that every network card has a physical MAC address that does not
 change. MAC addresses are not used in a hierarchical fashion.
-A great example of hierarchical addressing is your street address. Let’s say that you
+A great example of hierarchical addressing is your street address. Let's say that you
 live in Apartment 4B on 123 Main Street, Anytown, Kansas, USA. If someone sent you a
 letter via snail mail, the hierarchy of your address would help the postal service and carrier
 deliver it to the right place. First and broadest is USA. Kansas helps narrow it down a bit,
 and Anytown narrows it down more. Eventually they get to your street, the right number
 on your street, and then the right apartment. If the address space were flat (for example,
-Kansas didn’t mean anything more specific than Main Street), or you could name your state
+Kansas didn't mean anything more specific than Main Street), or you could name your state
 anything you wanted to, it would be really hard to get the letter to the right spot.
-Take this analogy back to IP addresses. They’re set up to organize networks logically to
-make delivery between them possible and then to identify an individual node within a network. If this structure weren’t in place, a huge, multinetwork space like the Internet wouldn’t
+Take this analogy back to IP addresses. They're set up to organize networks logically to
+make delivery between them possible and then to identify an individual node within a network. If this structure weren't in place, a huge, multinetwork space like the Internet wouldn't
 be possible. It would simply be too unwieldy to manage.
 Each IP address is made up of two components: the network ID and the host ID. The
 network portion of the address always comes before the host portion. Because of the way IP
@@ -1130,7 +1093,7 @@ the corresponding bit in the IP address part of the network ID. The rest will be
 ID. The number 255 is the highest number you will ever see in IP addressing, and it means
 that all bits in the octet are set to 1.
 
-Here’s an example based on two numbers I have used in this chapter. Look at the
+Here's an example based on two numbers I have used in this chapter. Look at the
 IP address of 192.168.10.55. Assume that the subnet mask in use with this address
 is 255.255.255.0. This indicates that the first three octets are the network portion of
 the address and the last octet is the host portion. Said another way, the network ID is
@@ -1139,23 +1102,21 @@ All of this is important to know because it governs how computers communicate. I
 computer wants to send a message to another computer on the same network, it just spits
 the message out on the wire (or wireless) and the other computer receives it. If the destination is on a different network (as determined by the network address), then the router comes
 into play. The sender will forward the message to the router to send to the destination. In
-this case, your router is called a default gateway. It’s basically the door from your network to
+this case, your router is called a default gateway. It's basically the door from your network to
 the outside world.
 All of this TCP/IP stuff can get a little heady. On more advanced CompTIA
-exams, such as A+ and Network+, you will need to know how to determine the network and host portions of the address based on a given sub-
-net mask. You shouldn’t be asked this on Tech+, though. For now, the key
+exams, such as A+ and Network+, you will need to know how to determine the network and host portions of the address based on a given subnet mask. You shouldn't be asked this on Tech+, though. For now, the key
 things to remember are:
 - To communicate using TCP/IP, each computer is required to have an IP
 address and a correct subnet mask.
 - Each IP address on a network must be unique.
-- If you want to connect your network to other networks (such as the Inter-
-net), a default gateway is also required.
+- If you want to connect your network to other networks (such as the Internet), a default gateway is also required.
 TCP/IP Ports
 In the previous section, you learned that an IP address identifies a unique host on a TCP/IP
 network. Knowing the right IP address is just part of the equation, however. To complete
 communication between two hosts, an additional identifier called a port (or port number) is
 used. Ports are based on the Process/Application layer protocol used.
-TCP/IP applications combine the host’s IP address with the port number
+TCP/IP applications combine the host's IP address with the port number
 in order to communicate. This combination is known as a socket.
 A good analogy for understanding port numbers is to think of cable or satellite television.
 In this analogy, the IP address is your house. The cable company needs to know where to
@@ -1170,24 +1131,24 @@ There are 65,536 ports numbered from 0 to 65535. Ports 0 through 1023 are called
 well- known ports and are assigned to commonly used services, and 1024 through 49151 are
 called the registered ports.
  Anything from 49152 to 65535 is free to be used by application
-vendors. Fortunately, you don’t need to memorize them all. Table 8.4 lists a few network services (the ones in the Tech+ exam objectives), associated protocols, and port numbers used.
+vendors. Fortunately, you don't need to memorize them all. Table 8.4 lists a few network services (the ones in the Tech+ exam objectives), associated protocols, and port numbers used.
 A complete list of registered port numbers can be found at www.iana.org.
 For the Tech+ exam, be sure to understand the following, as they are part
 of exam objective 2.8:
-- IP address (It’s a logical address and can be changed.)
-- MAC address (It’s a physical address built into the NIC and can’t be
+- IP address (It's a logical address and can be changed.)
+- MAC address (It's a physical address built into the NIC and can't be
 changed.)
 - Ports (They are like a channel within TCP/IP to identify a service.)
 Quick Intro to IPv6
-IPv4 was originally developed in 1973. Considering how fast technology evolves, it’s pretty
+IPv4 was originally developed in 1973. Considering how fast technology evolves, it's pretty
 amazing to think that the protocol still enjoys immense popularity over 50 years later.
 There are a few problems with IPv4, though. One is that we ran out of available network
-addresses, and the other is that TCP/IP can be somewhat tricky to configure (I’m pointing at
+addresses, and the other is that TCP/IP can be somewhat tricky to configure (I'm pointing at
 you, subnet masks).
 IPv4 has 32 bits of addressing space, which allows for nearly 4.3 billion addresses! So
-how could we run out of addresses? With the way it’s structured, only about 250 million of
+how could we run out of addresses? With the way it's structured, only about 250 million of
 those addresses are actually usable, and all of those are pretty much spoken for.
-TABLE 8.4  Common port number s
+TABLE 8.4  Common port numbers
 Service Protocol Port
 Web browsing (not secure) HTTP 80
 Secure web browsing HTTPS 443
@@ -1196,12 +1157,12 @@ Email (sending) SMTP 25
 Email (receiving) POP3 110
 Email (receiving) IMAP4 143
 
-A new version of TCP/IP has been developed, and it’s called IPv6. Instead of a 32- bit
+A new version of TCP/IP has been developed, and it's called IPv6. Instead of a 32- bit
 address, it uses 128- bit addresses.
 That provides for 3.4 × 1038 addresses, which theoretically should be more than enough that they will never run out globally. (Famous last words,
 right?) Figure 8.10 shows an example of an IPv6 address.
 IPv6 also includes, as standard features, many optional but useful IPv4 ones. While the
-addresses may be more difficult to remember, the automatic configuration and enhanced flexibility make the new version sparkle compared to the old one. Best of all, it’s backward compatible with and can run on the computer at the same time as IPv4, so networks can migrate
+addresses may be more difficult to remember, the automatic configuration and enhanced flexibility make the new version sparkle compared to the old one. Best of all, it's backward compatible with and can run on the computer at the same time as IPv4, so networks can migrate
 to IPv6 without a complete restructure. Figure 8.11 brings this section to a close by showing
 you a sample output from the ipconfig /all command. In it, you can see examples of an
 IPv4 address and subnet mask, MAC address (labeled physical address), and IPv6 address.
@@ -1216,7 +1177,7 @@ Global preﬁx Subnet
 FIGURE 8.10  IPv6 address
 FIGURE 8.11  ipconfig /all output
 
-functionality to network clients. I’ll talk about them now because they’re important components of TCP/IP, and you will see them come up when you configure your router.
+functionality to network clients. I'll talk about them now because they're important components of TCP/IP, and you will see them come up when you configure your router.
 DHCP servers are configured to provide IP configuration information automatically to
 clients. The following configuration information is typically provided:
 - IP address
@@ -1226,7 +1187,7 @@ clients. The following configuration information is typically provided:
 DHCP servers can provide a lot more than the items on this list, but those are the
 most common.
 The alternative to DHCP is for an administrator to enter in the IP configuration
-information manually on each host. This is called static IP addressing, and it is administratively intensive as compared to DHCP’s dynamic addressing.
+information manually on each host. This is called static IP addressing, and it is administratively intensive as compared to DHCP's dynamic addressing.
 DNS has one function on the network, and that is to resolve hostnames (or URLs) to IP
 addresses. This sounds simple enough, but it has profound implications.
 Think about using the Internet. You open your browser, and in the address bar you type
@@ -1234,40 +1195,40 @@ the uniform resource locator (URL) of your favorite website, something like www.
 .com, and press Enter. The first question your computer asks is, “Who is that?” (Remember,
 computers understand only 0s and 1s.) Your machine requires an IP address to connect to
 the website. The DNS server provides the answer, “That is 72.14.205.104.” Now that your
-computer knows the address of the website you want, it’s able to traverse the Internet to
+computer knows the address of the website you want, it's able to traverse the Internet to
 connect to it.
 Each DNS server has a database where it stores hostnameto - IP - ad dress
 pairs. If the DNS server does not know the address of the host you are
 seeking, it has the ability to query other DNS servers to help answer the
 request.
-Think about the implications of that for just a minute. We all probably use Google several times a day, but in all honesty how many of us know its IP address? It’s certainly not
-something that we are likely to have memorized. Much less, how could you possibly memorize the IP addresses of all of the websites you visit? Because of DNS, it’s easy to find
+Think about the implications of that for just a minute. We all probably use Google several times a day, but in all honesty how many of us know its IP address? It's certainly not
+something that we are likely to have memorized. Much less, how could you possibly memorize the IP addresses of all of the websites you visit? Because of DNS, it's easy to find
 resources. Whether you want to find CocaCola,
 Toyota, Amazon.com, or thousands of other
-companies, it’s usually pretty easy to figure out how. Type in the name with a.com on the
-end of it and you’re usually right. The only reason why this is successful is that DNS is there
+companies, it's usually pretty easy to figure out how. Type in the name with a.com on the
+end of it and you're usually right. The only reason why this is successful is that DNS is there
 to perform resolution of that name to the corresponding IP address.
 DNS works the same way on an intranet (a local network not attached to the Internet) as
 it does on the Internet. The only difference is that instead of helping you find www.google
-.com, it may help you find Jenny’s print server or Joe’s file server. From a clientside perspective,
+.com, it may help you find Jenny's print server or Joe's file server. From a clientside perspective,
  all you need to do is to configure the host with the address of a legitimate DNS server
 and you should be good to go.
 
 How to Get from Point A to Point B on a Network
-Understanding the basics of network communication is important. I’ve already hit a few of
-the key points in this chapter, but it’s time to tie them all together.
+Understanding the basics of network communication is important. I've already hit a few of
+the key points in this chapter, but it's time to tie them all together.
 Imagine a scenario where a laptop user connected to the Internet just pressed Send on an
-email to a friend. It’s a pretty common occurrence, right? Well, what happens next?
+email to a friend. It's a pretty common occurrence, right? Well, what happens next?
 Based on the software used (an email client), the laptop knows that it needs to send the
 message to the email server. And, the email software has been configured with the name
 of the email server: mail.wiley.com. An IP address is needed, so the laptop looks in its
 TCP/IP configuration information for the address of a DNS server. It then sends a message
 to the DNS server asking for the IP address to mail.wiley.com. The DNS server responds
 with an address, and the laptop can send the message.
-Let’s take a more granular look at what happens next. The next thing that the laptop needs
+Let's take a more granular look at what happens next. The next thing that the laptop needs
 to decide is whether the mail server is on the same network as the laptop. It does this by
 looking at its IP address and subnet mask to determine its network address. It then looks at
-the destination address with its (the sender’s) subnet mask. If the network addresses are the
+the destination address with its (the sender's) subnet mask. If the network addresses are the
 same, the message will get sent out on the local network. If not, then the message will get
 sent to the default gateway, the router, for transmission to the next network. Usually this is
 to the Internet.
@@ -1282,8 +1243,8 @@ all of the packets, it reassembles the message.
 frames are broken down and sent across the wired or wireless connection as individual
 bits. The receiving device reassembles the bits into frames and frames into packets. But that
 is way more detail than you need to remember for the Tech+ exam!)
-The process sounds complicated, and it really is. It’s pretty amazing that the Internet works
-at all, much less as smoothly as it does! If you’re curious to see how many routers (hops)
+The process sounds complicated, and it really is. It's pretty amazing that the Internet works
+at all, much less as smoothly as it does! If you're curious to see how many routers (hops)
 it takes to get from your computer to a website you like, use the trace route (tracert)
 command, shown in Figure 8.12. In this example, I traced the route to Amazon.com. For
 my computer to talk to Amazon, the packet went through 17 hops. You can see how long
@@ -1291,7 +1252,7 @@ each hop took in milliseconds, as well as the name or address of the router it w
 The lines with asterisks are routers where the owner set it up to not return an IP address
 or name.
 
-In Exercise 8.3, you will find your computer’s IP configuration information.
+In Exercise 8.3, you will find your computer's IP configuration information.
 EXERCISE 8.3
 Finding Your IP Configuration Information in Windows
 1. In the Windows search bar, type cmd and press Enter. This will open a
@@ -1313,8 +1274,8 @@ Joining a computer to a network provides it with many more storage options than 
 would have on its own. There are several scenarios in which more storage is desirable. One
 common one is for mobile devices with limited space—  storing data in the cloud can be a tremendous help.
  Another is for laptop users with small SSDs. A third is when multiple users
-need to access data, making it impractical to store on someone’s local drive. In this section,
-you’ll learn about network storage types, including file servers, networkattached storage
+need to access data, making it impractical to store on someone's local drive. In this section,
+you'll learn about network storage types, including file servers, networkattached storage
 (NAS), and cloud storage service.
 Tech+ exam objective 2.3 is “Compare and contrast storage types.” Ones
 you need to know are file server, networkat
@@ -1327,7 +1288,7 @@ a file server, and the second is NAS.
 A file server is a server computer that is specialized to store user files. It can be a dedicated or
 nondedicated server. The primary hardware requirement for a file server is lots of hard drive
 space. Oftentimes, file servers will have multiple optical drives as well.
-Since we’re on the subject of servers, now is as good a time as any to
+Since we're on the subject of servers, now is as good a time as any to
 remind you about two networking models you need to be familiar with
 as part of exam objective 2.8. They are client/server and peerto
 - pe
@@ -1345,7 +1306,7 @@ er networks, sometimes called workgroups, are only
 practical to manage for up to about 10 computers.
 NetworkAttached Storage
 A networkattached stor age (NAS) device takes hard drive storage to the next level. Based on
-its name, you can probably guess that it’s attached to the network, which it is, but that’s just
+its name, you can probably guess that it's attached to the network, which it is, but that's just
 the beginning. First, take a look at a simple NAS device in Figure 8.13.
 
 Figure 8.13 shows is a self-  enclosed unit that can hold up to four hard drives. Some hold
@@ -1371,7 +1332,7 @@ you have multiple users on a network, everyone can easily get to it.
 Cloud Storage Services
 Storage is the area in which cloud computing got its start. The idea is simple—  you store files
 just like you would on a hard drive but with two major advantages. One,
- you don’t need to
+ you don't need to
 buy the hardware, and two, users can access the files regardless of where they are physically
 located. You can have users in the United States, China, and Germany, and all of them have
 access via their web browser. In that respect, cloud storage is much easier to configure than a
@@ -1409,11 +1370,11 @@ Accessing the sites is done through your web browser or an app you download. Onc
 are in the site, managing your files is much like managing them on your local computer. In
 Figure 8.14, you can see the Google Drive interface, with four folders and two files in it.
 You have a few options to share a folder with another user. The easiest way to do this is
-to rightclick the folder and choose Share ➢
- Share. You’ll be asked to enter their name or
+to right-click the folder and choose Share ➢
+ Share. You'll be asked to enter their name or
 email address and indicate whether they can view or edit the file (see Figure 8.15).
 FIGURE 8.14  Google Drive
-Setting Up a Small Wireless Network 463
+
 Setting Up a Small Wireless Network
 Finally, the part you have been waiting for! This is the section where I will show you how to
 configure a router for your small wireless network. The exam objectives mention small wireless
@@ -1430,23 +1391,23 @@ three sections: basic configuration, security options, and additional services.
 
 The Wi-Fi Alliance (www.Wi-Fi.org) is the authoritative expert in the field of wireless
 LANs. It lists five critical keys to setting up a secured wireless router:
-1. Change the router’s SSID.
-2. Change the administrator username and password. Make sure that it’s a strong password.
+1. Change the router's SSID.
+2. Change the administrator username and password. Make sure that it's a strong password.
 FIGURE 8.15  Sharing a folder on Google Drive
 
 3. Enable WPA3, WPA2 Personal, or the highest level of security the router supports.
 4. Choose a high- quality security passphrase. Make it different from the administrator
 password!
-5. From the clients, select WPA3 (or security that matches your router’s setting) and enter
+5. From the clients, select WPA3 (or security that matches your router's setting) and enter
 the security passphrase to connect.
-This list has a few new acronyms in it, and I’ll define each of them in just a minute. To
+This list has a few new acronyms in it, and I'll define each of them in just a minute. To
 set up the Linksys router, you need to download the Linksys app. Open the app and follow
 the directions. They have tried to make it as easy as possible for users to set up wireless networks without the help of a technician. If you need stepbystep directions for a router,
  you
-will likely be able to find them on the manufacturer’s website as well. After it’s set up, you
+will likely be able to find them on the manufacturer's website as well. After it's set up, you
 can administer the router from the app or from a browser by typing in the IP address of the
 default gateway. For the examples in this section, I am going to show images from a Linksys
-MR9000, because that’s what I have.
+MR9000, because that's what I have.
 Before we start changing settings, first take a look at the home page for the Linksys
 Smart Wi-Fi software, as shown in Figure 8.16.
  The SSID is shown as well as some other
@@ -1456,7 +1417,6 @@ hamburger menu icon in the upperleft corner.
  The rest of the examples in this section will
 feature the browser version.
 FIGURE 8.16  Linksys Smar t Wi-Fi
-Setting Up a Small Wireless Network 465
 
 The parameter that you will configure first is the service set identifier (SSID), which is
 your wireless network name. An SSID is a unique name given to the wireless network.
@@ -1472,7 +1432,7 @@ memorable.
 FIGURE 8.17  Linksys app home page
 
 For better security, you should set your network name to something that
-doesn’t identify to whom it belongs. This keeps potential hackers from
+doesn't identify to whom it belongs. This keeps potential hackers from
 coming after you personally or possibly being able to guess your password
 based on information about you. I am probably setting a bad example in
 Figure 8.18 by naming my network something close to my last name.
@@ -1483,16 +1443,16 @@ Keeping the administrator name and password away from users or potential hackers
 utmost importance. The username should be difficult to guess and not linked to your name
 or other user account names you have, and the password should be very secure.
 FIGURE 8.18  Wi-Fi Settings
-Setting Up a Small Wireless Network 467
-In Linksys’s case, the username will be based off the email address used to create the
+
+In Linksys's case, the username will be based off the email address used to create the
 account. The password is changed from the Connectivity menu shown in Figure 8.19. Notice
 also that this page is where the firmware updates are configured. Always keep the firmware
 up-to-date to help protect the network!
-If you forget your wireless router’s administrator password, you won’t
+If you forget your wireless router's administrator password, you won't
 be able to make any configuration changes. Wireless routers have a
 recessed reset button on them, usually on the bottom or the back. You
 may need a pen or a paperclip to be able to push it. Push that button in
-and hold it for about 20 to 30 seconds. The router’s lights will flash several times, and it will reset to factory settings. Then, launch your configuration utility to set up the router again.
+and hold it for about 20 to 30 seconds. The router's lights will flash several times, and it will reset to factory settings. Then, launch your configuration utility to set up the router again.
 Enabling the Best Security
 Security modes are configured by SSID and done from the Wi-Fi settings tab (refer to
 Figure 8.18).
@@ -1505,8 +1465,7 @@ FIGURE 8.19  Connectivity Settings
 
 Choosing a High- Quality Passphr ase
 When users attempt to join the network, they need to enter the passphrase. In the Linksys
-software Wi-Fi settings (Figure 8.18 again), it’
-s labeled Wi-Fi Password.
+software Wi-Fi settings (Figure 8.18 again), it's labeled Wi-Fi Password.
 To change it, click in
 the box and type the new password. It should be different than the administrator password
 and challenging to guess.
@@ -1521,7 +1480,7 @@ will join the network in Settings ➢ Connections ➢  Wi-Fi.
 Tapping the Settings icon next to the
 network SSID will show the security mode in use, like what you see in Figure 8.21.
 FIGURE 8.20  iOS joining a wireless network
-Setting Up a Small Wireless Network 469
+
 Once the client is connected to the network, verify Internet connectivity. Do this by
  opening the browser of your choice and seeing whether you can get to a website such as
 www.google.com.
@@ -1531,27 +1490,27 @@ SSID and default passwords.
 
 By their very nature, wireless routers are less secure than their wired counterparts. The fact
 that their signals travel through the air makes them a little harder to contain. The best
-way to help protect network data while it’s being transmitted is to use wireless encryption.
+way to help protect network data while it's being transmitted is to use wireless encryption.
 FIGURE 8.21  Android Wi-Fi settings
 
-While you can create an open network connection, it’s recommended that instead you use
+While you can create an open network connection, it's recommended that instead you use
 one of the encryption methods outlined in this section.
 
 The growth of wireless systems has created several opportunities for attackers. These systems
-are relatively new, they use well- established communications mechanisms, and they’re easily
+are relatively new, they use well- established communications mechanisms, and they're easily
 intercepted.
  Wi-Fi routers use SSIDs to allow communications with a specific access point.
 Because by default wireless routers will broadcast their SSID
 , all someone with a wireless
-client needs to do is to search for an available signal. If it’s not secured, they can connect
+client needs to do is to search for an available signal. If it's not secured, they can connect
 within a few seconds.
-The advantage of an open portal is that potential users don’t need to enter a password.
+The advantage of an open portal is that potential users don't need to enter a password.
 If the goal is to let everyone within range onto the network, then an open portal is the
 way to go.
 Some administrators implement a captive portal feature when using open portals. A captive portal is a welcome page notifying the user of the conditions of the network, including
 which behaviors are permitted. For example, they will often say something to the effect that
 hacking and other malicious behaviors are prohibited, and the user assumes responsibility
-for their own security. Of course, a sternly worded message won’t keep those with bad intent
+for their own security. Of course, a sternly worded message won't keep those with bad intent
 from doing bad things, but it can (in theory) absolve the portal owner from any liability.
 The point is, open portals pose security risks to the network and to users on the network.
 Use them with caution.
@@ -1574,9 +1533,9 @@ algorithms. These weaknesses allow the algorithm potentially to be cracked in a 
 amount of time—  no more than two or three minutes.
 This makes WEP one of the more vulnerable protocols available for security.
 Because of security weaknesses and the availability of newer protocols, WEP is not used
-widely. It’s still better than nothing, though, and it does an adequate job of keeping casual
-snoops at bay. But if you have any other options, it’s best to avoid WEP.
-Setting Up a Small Wireless Network 471
+widely. It's still better than nothing, though, and it does an adequate job of keeping casual
+snoops at bay. But if you have any other options, it's best to avoid WEP.
+
 WPA
 Wi-Fi Protected Access (WP A) is an improvement on WEP that was first available in 1999
 but did not see widespread acceptance until around 2003. Once it became widely available,
@@ -1600,7 +1559,7 @@ over WEP and WPA. As mentioned earlier, WPA2 implements all of the required elem
 of the 802.11i security standard. Most notably, it uses Counter Mode CBCMAC Protocol
 (CCMP),
  which is a protocol based on the Advanced Encryption Standard (AES) security
-algorithm. CCMP was created to address the shortcomings of TKIP, so consequently it’s
+algorithm. CCMP was created to address the shortcomings of TKIP, so consequently it's
 much stronger than TKIP. Typical WPA2 security keys are 128 bits long.
 The terms CCMP and AES tend to be interchangeable in common parlance. You might also see it written as AESCC
 MP.
@@ -1614,7 +1573,7 @@ and shared with all clients on the network. In Wi-Fi
 , PSK is in use anytime the “personal” suffix is added, for example, “WPA2 Personal”
 like you saw in Figure 8.18. This is in contrast to the more secure WPA2
 Enterprise, where each user or device gets individualized security creden -
-tials to join the network. As long as the WPA2 passphrase is kept confidential, it’s very secure.
+tials to join the network. As long as the WPA2 passphrase is kept confidential, it's very secure.
 
 WPA3
 The newest and best wireless encryption standard is Wi-Fi Protected Access 3 (WP A3), introduced in 2018. It uses AESCCMP like WP
@@ -1630,17 +1589,17 @@ every time.
 Exam objective 6.5 specifies that you should know Wi-Fi e ncryption
 options such as an open network, preshared key, WPA, WPA2, and WPA3.
 I threw a lot of acronyms and detail at you in describing each of these,
-and it’s very likely way more than you will need to know for the Tech+
+and it's very likely way more than you will need to know for the Tech+
 exam. Focus on understanding that open networks are unsecure, and
 that WPA3 is better than WPA2, which is better than WPA. Also know the
 basic workings of PSK, in that the same passphrase (or passcode) is used
 by all clients.
 Additional Wireless Router Services
-Wireless routers offer many more services than I’ve been able to cover to this point, and
+Wireless routers offer many more services than I've been able to cover to this point, and
 most of them are out of the scope of Tech+ exam training. Still, there are a few items mentioned earlier in this book that I want to cover while on the subject.
 Guest Access
 Clients who access your wireless network can see other clients on the network and access
-their resources that are shared. If you have clients who need Internet access but you don’t
+their resources that are shared. If you have clients who need Internet access but you don't
 want them to see the rest of the network, you can let them on as guests.
 As a security precaution, leave your guest network disabled unless you
 have a specific reason to enable it.
@@ -1650,22 +1609,22 @@ so far. If you look back at Figure 8.16, you can see the guest network configura
 router. Notice that the password is displayed in plain text. Clicking any of the links in the
 Guest Access box, or clicking the Guest Access icon in the left menu, will bring up the Guest
 Access window (Figure 8.22), where you can change the settings.
-Setting Up a Small Wireless Network 473
+
 DHCP
 Earlier in this chapter, I talked about DHCP and how it automatically configures your clients with IP addresses. This router has it enabled (see Figure 8.23), and you can see some
-of the configuration options. For the most part, you won’t need to change any of these,
+of the configuration options. For the most part, you won't need to change any of these,
 unless perhaps you want to allow more than the default of 50 clients onto your network.
 Odds are if you have that many clients, you will need a second wireless access point to
 handle the traffic.
 Firewall
 Software firewall functionality was detailed in Chapter 5. A router is often used as a
 hardware firewall to protect several computers. Figure 8.24 shows you the Security section
-of the router’s configuration, which allows you to set up your firewall rules.
+of the router's configuration, which allows you to set up your firewall rules.
 FIGURE 8.22  Guest network configuration
 
 FIGURE 8.24  Firewall Settings
 FIGURE 8.23  DHCP configuration
-Setting Up a Small Wireless Network 475
+
 On these three security tabs, you can set an Internet access policy and block protocols such as HTTPS, FTP, and others. Other security options are under Parental Controls,
 which allows you to block websites by URL and limit Internet access times, as shown in
 Figure 8.25.
@@ -1682,7 +1641,7 @@ Answers can vary somewhat, but here are some recommended steps:
 1. Contact the local phone company and the local cable company to see what the best
 deal is for Internet access and set up an account. Once the DSL or cable modem
 arrives, begin the network setup.
-2. While you are waiting for the modem, purchase a wireless router. It’s generally best to
+2. While you are waiting for the modem, purchase a wireless router. It's generally best to
 get the most current technology, so 802.1 1ac or 802.1 1ax is the best choice.
 3. Set up the wireless router:
 a. Plug in the cables per the instructions.
@@ -1713,7 +1672,7 @@ wired and wireless. Wireless networking really means Wi-Fi, which is based on th
 802.11 standard.
  Other wireless connection types include Bluetooth and infrared, but those
 are specialized connection types not intended for full- scale networking.
-Exam Essentials 477
+
 The next topic was networking essentials, starting with important devices such as
 modems, switches, access points, routers, and firewalls. You then learned about protocols
 and in particular the most important protocol used today, TCP/IP. You learned about IP
@@ -1786,17 +1745,17 @@ You can find the answers in Appendix A.
 The Chapter 8 lab has two parts to it. In Part 1, you will set up your own secure network. In
 Part 2, you will see how well others around you have done.
 Part 1: Setting Up Y our Wireless Router
-1. Plug in your router per the manufacturer’s instructions, and configure the connection to
+1. Plug in your router per the manufacturer's instructions, and configure the connection to
 your Internet device (if applicable).
 2. Run the setup routine.
 3. Set your SSID.
 4. Set security to the strongest available option.
 5. Change the wireless password to something that is challenging to guess.
-6. Change the administrator password to something that’s even harder to guess.
+6. Change the administrator password to something that's even harder to guess.
 7. Connect your client computer to the network.
 8. Verify Internet access.
 9. Update the firmware; set the firmware to update automatically if you like.
-Chapter 8 Lab 479
+
 Part 2: T esting Y our Neighbors
 In this part, you will check to see how well your neighbors have set up their wireless
 networks.
@@ -1805,7 +1764,7 @@ many do you see available?
 If you live in a densely populated area, especially an apartment or condominium, you
 will probably have a really long list of available networks.
 2. How many of those networks are unsecured?
-3. Don’t try to connect to neighbors’ unsecured networks. One big reason why is that it’s
+3. Don't try to connect to neighbors' unsecured networks. One big reason why is that it's
 illegal. Another reason is that it could expose your computer to potential threats on that
 unsecured network.
 
@@ -1851,7 +1810,7 @@ B
 . Satellite
 C. Cellular
 D. RF
-Review Questions 481
+
 6. This question refers to the scenario at the end of the chapter,  in “Configuring a Small Office
 Network.” When connecting client computers to the network, what password do they need
 to enter?
@@ -1868,9 +1827,9 @@ C. Firewall
 D. DSL
 8. Which of the following is true about TCP/IP ports?
 A
-. It’s based on the protocol being used.
+. It's based on the protocol being used.
 B
-. It’s the network address of the host.
+. It's the network address of the host.
 C
 . It will differ based on the MAC address.
 D. It will differ based on the networking model used.
@@ -1931,7 +1890,7 @@ A
 B. ipconfig
 C. ipinfo
 D. tcpipconfig
-Review Questions 483
+
 18. By definition, what is an SSID?
 A
 . A wireless network name

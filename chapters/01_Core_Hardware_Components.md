@@ -6,47 +6,49 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 
 ## Core Hardware Components
 
-**THE FOLLOWING COMPTIA TECH+ FC0- U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
- ✓ 1.0 IT Concepts and T erminology
+**THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
+ ✓ 1.0 IT Concepts and Terminology
  ✓ 1.1 Explain the basics of computing.
-- Input
-- Processing
-- Output
-- Storage
+    - Input
+    - Processing
+    - Output
+    - Storage
  ✓ 1.3 Compare and contrast common units of measure.
-- Storage unit
-- Bit
-- Byte
-- Kilobyte (KB)
-- Megabyte (MB)
-- Gigabyte (GB)
-- Terabyte (TB)
-- Petabyte (PB)
-- Processing speed
-- Megahertz (MHz)
-- Gigahertz (GHz)
+    - Storage unit
+    - Bit
+    - Byte
+    - Kilobyte (KB)
+    - Megabyte (MB)
+    - Gigabyte (GB)
+    - Terabyte (TB)
+    - Petabyte (PB)
+    - Processing speed
+    - Megahertz (MHz)
+    - Gigahertz (GHz)
  ✓ 2.0 Infrastructure
  ✓ 2.2 Explain the purpose of common internal computing components.
-- Motherboard/system board
-- Firmware/basic input/output system (BIOS)
-- Random-access memory (RAM)
-- Central Processing Unit (CPU)
-- Graphics Processing Unit (GPU)
-- Storage
-- Network interface card (NIC)
-- Wired vs. wireless
-- Onboard vs. expansion card
- ✓ 2.3 Compare and contr ast storage types.
-- Volatile vs. non- volatile
-- Local storage
-- RAM
-- Readonly memory (ROM)
-- Storage drive
-- Magnetic disks/hard disk drive (HDD)
-- Solidstate drive (SSD)
-- Non- volatile memory express (NVMe)
-- Optical
-- External flash drives
+    - Motherboard/system board
+    - Firmware/basic input/output system (BIOS)
+    - Random-access memory (RAM)
+    - Central Processing Unit (CPU)
+    - Graphics Processing Unit (GPU)
+    - Storage
+    - Network interface card (NIC)
+    - Wired vs. wireless
+    - Onboard vs. expansion card
+ ✓ 2.3 Compare and contrast storage types.
+    - Volatile vs. non-volatile
+    - Local storage
+    - RAM
+    - Read-only memory (ROM)
+    - Storage drive
+    - Magnetic disks/hard disk drive (HDD)
+    - Solid-state drive (SSD)
+    - Non-volatile memory express (NVMe)
+    - Optical
+    - External flash drives
+
+### Introduction
 
 What better way to kick off a book on computing technology
 fundamentals than to talk about the most fundamental components of all—  core hardware.
@@ -55,15 +57,15 @@ the basics, computers are simply collections of specialized
 hardware devices that work together (with software) to provide you with the functionality
 you want. For most users, the desired functionality is to take input, such as from a keyboard,
 a mouse, or a touchscreen; somehow process it; produce output (video or printed); and store
-data. Sometimes the hardware is in your hands, and at other times it’s halfway around the
-world—  but it’s always necessary
+data. Sometimes the hardware is in your hands, and at other times it's halfway around the
+world—  but it's always necessary
 . Even soft and fluffysounding terms such as “the cloud”
 
 (which I will introduce in Chapter 9, “Cloud Computing and Artificial Intelligence”) rely on
 much of the same hardware that sits snugly within your tablet or smartphone case.
 To begin your journey of understanding fundamental computing technology concepts,
 I will discuss components that are commonly included inside the computer case. Some are
-critical, whereas others just provide features that are nice to have, such as sound or a network connection. In this way, I’ll start from the inside out so that you understand what
+critical, whereas others just provide features that are nice to have, such as sound or a network connection. In this way, I'll start from the inside out so that you understand what
 makes computers work the way they do.
 
 In this section, I will talk about the components that are generally inside the computer case.
@@ -73,17 +75,17 @@ drives for expanded storage. Network cards are another great example. Today, the
 is generally built into the computer, but you can easily find external ones as well. Regardless
 of the location of your hard drive or network card, it still provides the same functionality.
 Most home computer components are modular. That is, they can be removed and
-replaced by another piece of hardware that does the same thing, provided that it’s compatible and that it fits. For example, if the hard drive in your laptop fails, it can be removed and
-replaced by another hard drive. This isn’t always the case, of course, and the general rule is
+replaced by another piece of hardware that does the same thing, provided that it's compatible and that it fits. For example, if the hard drive in your laptop fails, it can be removed and
+replaced by another hard drive. This isn't always the case, of course, and the general rule is
 that the smaller the device, the less modular it is. This is because to achieve the smaller size,
-manufacturers need to integrate more functionality into the same component. It’s usually
+manufacturers need to integrate more functionality into the same component. It's usually
 quicker and just as costeffective to replace a device such as a smartphone rather than repair
 it if a part fails. If a component is modular and can be replaced,
  you will sometimes hear it
 referred to as a field-replaceable unit (FRU)
 .
 
-Since I’m talking about components that are inside the case, it would be unfortunate to
+Since I'm talking about components that are inside the case, it would be unfortunate to
 ignore the case itself. Cases are usually a combination of metal and plastic and serve these
 three primary functions:
 - Keeping all the components securely in place
@@ -101,20 +103,20 @@ smaller devices such as smartphones as well.
 These three components—  motherboards, processors,  and memory—  are the holy trinity of
 computers. Pretty much every personal computing device made today requires all three of
 these parts.
- So, without further ado, let’s dive in.
+ So, without further ado, let's dive in.
 
-The motherboard is the most important component in the computer because it connects all the other components. Functionally, it acts much like the nervous system of the computer. You will also hear it called the system board or the mainboard. With this introduction, you might think that this piece of hardware is complex—  and you’d be right!
-Manufacturers and hardware resellers don’t make it easy to understand what you’re
-dealing with either. Here’s the description of a motherboard for sale on an Internet
+The motherboard is the most important component in the computer because it connects all the other components. Functionally, it acts much like the nervous system of the computer. You will also hear it called the system board or the mainboard. With this introduction, you might think that this piece of hardware is complex—  and you'd be right!
+Manufacturers and hardware resellers don't make it easy to understand what you're
+dealing with either. Here's the description of a motherboard for sale on an Internet
 hardware site:
 
 Asus ROG Strix Z790-E Gaming WiFi II LGA 1700 DDR5 ATX Motherboard, DDR5 8000+, 1x PCIe 5.0x16, 2x PCIe 4.0x16, 5x M.2 slots, 1x HDMI, 1x DisplayPort, 1x USB 20 Gbps port, 11x USB 10 Gbps ports, Wi-Fi 7.
 
-What does that all mean? Is it even human language? Don’t worry. By the end of this section on motherboards, you will understand what it all means.
+What does that all mean? Is it even human language? Don't worry. By the end of this section on motherboards, you will understand what it all means.
 
 Tech+ exam objective 2.2, “Explain the purpose of common internal
-computing components, ” lists motherboard/system board as a subobjective. I’ll explain the motherboard in depth here, probably in more detail
-than you will need to know for the exam. It’s better to be over- prepared,
+computing components, ” lists motherboard/system board as a subobjective. I'll explain the motherboard in depth here, probably in more detail
+than you will need to know for the exam. It's better to be over- prepared,
 though, and the knowledge you gain here will help you in the real world
 as well.
 The first thing to know about motherboards is that they are a printed circuit board
@@ -127,7 +129,7 @@ popular brands right now are ASUS, GIGABYTE, and Micro- Star (MSI). Figure 1.1 s
 typical motherboard.
 All other components are attached to this circuit board.
  Some are physically attached
-directly to the board and aren’t intended to be removed, such as the underlying circuitry, the
+directly to the board and aren't intended to be removed, such as the underlying circuitry, the
 central processing unit (CPU) slot, random access memory (RAM) slots, expansion slots, and
 FIGURE 1.1  A motherboard
 
@@ -139,7 +141,7 @@ card, network card, and others directly onto the motherboard as
 opposed to having slots into which they are inserted. As a rule of thumb,
 the smaller the motherboard, the more likely it is to have integrated
 components.
-Let’s start breaking down the features and components typically associated with motherboards. The following list might look long, but breaking each one down separately will help
+Let's start breaking down the features and components typically associated with motherboards. The following list might look long, but breaking each one down separately will help
 you to understand the importance of each one. Here are the topics coming up shortly:
 - Form factors
 - Chipsets
@@ -154,11 +156,12 @@ you to understand the importance of each one. Here are the topics coming up shor
 - Frontpanel connectors
 In the following sections, you will learn about some of the most common components of
 a motherboard and what they do.
- I’ll show you what each component looks like so that you
+ I'll show you what each component looks like so that you
 can identify it on almost any motherboard you run across.
 
+### Form Factors
 Motherboards are classified by their design, which is called a form factor. There are dozens
-of form factors in existence. Because motherboards mount to the system case, it’s important
+of form factors in existence. Because motherboards mount to the system case, it's important
 to know what types of motherboards your case supports before replacing one. Desktop computer cases often support multiple sizes of motherboards, but laptops are another story. With
 laptops, you almost always need to replace an old motherboard with the same version.
 The most common form factors used today are Advanced Technology Extended (ATX),
@@ -172,7 +175,7 @@ less power and therefore generate less heat,
  to reduce the amount of heat produced by the
 computer. Because these two are smaller, they also offer fewer options for adding expansion
 cards versus the ATX design.
-Here’s a quick history lesson. The XT form factor was developed by IBM
+Here's a quick history lesson. The XT form factor was developed by IBM
 in 1983, and it is generally considered the first industry-standard PC form
 factor. In 1985, IBM released the Baby-AT
 , which because of its smaller
@@ -183,12 +186,7 @@ of this writing, the ATX and microATX (which is similar in configuration
 to ATX, only smaller) are still the most popular desktop computer form
 factors.
 Table 1.1 provides the dimensions of common motherboard form factors.
-In view of how quickly computer technology evolves, it is amazing that the form factors
-remain popular for as long as they do. The advent of smaller devices such as tablets and
-smartphones has driven the most recent form factor design changes.
 
-The motherboard’s chipset is a collection of chips or circuits that perform interface and
-peripheral functions for the processor. Said differently, this collection of chips provides
 TABLE 1.1  Motherboard form factors
 Form factor Release year Size
 Baby-AT 1985 8.5 × 10 – 13 in (216 × 254 – 330 mm)
@@ -204,19 +202,25 @@ MobileITX 20
 NeoITX 2
 012 6.7 × 3.35 in (170 × 85 mm)
 
+In view of how quickly computer technology evolves, it is amazing that the form factors
+remain popular for as long as they do. The advent of smaller devices such as tablets and
+smartphones has driven the most recent form factor design changes.
+
+### Chipsets
+The motherboard's chipset is a collection of chips or circuits that perform interface and
+peripheral functions for the processor. Said differently, this collection of chips provides
 interfaces for memory, expansion cards, and onboard peripherals, and it generally dictates
 how a motherboard will communicate with the installed peripherals.
 Chipsets are usually given a name and model number by the original manufacturer—  for
-example, Intel’
-s Z790. What features make the Z790 so great? I will be honest; I have no
-idea. There are so many chipsets out there that it’s impossible to memorize the features of
+example, Intel's Z790. What features make the Z790 so great? I will be honest; I have no
+idea. There are so many chipsets out there that it's impossible to memorize the features of
 each one. But, if you need to know, having the manufacturer and model can help you look
 up the features of that particular chipset, such as the type of RAM supported, the type and
 brand of onboard video, and so on.
 In the motherboard example at the beginning of this section, you
 saw an ASUS Z790- E mo
 therboard. The best place to look for
-motherboard specifications is on the manufacturer’s website. For
+motherboard specifications is on the manufacturer's website. For
 example, https://rog.asus.com/us/motherboards/rog- s trix/
 rog- s
 trix- z
@@ -227,10 +231,10 @@ ifi- m
 odel/spec tells you everything
 that you need to know about the ASUS ROG Strix Z790- E mo
 therboard.
-The functions of chipsets can be divided into two major groups: Northbridge and Southbridge. It’s highly unlikely that you’ll be tested on these on the Tech+ exam, but I want to
+The functions of chipsets can be divided into two major groups: Northbridge and Southbridge. It's highly unlikely that you'll be tested on these on the Tech+ exam, but I want to
 introduce them just in case you hear the terms. Plus, I think it helps better explain exactly
 what the chipset does.
-Northbridge The Northbridge subset of a motherboard’s chipset performs one important function: management of high- speed peripheral communications.
+Northbridge The Northbridge subset of a motherboard's chipset performs one important function: management of high- speed peripheral communications.
 The Northbridge is
 responsible primarily for communications with integrated video and processor-to-memory
 communications.
@@ -244,22 +248,19 @@ Southbridge The Southbridge subset of the chipset is responsible for providing s
 the onboard slower peripherals (PS/2, parallel ports,
  serial ports, Serial and Parallel ATA, and
 so on) and managing their communications with the rest of the computer and the resources
-given to them. If you’re thinking about any component other than the CPU, memory and
+given to them. If you're thinking about any component other than the CPU, memory and
 cache, or integrated video, the Southbridge is in charge.
-As of 2023, most PCs don’t separate out the Northbridge and Southbridge
+As of 2023, most PCs don't separate out the Northbridge and Southbridge
 into two physically distinct chips. Instead, a single chip typically handles
 both functions of the chipset. In addition, some manufacturers will refer
 to their chipsets as a platform controller hub (PCH) or integrate the functionality directly into the central processing unit (CPU).
-Figure 1.2 shows the chipset of a motherboard, with the heat sink of the Northbridge,
-at the top left, connected to the heatspreading cover of the Southbridge, at the bot
--
-tom right.
+Figure 1.2 shows a typical motherboard chipset: the Northbridge heat sink at the top left connects to the heat-spreading cover of the Southbridge at the bottom right.
 
-Who’s Driving the Bus?
+### Data Buses and Serial Interfaces
+Who's Driving the Bus?
 When talking about the Northbridge, I mentioned a bus (specifically a frontside bus), so
 now is a good time to talk about what a bus does and to give you some historical context.
-Y
-ou’ll probably hear the term come up often when talking about computer hardware, such
+You'll probably hear the term come up often when talking about computer hardware, such
 as in discussions about the system bus, expansion bus, parallel bus, and serial bus.
 A bus is a common collection of signal pathways over which related devices communicate
 within the computer system. It refers specifically to a data path or the way that the computer communicates over that path.
@@ -269,30 +270,28 @@ or a 1 (in an on state) of data at a time, whereas a parallel bus communicates i
 parallel channels (eight, for example) at once. Based on this explanation, you might think
 that parallel is faster than serial. After all, eight lanes should move more data than one lane,
 right? Sometimes, but not always. It depends on how fast you can get each lane to move.
-Serial was developed before parallel, because at its core it’s an easier technology to implement. In the late 1980s, parallel became much more popular for printers because it was a
+Serial was developed before parallel, because at its core it's an easier technology to implement. In the late 1980s, parallel became much more popular for printers because it was a
 lot faster. The only downside to parallel was that the different streams of data needed to be
-carefully synchronized. This slowed down transmissions so that they weren’t exactly eight
+carefully synchronized. This slowed down transmissions so that they weren't exactly eight
 times faster than the comparable serial connections.
-FIGURE 1.2  Northbridge and Southbridge
 
 By 1996, manufacturers had advanced the speed of serial technology enough so that it was
 faster than parallel, and the world saw the introduction of Universal Serial Bus (USB). It was
 faster than parallel, and it had a lot of additional features, such as the ability to hotplug
-devices (that is, plug and unplug them without needing to shut down the system). T
-oday, all
-of the fastest peripheralconnection technologies in use, suc
-h as USB, Peripheral Component Interconnect Express (PCIe), and Serial ATA (SATA), are all serial.
-Thus, although parallel was king for a day, it’s now outdated and rarely used. You can get
+devices (that is, plug and unplug them without needing to shut down the system). Today, all
+of the fastest peripheral connection technologies in use, such as USB, Peripheral Component Interconnect Express (PCIe), and Serial ATA (SATA), are all serial.
+Thus, although parallel was king for a day, it's now outdated and rarely used. You can get
 faster transmissions via serial technology.
 
+### Processor Sockets
 The central processing unit (CPU) is the “brain” of any computer. There are many different
 types of processors for computers, and the processor you have must fit into the socket on the
-motherboard. Typically, in today’s computers, the processor is the easiest component to identify on the motherboard. It is usually the component that has either a large fan and/or a heat
+motherboard. Typically, in today's computers, the processor is the easiest component to identify on the motherboard. It is usually the component that has either a large fan and/or a heat
 sink (usually both) attached to it. You will learn more about types of CPUs in the “Processors”
 section, later in this chapter.
 CPU sockets are almost as varied as the processors they hold. Sockets are basically flat and
 have several columns and rows of holes or pins arranged in a square, as shown in Figure 1.3.
-You’ll hear terms like pin grid array (PGA) or land grid array (LGA) to describe the socket
+You'll hear terms like pin grid array (PGA) or land grid array (LGA) to describe the socket
 type. In Figure 1.3, the left socket is PGA (socket AM4), and the right one is an LGA 1200.
 PGA sockets have holes, and the processors have pins that fit into the holes. LGA sockets have
 contacts (often pins) built into them, which connect with contacts on the CPU. Both sockets
@@ -303,11 +302,12 @@ FIGURE 1.3  CPU sock ets
 
 At the beginning of this section, I gave you a description of a motherboard for sale. LGA 1700 is the socket shown in the example.
 
+### Memory Slots
 Random access memory (RAM) slots are for the modules that hold memory chips. RAM is
 the primary memory used to store currently used data and instructions for the CPU. Think
-of it as volatile, short-term memory; it’s volatile in the sense that its contents will be lost
-if it’s not continuously powered. (This is in contrast to persistent storage, which hard
-drives offer. I’ll talk more about those later in this chapter, in the “Storage Devices” section.) Many and varied types of memory are available for PCs today. Examples include
+of it as volatile, short-term memory; it's volatile in the sense that its contents will be lost
+if it's not continuously powered. (This is in contrast to persistent storage, which hard
+drives offer. I'll talk more about those later in this chapter, in the “Storage Devices” section.) Many and varied types of memory are available for PCs today. Examples include
 Double Data Rate 4 (DDR4) and DDR5. Memory for desktops comes on circuit boards
 called dual inline memory modules (DIMMs) and for laptops on small outline DIMMs
 (SODIMMs). (I will talk about what these acronyms mean in the “Memory” section later
@@ -332,6 +332,7 @@ later in this chapter.
 If there is cache on your motherboard, it is not likely to be a removable component.
 Therefore, it does not have a slot or connector like RAM does.
 
+### Expansion Slots
 The most visible parts of any motherboard are the expansion slots. These are small plastic
 slots, usually from 1 to 6 inches long and approximately ½″ wide. As their name suggests,
 these slots are used to install various devices in the computer to expand its capabilities. Some
@@ -346,13 +347,13 @@ Each type differs in appearance and function. In the following sections, I will 
 to identify visually the different expansion slots on the motherboard.
 FIGURE 1.5  SODIMM slots
 
-For years, the most common expansion slots were the 32-bit Peripheral Component Interconnect (PCI) slots. They are easily recognizable because they are only around 3 inches long and classically white, although modern boards take liberties with the color. Although popularity has shifted from PCI to PCIe, the PCI slot’s service to the industry cannot be ignored; it
+For years, the most common expansion slots were the 32-bit Peripheral Component Interconnect (PCI) slots. They are easily recognizable because they are only around 3 inches long and classically white, although modern boards take liberties with the color. Although popularity has shifted from PCI to PCIe, the PCI slot's service to the industry cannot be ignored; it
 has been an incredibly prolific architecture for many years.
 At the time PCI came out, the bus speed (how fast the data gets from point A to point
 B) was considered fast. You could get data throughput rates of 133 megabytes per second
 (MBps) and 266 MBps, with 133 MBps being the most common. Eventually, advances in
 the technology would double PCI speeds up to 533 Mbps. (Yes, 266 × 2 = 532, not 533.
-Hardware developers take a little creative license with rounding here and there.) By today’s
+Hardware developers take a little creative license with rounding here and there.) By today's
 standards, the best PCI throughput is extremely slow, as you will see when we discuss newer
 technologies such as AGP and PCIe in the next two sections.
 PCI slots and adapters are manufactured in 3.3V and 5V versions. The notch (also called
@@ -365,7 +366,7 @@ AGP Expansion Slots
 Accelerated Graphics Port (AGP) slots are known mostly for legacy video card use and have
 been supplanted in new installations by PCI Express slots and their adapters. While AGP is
 almost extinct today, you can still buy motherboards that have it. AGP slots were designed
-to be a direct connection between the video circuitry and the PC’s memory. They are also
+to be a direct connection between the video circuitry and the PC's memory. They are also
 easily recognizable because they are usually brown and located right next to the PCI slots on
 the motherboard. AGP slots are slightly shorter than PCI slots and are pushed back from the
 rear of the motherboard in comparison with the position of the PCI slots. Figure 1.7 shows
@@ -374,14 +375,14 @@ FIGURE 1.6  PCI expansion slots
 an example of an older AGP slot, along with a white PCI slot for comparison. Notice the
 difference in length between the two.
 In the tech world, the word “legacy” means old and outdated, and the
-technology is likely no longer used. It’s not meant as a compliment!
+technology is likely no longer used. It's not meant as a compliment!
 AGP performance is based on the original specification, known as AGP 1x, which has a
 data rate of 266 MBps. AGP 2x, 4x, and 8x specifications increase throughput linearly. For
 instance, AGP 8x produces an effective throughput of 2133 MBps. (Using the commonly quoted 266 MBps AGP 1x rate, 266 × 8 = 2128 MBps; the headline “2133 MBps” figure comes from finer clock math and rounding.) Note
 that this maximum throughput is only a fraction of the throughput of PCIe x16, which is
 covered in the following section.
 PCIe Expansion Slots
-Today’s most common expansion slot architecture on motherboards is PCI Express (PCIe).
+Today's most common expansion slot architecture on motherboards is PCI Express (PCIe).
 It was designed to be a replacement for AGP and PCI. PCIe has the advantage of being faster
 than AGP while maintaining the flexibility of PCI. PCIe has no plug compatibility with either
 AGP or PCI. As a result, some modern PCIe motherboards still have a regular PCI slot for
@@ -401,7 +402,7 @@ Compared to its predecessors, PCIe is fast. Even at the older PCIe 2.0 standard,
 The current in- market PCIe standard is PCIe 5.0, and with it a × 16 card can operate at a
 screaming 63 GBps,
  or about 118 times as fast as PCI. All PCIe slots are backward compatible with older PCIe cards. So, you can put a PCIe 2.0 card in a PCIe 5.0 slot—  you just
-won’t get the speed of PCIe 5.0,
+won't get the speed of PCIe 5.0,
  of course.
 The Speed of Innovation
 Newer standards always offer faster data transfer rates and greater throughput. Usually
@@ -419,16 +420,17 @@ s.
 FIGURE 1.8  PCIe expansion slots
 
 Continuing the journey is PCIe 6.0, released in January 2022. Devices supporting this standard are expected to hit the market in 2024. And right around the corner is PCIe 7.0, with a
-2025 release date and devices expected in 2027. Some technology experts say that it’s hard
+2025 release date and devices expected in 2027. Some technology experts say that it's hard
 to imagine any device needing the crazy 256 GBps of bandwidth that PCIe 7.0 will provide,
-but I’m sure someone will figure out an application for it.
+but I'm sure someone will figure out an application for it.
 Its high data rate makes PCIe the current choice of gaming aficionados. The only downside with PCIe (and with later AGP slots) is that any movement of these high- performance
 devices can result in temporary failure or poor performance. Consequently
 , both PCIe and
 AGP slots have a latch and tab that secure the adapters in place.
 
+### Internal Storage Connectors
 One of the endearing features of computers is that they store data and allow it to be
-retrieved later. (It’s true that they sometimes mysteriously lose our data too, but that’s
+retrieved later. (It's true that they sometimes mysteriously lose our data too, but that's
 another story.) The long-term storage device is called a hard drive, and it plugs into the
 motherboard.
 Stored data is sometimes called data at rest, as opposed to moving
@@ -442,7 +444,9 @@ same). Figure 1.10 shows four SATA connectors. Notice how they are conveniently 
 for you on the motherboard!
 FIGURE 1.9  IDE hard drive connector s
 
-Power Connectors
+FIGURE 1.10  SATA hard drive connectors
+
+### Power Connectors
 Computers are obviously electronic devices, and electronics, of course, require power. In
 addition to the other sockets and slots on the motherboard, a special connector (the 24-
 pin block connector shown in Figure 1.11) allows the motherboard to be connected to the
@@ -451,18 +455,12 @@ power supply to receive power.
 Older AT- style motherboards used a 20- pin connector,
  and other devices such as hard drives
 and optical drives use smaller connectors that we will talk about later.
-BIOS/Firmware
-Firmware is the name given to any software that is encoded in hardware, usually a readonly memory (R
-OM) chip, and can be run without extra instructions from the operating
-system. Firmware is great for situations where a specific computing routine that never
-FIGURE 1.10  SATA hard drive connectors
-FIGURE 1.11  A 24- pin A TX power connector
 
-(or rarely) changes needs to be run. Most computing devices and printers use firmware
-in some sense. The best example of firmware is a computer’s basic input/output system
-(BIOS) routine, which is burned into a flash memory chip located on the motherboard.
-Also, some expansion cards, such as video cards, use their own firmware utilities for
-setting up peripherals.
+FIGURE 1.11  A 24- pin ATX power connector
+
+### Firmware and BIOS
+Firmware is the name given to any software that is encoded in hardware, usually a Read-only memory (ROM) chip, and can be run without extra instructions from the operating system. Firmware is great for situations where a specific computing routine that never (or rarely) changes needs to be run. Most computing devices and printers use firmware in some sense. The best example of firmware is a computer's basic input/output system (BIOS) routine, which is burned into a flash memory chip located on the motherboard. Also, some expansion cards, such as video cards, use their own firmware utilities for setting up peripherals.
+
 Tech+ exam objective 2.2 lists firmware/basic input/output system (BIOS)
 as a subobjective. Be sure to know what it does.
 Aside from the processor, the most important chip on the motherboard is the BIOS chip.
@@ -475,16 +473,14 @@ Phoenix/Award, Winbond, and so on). Figure 1.12 gives you an idea of what a BIOS
 might look like. This one is made by Fintek.
 FIGURE 1.12  A BIOS chip on a motherboard
 
-When you power on your computer, the BIOS initializes and runs a systemchecking routine called the
-poweron
-self- test
-(POST). The POST routine does the following things:
+When you power on your computer, the BIOS initializes and runs a system-checking routine called the power-on self-test (POST). The POST routine does the following things:
+
 - Verifies the integrity of the BIOS itself
 - Verifies and confirms the size of primary memory
 - Analyzes and catalogs other forms of hardware, such as buses and boot devices
 - Offers the user a key sequence to enter the configuration screen
-- Hands over control to the boot device (usually a hard drive) highest in the configured
-boot order to load the operating system
+- Hands over control to the boot device (usually a hard drive) highest in the configured boot order to load the operating system
+
 If all its tests complete successfully, the POST process finishes. If there is an error, it can
 produce a beep code or displayed code that indicates there is an issue. Each BIOS publisher
 has its own series of codes that can be generated.
@@ -492,14 +488,13 @@ The BIOS on most modern computers has been replaced by a Unified
 Extensible Firmware Interface (UEFI), first introduced in 2002. It supports
 all the functions BIOS did, and it has updated features such as a graphical
 interface, support for larger hard drives, embedded security, and a faster
-boot time. In practice, the terms BIOS and UEFI are essentially inter-
-changeable. In this book, I will use BIOS as that’s the term specified in the
+boot time. In practice, the terms BIOS and UEFI are essentially interchangeable. In this book, I will use BIOS as that's the term specified in the
 exam objectives and acronym list.
 As mentioned, the POST routine offers the user a chance to enter the BIOS and change the configuration settings. This is usually done by pressing a key during the boot process, such as F2, F12,
 or the Delete key. The computer may prompt you, but usually the prompt goes by quickly. If you
-don’t see anything, an Internet search for the motherboard manufacturer will give you instructions
+don't see anything, an Internet search for the motherboard manufacturer will give you instructions
 on how to get into the BIOS. Once you get a screen showing that the operating system has
-started, you’re too late. Figure 1.13 shows a BIOS (technically UEFI) configuration page.
+started, you're too late. Figure 1.13 shows a BIOS (technically UEFI) configuration page.
 FIGURE 1.13  BIOS settings
 
 Inside the BIOS, you can make system configuration selections such as changing the
@@ -508,15 +503,16 @@ you would press F2 or click Advanced Mode to make these changes. Also, many BIOS
 diagnostic routines that you can use to have the BIOS analyze the state and quality of the
 same components it inspects during bootup but at a much deeper level.
 
-When you upgrade your system’s hardware, the system BIOS typically recognizes it upon
-bootup. If you upgraded your hard drive, processor, or memory and it’s not recognized,
+When you upgrade your system's hardware, the system BIOS typically recognizes it upon
+bootup. If you upgraded your hard drive, processor, or memory and it's not recognized,
 though, you might need to update your system BIOS. This is done through a process called
 flashing the BIOS.
 To flash the BIOS, you will need to download the most current version from the manufacturer of your computer (or motherboard, if you built your own system) and follow the
 instructions. As a warning, you should always be very careful when flashing a BIOS and
-follow the manufacturer’s instructions to the letter. Messing it up could cause the motherboard to become inoperable.
+follow the manufacturer's instructions to the letter. Messing it up could cause the motherboard to become inoperable.
 
-Your PC has to keep certain settings when it’s turned off and its power cord is unplugged,
+### CMOS and BIOS Settings Storage
+Your PC has to keep certain settings when it's turned off and its power cord is unplugged,
 such as the date and time, hard drive configuration, memory and CPU settings, boot
 sequence, and power management features.
 These settings are kept in a special memory chip called the complementary metal oxide
@@ -530,21 +526,22 @@ RAM does when your computer is powered off). To prevent CMOS from losing its rat
 important information, motherboard manufacturers include a small battery called the
 CMOS battery to power the CMOS memory. Most CMOS batteries look like watch batteries or small cylindrical batteries. If you look back at Figure 1.12, you will see the CMOS
 battery next to the BIOS.
-If your system does not retain its configuration information after it’s been powered off,
-it’s possible that the CMOS battery has failed. Replacing it is similar to replacing a watch
+If your system does not retain its configuration information after it's been powered off,
+it's possible that the CMOS battery has failed. Replacing it is similar to replacing a watch
 battery.
 
-If you’ve ever looked at the back of a computer, you know that there’s a lot going on back
+### Front Panel and Back Panel Connectors
+If you've ever looked at the back of a computer, you know that there's a lot going on back
 there. There could be a dozen or so different types of connectors, including ones for power,
 video, audio, a keyboard and mouse, networking (such as Gigabit Ethernet), and other
 devices. Generally speaking, all of these connectors are connected to one of two things: the
-motherboard or an expansion card that’s attached to the motherboard. I will talk about all
+motherboard or an expansion card that's attached to the motherboard. I will talk about all
 of these in Chapter 2, “Peripherals and Connectors.” For now, I offer you Figure 1.14, showing several connectors on the back panel.
 
-Even though the front panel of the computer isn’t as chaotic as the back panel, there’s still a
+Even though the front panel of the computer isn't as chaotic as the back panel, there's still a
 lot happening. The front of your computer might have one or more memory card readers or
 optical drives such as a DVDROM.
- It’s kind of oldschool to have these devices accessible
+ It's kind of oldschool to have these devices accessible
 from the front of your system.
 Years ago, you might have had 3½″ or even 5¼″ floppy drives
 on the front of your system too. (Google them!)
@@ -554,7 +551,7 @@ started moving connectors that used to be found only on the backs of systems to 
 Now, your system will likely have most if not all of the following types of connectors on the
 front panel or top of the case. All of them get connected to the motherboard in some fashion.
 Power Button Having a power button in an easily accessible place seems kind of obvious,
-doesn’t it? Well, they used to be on the back or side of computers, too. Many times, your
+doesn't it? Well, they used to be on the back or side of computers, too. Many times, your
 power button will also double as a power light, letting you know that the system is on.
 Reset Button Reset buttons are hitormiss on computers today.
  The idea is that this button
@@ -580,27 +577,22 @@ or more USB ports on the front or top of the case. Other systems will have memor
 readers built into the front of the case as well. I will cover these different connectors in
 Chapter 2.
 
+### Reading Motherboard Specifications
 At the beginning of this section, I gave you a description of a motherboard for sale.
 Asus ROG Strix Z790-E Gaming WiFi II LGA 1700 DDR5 ATX Motherboard, DDR5 8000+, 1x PCIe 5.0x16, 2x PCIe 4.0x16, 5x M.2 slots, 1x HDMI, 1x DisplayPort, 1x USB 20 Gbps port, 11x USB 10 Gbps ports, Wi-Fi 7.
 
-Now that you’ve learned about motherboards, let’s translate the acronym string. “Asus
+Now that you've learned about motherboards, let's translate the acronym string. “Asus
 ROG Strix Z790-  E Gaming WiFi II” is the manufacturer and model of the motherboard.
 
 It has the LGA 1700 CPU socket, and uses DDR5 RAM (which you will learn about in the
-“Memory” section later in this chapter). It’s an ATXstyle motherboard (again, suppor
-t-
-ing DDR5) with one PCIe 5.0× 16 slot, two PCIe 4.0× 16 slots, five M.2 slots (covered in
-the “Hard Drives” section later in this chapter), one HDMI and one DisplayPort (to connect monitors), one USB 20 Gbps port and 1 1 USB 10 Gbps ports for external peripherals, and it supports Wi-Fi 7 (which I will talk about in Chapter 8; sometimes you will
-
-see it written as WiFi, but the correct standard per the accrediting agency is Wi-Fi,
-with a h
-yphen).
+“Memory” section later in this chapter). It's an ATX-style motherboard (again, supporting DDR5) with one PCIe 5.0×16 slot, two PCIe 4.0×16 slots, five M.2 slots (covered in the “Hard Drives” section later in this chapter), one HDMI and one DisplayPort (to connect monitors), one USB 20 Gbps port and 11 USB 10 Gbps ports for external peripherals, and it supports Wi-Fi 7 (which I will talk about in Chapter 8; sometimes you will see it written as WiFi, but the correct standard per the accrediting agency is Wi-Fi, with a hyphen).
 Armed with this information, you can now compare motherboards to each other to determine which one has some of the features you are seeking!
 
+### Processors
 The processor is the most important component on the motherboard. The role of the central
 processing unit (CPU) is to control and direct all the activities of the computer. Because of
-this role, the CPU often is called the brain of the computer. The analogy isn’t perfect because
-the processor isn’t capable of thinking independently. It just does what it’s instructed to do, which is processing math. Still, the analogy of the processor as the computer’s brain is
+this role, the CPU often is called the brain of the computer. The analogy isn't perfect because
+the processor isn't capable of thinking independently. It just does what it's instructed to do, which is processing math. Still, the analogy of the processor as the computer's brain is
 close enough.
 Tech+ exam objective 2.2 lists central processing unit (CPU) as a subob -
 jective. Be sure to know what it is and what it does!
@@ -614,16 +606,17 @@ to insert them incorrectly into their sockets. Figure 1.15 shows an Intel Core i
 sitting in an open LGA socket.
 FIGURE 1.15  Intel Core i7 processor
 
-As powerful as processors are, they don’t look that impressive from the outside. Moreover, rarely will you see a processor without an accompanying heatremoval system.
+As powerful as processors are, they don't look that impressive from the outside. Moreover, rarely will you see a processor without an accompanying heatremoval system.
 Your processor will have either a metal heat sink (it looks like rows of aluminum fins sticking up
 from it), a fan, or a combination of the two. Without a heat sink and/or fan, a modern processor would generate enough heat to destroy itself within a few seconds.
 
 The most important characteristic your processor can have is compatibility. Does it fit into
 your motherboard? Beyond this, there are literally dozens of different characteristics that
 CPUs have, such as hyperthreading and virtualization support. Most of those topics are
-beyond the scope of this book. Here, I’ll focus on three key characteristics: architecture,
+beyond the scope of this book. Here, I'll focus on three key characteristics: architecture,
 speed, and cache.
-Architecture
+
+### Processor Architecture
 Three architecture-related terms with which you should be familiar are 32-bit and 64-bit, and ARM. Processors that you find today will be labeled as 32-bit or 64-bit.
 What this
 refers to is the set of data lines between the CPU and the primary memory of the system;
@@ -635,11 +628,11 @@ Microsoft operating systems,
  the external system data bus will always be 64 bits wide or
 some larger multiple thereof. You will find 32-  bit and 64- bit processors designed for all
 types of computers,
- such as laptops, desktops, workstations, and servers. In today’s world,
+ such as laptops, desktops, workstations, and servers. In today's world,
 though, using a 32-  bit processor on a server would be a little like entering a bicycle into a
 sports car race.
 Advanced RISC Machines (ARM) refers to a type of processor that uses an architecture
-known as reduced instruction set computing (RISC). That’s in contrast to Intel’s (and clones)
+known as reduced instruction set computing (RISC). That's in contrast to Intel's (and clones)
 x86 architecture, which employs complex instruction set computing (CISC). Confused yet?
 Remember that processors do math. The differences between RISC and CISC is how the
 processors do the math and the instructions that the software needs to give them to do the
@@ -658,31 +651,28 @@ used in devices that are tabletsized and smaller,
  like mobile phones. Roughly 90 percent
 of all small devices use ARM chips.
 
-Another term that you will hear in terms of architecture is the number of cores a processor has. You might see something labeled dual-  core, quadcore, or even 128-  core.
-To
-keep making better and faster processors every year, manufacturers constantly have to
-find ways to increase the number of instructions a processor can handle per second. Since
-about 2004, they’ve done it mostly by adding cores to desktop processors. Multicore
-means that the CPU is actually made up of several processors working in unison within the
-same package.
-Speed
+### Processor Cores and Multithreading
+Another term that you will hear in terms of architecture is the number of cores a processor has. You might see something labeled dual-core, quad-core, or even 128-core. To keep making better and faster processors every year, manufacturers constantly have to find ways to increase the number of instructions a processor can handle per second. Since about 2004, they've done it mostly by adding cores to desktop processors. Multicore means that the CPU is actually made up of several processors working in unison within the same package.
+
+### Processor Speed
 Hertz (Hz) are electrical cycles per second. Each time the internal clock of the processor
-completes a full cycle, a single Hz has passed. Back in 1981, IBM’s first PC ran at 4.77 megahertz (MHz), which is 4.77 million cycles per second. Modern processors operate at billions
+completes a full cycle, a single Hz has passed. Back in 1981, IBM's first PC ran at 4.77 megahertz (MHz), which is 4.77 million cycles per second. Modern processors operate at billions
 of cycles per second, or gigahertz (GHz). For example, you might see a processor that runs at
 3.5 GHz. Generally speaking, faster is better, although it generates more heat.
-To save power during times when it’s not busy, many CPUs can throttle down their speed
+To save power during times when it's not busy, many CPUs can throttle down their speed
 to reduce the amount of energy used. CPU throttling is common in processors for mobile
 devices, where heat generation and systembattery drain are key issues of full power usage.
 For the Tech+ exam objective 1.3, “Compare and contrast common units
 of measure,” you need to be familiar with megahertz (MHz) and gigahertz
 (GHz) in reference to processing speed.
 
+### Processor Cache
 I already mentioned cache when discussing motherboards, but most processors also include
 their own builtin cache. Cache is a quick form of memory that greatly speeds up the
 performance of your computer
 .
-You’ll see three different cache designations. Level 1 cache (L1 cache) is the smallest and
-fastest, and it’s on the processor die itself. In other words, it’s an integrated part of the manufacturing pattern that’s used to stamp the processor pathways into the silicon chip. You can’t
+You'll see three different cache designations. Level 1 cache (L1 cache) is the smallest and
+fastest, and it's on the processor die itself. In other words, it's an integrated part of the manufacturing pattern that's used to stamp the processor pathways into the silicon chip. You can't
 get any closer to the processor than that.
 While the definition of L1 cache has not changed much over the years, the same is not
 true for other cache levels. L2 and L3 cache used to be on the motherboard but now have
@@ -700,13 +690,14 @@ example.
 - L2 cache: 256 KB
 - L3 cache: 4 MB–12 MB
 - RAM: 4 GB–64 GB
-CPU Functionality
+
+### CPU Functionality
 Processors are made up of millions of transistors, which are electrical gates that let power
-through or not depending on their current state. They’re the basis of binary processing,
+through or not depending on their current state. They're the basis of binary processing,
 that is, processing (doing math) based on things being in one of two states: on or
 off, 1 or 0.
-At their most basic level, all that computers understand is 1s and 0s; it’s the processor’s
-job to do math on strings of 1s and 0s. The math that it performs is based on what’s known
+At their most basic level, all that computers understand is 1s and 0s; it's the processor's
+job to do math on strings of 1s and 0s. The math that it performs is based on what's known
 as an instruction set—  rules on how to do the math. It accepts numbers as input,
  performs
 calculations on them, and delivers other numbers as output. How many numbers the processor can accept at a time varies. Earlier, I mentioned 32- bit versus 64- bit architecture. Processors with 64- bit architecture can accept more data at once, and as you can imagine,
@@ -716,10 +707,10 @@ Tech+ exam objective 1.1, “Explain the basics of computing,” lists input,
 processing, output, and storage as subobjectives. Have a high- le
 vel
 understanding of how each works.
-Binary notation is a bit unfamiliar to most people, because we’re more accustomed to
+Binary notation is a bit unfamiliar to most people, because we're more accustomed to
 using the decimal numbering system (0–9). Exercise 1.1 will get you more familiar with
 binary notation.
-I’ll talk a lot more about binary, decimal, and hexadecimal in Chapter 6,
+I'll talk a lot more about binary, decimal, and hexadecimal in Chapter 6,
 “Software Development.”
 EXERCISE 1.1
 Converting Between Decimal and Other Numbering Systems
@@ -727,7 +718,7 @@ Converting Between Decimal and Other Numbering Systems
 pressing Enter.
 2. Click the Calculator button (the three parallel lines near the upper-left corner), and
 choose Programmer to switch to Programmer view, as shown in Figure 1.16. Notice on
-the left that there is a mark next to the Dec option because that is what’s selected. Dec
+the left that there is a mark next to the Dec option because that is what's selected. Dec
 is short for Decimal.
 
 3. Enter the number 267.
@@ -739,15 +730,15 @@ conversion. The number in binary is 100001011.
 7. Click DEC again to return to decimal.
 8. Experiment with other numbers. What would your birth date look like in binary or hex?
 Close the calculator when you are finished.
-Memory
+
+### Memory
 Memory, generically speaking, is data storage that uses on/off states on a chip to record patterns of binary data. (Remember, computers deal only with 1s and 0s!) Inside a memory chip
 is a grid of on/off switches. An on value represents 1, and an off value represents 0.
 FIGURE 1.16  Calculator in Programmer view
 
 Memory is often categorized as **volatile** or **nonvolatile**. Volatile memory, such as the RAM installed on your motherboard, must stay powered on to retain its contents. Nonvolatile memory, such as ROM and flash, retains data without continuous power. Static RAM (SRAM) and dynamic RAM (DRAM) refer to how RAM cells are built; **system RAM (whether SRAM or DRAM) is volatile.**
 Broadly speaking, all memory can be divided into one of two types: ROM and
-RAM. Readonly memory (R
-OM) chips store data permanently; you can’t make changes
+RAM. Read-only memory (ROM) chips store data permanently; you can't make changes
 to their content at all. (It takes a special ROMwriting machine to write one.) This type of
 memory is always static.
  The BIOS on your motherboard is stored on a ROM chip.
@@ -757,35 +748,36 @@ electronic pulses.
 The programming on simple electronic devices that will never need to be user- updated,
 like the computer on an exercise treadmill that stores various fitness programs,
  will also
-be stored on ROM. The main advantage of ROM is its reliability. It can never be accidentally changed or deleted. The disadvantages of ROM are that it’s slow compared to RAM
-and that you can’t ever update it; you have to pull the chip out of the system and replace it.
-Because of these drawbacks, ROM isn’t used as a PC’s primary memory source; a PC has
+be stored on ROM. The main advantage of ROM is its reliability. It can never be accidentally changed or deleted. The disadvantages of ROM are that it's slow compared to RAM
+and that you can't ever update it; you have to pull the chip out of the system and replace it.
+Because of these drawbacks, ROM isn't used as a PC's primary memory source; a PC has
 only a small amount of ROM.
 Tech+ exam objective 2.2 lists random access memory (RAM) as a subob -
 jective. In addition, objective 2.3, “Compare and contrast storage types,”
 lists volatile vs. non-volatile, RAM, and ROM as subobjectives.
-Random access memory (RAM) can be written and rewritten on the device in which it’s
-installed. It’s called random access because the data is stored in whatever locations are available in it, and when reading data back from RAM, only the required data is read, not the
+Random access memory (RAM) can be written and rewritten on the device in which it's
+installed. It's called random access because the data is stored in whatever locations are available in it, and when reading data back from RAM, only the required data is read, not the
 entire contents.
 You can never have too much RAM.
-RAM can be either static or dynamic. **NAND flash memory** (not SRAM) is what USB flash drives and SSDs use to store files without power. **Most working memory on a PC’s motherboard is dynamic RAM (DRAM)**; when people say “memory” or “RAM,” they usually mean that DRAM. **Static RAM (SRAM)** is faster and is typically used for small, high-speed caches (for example, on or near the CPU). **Both SRAM and DRAM used as system memory are volatile—when you power off the computer, their contents are lost.**
-The motherboard’s RAM functions as a work area when the computer is on. The OS is
+RAM can be either static or dynamic. **NAND flash memory** (not SRAM) is what USB flash drives and SSDs use to store files without power. **Most working memory on a PC's motherboard is dynamic RAM (DRAM)**; when people say “memory” or “RAM,” they usually mean that DRAM. **Static RAM (SRAM)** is faster and is typically used for small, high-speed caches (for example, on or near the CPU). **Both SRAM and DRAM used as system memory are volatile—when you power off the computer, their contents are lost.**
+The motherboard's RAM functions as a work area when the computer is on. The OS is
 loaded into it, as are any applications that you have open and any data associated with
 
 those applications. The more free RAM in the computer, the larger the available workspace,
-so the more applications and data files you’ll be able to have open at once. If your system
+so the more applications and data files you'll be able to have open at once. If your system
 runs low on RAM, it can use slower virtual memory to compensate. Exercise 1.2 shows you
 how to configure your virtual memory. Note that for exercises and examples in this book I
 am using Windows 11 Home. Older Windows operating systems will have similarly or identically named utilities to perform these tasks. If you are unsure, an Internet search for the
 utility name should help you out.
-Virtual Memory
+
+### Virtual Memory
 Many OSs, including Microsoft Windows, use a tremendous amount of RAM as they operate.
 They sometimes do this to the point that even a well- equipped PC might not have enough
 RAM to do everything that a user w
 ants. To prevent the user from being denied an activity
 because of a lack of available memory, these OSs employ virtual memory to take up the slack.
-With virtual memory, a portion of the hard disk is set aside as a holding area for the contents of RAM. When there isn’t enough space in RAM to hold the data that needs to be
-placed there, the OS’s virtual memory management utility temporarily moves some of the
+With virtual memory, a portion of the hard disk is set aside as a holding area for the contents of RAM. When there isn't enough space in RAM to hold the data that needs to be
+placed there, the OS's virtual memory management utility temporarily moves some of the
 least recently used data in RAM onto the hard disk, making room for the new incoming
 data. Then, if an application calls for the data that was moved out, the virtual memory manager moves something else out and swaps the needed data back in again.
 Because of all this data swapping, the reserved area on the hard disk for virtual memory is
@@ -794,9 +786,9 @@ The main drawback of virtual memory is its speed, which is limited to the speed 
 hard drive can store and retrieve data. Compared to the speed of the processor and memory,
 the hard disk is very slow. Therefore, the less physical RAM available in a system and the
 more that system has to rely on virtual memory, the more slowly applications will run on that
-system. That’s why adding more RAM to a system is often a worthwhile upgrade.
+system. That's why adding more RAM to a system is often a worthwhile upgrade.
 EXERCISE 1.2
-Assessing Your Computer’s RAM and Virtual Memory in Windows 11
+Assessing Your Computer's RAM and Virtual Memory in Windows 11
 1. In the Windows search box (located next to the Start button), type about, which will show
 the About Your PC desktop app. Click the app name to open it. (Alternatively, open
 Control Panel ➢  System.) You will get a screen similar to the one shown in Figure 1.17.
@@ -809,18 +801,16 @@ Properties dialog box opens.
 Options dialog box opens.
 5. Click the Advanced tab, and in the Virtual Memory section, note the total paging file
 size for all drives, as shown in Figure 1.18. This is the amount of virtual memory set
-aside for the system’s use.
-FIGURE 1.17  About your PC
-EXERCISE 1.2  (continued)
+aside for the system's use.
 
 6. Click the Change button. The Virtual Memory dialog box opens.
-7. Click Cancel to close the dialog box without making any changes. (It’s usually best to
+7. Click Cancel to close the dialog box without making any changes. (It's usually best to
 continue to let this setting be automatically managed by the system.)
 8. Click Cancel to close the Performance Options dialog box.
 9. Click Cancel to close the System Properties dialog box.
 10. Close the Control Panel window.
-FIGURE 1.18  Virtual memory
 
+### Memory Bus Speeds and DDR SDRAM
 The pathway that delivers data to and from the memory is called a memory bus. Memory
 has a bus width that determines how many columns are in each row of storage. All the bits
 in a single row are read together as a single value, so the wider the memory bus width, the
@@ -840,7 +830,7 @@ double data rate (DDR) SDRAM, also
 sometimes called DDR1. It makes higher transfer rates achievable by strictly controlling the
 timing of the electrical data and clock signals so that data can be doublepumped into the
 RAM. The
-term double data rate is a reference to DDR’s capability of achieving nearly twice
+term double data rate is a reference to DDR's capability of achieving nearly twice
 the bandwidth of SDR.
 After DDR1 came DDR2 SDRAM, which enables greater throughput and requires lower
 power by running the internal clock at half the speed of the data bus in addition to doublepumping the bus.
@@ -850,10 +840,10 @@ DDR3, DDR4,
  and DDR5 go even further, doubling the data rate from each previous version and using less power. The DDR6 standard, expected to be finalized in late 2024 or early
 2025, will double the speed of DDr4.
 Video cards with DDR6 RAM are already on the market; you will see it
-labeled as GDDR6 (the leading G indicates it’s memory optimized for
+labeled as GDDR6 (the leading G indicates it's memory optimized for
 graphics cards). The DDR6 dates are for system RAM.
 Motherboards typically accept only one type of RAM: SDR, DDR, DDR2, DDR3,
-DDR4, or DDR5. Even if the motherboard is physically compatible with other types, it’s
+DDR4, or DDR5. Even if the motherboard is physically compatible with other types, it's
 programmed to work with RAM at a certain speed.
 
 There have been various sizes and shapes of RAM modules in PCs over the years. For the
@@ -885,22 +875,22 @@ Determining the Type of Installed RAM
 anything about the RAM specifications. In the documentation, locate the information
 about installing a RAM upgrade. This will tell you where to find the RAM on
 your system.
-2. Open the computer’s case and locate the RAM. Identify whether it’s DIMM or
+2. Open the computer's case and locate the RAM. Identify whether it's DIMM or
 SODIMM. (Most laptops use SODIMM, and most desktop PCs use DIMM.) To avoid
 damaging it with static electricity, avoid touching it. If you need to touch it, touch the
-metal frame of the PC’s case first.
+metal frame of the PC's case first.
 3. Examine the numbers or codes, if any, on the DIMM or SODIMM, looking for model
 numbers, speeds, or any other pertinent information.
 4. Look at the data you gathered online to see whether you can determine anything about
 the memory based on those numbers.
-5. If you can’t determine the RAM type by any of these methods, find the motherboard’s
+5. If you can't determine the RAM type by any of these methods, find the motherboard's
 brand and model number (look for this information printed on the motherboard itself).
 Then look up the motherboard online to see whether information about its RAM
 requirements is available.
 
 Beyond the “big three” of the motherboard, processor, and RAM, there are several other
 important devices located inside your computer. Broadly speaking, they fall into one of
-two camps. They either provide long-term storage or expand your system’s functionality by
+two camps. They either provide long-term storage or expand your system's functionality by
 giving you features such as video,
  audio, or network access.
 In the following sections, I will introduce you to six different types of devices. The first
@@ -909,18 +899,19 @@ The last four
 , video cards, sound cards, network cards, and modems, provide features
 that take your computer from being a really good paperweight to being a helpful and fun
 device to use.
-Storage Devices
-So far in this chapter we’ve covered details related to system RAM, which is a short-term,
+
+### Storage Devices
+So far in this chapter we've covered details related to system RAM, which is a short-term,
 volatile storage component. In this section, we will switch to discussing long-term
 
-nonvolatile, or persistent storage options (meaning they don’t lose their data when powered off) including hard disk drives, solid-state drives, optical discs, and flash drives.
+nonvolatile, or persistent storage options (meaning they don't lose their data when powered off) including hard disk drives, solid-state drives, optical discs, and flash drives.
 Storage is mentioned in Tech+ objective 1.1 and again in objective 2.2.
 Objective 2.3 goes even further and lists several local storage options you
 need to be familiar with, including magnetic disks/hard disk drive (HDD),
 solid-state drive (SSD), nonvolatile memory express (NVMe), optical, and
-external flash drives. It’s clearly an important topic!
+external flash drives. It's clearly an important topic!
 Hard Drives
-Computers would be a lot less useful to us if they weren’t able to store our data long-term.
+Computers would be a lot less useful to us if they weren't able to store our data long-term.
 This is where hard drives come in. Hard disk drive (HDD) systems (called hard disks or hard
 drives for short) are used for permanent storage and quick access. They hold our data as
 well as files the system needs to operate smoothly. Drives differ in their capacity, their speed
@@ -937,8 +928,8 @@ data to the platters by magnetizing bits of iron oxide particles on the platters
 positive and negative polarity.
  As a hard disk operates, the platters rotate at a high speed,
 and the read/write heads hover just over the disk surfaces on a cushion of air generated
-by the spinning. Normally, you won’t see the inside of a hard drive, so you can see one in
-Figure 1.20. Once you open the metal box in which it’s encased, you ruin the drive. The
+by the spinning. Normally, you won't see the inside of a hard drive, so you can see one in
+Figure 1.20. Once you open the metal box in which it's encased, you ruin the drive. The
 drives are typically 3½″ in diameter for full- size hard disk drives (for desktop PCs) and 2½″
 
 for smaller hard disk drives used in laptops.
@@ -951,7 +942,7 @@ material. They were written to and read from magnetically, just like hard
 drives. You would insert them into an FDD, which performed the reading
 and writing functions on the disk.
 The two most common sizes were 3½″ and 5¼″, and they held 1.44 MB and
-1.2 MB, respectively. You won’t need to know those numbers for the exam,
+1.2 MB, respectively. You won't need to know those numbers for the exam,
 but they give you good perspective on how little data they could hold. The
 one advantage they had was that they were portable. Now we have USB
 flash drives, with capacities in the gigabytes (and no special read/write device
@@ -960,7 +951,7 @@ required), which make floppy disks obsolete.
 When evaluating hard drives, there are really two factors that determine their performance:
 size and speed.
 Size is fairly self- evident. Hard drives with larger capacity store more data.
- There isn’t
+ There isn't
 anything too tricky about it. You can easily find hard drives with capacities from several
 hundred gigabytes up to 20 terabytes or more. Table 1.2 has some conversions that will
 likely come in handy.
@@ -978,7 +969,7 @@ vie is about 4 GB.
 1,000 terabytes 1 petabyte (PB) Data from a large government institution, such as the
 U.S. Internal Revenue Service.
 
-Most people assume that they don’t need to think in terms of exabytes or zettabytes (not
+Most people assume that they don't need to think in terms of exabytes or zettabytes (not
 to mention yottabytes, which are 1,000 zettabytes), but with 18–20 TB hard drives being
 relatively common today, these larger measures are probably right around the corner.
 Tech+ exam objective 1.3 specifically calls out all storage units of measure from bit up to petabyte, so it may be helpful to review Table 1.2 a
@@ -1000,14 +991,14 @@ can be better for laptops, where heat production and battery usage can be issues
 higherspeed drives. For desktop HDDs,
  7200 rpm is the most common speed in use today.
 How many Equals Example
-1,000 petabytes 1 exabyte (EB) It’s rumored that YouTube stores just over 1 EB of data,
-but it’s hard to confirm that claim.
+1,000 petabytes 1 exabyte (EB) It's rumored that YouTube stores just over 1 EB of data,
+but it's hard to confirm that claim.
 1,000 exabytes 1 zettabyte (ZB) In 2013, NPR and Forbes reported that the U.S. National
-Security Agency’s new Utah data center could store up
-to 5 ZB of data. But it’s the NSA, so of course there is
+Security Agency's new Utah data center could store up
+to 5 ZB of data. But it's the NSA, so of course there is
 no official confirmation of this.
 The historical convention was always that the next level up equaled 1,024 of the previous level, such that
-1 MB = 1,024 KB. Now, it’s more or less accepted that we just round everything off to 1,000 to make it easier
+1 MB = 1,024 KB. Now, it's more or less accepted that we just round everything off to 1,000 to make it easier
 to do the math.
 
 There are two common hard drive standards in the marketplace today: Parallel ATA (PATA),
@@ -1023,7 +1014,7 @@ shown in Figure 1.9 and Figure 1.10.
 Power Data
 FIGURE 1.21  PATA/IDE and SATA hard drives
 
-There’s a third connector type, called Small Computer System Interface
+There's a third connector type, called Small Computer System Interface
 (SCSI, pronounced scuzzy), that you might hear about. It uses a ribbon
 cable similar to IDE but wider. It was once popular for high- en
 d systems,
@@ -1035,7 +1026,7 @@ Connecting Multiple PATA Devices
 Hard drives are important, and for many years the most common hard drive standard was
 PATA (at the time called IDE). Most motherboards came with two connectors; today, motherboards will have one, if they support PATA at all. When CD- ROM drives came out, they too
 used the same 40- pin connector as hard drives. If you had only two devices, this w
-asn’t a
+asn't a
 problem. But what if you wanted two hard drives and a CD- ROM?
 The 40- pin PA
 TA ribbon cable has three connectors on it. One goes to the motherboard, and
@@ -1051,13 +1042,13 @@ on the back of the hard drive. If you look at Figure 1.21, the jumper block is t
 between the P
 ATA data connector and the power block. The right two pins have a jumper
 placed over them, configuring the drive.
-Some PATA cables will assign a role to a drive based on the connector into which it’s
-plugged. (That’s called Cable Select [CS], with the primary at the end and the secondary in
+Some PATA cables will assign a role to a drive based on the connector into which it's
+plugged. (That's called Cable Select [CS], with the primary at the end and the secondary in
 the middle.) To make this work, you must set the jumpers on each of the drives to the CS
 setting. Fortunately, they are usually set to CS by default. The top of the hard drive might
 have a sticker showing you the jumper settings (the one in Figure 1.21 does), or you can
-check the manufacturer’s documentation.
-When a newly installed PATA drive doesn’t work, it could be because the jumpers aren’t set
+check the manufacturer's documentation.
+When a newly installed PATA drive doesn't work, it could be because the jumpers aren't set
 correctly.
 
 Unlike conventional hard drives, a solid-state drive (SSD) has no moving parts but uses the
@@ -1084,9 +1075,9 @@ shapes and sizes of SSDs as well as how they are connected to the motherboard.
 
 SSDs are one area that can cause a lot of confusion for new and experienced technicians alike. There are several standards that sound similar to each other and multiple connection methods as well. Old conventional HDDs might be slow and bulky, but at least they are simple to understand and install!
 
-Terms that you will hear referring specifically to SSDs include nonvolatile memory express (NVMe) and M.2 (pronounced m dot two). While these terms are often used interchangeably, they are different things. NVMe is a standard regulating data transfers. It’s incredibly fast—Generation 4 NVMe drives can transfer more than 7000 MB/s (megabytes per second) compared to SATA SSDs, which top out at about 600 MB/s. But there is no such thing as an NVMe slot; NVMe drives can be made in form factors such as PCIe. Figure 1.23 shows a PCIe NVMe SSD.
+Terms that you will hear referring specifically to SSDs include nonvolatile memory express (NVMe) and M.2 (pronounced m dot two). While these terms are often used interchangeably, they are different things. NVMe is a standard regulating data transfers. It's incredibly fast—Generation 4 NVMe drives can transfer more than 7000 MB/s (megabytes per second) compared to SATA SSDs, which top out at about 600 MB/s. But there is no such thing as an NVMe slot; NVMe drives can be made in form factors such as PCIe. Figure 1.23 shows a PCIe NVMe SSD.
 
-M.2, on the other hand, is a form factor—that is, the size and physical configuration of the drive. It also shares its name with M.2 slots on the motherboard. It’s not a coincidence—as you would expect, M.2 drives fit into M.2 slots. Figure 1.24 shows an M.2 NVMe SSD.
+M.2, on the other hand, is a form factor—that is, the size and physical configuration of the drive. It also shares its name with M.2 slots on the motherboard. It's not a coincidence—as you would expect, M.2 drives fit into M.2 slots. Figure 1.24 shows an M.2 NVMe SSD.
 FIGURE 1.23  PCIe NVMe SSD
 FIGURE 1.24  M.2 NVMe SSD
 
@@ -1095,8 +1086,8 @@ M.2 drive will greatly outperform a SATA M.2 drive. Still, any SATA SSD will be 
 times faster than a conventional HDD.
 When it comes to selecting an SSD, make sure that the motherboard supports the drive
 you want to install, and confirm you have an open slot of the right type—M.2, SATA,
-or PCIe. We’ve already looked at PCIe (Figure 1.8) and SATA (Figure 1.10) slots in this
-chapter; Figure 1.25 shows an M.2 connector. It’s in the center pointing downward. To
+or PCIe. We've already looked at PCIe (Figure 1.8) and SATA (Figure 1.10) slots in this
+chapter; Figure 1.25 shows an M.2 connector. It's in the center pointing downward. To
 get to it, you will need to loosen a screw that holds a protective cover in place over the
 slot and remove the cover. The protective cover is shown in Figure 1.26, with the screw on
 the left.
@@ -1110,7 +1101,7 @@ Exercise 1.4 shows how to view information about your storage drives in Windows.
 FIGURE 1.25  M.2 connector on motherboard
 
 FIGURE 1.26  M.2 slot protective co ver
-FIGURE 1.27  Two USB flash dri ves
+FIGURE 1.27  Two USB flash drives
 
 EXERCISE 1.4
 Examining Storage Drives in Windows 11
@@ -1120,7 +1111,7 @@ left navigation pane, click This PC. This will show the This PC desktop app. A l
 drives on your PC appears, like the one shown in Figure 1.28.
 2. Examine the primary hard disk (C:). You can see a bar that shows you how much
 storage space it has as well as how much space is free. Figure 1.28 shows an example.
-3. Rightclick the primary hard disk (C:), and click Properties. A Properties dialog box
+3. right-click the primary hard disk (C:), and click Properties. A Properties dialog box
 opens for that drive, as shown in Figure 1.29.
 4. Examine the information about the file system, used space, free space, and capacity.
 If free space is low (under about 10 percent), your computer could run slower than
@@ -1134,7 +1125,7 @@ FIGURE 1.28  Installed disk drives
 FIGURE 1.29  Hard disk properties
 FIGURE 1.30  Disk drives
 
-Optical Drives
+### Optical Drives
 Computers can have an optical storage drive capable of reading the latest Blu-ray Disc (BD),
 a digital versatile disc or digital video disc (DVD), or the legacy compact disc (CD) that you
 have lying around. Each type of optical drive can also be expected to support the technology
@@ -1145,7 +1136,7 @@ The BDs, DVDs, and CDs used for data storage are virtually the same as those use
 permanent recorded audio and video. The way data, audio, and video information is written
 to consumer-recordable versions makes them virtually indistinguishable from professionally
 manufactured discs.
-Each of these media types requires an optical drive capable of reading them. Read-only devices are designated with a -ROM ending, for example, BD-ROM, DVD-ROM, or CD-ROM. If the drive is capable of writing to these discs (called a burner), it will have a different ending, such as -R (recordable) or -RW (rewritable). To confuse matters further, there are two standards of DVD burners: DVD-RW and DVD+RW. Today’s DVD readers can generally handle both formats, but older devices might not be able to do so. Burnable BD drives are designated BD-R or BD-RE (for recordable or re-recordable). Figure 1.31 shows a DVD-ROM. It’s really hard to tell optical drives apart from each other, unless you see the logo that’s on it.
+Each of these media types requires an optical drive capable of reading them. Read-only devices are designated with a -ROM ending, for example, BD-ROM, DVD-ROM, or CD-ROM. If the drive is capable of writing to these discs (called a burner), it will have a different ending, such as -R (recordable) or -RW (rewritable). To confuse matters further, there are two standards of DVD burners: DVD-RW and DVD+RW. Today's DVD readers can generally handle both formats, but older devices might not be able to do so. Burnable BD drives are designated BD-R or BD-RE (for recordable or re-recordable). Figure 1.31 shows a DVD-ROM. It's really hard to tell optical drives apart from each other, unless you see the logo that's on it.
 Each of the formats I have mentioned so far has different capacities. Table 1.3 lists the
 most common. Before getting to Table 1.3, though, I need to define a few more acronyms.
 Discs can be single- sided (SS) or doublesided (DS), meaning that information is written
@@ -1159,14 +1150,14 @@ A doublesi ded, single- la yer DVD will give you more storage space than a
 single- si
 ded, dual- la
 yer DVD. This is because there is a bit of inefficiency
-when writing a second layer on one side, so the second layer doesn’t
+when writing a second layer on one side, so the second layer doesn't
 quite give you double the storage space versus just one layer.
 Now you know why Bluray movies are so much better than those on DVD. Even the simplest BD can store nearly 50 percent more data than the most advanced DVD!
 Other Internal Expansion Devices
 Beyond storage, there are other internal devices that add functionality to a computer as well.
-A computer with no video output won’t be of use to most people, so there’s a device that
-enables images to appear on a screen. Audio output isn’t always critical, but anyone who
-has been on a business or school conference call where the audio doesn’t work might beg to
+A computer with no video output won't be of use to most people, so there's a device that
+enables images to appear on a screen. Audio output isn't always critical, but anyone who
+has been on a business or school conference call where the audio doesn't work might beg to
 TABLE 1.3  Optical discs and their capacities
 Disc format Capacity
 CD SS (includes recordable versions) 650 MB, 700 MB, 800 MB, 900 MB
@@ -1186,7 +1177,7 @@ BD- R/RE DS, DL 10
 SS: single- sided; DS: doublesided; SL: single- layer; DL: dual- layer
 
 differ. Finally, computing today necessarily means communicating with other computers, and
-network cards help out with that. Let’s take a look at them.
+network cards help out with that. Let's take a look at them.
 
 A video adapter (more commonly called a graphics adapter or even more commonly a video
 card) is the expansion card you put into a computer to allow the computer to display output
@@ -1205,8 +1196,7 @@ to PCIe.
 Video cards can have one or more external plugins for monitors or other display devices.
 These will be covered in more detail in Chapter 2.
  Also notice that this card has two rather
-large fans attached to it—  in fact, that’
-s about all you can see. This is because the card has its
+large fans attached to it—  in fact, that's about all you can see. This is because the card has its
 FIGURE 1.32  An EVGA GeF orce video card
 
 own processor and memory and generates a lot of heat. Secondary cooling is necessary to
@@ -1215,8 +1205,8 @@ To save space and money, some systems (primarily laptops) will have
 the GPU built into the CPU or otherwise located on the motherboard.
 These systems will also split the system RAM between video and other
 system functions. (Usually, in these cases, the amount of RAM dedicated
-to video can be configured in the BIOS or in Windows.) There’s nothing
-wrong with this type of configuration, other than it’s slower than having
+to video can be configured in the BIOS or in Windows.) There's nothing
+wrong with this type of configuration, other than it's slower than having
 separate components. If you are a gamer or otherwise have high video
 processing needs, you will want a separate video card with as much RAM
 on it as you can get.
@@ -1233,7 +1223,7 @@ The most popular sound card standard in the market is the Sound Blaster, which i
 by Creative Labs.
 FIGURE 1.33  A legacy sound card
 
-It seems like every computer participates on a network these days, whether it’s at the office
+It seems like every computer participates on a network these days, whether it's at the office
 or at home. A network interface card (NIC) is an expansion card that connects a computer
 to a network so that it can communicate with other computers on that network. It translates
 the data from the parallel data stream used inside the computer into the serial data stream
@@ -1246,7 +1236,7 @@ onboard (integrated into the motherboard) versus expansion cards. NICs
 will also be covered again in Chapter 8.
 FIGURE 1.34  A wireless desktop NIC
 
-Most computers today have the NIC circuitry integrated into their motherboards. A computer with an integrated NIC wouldn’t need to have a NIC addon card installed unless
+Most computers today have the NIC circuitry integrated into their motherboards. A computer with an integrated NIC wouldn't need to have a NIC addon card installed unless
 it was faster or if you were using the second NIC for load balancing, security
 , or fault
 tolerance.
@@ -1260,7 +1250,7 @@ Usually, as you can see in Figure 1.35, there are two RJ- 11 ports: one for conn
 telephone line and the other for connection to a telephone.
 This is primarily so that a phone
 can gain access to the same wall jack to which the computer connects without swapping
-their cords. Keep in mind, though, that you won’t be able to use the phone while the computer is connected to the Internet.
+their cords. Keep in mind, though, that you won't be able to use the phone while the computer is connected to the Internet.
 Before high- speed Internet became popular,
  a modem was the device people used to get on
 the Internet. Of course, this meant that the phone line was in use and no one could call your
@@ -1271,14 +1261,14 @@ Although modems qualify as legacy technology, they are mentioned in
 Tech+ exam objective 2.8, “Identify basic networking concepts.” Like network cards, they will be covered again in Chapter 8.
 FIGURE 1.35  A modem
 
-Without electricity, there wouldn’t be any computers. With too much electricity, you’ll fry
+Without electricity, there wouldn't be any computers. With too much electricity, you'll fry
 everything inside the box. The goal is to find a happy medium and provide consistent power
 to your computer.
 Electronics components produce heat. The amount of heat depends on a variety of things,
 such as the number of transistors it has, the size of the piece, and the ventilation provided.
 Having components overheat is the most surefire way of having them fail, except perhaps for
 dousing them with water.
-In the next two sections, you’ll learn about providing your computer components with
+In the next two sections, you'll learn about providing your computer components with
 the right amount of power and then cooling them off so that they last as long as possible.
 
 The device in the computer that provides power is appropriately named the power supply
@@ -1311,7 +1301,7 @@ hard drives and optical drives. Each has a different appearance and way of conne
 device. Newer PSUs have a variety of similar, replacement, and additional connectors, such as
 dedicated power connectors for SATA and PCIe, additional power connectors for the motherboard, and even modular connections for these leads back to the power supply instead of
 a permanent wiring harness. Figure 1.38 shows the ATX power connector that goes to the
-motherboard. Notice that it’s keyed so that it can’t be put in the wrong way. Figure 1.39 shows
+motherboard. Notice that it's keyed so that it can't be put in the wrong way. Figure 1.39 shows
 three different types of peripheral power connectors: a 4- pin Molex connector for PA
 TA hard
 drives and optical drives, a 6- pin PCIe (called a PEG connector), and a S
@@ -1325,8 +1315,7 @@ voltage level used in the country where the computer is in service. For example,
  in the United
 States, the power grid supplies anywhere from 110VAC to 120VAC. However, in Europe, for
 instance, the voltage supplied is double, ranging from 220VAC to 240VAC.
-Although the voltage is the same as what is used in the United States to power high-
-voltage appliances, such as electric ranges and clothes driers,
+Although the voltage is the same as what is used in the United States to power high-voltage appliances, such as electric ranges and clothes driers,
  the amperage is much lower.
 The point is the switch is not there to match the type of outlet used in the same country. If
 the wrong voltage is chosen in the United States, the power supply expects more voltage
@@ -1338,9 +1327,9 @@ FIGURE 1.38  A 20- pin A TX power connector
 FIGURE 1.39  Peripheral power connector s
 
 FIGURE 1.40  Laptop power supply
-Laptop computers don’t have big, bulky power supplies like the one shown in
+Laptop computers don't have big, bulky power supplies like the one shown in
 Figure 1.36, but instead they use smaller AC adapters. They function the same way,
-converting AC current into DC power for the laptop’s components. AC adapters are also
+converting AC current into DC power for the laptop's components. AC adapters are also
 rated in watts and selected for use with a specific voltage the same as power supplies. One
 difference is that AC adapters are also rated in terms of DC volts out to the laptop or
 other device, such as certain brands and models of printers. Figure 1.40 shows a laptop AC
@@ -1360,7 +1349,7 @@ excess heat must be dissipated, or it will shorten the life of the components. I
 (as with the CPU), the component will produce so much heat that it can destroy itself in a
 
 matter of seconds if there is not some way to remove this extra heat. All computer systems
-today come with some cooling systems to reduce and remove heat. Here I’ll discuss two
+today come with some cooling systems to reduce and remove heat. Here I'll discuss two
 broad categories of cooling systems: case cooling and CPU cooling.
 
 The most common method used to cool computers is air cooling. With air cooling, the
@@ -1395,7 +1384,7 @@ Power supply
 Hard drive
 FIGURE 1.41  System unit airflow
 
-Note that you must pay attention to the orientation of the power supply’s airflow. If the
+Note that you must pay attention to the orientation of the power supply's airflow. If the
 power supply fan is an exhaust fan, as assumed in this discussion, the front and rear fans will
 match their earlier descriptions: front, intake; rear, exhaust. If you run across a power supply that
 has an intake fan, the orientation of the supplemental chassis fans should be reversed as well. The
@@ -1403,8 +1392,8 @@ rear chassis fan (or fans) should always be installed in the same orientation as
 fan runs to avoid creating a small airflow circuit that circumvents the cross flow of air through
 the case. The front chassis fan and the rear fans should always be installed in the reverse orientation to prevent them from fighting against each other and reducing the internal airflow.
 
-Without a doubt, the greatest challenge in computer cooling is keeping the CPU’s temperature in check. It is the component that generates the most heat in a computer; if left
-unchecked, it will fry itself in a matter of seconds. That’s why most motherboards have an
+Without a doubt, the greatest challenge in computer cooling is keeping the CPU's temperature in check. It is the component that generates the most heat in a computer; if left
+unchecked, it will fry itself in a matter of seconds. That's why most motherboards have an
 internal CPU heat sensor and a CPU fan sensor. If no cooling fan is active, these devices will
 shut down the computer before damage occurs.
 There are a few different types of CPU cooling methods, but the two most common can
@@ -1418,7 +1407,7 @@ FIGURE 1.42  CPU heat sink
 
 The metal fins on the heat sink in Figure 1.42 attach to the processor, and the fan in between helps dissipate the heat. You will find a variety of different types of processor heat
 sinks on the market, but most of them involve both the metal heat spreaders and a fan.
-Don’t touch a CPU heat sink until your computer has been turned off for
+Don't touch a CPU heat sink until your computer has been turned off for
 at least several minutes!
 The CPU fan often blows air down through the body of the heat sink to force the heat into
 the ambient internal air, where it can join the airflow circuit for removal from the case. However,
@@ -1451,9 +1440,8 @@ important component in the system because it connects everything and provides pa
 for communication. If the motherboard fails, your computer will not work. Processors are
 analogous to the brain of the computer, but what they really do is math and logic operations.
 They do it very quickly, and they generate a ton of heat. Much like the motherboard, if the
-processor fails, you don’t have a computer. Memory is critical, too. It’s a temporary storage
+processor fails, you don't have a computer. Memory is critical, too. It's a temporary storage
 
-Exam Essentials 59
 area for data; that data is lost when your system is turned off. Generally speaking, the more
 memory your system has, the better.
 Second, you looked at storage and expansion devices. Hard drives give you the permanent
@@ -1488,8 +1476,7 @@ components together and provide electrical pathways for data. CPUs perform mathe
 and logic operations on data,
  and RAM is used as a temporary storage area for data that the
 processor and applications need.
-Explain what the BIOS does. The BIOS loads the POST routine, which starts the computer’
-s boot process. It also stores configuration information such as the date and time, amount
+Explain what the BIOS does. The BIOS loads the POST routine, which starts the computer's boot process. It also stores configuration information such as the date and time, amount
 of RAM, and which device to load the operating system from.
 Know the difference between conventional hard drives and solid-state drives. First, they
 both do the same thing,
@@ -1518,45 +1505,27 @@ cooling methods, such as a combination of a heat sink and a fan or advanced syst
 as liquid cooling.
 Chapter 1 Lab
 You can find the answers in Appendix A.
-In this lab, you are being given the task of buying a new computer for a relative. You’ve
+In this lab, you are being given the task of buying a new computer for a relative. You've
 been given a strict budget. Based on that budget, you found three systems at the same price.
 Your relative will use the computer for browsing the Internet, paying bills, and occasionally
 playing some games. They also take a lot of family photos and videos and like to edit them
 on their computer. See Table 1.4 for the specifications of each of the three systems you found.
 TABLE 1.4  Shopping comparison
 Specification System J System L System S
-Processor 2.0 GHz AMD
-Ryzen 7
-1.3 GHz Intel Core i5 2.5 GHz Intel Core i5
-System memory
-(RAM)
-16 GB DDR4 16 GB DDR5 8 GB DDR4
-RAM expandable to Non- expandable 32 GB 32 GB
-Hard dri
-ve type SATA SSD SATA SSD SATA SSD
+Processor 2.0 GHz AMD Ryzen 7 1.3 GHz Intel Core i5 2.5 GHz Intel Core i5
+System memory (RAM) 16 GB DDR4 16 GB DDR5 8 GB DDR4
+RAM expandable to Non-expandable 32 GB 32 GB
+Hard drive type SATA SSD SATA SSD SATA SSD
 Hard drive size 1 TB 512 GB 256 GB
 Screen size 16 inches 14 inches 15.6 inches
-
-Chapter 1 Lab  61
-Specification System J System L System S
 Touch screen No Yes Yes
-Graphics AMD Radeon Intel Iris XE
-integrated
-Intel UHD integrated
+Graphics AMD Radeon integrated Intel Iris XE integrated Intel UHD integrated
 Video memory 2 GB dedicated Shared Shared
-Sound card 7.1- c
-hannel
-integrated
-5.1- c
-hannel
-integrated
-7.1 channel integrated
+Sound card 7.1-channel integrated 5.1-channel integrated 7.1-channel integrated
 Network card Wireless AC Wireless AX Wireless AC
-USB ports 4 USB- A 1 USB- A 3.2 2 USB- A 3.2, 1 USB- A
-2.0
-Display ports HDMI HDMI,
-2 Thunderbolt HDMI
-Operating system Windows 1 1 Home Windows 1 1 Home Windows 1 1 Home
+USB ports 4 USB-A (1× 3.2, 2× 3.2, 1× 2.0) — —
+Display ports HDMI HDMI, 2 Thunderbolt HDMI
+Operating system Windows 11 Home Windows 11 Home Windows 11 Home
 Battery life 12.8 hours 16.5 hours 15.1 hours
 Weight 4.1 lbs 3.4 lbs 3.7 lbs
 1. Based on the system specifications, which one would you recommend and why?
@@ -1609,7 +1578,6 @@ B. Expansion slots
 C. CPU
 D. RAM
 
-Review Questions 63
 7. If a user wants to play liveaction video games, which component will they want to upgrade
 first in their computer?
 A
@@ -1674,14 +1642,13 @@ B
 C. Intel
 D. ARM
 16. You just installed more memory in your computer
-, but it’s not recognized. Your friend suggests that you upgrade your BIOS. What’s the best way to do this?
+, but it's not recognized. Your friend suggests that you upgrade your BIOS. What's the best way to do this?
 A. Order a new BIOS chip from the motherboard manufacturer.
 B
 . Order a new BIOS chip from the memory manufacturer.
 C
 . Flash the BIOS.
-D. You can’
-t upgrade a BIOS.
+D. You can't upgrade a BIOS.
 1 7. Which component inside a computer produces the most heat?
 A. PSU
 B. CPU
@@ -1694,7 +1661,6 @@ B. HDD
 C. RAM
 D. ROM
 
-Review Questions 65
 19. Your boss wants you to justify your suggestion to purchase solid-state hard drives. What are
 advantages of solid-state drives? (Choose three.)
 A. Faster than HDDs

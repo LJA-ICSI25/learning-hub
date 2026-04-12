@@ -33,8 +33,22 @@ function normalizeBody(raw) {
   t = t.replace(/^\s*(?:Technet24|technet24)\s*$/gim, "");
   t = t.replace(/\b(?:Technet24|technet24)\b/gi, "");
 
-  /** Printed "618 Chapter 12 ■ …" headers */
+  /** Printed "618 Chapter 12 ■ …" headers (PDF page + chapter title) */
   t = t.replace(/^\d+\s+Chapter\s+\d+\s+[▪■\-].+$/gim, "");
+  /** Split chapter digits: "566 Chapter 1 1 ■ …" */
+  t = t.replace(/^\d+\s+Chapter\s+(?:\d+\s*)+\s*[▪■\-].+$/gim, "");
+  /** Footer like "Chapter 1 1 Lab 609" */
+  t = t.replace(/^Chapter\s+\d(?:\s+\d)+\s+Lab.*$/gim, "");
+  /** "Summary 607" page footers */
+  t = t.replace(/^\s*Summary\s+\d{2,4}\s*$/gim, "");
+  /** Printed section + page, e.g. "Operating System Fundamentals 203" */
+  t = t.replace(/^Operating System Fundamentals\s+\d{1,4}\s*$/gim, "");
+  /** More PDF running footers (section title + page number, whole line only) */
+  t = t.replace(/^(Review Questions|Exam Essentials)\s+\d{1,4}\s*$/gim, "");
+  t = t.replace(/^Chapter\s+\d+\s+Lab\s+\d{1,4}\s*$/gim, "");
+  t = t.replace(/^Setting Up a Small Wireless Network\s+\d{1,4}\s*$/gim, "");
+  t = t.replace(/^Using Web Browsers\s+\d{1,4}\s*$/gim, "");
+  t = t.replace(/^Managing an Operating System\s+\d{1,4}\s*$/gim, "");
 
   /** Running footers (page numbers); use .+ so commas inside titles match */
   t = t.replace(/^\s*(Exploring|Understanding)\s+.+\s+\d{1,4}\s*$/gim, "");

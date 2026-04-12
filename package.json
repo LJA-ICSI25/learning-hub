@@ -9,9 +9,13 @@
     "build:techplus": "node scripts/build-techplus-from-markdown.mjs",
     "polish:techplus-md": "node scripts/apply-techplus-html-polish.mjs",
     "validate:techplus-md": "node scripts/validate-techplus-html.mjs",
-    "verify:techplus": "node scripts/audit-techplus-consistency.mjs && node scripts/validate-techplus-html.mjs",
+    "verify:techplus": "node scripts/audit-techplus-consistency.mjs && node scripts/validate-techplus-html.mjs && node scripts/audit-techplus-segment-foreign-ids.mjs && node scripts/audit-banner-title-sync.mjs",
+    "audit:techplus-md": "node scripts/audit-techplus-markdown-quality.mjs",
+    "qa:techplus": "node scripts/normalize-techplus-markdown.mjs && npm run build:techplus && npm run verify:techplus && npm run audit:techplus-md",
+    "fix:techplus-banners": "node scripts/fix-techplus-source-banner-titles.mjs",
     "rebuild:techplus": "node scripts/normalize-techplus-markdown.mjs && node scripts/build-techplus-from-markdown.mjs",
-    "restore:techplus-md": "node scripts/restore-techplus-md-from-reference.mjs"
+    "restore:techplus-md": "node scripts/restore-techplus-md-from-reference.mjs",
+    "patch:techplus-headings": "node scripts/patch-techplus-h3-boundaries.mjs"
   },
   "devDependencies": {
     "marked": "^17.0.6"

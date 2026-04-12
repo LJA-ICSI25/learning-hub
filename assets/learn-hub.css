@@ -55,6 +55,28 @@ html {
   overscroll-behavior: none;
 }
 
+/* ---------- Higher contrast (user toggle) ---------- */
+body.lh-high-contrast {
+  --text: #ffffff;
+  --muted: #c8d2e0;
+  --bg: #050608;
+  --surface: #0c1018;
+  --surface2: #121a24;
+  --border: #4a5d78;
+  --blue: #5ed0ff;
+  --notes-text: #ffffff;
+  --notes-text-soft: #dde4ee;
+  --notes-muted: #a8b4c5;
+}
+
+body.lh-high-contrast .app::before {
+  opacity: 0.42;
+}
+
+body.lh-high-contrast a:hover {
+  color: #9ae6ff;
+}
+
 body {
   margin: 0;
   height: 100%;
@@ -453,6 +475,49 @@ a:hover {
   flex-shrink: 0;
   padding: 0.45rem 1rem 0.65rem;
   border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.lh-sidebar-a11y {
+  padding: 0.35rem 0.15rem 0.15rem;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.lh-sidebar-a11y-legend {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+}
+
+.lh-a11y-inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+}
+
+.lh-a11y-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  margin: 0;
+  line-height: 1.35;
+  user-select: none;
+}
+
+.lh-a11y-row input {
+  width: 0.95rem;
+  height: 0.95rem;
+  accent-color: var(--blue);
+  flex-shrink: 0;
 }
 
 .sidebar-foot button {
@@ -779,6 +844,57 @@ body[data-lh-track="sql"] #teach {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+}
+
+.lh-chapter-search-wrap {
+  margin: 0 0 0.25rem;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--notes-font);
+  background: rgba(28, 176, 246, 0.06);
+  border: 1px solid rgba(28, 176, 246, 0.28);
+  border-radius: 12px;
+}
+
+.lh-ch-search-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--notes-accent);
+  margin-bottom: 0.45rem;
+}
+
+.lh-ch-search-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lh-ch-search-input {
+  flex: 1 1 10rem;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.38rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.lh-ch-search-btn {
+  font-size: 0.72rem !important;
+  padding: 0.32rem 0.55rem !important;
+  flex-shrink: 0;
+}
+
+.lh-ch-search-status {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  color: var(--notes-text-soft);
+  min-height: 1.2em;
 }
 
 .lh-notes-chapter-tip {
@@ -1619,6 +1735,43 @@ body.lh-compact-teach #teach .lh-reference-inner {
   margin-bottom: 0 !important;
 }
 
+/** Exam objectives list (first <ul> after objectives banner): top-level = objectives, nested = sub-points */
+.lh-notes-prose ul.lh-exam-objectives {
+  margin: 0.65rem 0 1.1rem;
+  padding-left: 1.35rem;
+  list-style: disc;
+}
+
+.lh-notes-prose ul.lh-exam-objectives > li {
+  margin: 0.55rem 0;
+  line-height: 1.45;
+}
+
+.lh-notes-prose ul.lh-exam-objectives > li > p:first-child {
+  margin: 0 0 0.2rem !important;
+}
+
+.lh-notes-prose ul.lh-exam-objectives ul,
+.lh-notes-prose ul.lh-exam-objectives-sub {
+  margin: 0.4rem 0 0.35rem;
+  padding-left: 1.35rem;
+  list-style: circle;
+}
+
+.lh-notes-prose ul.lh-exam-objectives ul > li,
+.lh-notes-prose ul.lh-exam-objectives-sub > li {
+  margin: 0.22rem 0;
+  font-size: 0.94em;
+  line-height: 1.42;
+  color: var(--notes-text-soft);
+  font-weight: 400;
+}
+
+.lh-notes-prose ul.lh-exam-objectives ul > li::marker,
+.lh-notes-prose ul.lh-exam-objectives-sub > li::marker {
+  color: rgba(57, 197, 207, 0.75);
+}
+
 .lh-notes-prose .lh-chapter-markdown > p,
 .lh-notes-prose .lh-chapter-markdown li > p {
   margin: 1rem 0;
@@ -2348,12 +2501,6 @@ table.result th {
   line-height: 1.35;
 }
 
-#btn-copy-lesson-link {
-  font-size: 0.72rem !important;
-  padding: 0.3rem 0.5rem !important;
-  flex-shrink: 0;
-}
-
 /* ---------- Focus visible (keyboard) ---------- */
 button:focus-visible,
 a:focus-visible,
@@ -2381,6 +2528,20 @@ input:focus-visible {
   }
 }
 
+body.lh-force-reduce-motion *,
+body.lh-force-reduce-motion *::before,
+body.lh-force-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+body.lh-force-reduce-motion .xp-fill,
+body.lh-force-reduce-motion .progress-fill {
+  transition: none !important;
+}
+
 /* ---------- Print: study guide reading ---------- */
 @media print {
   .sidebar,
@@ -2388,10 +2549,11 @@ input:focus-visible {
   .topbar,
   .footer-actions,
   .sidebar-filter-wrap,
+  .lh-sidebar-a11y,
+  .lh-chapter-search-wrap,
   .lh-skip-link,
   #menu-toggle,
-  #btn-toggle-teach,
-  #btn-copy-lesson-link {
+  #btn-toggle-teach {
     display: none !important;
   }
 

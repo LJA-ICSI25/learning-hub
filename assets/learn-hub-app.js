@@ -85,6 +85,8 @@ function learnHubRunApp() {
 
   const PROGRESS_KEY = "learn-hub-progress-v9";
   const TEACH_COLLAPSED_KEY = "learn-hub-teach-collapsed";
+  const A11Y_CONTRAST_KEY = "learn-hub-a11y-contrast-v1";
+  const A11Y_MOTION_KEY = "learn-hub-a11y-reduce-motion-v1";
   const INDENT = "  ";
 
   const el = {
@@ -127,7 +129,6 @@ function learnHubRunApp() {
     techStatus: document.getElementById("tech-status"),
     lessonFilter: document.getElementById("lesson-filter"),
     lessonPlace: document.getElementById("lh-lesson-place"),
-    btnCopyLessonLink: document.getElementById("btn-copy-lesson-link"),
     announcer: document.getElementById("lh-announcer"),
   };
 
@@ -239,6 +240,49 @@ function learnHubRunApp() {
       return ta.value;
     }
     return t;
+  }
+
+  /** One line for Tech+ lh-tg-source <strong>: prefer real subsection headings inside the segment body. */
+  function stripBannerTitle(s) {
+    return String(s || "")
+      .replace(/\s+/g, " ")
+      .replace(/\s+([.,;:!?])/g, "$1")
+      .trim();
+  }
+
+  function deriveTechplusBannerTitleFromMd(html, lessonTitle) {
+    var fb = stripBannerTitle(decodeLessonTitle(lessonTitle || ""));
+    /** Ch 1 “Overview & exam objectives”: body has only h2 chapter title + objectives list — keep curriculum title, not the h2. */
+    if (
+      /^overview\b/i.test(fb) &&
+      /\bTHE FOLLOWING COMPTIA\b/i.test(html) &&
+      /<ul\b/i.test(html)
+    ) {
+      return fb;
+    }
+    var i = html.indexOf("lh-tg-root");
+    var slice = i >= 0 ? html.slice(i) : html;
+    var h3 = slice.match(/<h3[^>]*>([^<]*)<\/h3>/i);
+    if (h3) return stripBannerTitle(decodeLessonTitle(h3[1]));
+    var h2 = slice.match(/<h2[^>]*>([^<]*)<\/h2>/i);
+    if (h2) return stripBannerTitle(decodeLessonTitle(h2[1]));
+    var ex = slice.match(/<p>\s*EXERCISE\s+([\d.]+)\s*<\/p>\s*<p>([^<]+)<\/p>/i);
+    if (ex) return "Exercise " + ex[1] + " — " + stripBannerTitle(decodeLessonTitle(ex[2]));
+    var h1 = slice.match(/<h1[^>]*>([^<]*)<\/h1>/i);
+    if (h1) {
+      var ht = stripBannerTitle(decodeLessonTitle(h1[1])).replace(/^Lesson\s+\d+\s*:\s*/i, "").trim();
+      if (ht) return ht;
+    }
+    return stripBannerTitle(decodeLessonTitle(lessonTitle || ""));
+  }
+
+  function normalizeTechplusSourceBanner(html, Ls) {
+    if (!html || html.indexOf("lh-tg-source") < 0) return html;
+    var title = deriveTechplusBannerTitleFromMd(html, Ls.title || "");
+    if (!title) return html;
+    return html.replace(/(<p class="lh-tg-source"><strong>)([^<]*)(<\/strong>)/, function (_, a, _old, c) {
+      return a + escapeHtml(title) + c;
+    });
   }
 
   /** Plain text for filtering when titles contain HTML snippets. */
@@ -412,25 +456,13 @@ function learnHubRunApp() {
     } catch (e) {}
   }
 
-  function getShareableLessonUrl() {
-    try {
-      var u = new URL(location.href);
-      u.search = "";
-      u.searchParams.set("course", activeCourseId);
-      var Ls = currentLesson();
-      if (Ls && Ls.id) u.searchParams.set("lesson", Ls.id);
-      return u.toString();
-    } catch (e) {
-      return "";
-    }
-  }
-
   function getResolvedReadHtml(Ls) {
     if (!Ls) return "";
     var base = Ls.readHtmlBase != null ? Ls.readHtmlBase : "";
     if (/^tech-sg-\d{2}-\d{2}$/.test(Ls.id)) {
       var md = typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS_MD && window.LEARN_HUB_TECHPLUS_MD[Ls.id];
-      return base + (md ? md : "");
+      var full = base + (md ? md : "");
+      return normalizeTechplusSourceBanner(full, Ls);
     }
     return (Ls.readHtml != null ? Ls.readHtml : Ls.narrative) || "";
   }
@@ -438,6 +470,289 @@ function learnHubRunApp() {
   function techSgChapterFromLessonId(lessonId) {
     var m = typeof lessonId === "string" && lessonId.match(/^tech-sg-(\d{2})-\d{2}$/);
     return m ? parseInt(m[1], 10) : 0;
+  }
+
+  var chapterSearchState = {
+    query: "",
+    chapter: 0,
+    matches: [],
+    curIdx: 0,
+    runId: 0,
+    searchTimer: null,
+  };
+
+  function segmentPlainForSearch(Lx) {
+    if (!Lx) return "";
+    var html = getResolvedReadHtml(Lx);
+    return plainTextFromHtml(html)
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function buildChapterMatchList(ch, q) {
+    var matches = [];
+    if (!ch || !q) return matches;
+    var list = lessons();
+    var prefix = "tech-sg-" + String(ch).padStart(2, "0") + "-";
+    var ql = q.toLowerCase();
+    for (var i = 0; i < list.length; i++) {
+      var L = list[i];
+      if (String(L.id).indexOf(prefix) !== 0) continue;
+      var plain = segmentPlainForSearch(L);
+      var pl = plain.toLowerCase();
+      var pos = 0;
+      var idx;
+      var occ = 0;
+      while ((idx = pl.indexOf(ql, pos)) >= 0) {
+        matches.push({ lessonIndex: i, occInLesson: occ });
+        occ++;
+        pos = idx + ql.length;
+      }
+    }
+    return matches;
+  }
+
+  function waitForReadingThen(fn) {
+    var tries = 0;
+    function tick() {
+      var r = el.teach && el.teach.querySelector(".lh-tech-reading");
+      if (r) {
+        fn(r);
+        return;
+      }
+      if (tries++ > 160) return;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function prefersReducedMotion() {
+    return (
+      document.body.classList.contains("lh-force-reduce-motion") ||
+      (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    );
+  }
+
+  function focusOccurrenceInReading(root, query, occurrenceIndex) {
+    if (!root || !query || occurrenceIndex < 0) return false;
+    var ql = query.toLowerCase();
+    var qLen = query.length;
+    var seen = 0;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var node;
+    var reduceMotion = prefersReducedMotion();
+    while ((node = walker.nextNode())) {
+      var text = node.nodeValue;
+      if (!text) continue;
+      var tl = text.toLowerCase();
+      var pos = 0;
+      var idx;
+      while ((idx = tl.indexOf(ql, pos)) >= 0) {
+        if (seen === occurrenceIndex) {
+          var range = document.createRange();
+          range.setStart(node, idx);
+          range.setEnd(node, idx + qLen);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          var elScroll = node.parentElement;
+          if (elScroll && elScroll.scrollIntoView) {
+            elScroll.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+          }
+          return true;
+        }
+        seen++;
+        pos = idx + ql.length;
+      }
+    }
+    return false;
+  }
+
+  function updateChapterSearchControlsDisabled() {
+    var prev = document.getElementById("lh-ch-search-prev");
+    var next = document.getElementById("lh-ch-search-next");
+    var has = chapterSearchState.matches.length > 0;
+    if (prev) prev.disabled = !has;
+    if (next) next.disabled = !has;
+  }
+
+  function updateChapterSearchStatusText() {
+    var st = document.getElementById("lh-ch-search-status");
+    if (!st) return;
+    var n = chapterSearchState.matches.length;
+    var q = chapterSearchState.query;
+    if (!q) {
+      st.textContent = "Search all segments in this chapter (loads chapter text once).";
+      return;
+    }
+    if (n === 0) {
+      st.textContent = "No matches in this chapter.";
+      return;
+    }
+    st.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter";
+  }
+
+  function runChapterSearchFromInput() {
+    var inp = document.getElementById("lh-ch-search-input");
+    var q = inp && inp.value ? String(inp.value).trim() : "";
+    var Lcur = currentLesson();
+    var chFromLesson = techSgChapterFromLessonId(Lcur && Lcur.id);
+    if (chFromLesson) chapterSearchState.chapter = chFromLesson;
+    chapterSearchState.query = q;
+    chapterSearchState.runId++;
+    var myRun = chapterSearchState.runId;
+    var ch = chapterSearchState.chapter;
+    if (!q) {
+      chapterSearchState.matches = [];
+      chapterSearchState.curIdx = 0;
+      try {
+        window.getSelection().removeAllRanges();
+      } catch (_) {}
+      updateChapterSearchControlsDisabled();
+      updateChapterSearchStatusText();
+      return;
+    }
+    var loadP =
+      typeof window.loadLearnHubTechplusChapter === "function" ? window.loadLearnHubTechplusChapter(ch) : Promise.resolve();
+    loadP
+      .then(function () {
+        if (myRun !== chapterSearchState.runId) return;
+        var matches = buildChapterMatchList(ch, q);
+        chapterSearchState.matches = matches;
+        if (matches.length) {
+          chapterSearchState.curIdx = 0;
+          var m0 = matches[0];
+          if (lessonIndex !== m0.lessonIndex) {
+            goLesson(m0.lessonIndex);
+            waitForReadingThen(function (r) {
+              if (myRun !== chapterSearchState.runId) return;
+              focusOccurrenceInReading(r, q, m0.occInLesson);
+              updateChapterSearchControlsDisabled();
+              updateChapterSearchStatusText();
+              if (el.announcer) el.announcer.textContent = "Jumped to first match in chapter.";
+            });
+          } else {
+            requestAnimationFrame(function () {
+              if (myRun !== chapterSearchState.runId) return;
+              var r = el.teach && el.teach.querySelector(".lh-tech-reading");
+              if (r) focusOccurrenceInReading(r, q, m0.occInLesson);
+              updateChapterSearchControlsDisabled();
+              updateChapterSearchStatusText();
+            });
+          }
+        } else {
+          chapterSearchState.curIdx = -1;
+          updateChapterSearchControlsDisabled();
+          updateChapterSearchStatusText();
+        }
+      })
+      .catch(function () {
+        if (myRun !== chapterSearchState.runId) return;
+        chapterSearchState.matches = [];
+        chapterSearchState.curIdx = -1;
+        updateChapterSearchControlsDisabled();
+        updateChapterSearchStatusText();
+      });
+  }
+
+  function refreshChapterSearchAfterLessonRender() {
+    var q = chapterSearchState.query;
+    var ch = chapterSearchState.chapter;
+    if (!q || !ch) return;
+    var loadP =
+      typeof window.loadLearnHubTechplusChapter === "function" ? window.loadLearnHubTechplusChapter(ch) : Promise.resolve();
+    loadP.then(function () {
+      chapterSearchState.matches = buildChapterMatchList(ch, q);
+      if (chapterSearchState.curIdx >= chapterSearchState.matches.length) {
+        chapterSearchState.curIdx = Math.max(0, chapterSearchState.matches.length - 1);
+      }
+      updateChapterSearchControlsDisabled();
+      updateChapterSearchStatusText();
+      requestAnimationFrame(function () {
+        var m = chapterSearchState.matches[chapterSearchState.curIdx];
+        var r = el.teach && el.teach.querySelector(".lh-tech-reading");
+        if (m && r && m.lessonIndex === lessonIndex && chapterSearchState.query) {
+          focusOccurrenceInReading(r, chapterSearchState.query, m.occInLesson);
+        }
+      });
+    });
+  }
+
+  function chapterSearchNavigate(delta) {
+    if (!chapterSearchState.matches.length || !chapterSearchState.query) return;
+    var n = chapterSearchState.matches.length;
+    chapterSearchState.curIdx = (chapterSearchState.curIdx + delta + n) % n;
+    var m = chapterSearchState.matches[chapterSearchState.curIdx];
+    var q = chapterSearchState.query;
+    if (lessonIndex !== m.lessonIndex) {
+      goLesson(m.lessonIndex);
+      waitForReadingThen(function (r) {
+        focusOccurrenceInReading(r, q, m.occInLesson);
+        updateChapterSearchStatusText();
+        if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter.";
+      });
+    } else {
+      var r = el.teach && el.teach.querySelector(".lh-tech-reading");
+      if (r) focusOccurrenceInReading(r, q, m.occInLesson);
+      updateChapterSearchStatusText();
+      if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter.";
+    }
+  }
+
+  function bindChapterSearchControls() {
+    var inp = document.getElementById("lh-ch-search-input");
+    var prev = document.getElementById("lh-ch-search-prev");
+    var next = document.getElementById("lh-ch-search-next");
+    if (!inp) return;
+    var Ls = currentLesson();
+    var ch = techSgChapterFromLessonId(Ls && Ls.id);
+    if (chapterSearchState.chapter && chapterSearchState.chapter !== ch) {
+      chapterSearchState.query = "";
+      chapterSearchState.matches = [];
+      chapterSearchState.curIdx = 0;
+    }
+    chapterSearchState.chapter = ch;
+    inp.value = chapterSearchState.query;
+
+    function onInput() {
+      clearTimeout(chapterSearchState.searchTimer);
+      chapterSearchState.searchTimer = setTimeout(function () {
+        runChapterSearchFromInput();
+      }, 220);
+    }
+
+    inp.removeEventListener("input", inp.__lhChSearchInput);
+    inp.removeEventListener("keydown", inp.__lhChSearchKeydown);
+    if (prev && prev.__lhChSearchClick) prev.removeEventListener("click", prev.__lhChSearchClick);
+    if (next && next.__lhChSearchClick) next.removeEventListener("click", next.__lhChSearchClick);
+
+    inp.__lhChSearchInput = onInput;
+    inp.__lhChSearchKeydown = function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        clearTimeout(chapterSearchState.searchTimer);
+        runChapterSearchFromInput();
+      }
+    };
+    inp.addEventListener("input", onInput);
+    inp.addEventListener("keydown", inp.__lhChSearchKeydown);
+
+    if (prev) {
+      prev.__lhChSearchClick = function () {
+        chapterSearchNavigate(-1);
+      };
+      prev.addEventListener("click", prev.__lhChSearchClick);
+    }
+    if (next) {
+      next.__lhChSearchClick = function () {
+        chapterSearchNavigate(1);
+      };
+      next.addEventListener("click", next.__lhChSearchClick);
+    }
+
+    updateChapterSearchControlsDisabled();
+    updateChapterSearchStatusText();
+    if (chapterSearchState.query) refreshChapterSearchAfterLessonRender();
   }
 
   function updateLessonPlaceLine() {
@@ -454,6 +769,11 @@ function learnHubRunApp() {
   /** Study-guide readings from Markdown: tech-sg-01-01 … (was full chapters tech-sg-01 …). */
   function isFullChapterTechLesson(lessonId) {
     return typeof lessonId === "string" && /^tech-sg-\d{2}(?:-\d{2})?$/.test(lessonId);
+  }
+
+  /** First segment per chapter (objectives + overview) — `tech-sg-NN-01`. */
+  function isTechSgChapterOverviewLesson(lessonId) {
+    return typeof lessonId === "string" && /^tech-sg-\d{2}-01$/.test(lessonId);
   }
 
   /**
@@ -1349,14 +1669,29 @@ function learnHubRunApp() {
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
     const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
+    const isChapterOverviewSg = isFullChapterTechLearn && isTechSgChapterOverviewLesson(Ls.id);
     const read = getResolvedReadHtml(Ls);
     const refBody = isTech ? '<div class="tech-prose lh-ref-body lh-notes-prose">' + read + "</div>" : read;
     let refBlock = "";
     if (read && String(read).trim()) {
       if (isFullChapterTechLearn) {
+        const chapterTipHtml = isChapterOverviewSg
+          ? ""
+          : '<p class="lh-notes-chapter-tip" role="note">The study guide text for this lesson is below. Use <strong>On this page</strong> when it shows up. <strong>Continue</strong> or <strong>Skip lesson</strong> when you are finished—both mark this step complete.</p>';
         refBlock =
-          '<div class="lh-full-chapter">' +
-          '<p class="lh-notes-chapter-tip" role="note">The study guide text for this lesson is below. Use <strong>On this page</strong> when it shows up. <strong>Continue</strong> or <strong>Skip lesson</strong> when you are finished—both mark this step complete.</p>' +
+          '<div class="lh-full-chapter' +
+          (isChapterOverviewSg ? " lh-chapter-overview" : "") +
+          '">' +
+          '<div class="lh-chapter-search-wrap" role="search" aria-label="Search in this book chapter">' +
+          '<label class="lh-ch-search-label" for="lh-ch-search-input">Search in chapter</label>' +
+          '<div class="lh-ch-search-row">' +
+          '<input type="search" id="lh-ch-search-input" class="lh-ch-search-input" placeholder="Word or phrase…" autocomplete="off" spellcheck="false" />' +
+          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-prev" disabled aria-label="Previous match in chapter">Prev</button>' +
+          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-next" disabled aria-label="Next match in chapter">Next</button>' +
+          "</div>" +
+          '<p class="lh-ch-search-status" id="lh-ch-search-status" aria-live="polite"></p>' +
+          "</div>" +
+          chapterTipHtml +
           '<article class="lh-tech-reading lh-full-chapter-body lh-notes-surface" aria-label="Study guide reading">' +
           refBody +
           "</article></div>";
@@ -1386,7 +1721,7 @@ function learnHubRunApp() {
       escapeHtml(c.name) +
       "</span></header>" +
       '<div class="lesson-shell-body">' +
-      fccLessonStrip(Ls, c) +
+      (isChapterOverviewSg ? "" : fccLessonStrip(Ls, c)) +
       refBlock +
       "</div></div>";
 
@@ -1481,6 +1816,7 @@ function learnHubRunApp() {
       requestAnimationFrame(function () {
         const reading = el.teach && el.teach.querySelector(".lh-tech-reading");
         if (reading) buildChapterToc(reading, Ls.id);
+        bindChapterSearchControls();
       });
     }
   }
@@ -1652,6 +1988,35 @@ function learnHubRunApp() {
       const n = typeof nodeOrId === "string" ? document.getElementById(nodeOrId) : nodeOrId;
       if (n) n.addEventListener(ev, fn);
     }
+
+    function applyA11yFromStorage() {
+      try {
+        var c = localStorage.getItem(A11Y_CONTRAST_KEY) === "1";
+        var m = localStorage.getItem(A11Y_MOTION_KEY) === "1";
+        document.body.classList.toggle("lh-high-contrast", c);
+        document.body.classList.toggle("lh-force-reduce-motion", m);
+        var ce = document.getElementById("lh-a11y-contrast");
+        var me = document.getElementById("lh-a11y-reduce-motion");
+        if (ce) ce.checked = c;
+        if (me) me.checked = m;
+      } catch (_) {}
+    }
+    applyA11yFromStorage();
+    on("lh-a11y-contrast", "change", function (ev) {
+      var onCh = ev.target && ev.target.checked;
+      document.body.classList.toggle("lh-high-contrast", !!onCh);
+      try {
+        localStorage.setItem(A11Y_CONTRAST_KEY, onCh ? "1" : "0");
+      } catch (_) {}
+    });
+    on("lh-a11y-reduce-motion", "change", function (ev) {
+      var onCh = ev.target && ev.target.checked;
+      document.body.classList.toggle("lh-force-reduce-motion", !!onCh);
+      try {
+        localStorage.setItem(A11Y_MOTION_KEY, onCh ? "1" : "0");
+      } catch (_) {}
+    });
+
     document.querySelectorAll("#editor-tabs button").forEach((btn) => {
       btn.addEventListener("click", () => {
         const tab = btn.getAttribute("data-tab");
@@ -1750,23 +2115,6 @@ function learnHubRunApp() {
       }
       el.lessonFilter.addEventListener("input", runFilter);
       el.lessonFilter.addEventListener("search", runFilter);
-    }
-
-    if (el.btnCopyLessonLink) {
-      el.btnCopyLessonLink.addEventListener("click", function () {
-        var url = getShareableLessonUrl();
-        if (!url) return;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(url).then(function () {
-            toast("Lesson link copied");
-            if (el.announcer) el.announcer.textContent = "Lesson link copied to clipboard.";
-          }).catch(function () {
-            window.prompt("Copy this lesson link:", url);
-          });
-        } else {
-          window.prompt("Copy this lesson link:", url);
-        }
-      });
     }
 
     function bindRunCheck(ta, runFn, checkFn) {

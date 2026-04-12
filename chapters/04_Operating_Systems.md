@@ -6,7 +6,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 
 ## Operating Systems
 
-**THE FOLLOWING COMPTIA TECH+ FC0- U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
+**THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
  ✓ 3.0 Applications and Software
  ✓ 3.1 Identify components of an OS.
 - Filesystem characteristics
@@ -38,16 +38,19 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 - Desktop/workstation
 - Server
 - Embedded
+
+### Introduction
+
 Computers are pretty much useless without software. A piece
 of hardware might just as well be used as a paperweight or
 doorstop unless you have an easy way to interface with it.
 Software provides that way. While there are many types of
-software, or programs, the most important application that you’ll ever deal with is the
+software, or programs, the most important application that you'll ever deal with is the
 operating system.
 There are several types of operating systems on the market today, and each has its own
-unique functions and features. I’ll cover four categories of important operating systems in
+unique functions and features. I'll cover four categories of important operating systems in
 this chapter. Even though they are all somewhat different and all complex, at the end of the
-day they all need to accomplish the same basic functions. I’ll talk about what those functions
+day they all need to accomplish the same basic functions. I'll talk about what those functions
 are, types of operating systems, and a bit of history in the “Operating System Fundamentals”
 section of this chapter.
 Finally, you need to know how to navigate through an operating system to make it work
@@ -56,8 +59,8 @@ that structure and execute programs. After reading this chapter, you should have
 fundamental understanding of what operating systems are and an appreciation for why they
 work the way they do.
 
-Before I begin discussing operating systems, it’s important to take one step further back and
-talk about software in general. In computing, there are three major classifications of software that you will be dealing with: operating systems, applications, and drivers. Here’s a
+Before I begin discussing operating systems, it's important to take one step further back and
+talk about software in general. In computing, there are three major classifications of software that you will be dealing with: operating systems, applications, and drivers. Here's a
 description of each:
 Operating System An oper
 ating system (OS) provides a consistent environment for other
@@ -77,28 +80,28 @@ include complex programs such as Microsoft Word and Google Chrome as well as sim
 programs such as a commandline file transfer program. I will cover applications in depth in
 Chapter 5,
  “Software Applications.”
-Driver A dri
-ver is an extremely specific application written for the purpose of instructing a
+Driver A driver is an extremely specific application written for the purpose of instructing a
 particular OS on how to access a piece of hardware. Each hardware device, like a printer or
 network card, has unique features and configuration settings, and the driver allows the OS to
 understand properly how the hardware works and what it is able to do.
-With those key software designations out of the way, let’s take a trip back through time to
+With those key software designations out of the way, let's take a trip back through time to
 understand where operating systems came from.
-A Brief History of Operating Systems
-First, I probably owe you a warning. You won’t be quizzed on the history of operating systems on the CompTIA Tech+ exam. What you will be tested on is the basic functions of an
+
+### A Brief History of Operating Systems
+First, I probably owe you a warning. You won't be quizzed on the history of operating systems on the CompTIA Tech+ exam. What you will be tested on is the basic functions of an
 operating system, the components of an operating system, and the different varieties on the
 market. The reason I want to take you through some history is that I believe it will give you
 some good perspective on why OSs do what they do and why there are so many, and perhaps
-some appreciation for them as well. So even though it won’t be on the test, don’t skip this part!
+some appreciation for them as well. So even though it won't be on the test, don't skip this part!
 OS
 Hard disks
 Processor
 Devices
 Input/output Memory
 FIGURE 4.1  The operating system interacts with hardware.
-Operating System Fundamentals 203
+
 Pre- OS
-Let’s go back to the dawning of the computer age, about 1946. A few electronic “computers”
+Let's go back to the dawning of the computer age, about 1946. A few electronic “computers”
 had been developed by that time, and the U.S. government, in partnership with the University
 of Pennsylvania, announced the development of a machine named the Electronic Numerical
 Integrator and Computer (ENIAC). Like a lot of technology at the time, this one had the
@@ -122,14 +125,14 @@ requested results. Clearly, improvements were needed.
 FIGURE 4.2  ENIAC
 Source: Unknown author / U.S. Army Photo / Wikimedia Commons / Public domain.
 
-By 1949, computers had memory. It wasn’t much, and it was executed by using tubes
+By 1949, computers had memory. It wasn't much, and it was executed by using tubes
 filled with liquid mercury. Around the same time, other inventors were laying down the basic
 elements of programming languages. In 1952, the idea of reusable code (being able to run
 the same program multiple times with the same punch cards) surfaced. The assembler also
 appeared, which allowed programmers to write a command in a higherlevel language, and it
 would be translated to assembly for the computer to take action.
 Assembly code is a low-level programming language that corresponds to
-direct action that the computer needs to take. You’ll learn more about this
+direct action that the computer needs to take. You'll learn more about this
 in Chapter 6, “Software Development.”
 These and other technological advancements started people on the path of developing the
 first operating system.
@@ -146,7 +149,7 @@ Throughout the 1950s and 1960s, various companies (including IBM and Bell Labs) 
 universities (Massachusetts Institute of Technology, Manchester University, University of
 Michigan, University of California–Berkeley, and others) started developing their own compilations of code and giving them names. These were the first operating systems, and they
 were each designed to work with a specific model of computer.
-Standardization
+### Standardization
 Operating systems of the time were slow and were not compatible with each other. In 1969,
 a group of engineers from Bell Labs came out with UNIX. By 1973, they had released the
 fourth edition of it, which had some big benefits. First, it was written in a newer programming language (called C), which was easier to deal with than Fortran. Second, it could
@@ -155,13 +158,13 @@ market. By 1975, many universities (and their students) were using UNIX, and its
 spread quickly.
 An interesting and hugely impactful note to the history of UNIX is that at the time, Bell
 Systems (which owned Bell Labs as well as the entire telephone infrastructure in the United
-States) was a regulated monopoly, so it couldn’t get into the computer business. Therefore,
-since it couldn’t make any money on UNIX, the company distributed it for free. Users were
-Operating System Fundamentals 205
+States) was a regulated monopoly, so it couldn't get into the computer business. Therefore,
+since it couldn't make any money on UNIX, the company distributed it for free. Users were
+
 also free to make any modifications they wanted to the OS, which means that UNIX was
 open source code.
 Open source versus commercial (closed-source/proprietary) code is still
-a matter of significant debate today. I’ll get into that when I talk about different types of operating systems.
+a matter of significant debate today. I'll get into that when I talk about different types of operating systems.
 Through the late 1970s and early 1980s, operating systems were pretty basic. They had a
 command interpreter, the ability to load programs, and basic device drivers. That was until
 about 1981, when IBM introduced the first personal computer. With the IBM PC came the
@@ -179,7 +182,7 @@ FIGURE 4.3  The first PC graphical user interface
 The Star interface was given the not-so-nice nickname WIMP—Windows, Icons, Mouse, Pointer—by its detractors. The nickname stuck around for
 future windows-based interfaces as well.
 Apple licensed the operating system from Xerox, made some improvements, and introduced it on the Macintosh computer in 1984. It became immediately popular, and the world
-hasn’t been the same since. (Apple was ahead of the curve even more than 40 years ago!)
+hasn't been the same since. (Apple was ahead of the curve even more than 40 years ago!)
 Up until this time, the only way you really interacted with your computer was with the keyboard, typing commands into what was called a console or command line, and all display
 was textbased. Not anymore.
  Graphical displays and windows were here to stay.
@@ -208,17 +211,15 @@ or examine the code.
 A word often used interchangeably with closed source is proprietary.
 Shell A program that runs on top of the OS and allows the user to issue commands
 through a set of menus or other interface (which may be a textbased console or command
-line or a graphical interface). Shells make an OS easier to use by creating a relatively user
--
-friendly interface.
+line or a graphical interface). Shells make an OS easier to use by creating a relatively user-friendly interface.
 Graphical User Interface (GUI)  A method by which a person communicates with a computer using graphical images,
  icons, and methods other than text. GUIs allow a user to use
-Operating System Fundamentals 207
+
 a mouse, touchpad, or another mechanism (in addition to the keyboard) to interact with the
 computer to issue commands.
 Cooperative Multitasking Computers appear to run multiple applications simultaneously,
 
-but in reality, they can focus on only one at a time. They’re able to switch back and forth
+but in reality, they can focus on only one at a time. They're able to switch back and forth
 between programs so quickly that it appears that they are doing multiple things at once.
 Cooperative multitasking is a multitasking method that depends on the application itself to
 be responsible for using the processor and then freeing it for access by other applications.
@@ -238,7 +239,7 @@ the processor at one time.
 This results in faster application performance, because it allows a
 program to do many things at once.
 Later on in this chapter in the “Process Management” section, you will
-learn about killing (stopping) processes using a tool called Task Manager. Here’s a good place to introduce a few important terms and their
+learn about killing (stopping) processes using a tool called Task Manager. Here's a good place to introduce a few important terms and their
 distinctions. Any piece of software running on a computer runs as a process. A process will be an isolated program with its own memory space
 and other resources. Within a process, there will be one or more threads
 running. All of the threads within that process share the memory space
@@ -261,7 +262,7 @@ as are operating systems that will run on them.
  As mentioned earlier, you cannot mix 64- bit
 software with 32- bit hardware (but you can run most 32- bit software on 64- bit hardware).
 
-With those terms in mind, let’s look at the key functions of an operating system.
+With those terms in mind, let's look at the key functions of an operating system.
 The functions that you will examine in more depth in the upcoming sections are
 as follows:
 - Interfacing between users and the hardware and coordinating between hardware
@@ -270,37 +271,36 @@ components
 - Creating a structure for data management
 - Monitoring system health and functionality
 Coordinating Users and Hardware
-Thank goodness we’ve moved beyond needing to spend an entire week manually moving
-connections around to just do a simple math problem. Even today, most people don’t know
+Thank goodness we've moved beyond needing to spend an entire week manually moving
+connections around to just do a simple math problem. Even today, most people don't know
 how to tell the computer hardware (in assembly) to function, nor do they care to know how.
 We turn our computers on, and we expect that when we click something, it works, or when
 we press a key on the keyboard, that letter appears on our screen. The operating system
 coordinates all of that for us.
-Most of us don’t also really give much thought to the different types of hardware needed
+Most of us don't also really give much thought to the different types of hardware needed
 to execute what seem to be simple commands. If we open a document or a spreadsheet, it
 requires coordination of the mouse (or keyboard), motherboard, processor, memory, and
 hard drive. If that file is on another computer on the network, it also requires our network
-card. Again, the operating system manages all of this for us so that we don’t have to think
+card. Again, the operating system manages all of this for us so that we don't have to think
 about it.
 To talk to the hardware, operating systems use specialized programs called device drivers,
 or drivers for short. A driver tells the OS how to talk to the specific piece of hardware and
 how to use its features. If there is no driver for that OS, then the hardware will not be compatible with it.
-Operating systems also keep us users in check. We’re not allowed to perform any
-functions that would break the hardware, generally speaking. At a minimum, we’re at least
+Operating systems also keep us users in check. We're not allowed to perform any
+functions that would break the hardware, generally speaking. At a minimum, we're at least
 warned that what we are about to do will erase everything on our hard drive—  are we sure
-that’s what we want to do?
+that's what we want to do?
 Another thing that OSs can do to help us silly people behave is to limit the resources
 that we are allowed to access.
- If you work for a company, you probably don’t need to see
-everyone’s salary information unless you’re the boss or in the HR department. Many PC
+ If you work for a company, you probably don't need to see
+everyone's salary information unless you're the boss or in the HR department. Many PC
 OSs allow for the creation of user accounts to manage who can get to what. This is done by
 assigning permissions—  that is, specifying which users can access which files.
 If you are the only person who uses your computer, user accounts
-and permissions aren’t as big of a deal. But once you start getting into
+and permissions aren't as big of a deal. But once you start getting into
 environments where more than one person is involved, they become
 important because permissions define who or what can access a file or
-resource. You’ll learn how to create user accounts in the “Managing Features and Interfaces” section later in this chapter.
-Operating System Fundamentals 209
+resource. You'll learn how to create user accounts in the “Managing Features and Interfaces” section later in this chapter.
 
 I talked about how nice it is to have the operating system talk to the hardware for us. Similarly, the OS gives software applications one standard interface with which to work. Without
 an OS, each software application would need to know how to talk to each specific piece of
@@ -308,17 +308,17 @@ hardware on the market—  an impossible task for developers. So,
  the programmer creates a
 program that works with the OS, and then the OS figures out how to talk to the hardware.
 Because each OS is created differently, though, applications are written for a specific OS
-and not compatible with different ones. For example, a game written for macOS won’t work
+and not compatible with different ones. For example, a game written for macOS won't work
 on a machine running Windows, or vice versa. Odds are that the developer will have a different version that works just fine on Windows. Within versions of an OS family, compatibility
-isn’t generally as big of a problem as it is across OS types. If an app works on Windows 11,
-it will almost certainly run on Windows 10 or even Windows Vista as well. This isn’t always
+isn't generally as big of a problem as it is across OS types. If an app works on Windows 11,
+it will almost certainly run on Windows 10 or even Windows Vista as well. This isn't always
 true, and it starts becoming more problematic the farther apart generations of apps and
 operating systems become. For example, a game designed to run on Windows 95 (which is
 more than 30 years old) might not work natively—  that is, without another program helping
 translate—  in
 Windows 11.
 Providing Structure for Data Management
-Ideally, by now the idea that computers store data permanently shouldn’t come as a shock
+Ideally, by now the idea that computers store data permanently shouldn't come as a shock
 to you. Data can be anything from files needed to run the OS to a spreadsheet with a work
 project to pictures and videos of a recent vacation. But how is it stored on the hard drive? Is
 it just a jumbled mess of bits? And if it were, then how do you easily find the data you need,
@@ -335,47 +335,46 @@ The “Managing Folder and File Structures”
  section later in this chapter covers this topic
 in significantly more detail.
 Monitoring System Health and Functionality
-Finally, OSs will monitor the health of your system’s hardware, giving you an idea of how
-well (or not) it’s performing. You can see how busy your CPU is or how quickly your hard
+Finally, OSs will monitor the health of your system's hardware, giving you an idea of how
+well (or not) it's performing. You can see how busy your CPU is or how quickly your hard
 drives retrieve data or how much data your network card is sending, all to understand how
 efficient your computer is. Monitoring system performance can also alert you if a component
 is starting to fail, if its performance starts to deteriorate rapidly.
 Different OSs use different tools to monitor system health. In most versions of Windows,
-the utility is called Performance Monitor, and it’s located in Windows Tools in Control Panel.
+the utility is called Performance Monitor, and it's located in Windows Tools in Control Panel.
 In Figure 4.4, you can see processor performance on my computer.
 
 The small spikes in performance were when I opened a game and an Excel spreadsheet.
-But as you can see, my CPU isn’t being taxed in any way. The vertical line moves across the
+But as you can see, my CPU isn't being taxed in any way. The vertical line moves across the
 screen to show current performance.
-Most of the time, it’s helpful to have context to decide whether or not the data that these
+Most of the time, it's helpful to have context to decide whether or not the data that these
 tools produce indicates a problem. For example, if 20 percent of my memory is being used,
-is that good or bad? It’s probably not a problem, unless I haven’t changed anything and it
+is that good or bad? It's probably not a problem, unless I haven't changed anything and it
 used to be consistently at 10 percent. What administrators often do is to set up a baseline
 of performance for key hardware components (the CPU, memory, hard drive, and network)
 to know what normal performance looks like. Then, if the system is having issues, they can
 refer to the baseline to see how bad the issue really is.
 The macOS performance tool is called Activity Monitor, and Ubuntu
-Linux’s default one is System Monitor. Ubuntu is open source, so the user
+Linux's default one is System Monitor. Ubuntu is open source, so the user
 community has developed new fancier ones as well, such as Resources.
 Configuring and using performance monitoring tools is beyond the scope of this book;
 just know that your operating system can perform these tasks for you.
 
 You could literally spend a lifetime learning about all of the different types of operating systems in existence. There are OSs built specifically for servers, workstations, mobile devices,
-routers, home entertainment systems, and more. Within each of these designations, you’ll
+routers, home entertainment systems, and more. Within each of these designations, you'll
 find dozens if not hundreds or thousands of variants, each with its own unique features.
 Understanding it all is an interesting hobby for some and an absolute nightmare for others.
 FIGURE 4.4  Windows Performance Monitor
-Operating System Fundamentals 211
-Fortunately, the CompTIA Tech+ exam doesn’t ask you to memorize thousands of
+
+Fortunately, the CompTIA Tech+ exam doesn't ask you to memorize thousands of
 operating systems and their features. If they did, we would need several more books just to
 cover them. For this exam, you just need to know about four categories of OSs. For each
-category, I’ll provide a quick background explaining the purpose of the category. Then, I will
-give you a few examples of operating systems within each category so that you can under-
-stand the similarities and differences between them.
+category, I'll provide a quick background explaining the purpose of the category. Then, I will
+give you a few examples of operating systems within each category so that you can understand the similarities and differences between them.
 On the Tech+ exam, you will need to “Explain the purpose of operating
 systems,” per objective 3.2. This includes four OS types: mobile, desktop/
 workstation, server, and embedded. Be familiar with the major OSs in
-each category. That said, it’s highly unlikely that you will get asked details
+each category. That said, it's highly unlikely that you will get asked details
 about specific versions of any one OS, as is outlined in some of the
 upcoming tables. These details are provided to give you a flavor for the
 features introduced over the years.
@@ -387,34 +386,34 @@ nobody specified that they were for a workstation—  they were just operating s
 they were designed to let users perform tasks on a single machine,
  which is essentially what
 a workstation does. Even a beast like ENIAC was essentially a workstation. Okay, maybe it
-was more like a giant calculator, but I’m going to call it a workstation anyway. It certainly
-wasn’t a server or a mobile device.
-Workstations are still abundant in today’s computer world. Everyone’s laptop or desktop
+was more like a giant calculator, but I'm going to call it a workstation anyway. It certainly
+wasn't a server or a mobile device.
+Workstations are still abundant in today's computer world. Everyone's laptop or desktop
 computer at home is a workstation. On a network, the term workstation is synonymous
-with client computer, which again, is usually a laptop or desktop. In this section, I’ll take you
+with client computer, which again, is usually a laptop or desktop. In this section, I'll take you
 through four of the most important workstation OSs in the market.
 Linux
-Of the four OSs we’re going to cover here, Linux is the least popular one for workstation
-installation. So why cover it first? Because it’s easily the most influential. Linux was developed in 1991 by Linus Torvalds and is in many ways a derivative of UNIX.
-First, I need to clarify one important thing: Linux isn’t actually an operating system.
+Of the four OSs we're going to cover here, Linux is the least popular one for workstation
+installation. So why cover it first? Because it's easily the most influential. Linux was developed in 1991 by Linus Torvalds and is in many ways a derivative of UNIX.
+First, I need to clarify one important thing: Linux isn't actually an operating system.
 Linux is a kernel, or the core of an operating system. To turn the kernel into a Linuxbased
 OS, developers need to add other critical components such as daemons (services),
  a shell,
 shell utilities, a desktop environment (such as a graphical user interface), and desktop applications. The combination of all of these features is referred to as a distribution. There have
 been hundreds if not thousands of Linux distributions created.
 Even though Linux is not technically an operating system, a lot of people still call it one.
-Here I’ll do the same because it’s a lot shorter than writing “the collection of Linuxbased
+Here I'll do the same because it's a lot shorter than writing “the collection of Linuxbased
 operating systems” every time I refer to it.
  Linux is also unique among our list of desktop
-OSs because it’s the only one that’s open source.
+OSs because it's the only one that's open source.
 
-Most Linux distributions use what’s called the Bash shell. Bash stands
+Most Linux distributions use what's called the Bash shell. Bash stands
 for Bourneag
 ain shell, which was designed to replace an older commonly used shell called the Bourne shell. Bash is also the default shell
 of macOS.
 
-If you’ll recall, open source means that anyone who wants to can modify the code, and many
-developers have decided to take that challenge. They can’t change the kernel, which is what
+If you'll recall, open source means that anyone who wants to can modify the code, and many
+developers have decided to take that challenge. They can't change the kernel, which is what
 defines Linux, but they can change anything else they want in the distribution. One developer might add lots of services, whereas another might keep it lean and quick. Some versions
 are 32- bit, and others are 64- bit. Many distributions have a GUI,
  whereas others (mostly
@@ -424,15 +423,15 @@ some estimates,
 today.
  There are surely thousands more that are retired or unpublished. Like any proper OS,
 Linux distributions have names. Examples include Ubuntu Linux, Linux Mint, Debian, KDE,
-and Red Hat. Figure 4.5 shows the desktop of Lubuntu, which is in the Ubuntu family. (It’s
+and Red Hat. Figure 4.5 shows the desktop of Lubuntu, which is in the Ubuntu family. (It's
 basically Ubuntu with a “lighter” and quicker desktop, designed to speed up performance.)
-You’ll notice a similarity with other “Windowslike” desktops,
+You'll notice a similarity with other “Windowslike” desktops,
  complete with a Startlike
 button, folders,
- the ability to rightclick to change desktop preferences, and similar menus to
+ the ability to right-click to change desktop preferences, and similar menus to
 get to various applications and utilities.
 FIGURE 4.5  Lubuntu desktop
-Operating System Fundamentals 213
+
 Most Linux distributions in the wild today come from one of three families: Debian, Slackware, or RPM, which were popular Linux versions around 1993–1994. As is encouraged in
 the Linux community, developers took these versions, made changes, and redistributed them
 with different names. If you wanted to, you could take any existing version of Linux (except
@@ -444,7 +443,7 @@ The vast majority of distributions are free of charge. The underpinning belief o
 source community is that software, particularly software that aids in educational or scientific
 endeavors, should be free. Commercial (nonfree) variants of Linux also exist, such as Red
 Hat Enterprise. In addition, several other OSs, such as Android and Chrome, are built upon
-a Linux foundation. You don’t necessarily pay for those OSs, but they are bundled with
+a Linux foundation. You don't necessarily pay for those OSs, but they are bundled with
 devices that you do pay for, such as a smartphone or a Chromebook.
 Distributions might or might not be backed by a corporation, which means that technical
 support for issues can be hit or miss. In most cases, you will need to rely on online support
@@ -467,9 +466,9 @@ might otherwise be interested in a free and efficient operating system.
 For programmers or hardware developers,
  some version of Linux is generally the
 preferred choice. It has less overhead (lesser hardware requirements and usage) than other
-workstation OSs and is readily customizable for their needs. Even though it doesn’t have a
+workstation OSs and is readily customizable for their needs. Even though it doesn't have a
 major installed base in the workstation market, Linux is an incredibly powerful OS that we
-really don’t want to live without.
+really don't want to live without.
 macOS
 Apple introduced the Macintosh computer in 1984, and behind a massive marketing
 campaign it became popular. Its popularity can be attributed to the fact that it had an
@@ -480,7 +479,7 @@ combination of its own previous OS (called the Lisa OS) and features from the Xe
 macOS Versions
 Early versions of System were relatively simple. They had an application called Finder, which
 allowed users to store and locate their files. One early challenge was that Finder created
-virtual folders for file storage, so those folders and files weren’t visible in any program except
+virtual folders for file storage, so those folders and files weren't visible in any program except
 for Finder. These early versions also could run only one application at a time.
 Released in 1987, System 5 provided for cooperative multitasking with the MultiFinder
 application. This represented a big step forward for the OS. By then, files and folders were
@@ -501,16 +500,16 @@ Mac OS X was the tenth version of the Mac series of operating systems, and it ma
 a major departure from previous Mac OSs. In 2016, Apple renamed its operating system to
 macOS. This is in line with its other operating systems, such as iOS (which I will talk about
 later, in the “Mobile Operating Systems” section), tvOS, and watchOS. Before I get into the
-details, let’s pause and review some of the major versions of the macOS to this point, as
+details, let's pause and review some of the major versions of the macOS to this point, as
 shown in Table 4.1.
 Throughout the rest of this section, I am going to use “macOS” to refer to
 the family of Mac operating systems, unless I refer to a specific version.
 TABLE 4.1  Selected macOS releases
-Version Y ear Notes
+Version Year Notes
 System 1 1984 First widely popular GUI
 System 2 1985 Introduces hierarchical file system
 System 5 1987 Adds cooperative multitasking
-Operating System Fundamentals 215
+
 The Mac clone market was short- li
 ved—  it l
 asted only about a year. Steve
@@ -518,19 +517,19 @@ Jobs (one of the founders of Apple who was ousted by the board of directors in 1
 was to shut down Mac clones. He succeeded in late 1997, right as Apple
 released Mac OS 8.
 Mac OS X for servers was released in 1999, and the desktop version followed in the
-spring of 2001. OS X was a major departure from Apple’s previous OSs, because it was
+spring of 2001. OS X was a major departure from Apple's previous OSs, because it was
 UNIXbased. In fact,
  all of the most recent macOS versions are certified UNIX systems.
 By the time OS X was released, Apple was in a challenging position. Windows was
-continuing to take market share, and Apple’s OS interface was deemed a bit dated. OS X
-changed that with a new theme (layout) called Aqua. It’s been updated several times, but the
+continuing to take market share, and Apple's OS interface was deemed a bit dated. OS X
+changed that with a new theme (layout) called Aqua. It's been updated several times, but the
 essence of Aqua still exists.
 One of the interesting features of Mac operating systems is their naming. Since 2001, Mac
 OSs have gone through a number of revisions, each one adding new features. Each one is
 given a version number, but also a name. Apple named several versions after large cats and,
 since version 10.9, places in California. Table 4.2 shows you a few select versions of Mac OS
 X and macOS.
-Version Y ear Notes
+Version Year Notes
 System 7 1991 User interface redesign, virtual memory support, true 32-  bit OS, and
 other enhancements
 Mac OS 7.6
@@ -542,7 +541,7 @@ macOS 2016 Siri on the desktop, integrated Apple Pay, new Apple File System, bet
 graphics capabilities (4K video, virtual reality), better integration with
 mobile OSs
 TABLE 4.2  macOS versions
-Version Y ear Name Notes
+Version Year Name Notes
 10.0 2001 Cheetah First Mac OS X version. Panned by critics, loved by Mac
 enthusiasts. Aqua interface.
 10.8 2012 Mountain Lion Messages app replaced iChat. Apple commits to yearly
@@ -558,24 +557,24 @@ on a compatible system. macOS has a relatively low share of the workstation mark
 about 4–5 percent of the install base. Most of this is because
 Apple has kept the OS mostly
 proprietary, whereas its main rival Windows has tried to be on every PC possible.
-Macs tend to have very loyal users, and the general consensus is that if you’re working on
+Macs tend to have very loyal users, and the general consensus is that if you're working on
 highly visual projects, Macs are the way to go. Macs also come with plenty of productivity
 software, but graphical applications are where Macs really shine.
-As for using the interface, it’s a lot like other WIMP interfaces out there. Figure 4.6 shows
+As for using the interface, it's a lot like other WIMP interfaces out there. Figure 4.6 shows
 the Sonoma desktop. One difference versus some other interfaces is that Mac OS uses the
 dock, or the bar at the bottom of the desktop, for an easy way to activate icons of your
 favorite apps.
 
 The Microsoft Windows family of operating systems has far and away the largest installed
 base in the laptop and desktop PC market. This might not come as a surprise to you, but it
-might actually be a little surprising considering the inauspicious start of the Windows OS. I’ll
+might actually be a little surprising considering the inauspicious start of the Windows OS. I'll
 get to that in a minute.
 Windows has always been developed in- house by Microsoft, and it is seen as the flag
 bearer for closedsource software. Because of this and because Microsoft has a history of
 strongarming competitors, the company has faced a significant amount of scorn from the
 open source community
 .
-Version Y ear Name Notes
+Version Year Name Notes
 10.12 2016 Sierra Name changed to macOS. Siri on the desktop, integrated
 Apple Pay, new Apple File System, better graphics capabilities (4K video, virtual reality), better integration with
 mobile OSs.
@@ -585,22 +584,22 @@ interface.
 access), the user lock screen, and screensaver/wallpaper
 integration.
 TABLE 4.2  macOS versions (continued)
-Operating System Fundamentals 217
+
 Windows Versions
-Let’s get back to the bad start that Windows had. The first version, Windows 1.0, released
-in 1985, was nothing more than a somewhat graphical frontend to Microsoft’s popular
+Let's get back to the bad start that Windows had. The first version, Windows 1.0, released
+in 1985, was nothing more than a somewhat graphical frontend to Microsoft's popular
 commandline MS- DOS operating system.
-Windows 2.0, released in 1987, didn’t fare much
+Windows 2.0, released in 1987, didn't fare much
 better; Macintosh was clearly superior from a usability and aesthetics standpoint.
 By the time Windows 3.0 rolled out in 1990, Microsoft and Apple were in a full- out
 battle with each other.
  Windows had copied, legally or not (depending on whom you talk
-to), a lot of the look and feel of Mac’s System Software. In addition, Windows 3.0 supported
+to), a lot of the look and feel of Mac's System Software. In addition, Windows 3.0 supported
 cooperative multitasking and virtual memory. The Windows shell was called Program Manager, and it allowed users to navigate the system graphically to find files and to start applications. Upgrades to Windows 3.0 included Windows 3.1 and Windows for Workgroups 3.11.
 Figure 4.7 shows the Windows 3.11 Program Manager.
 The next major revision came in August 1995: Windows 95. It replaced Program Manager with a shell based on Windows Explorer and added a new feature called the Start
 button, as shown in Figure 4.8. It had some 32- bit features, but it employed 16- bit features as well,
- so it wasn’t a true 32- bit OS. By most accounts,
+ so it wasn't a true 32- bit OS. By most accounts,
  what had already been an
 easy operating system to use just got easier. Windows 95 exploded in popularity. Windows
 Explorer remained the default shell for Windows for 17 years, until Windows 8 was released
@@ -612,7 +611,7 @@ FIGURE 4.7  Windows 3.11 Program Manager
 Source: Windows 3.11 Program Manager screenshot / with permission from Microsoft.
 FIGURE 4.8  Windows 95 desktop
 Source: Windows 95 desktop screenshot / with permission from Microsoft.
-Operating System Fundamentals 219
+
 Around the same time, Microsoft was working on a serverbased operating system called
 Windows NT
 . (NT stood for New Technology, although critics claimed it stood for “Nice
@@ -620,7 +619,7 @@ Try.”) Windows NT, using the 32- bit W
 indows NT kernel, was launched in 1993. At the
 time, of course, Microsoft was also busy working on Windows 95. Its goal was to unify the
 two operating systems into one platform, but that proved to be harder than it originally
-anticipated. Microsoft wouldn’t be able to consolidate to one OS platform until Windows
+anticipated. Microsoft wouldn't be able to consolidate to one OS platform until Windows
 XP, which was released in 2001. XP was also the first version of Windows to come in a
 64- bit version. From
 Windows XP on, all Microsoft OSs have used the Windows NT kernel.
@@ -640,7 +639,7 @@ called Action Center to display notifications, and had a new web browser, Micros
 FIGURE 4.9  Windows 8.1 Start screen
 Source: Windows 8.1 Start screen screenshot / with permission from Microsoft.
 
-The feature most people were excited about was Cortana, which is Microsoft’s voiceactivated personal assistant (think of Siri on the iPhone).
+The feature most people were excited about was Cortana, which is Microsoft's voiceactivated personal assistant (think of Siri on the iPhone).
 The most recent version (as of this writing) is W
 indows 11, released in 2021. It has a
 redesigned Start menu and taskbar, integrated widgets, better touch controls, and various
@@ -650,7 +649,7 @@ some key versions of Windows and associated features.
 Windows Usage
 In your travels in the IT world, you will see a lot of Windows because it is the most popular
 desktop and laptop OS worldwide. It has just over 80 percent of the laptop and desktop
-market. That is mostly because of Microsoft’s desire to get it onto as many systems as possible. Whereas Apple has traditionally combined the hardware and OS as a package, for
+market. That is mostly because of Microsoft's desire to get it onto as many systems as possible. Whereas Apple has traditionally combined the hardware and OS as a package, for
 most of its existence Microsoft has not been in the hardware market. It produced an OS
 (and applications) and tried to make sure that it was bundled with every PC that shipped.
 The strategy has had some clear success.
@@ -661,10 +660,10 @@ Windows 10 on machines that have the required hardware to support it, accounts f
 25 percent of the Windows installs. There are still some legacy Windows 7 installations and
 other random versions out there too.
 TABLE 4.3  Selected Windows versions
-Version Y ear Notes
+Version Year Notes
 Windows 1.0 1985 A graphical interface for MS-  DOS. Not widely received.
 Windows 3.0
-1990 The first serious competitor to Apple’s graphical OS. Supported
+1990 The first serious competitor to Apple's graphical OS. Supported
 multitasking and virtual memory.
 Windows 95 1995 Introduced the Start button.
 Windows XP 2001 First Microsoft OS for home use with the Windows NT kernel. First
@@ -678,29 +677,28 @@ Windows 10 2015 Several major upgrades, including Cortana and better integration
 with mobile devices.
 Windows 11 2021 Upgraded Start menu and taskbar, integrated widgets, better touch
 controls for touchcapable devices.
-Operating System Fundamentals 221
+
 ChromeOS
-ChromeOS was developed by Google and launched in 2011. In many important ways, it’s
-unlike any of the other OSs we’ve discussed so far. The guiding principle behind the design
-of ChromeOS is that it’s supposed to be lightweight and perform the most common tasks
-users need today. And what’s the most common thing that all of us do? Get on the Internet.
+ChromeOS was developed by Google and launched in 2011. In many important ways, it's
+unlike any of the other OSs we've discussed so far. The guiding principle behind the design
+of ChromeOS is that it's supposed to be lightweight and perform the most common tasks
+users need today. And what's the most common thing that all of us do? Get on the Internet.
 Google had its Chrome browser, and its original intent was to make an OS based on the
-browser alone. That’s it. Several rounds of testing showed that it was close but not quite
+browser alone. That's it. Several rounds of testing showed that it was close but not quite
 on target with the ideal user experience. So, Google went back to the drawing board and
 incorporated the Gentoo Linux kernel and package management system with Chrome.
-ChromeOS was born. Looking at the Chrome desktop in Figure 4.10, you’ll see that it looks
+ChromeOS was born. Looking at the Chrome desktop in Figure 4.10, you'll see that it looks
 similar to Windows 11 and macOS, with a launcher in the lower center, a taskbar, and a
 status tray with a clock in the lowerright corner.
-What’
-s particularly interesting about ChromeOS is that it stores little to nothing on the
+What's particularly interesting about ChromeOS is that it stores little to nothing on the
 local computer. Everything is stored in the cloud.
 ChromeOS Versions
-ChromeOS doesn’t have major version names as Microsoft or Apple OSs do, at least not yet.
+ChromeOS doesn't have major version names as Microsoft or Apple OSs do, at least not yet.
 As Google publishes updates, the new version is automatically downloaded to the system
 with no user intervention needed. There are no compatibility issues to worry about because
-all of the apps themselves are stored on Google’s cloud.
+all of the apps themselves are stored on Google's cloud.
 ChromeOS itself is available only on Chromebooks. ChromeOS Flex can be installed
-on any computer that has Windows or macOS. For what it’s worth, the ChromeOS version
+on any computer that has Windows or macOS. For what it's worth, the ChromeOS version
 released in April 2024 was 120.0.6099.304, and Chrome 124 was in beta testing. Not that
 anyone will quiz you on that.
 FIGURE 4.10  Google ChromeOS
@@ -722,14 +720,14 @@ Google claims that they do not intend for ChromeOS to be a replacement for tradi
 desktop and laptop OSs. They say that ChromeOS is for secondary systems, with which
 people typically surf the Internet, send email, and use a few applications here and there. The
 heavy lifting is still for other workstations. The launch of Chromeboxes makes some experts
-wonder if that’s really the case.
-ChromeOS has been one of the most popular OSs being sold in the last few years. It’s a
+wonder if that's really the case.
+ChromeOS has been one of the most popular OSs being sold in the last few years. It's a
 popular choice for elementary and high school students, and it does most of the things adults
 want a computer to do as well, which is surf the web, browse social media, and write email.
-They are also far less expensive than most laptops because they don’t need as robust hardware
+They are also far less expensive than most laptops because they don't need as robust hardware
 to run. Choosing between the two often comes down to the features needed and price.
 Server Operating Systems
-Let’s move on to server operating systems next because for the most part they are similar to
+Let's move on to server operating systems next because for the most part they are similar to
 workstation operating systems. Most companies that build both use an identical kernel and
 shell to keep the user experience similar between the two. In other words, if you know how
 to use a Windowsbased workstation OS, you will easily find your way around a
@@ -738,29 +736,29 @@ Server installation. There will be some differences, of course, because servers 
 more than workstations.
 Servers are in the business of providing resources to clients on a network. Workstations
 might need servers for security validation, access to files, or print capabilities. Server operating
-systems achieve many of these tasks by managing software modules called services, which I’ll
+systems achieve many of these tasks by managing software modules called services, which I'll
 talk a lot more about in the “Managing Features and Interfaces” section later in this chapter.
 Server OSs are also optimized to handle multiple concurrent client connections over a network.
 The major players in the server OS market are the same ones that are in the workstation
-OS market, with the exception of ChromeOS. Let’s take a look at some details of three categories of server operating systems.
+OS market, with the exception of ChromeOS. Let's take a look at some details of three categories of server operating systems.
 LinuxBased
 As with Linuxbased workstation OSs, there are a wide variety of Linuxbased server OS
 distributions on the market. Overall,
  Linuxbased servers have somewhere between a 10–20
 percent market share, depending on who you ask.
-Operating System Fundamentals 223
+
 One major difference is that server distributions are far more likely to be commercial, and
 therefore they cost money. After all, creating stable and secure OSs that can reliably serve your
-network isn’t easy or cheap. Some big names in the marketplace are Red Hat Enterprise, SUSE
+network isn't easy or cheap. Some big names in the marketplace are Red Hat Enterprise, SUSE
 Enterprise, Ubuntu Server, and Debian. Most are designed to be full enterpriselevel servers,
 whereas others can be more specialized for tasks such as web server management.
-One other name to know in the server OS market is FreeBSD. It’s
+One other name to know in the server OS market is FreeBSD. It's
 not Linuxba
 sed but rather is a direct descendant of BSD UNIX. My diehard Linuxlo
 ving friends will probably take exception to me putting it in
-a Linux section, but for our purposes here, they’re similar enough. There
+a Linux section, but for our purposes here, they're similar enough. There
 are two big differences to call out, though. First, FreeBSD is a complete
-OS, whereas you’ll recall that Linux is just a kernel. Second, FreeBSD
+OS, whereas you'll recall that Linux is just a kernel. Second, FreeBSD
 source code is even more open source than Linux. A lot of the FreeBSD
 code base is included in iOS and the PlayStation operating systems.
 MacBased
@@ -770,18 +768,17 @@ your existing Mac, and you were granted some server capabilities. It was inexpen
 billed itself as easy to use. Once installed, the macOS had a Server app that allowed the
 administrator to manage users and groups as well as services.
 The target audience was small businesses, schools, and individuals. It had a very small
-installed base, which surely led to its demise. You’re not likely to see it on a network of any
+installed base, which surely led to its demise. You're not likely to see it on a network of any
 substantial size.
 WindowsBased
-Windows NT 3.1 was Microsoft’s first entrant into the server OS space in 1993. For many
+Windows NT 3.1 was Microsoft's first entrant into the server OS space in 1993. For many
 years, Windowsbased servers lagged behind competitors in the marketplace, due partly
-to inferior technology but also owing to the perception that Microsoft wasn’
-t a legitimate
+to inferior technology but also owing to the perception that Microsoft wasn't a legitimate
 server software developer. As one administrator joked with me, “Windows NT is perfectly
 secure until you put a NIC in the machine.” Ouch.
 Over the years, Microsoft made improvements to its technology, and now Windowsbased
 servers enjoy somewhere around 80–90 percent market share.
- It’s easy for administrators to use
+ It's easy for administrators to use
 Windows Server products because most of them are intimately familiar with Windows interfaces.
 Microsoft no longer uses the Windows NT name but now names its server products
 Microsoft Server with the year that it was released. New versions have been coming out
@@ -789,15 +786,15 @@ every four or five years. Versions you might see include Windows Server 2022, Wi
 Server 2019, Windows Server 2016, and even Windows 2000 Server. A new version typically
 arrives every three to four years, but most administrators are slow to upgrade.
 You might find it strange that some companies still choose to use a server operating
-system that’s more than 15 years old, like Windows Server 2008. Microsoft no longer supported it as of January 2020, so administrators could have some big challenges if they run
-into problems that they can’t solve. Why doesn’t the company just upgrade? There are three
-main reasons. First, with servers, the old adage of “If it’s not broken, don’t fix it” is gospel.
-If it’s working well, there are few incentives to upgrade. Second, every time you upgrade a
+system that's more than 15 years old, like Windows Server 2008. Microsoft no longer supported it as of January 2020, so administrators could have some big challenges if they run
+into problems that they can't solve. Why doesn't the company just upgrade? There are three
+main reasons. First, with servers, the old adage of “If it's not broken, don't fix it” is gospel.
+If it's working well, there are few incentives to upgrade. Second, every time you upgrade a
 server, it requires a lot of time and energy for thorough testing, and most administrators
 
-just don’t have that much time available. Third, tight budgets are also an issue— upgrading
+just don't have that much time available. Third, tight budgets are also an issue— upgrading
 servers is not cheap. Consequently
-, you’ll often see older operating systems in use on the
+, you'll often see older operating systems in use on the
 server side than you will on the client side.
 Mobile Operating Systems
 As the name of this section implies, here I will be talking about operating systems specifically
@@ -811,13 +808,12 @@ running on the iPhone and iPad mobile platforms, respectively. Between those two
 Apple has between 30 to 40 percent of the global smartphone and tablet market share.
 Figure 4.11 shows the home screen of iOS 17.
 FIGURE 4.11  iOS 17 home screen
-Operating System Fundamentals 225
-The iOS system is built on the same foundation as Apple’s desktop OS. In fact, early
+
+The iOS system is built on the same foundation as Apple's desktop OS. In fact, early
 marketing literature for the iPhone simply referred to the OS as a version of OS X. Later,
-it renamed it to iPhone OS, but after the introduction of the iPad, Apple went to the short-
-ened iOS. Throughout their history, though, the workstation and mobile versions have been
+it renamed it to iPhone OS, but after the introduction of the iPad, Apple went to the shortened iOS. Throughout their history, though, the workstation and mobile versions have been
 fairly different and not directly compatible with each other. Apps built for one would not
-work on the other; it’s much more seamless today, and Apple is continually working to
+work on the other; it's much more seamless today, and Apple is continually working to
 increase their compatibility.
 The first generation was released in 2007 concurrently with the first iPhone. With this
 launch, Apple thrust itself into a very competitive mobile market, with a product that in
@@ -836,10 +832,10 @@ Starting with the release of OS X Yosemite and continuing today, Apple is trying
 the experience between your workstation and your mobile device more seamless. Expect
 these efforts to continue until eventually the two platforms are basically seamless.
 Apple also makes its own OS for the Apple Watch, called watchOS. It
-first launched in 2015, and like iOS it’s updated once per year. The version numbers are not synchronized with iOS/iPadOS. For example, in
+first launched in 2015, and like iOS it's updated once per year. The version numbers are not synchronized with iOS/iPadOS. For example, in
 2023 when iOS 17 was released, the watchOS release was version 10.
 TABLE 4.4  iOS versions and features
-Version Y ear Selected features
+Version Year Selected features
 iPhone OS 1 2007 First fingerbased touchscreen, iT
 unes connectivity, Safari web
 browser, on- screen virtual k
@@ -858,22 +854,21 @@ Along with Apple, Google is the other dominant player in the mobile market with 
 Android OS, with 60 to 70 percent share of the global mobile device market. If you look
 at the smartphone market alone, Android has far more users than Apple thanks to a bigger presence in Asia and Africa. (iOS owns a slight share advantage in Europe and North
 America.) Reputable sources claim that there are more Android installations than all other
-OSs in the world combined; as of 2024, it’s estimated that there are nearly 4 billion active
+OSs in the world combined; as of 2024, it's estimated that there are nearly 4 billion active
 Android devices in the world, spread across 190 countries.
-Android started off as its own company and was purchased by Google in 2005. Like Google’s
-ChromeOS, Android is Linuxbased. It’
-s primarily installed on smartphones and tablets but
+Android started off as its own company and was purchased by Google in 2005. Like Google's
+ChromeOS, Android is Linuxbased. It's primarily installed on smartphones and tablets but
 also on specialized television, automobile, and wristwatch devices. It supports the use of similar
-touchscreen technology as Apple’s iPhone. Figure 4.12 shows the Android 13 home screen.
+touchscreen technology as Apple's iPhone. Figure 4.12 shows the Android 13 home screen.
 FIGURE 4.12  Android 13 home screen
-Operating System Fundamentals 227
+
 Android was slightly later to the market than iOS, with Android 1.0 launching in 2008.
 Since its launch, though, it has quickly grown in popularity and is the top smartphone
 platform, thanks in large part to it being available on devices from several manufacturers
-such as Samsung, LG, HTC, Sony, and Motorola, along with Google’s own hardware. (Apple,
+such as Samsung, LG, HTC, Sony, and Motorola, along with Google's own hardware. (Apple,
 much like it does with its macOS platform, restricts iOS to Apple hardware, which limits its
 potential install base.) Table 4.5 lists highlights of selected Android versions and features.
-You’ll notice that ever since version 1.5, Android versions have come with names of
+You'll notice that ever since version 1.5, Android versions have come with names of
 some sweet treat. In fact, all the way through version 9 (Android Pie) in 2018, the name was
 the primary reference and not the version number. In 2019 with the launch of Android 10
 (Quince Tart), Google decided to put more emphasis on the version number rather than the
@@ -887,7 +882,7 @@ stopped producing a mobile OS.
 The final type of operating system that you need to know about is an embedded operating
 system. Embedded operating systems are designed to be small and efficient, typically
 TABLE 4.5  Selected ver sions of Android OS
-Version Y ear Name Selected features
+Version Year Name Selected features
 1.0 2008 (none) Web browser, many Google apps, media player, Wi-Fi,
 and Bluetooth support.
 1.
@@ -906,13 +901,13 @@ few hardware resources. The downside is there is little to no flexibility. For e
 embedded OS can run only one application, as opposed to multiple applications like the
 other OS types can run.
 An example of an embedded operating system is firmware. Nearly all electronics devices
-have firmware of some type, which is responsible for managing that device’s specific
+have firmware of some type, which is responsible for managing that device's specific
 hardware. For example, a machine in an automobile factory may have firmware that dictates
 its precise movements to pick up a part and fit it into the right place on a car. That firmware
-is very specific to the machine, and it wouldn’t be of any use on a different set of hardware.
-Firmware can also control very small devices, such as watches, fitness monitors, or children’s
+is very specific to the machine, and it wouldn't be of any use on a different set of hardware.
+Firmware can also control very small devices, such as watches, fitness monitors, or children's
 toys. The firmware knows that if the user presses a button, it reacts by making a sound, displaying a menu, or doing whatever it was programmed to do.
-Most firmware is put on a readonly memory (ROM) chip and is not designed to be
+Most firmware is put on a Read-only memory (ROM) chip and is not designed to be
 upgraded.
  But as with the case of a system BIOS, some firmware can be upgraded by
 flashing it.
@@ -922,17 +917,16 @@ and better than every other one on the market. Sure enough, if you look under th
 each OS, you will see different methods of accomplishing similar tasks or different apps built
 in by default. The visual appearance is even more important, as programmers seem to try to
 outdesign each other by creating fancy effects to catch your eye.
-A trip into the OS inter-
-face design world will introduce you to terms such as skeuomorph, dazzle you with color
+A trip into the OS interface design world will introduce you to terms such as skeuomorph, dazzle you with color
 schemes, and amaze you with the moods that default system fonts generate.
 As much as they try to differentiate themselves, it seems that most desktop operating systems since the launch of the Mac have looked, well, the same. Sure, there are differences,
 but the executional elements are all pretty similar. You have a desktop, a place to show you
-what’s running, your system clock, and some sort of variation of a window. You’ll run into
-some technical differences. For example, you can rightclick a file to see its properties in
+what's running, your system clock, and some sort of variation of a window. You'll run into
+some technical differences. For example, you can right-click a file to see its properties in
 Windows and most graphical versions of Linux,
- whereas to “rightclick” with a Mac (which
+ whereas to “right-click” with a Mac (which
 has only one mouse button) you hold down the Control key and click or turn on twofinger
-tapping in the trackpad preferences to rightclick, as you would on a Chromebook with
+tapping in the trackpad preferences to right-click, as you would on a Chromebook with
 ChromeOS.
  But overall, using one desktop OS is very often like using any other OS.
 Mobile operating systems have changed the game a bit because of their restricted real
@@ -941,9 +935,9 @@ remain relatively constant across systems.
 The point is, learn how to use one OS, and it will be relatively easy for you to figure out
 how to use another. In this section, you are going to learn how to manage some of the key
 functions of operating systems, including using the correct interfaces. First, I will cover the
-topic of how to manage important OS features. Then, I’ll look at managing file systems
+topic of how to manage important OS features. Then, I'll look at managing file systems
 and permissions.
-Managing an Operating System 229
+
 Most of the examples I use in the following sections will be from Windows because it has the largest market share. I will use examples from
 Windows 11, but recall that functionality across Windows versions will
 be similar. Again, if you learn the concepts, you can almost always figure
@@ -956,10 +950,10 @@ that high- level view is good, but what does it really mean? More importantly
 who needs to set up or configure an operating system to do those things, how do you do it?
 As per exam objective 3.2, you should be able to explain how the
 operating system is an interface between applications and hardware.
-Let’s take a look first at some of the things an operating system needs to manage. In the
+Let's take a look first at some of the things an operating system needs to manage. In the
 previous paragraph, I mentioned users, applications, and hardware. Think of those as broad
 categories of things to manage, each of which can be broken down into more specific and
-tangible management tasks. While it’s not a comprehensive list of everything an OS needs to
+tangible management tasks. While it's not a comprehensive list of everything an OS needs to
 manage, here are some of the specifics that you need to understand:
 - User accounts
 - Access control
@@ -972,16 +966,16 @@ manage, here are some of the specifics that you need to understand:
 - Files, folders, and permissions
 The first two are related to users. Applications, processes, and services are software (application) related, and devices, disk space, and memory are all types of hardware. The last one,
 files, folders, and permissions, is a broad topic that warrants its own section, “Managing
-Folder and File Structures,” later in this chapter. I’ll cover each of the other eight items here,
+Folder and File Structures,” later in this chapter. I'll cover each of the other eight items here,
 explaining the purpose of each as well as how to manage them in Windows.
 
-A user account is an identity by which you’re known when using the OS. Most OSs allow
+A user account is an identity by which you're known when using the OS. Most OSs allow
 (or require) you to log in, identify yourself by your user account, and then adjust the system
 
 and user environment settings appropriately to match your user level and preferences. For
 example, your desktop background and available icons are linked to your user account.
 Within most OSs are multiple levels of users, with each level having different security settings called privileges. (Privileges are grouped together into bundles called permissions.) This
-enables you to grant access to the system to someone whom perhaps you don’t trust to have
+enables you to grant access to the system to someone whom perhaps you don't trust to have
 full access to it. For example, you might give a child permission to run applications on the
 system but not to make changes that affect other users, like changing system settings. Or, you
 might give the Finance group the ability to access a file whereas the Marketing group might
@@ -994,7 +988,7 @@ Settings ➢ Accounts. You can see that my account is an Administrator. To add a
 accounts, I could click Family Or Other Users, depending on whether or not they are part of
 my Microsoft 365 family account. To add a user, Microsoft will want you to provide a verifiable email address or phone number for that person.
 FIGURE 4.13  User accounts in Windows 11
-Managing an Operating System 231
+
 To see user accounts in Windows 10, click Start ➢ Settings (it looks like a
 gear) ➢ Accounts ➢ Family & Other People.
 On a Mac, you have Standard and Administrator, and Sharing Only accounts available.
@@ -1003,7 +997,7 @@ Accounts are managed by going to the Apple menu ➢  System Settings, then click
 add a new user. To manage account settings, click the information icon to the right of
 the username. There you can do things like make a user an administrator or impose
 parental controls.
-For Linux, the options available depend on the version you’re using. Most versions offer
+For Linux, the options available depend on the version you're using. Most versions offer
 some sort of Administrator, basic user, and guest or unprivileged account. In Linux and
 UNIX operating systems, the Administrator is often called root and may not be able to be
 renamed without altering system functionality. Figure 4.15 shows you the Lubuntu Linux
@@ -1011,41 +1005,41 @@ User and Group setting screen, which is accessed via the Home Button (similar to
 button in Windows) ➢ Preferences ➢ LXQt Settings ➢ Users And Groups. Adding a user is
 done with the Add button at the top of the window, and making changes to an account is
 done by highlighting it and clicking Properties.
-No matter which account type and OS you choose, it’s a good idea to passwordprotect
+No matter which account type and OS you choose, it's a good idea to passwordprotect
 it.
-The only exception to that is the Guest account on a Windows system. It usually doesn’t
-have a password because by its nature it’s accessible to the public. It’s also a good idea to
+The only exception to that is the Guest account on a Windows system. It usually doesn't
+have a password because by its nature it's accessible to the public. It's also a good idea to
 keep that account disabled unless you have a specific reason for enabling it. Exercise 4.1 has
 you create a user account in Windows 11.
 FIGURE 4.14  Users & Groups in macOS
 
 EXERCISE 4.1
 Creating a User Account in Windows 11
-1. In Windows 11, make sure you’re logged in using an account with administrator privileges.
+1. In Windows 11, make sure you're logged in using an account with administrator privileges.
 2. Click Start ➢ Settings (it looks like a gear).
 3. Click Accounts.
 4. Scroll down and click Other Users. You will see a screen similar to the one shown in the book.
-5. Click the Add Account button. A window will pop up asking how this person will sign in and may ask for an email or phone. You can choose to enter a live email address or phone number here, but for this exercise click **I Don’t Have This Person’s Sign-In Information**. (Microsoft may prompt you to enter an email to link the user to cloud services; if you enter an email and click Next, it creates the account and the user must verify it.)
-6. A Microsoft Create Account page will appear. You can create a Microsoft account here if you’d like. For this exercise, we’ll keep going by clicking the **Add A User Without A Microsoft Account** link.
+5. Click the Add Account button. A window will pop up asking how this person will sign in and may ask for an email or phone. You can choose to enter a live email address or phone number here, but for this exercise click **I Don't Have This Person's Sign-In Information**. (Microsoft may prompt you to enter an email to link the user to cloud services; if you enter an email and click Next, it creates the account and the user must verify it.)
+6. A Microsoft Create Account page will appear. You can create a Microsoft account here if you'd like. For this exercise, we'll keep going by clicking the **Add A User Without A Microsoft Account** link.
 7. The next page will be the Create A User For This PC page, as shown in the book. Enter a username and password, answer the three security questions that appear, and click Next. The user account name will now appear in Accounts ➢ Other Users.
 FIGURE 4.15  Lubuntu user and group settings
-Managing an Operating System 233
+
 FIGURE 4.16  Adding a user account
 FIGURE 4.17  Create a user
 
 Although the specific steps to create user accounts are different in each OS, the overall
 process is quite similar. (You will get to create a user account in Lubuntu at the end of
-this chapter’s lab.) It reinforces the notion that once you’re familiar with how to perform
+this chapter's lab.) It reinforces the notion that once you're familiar with how to perform
 tasks in one operating system, you can usually click around to figure it out in another,
 or Google it. Moving forward, I will use Windows 11 to show you how to complete
 management tasks.
 
 By default, user accounts are given the right level of system access to perform necessary
-tasks. For example, if a user wants to open an installed application, that usually isn’t a
-problem. When it comes to making system changes, though, that’s a different story.
+tasks. For example, if a user wants to open an installed application, that usually isn't a
+problem. When it comes to making system changes, though, that's a different story.
 The idea behind access control is that only administrators or other authorized users can
 make system changes such as changing security settings and installing new applications or
-drivers. It’s designed to help prevent catastrophic system changes, including accidentally
+drivers. It's designed to help prevent catastrophic system changes, including accidentally
 installing malware.
 Per Tech+ exam objective 3.2, you should be able to explain the purpose
 of access control in an operating system.
@@ -1056,7 +1050,7 @@ task tries to do something that requires elevated permissions, Windows sends a p
 user can just click Yes to continue with the task. If not, the user will need to provide proper
 administrative credentials to continue.
 FIGURE 4.18  User Account Control
-Managing an Operating System 235
+
 Windows UAC settings can be adjusted, although Microsoft does not recommend it. Keep
 that in mind as I show you how to do it in Exercise 4.2.
 EXERCISE 4.2
@@ -1074,24 +1068,24 @@ FIGURE 4.19  Making changes to your user account
 
 5. Adjust the slider bar to the four different security levels to see what UAC protects
 against. Choose your desired security level and then click OK to apply the changes.
-Even if you are the only person using a computer, it’s not a good idea to
+Even if you are the only person using a computer, it's not a good idea to
 set UAC to Never Notify. This will help prevent accidental installation of
 malware when you browse the web.
 
 Without a doubt, applications make our computers more usable. Some aid our productivity
-while others entertain us or help keep our data safe. I’ll talk in more depth about applications in Chapter 5. Within the operating system, administrators can install, modify, repair,
+while others entertain us or help keep our data safe. I'll talk in more depth about applications in Chapter 5. Within the operating system, administrators can install, modify, repair,
 update, or delete applications.
 Application management is listed in Tech+ exam objective 3.2. Be able to
 explain its purpose.
 FIGURE 4.20  User Account Control S ettings
 EXERCISE 4.2  (continued)
-Managing an Operating System 237
+
 When you install an application in Windows, it makes several system changes, including
-changes to a critical Windows database called the Registry. The Windows Registry maintains all system settings. Without it (or if it’s messed up), Windows won’t work. To uninstall, change, or repair an installed application properly, you should use the Programs And
+changes to a critical Windows database called the Registry. The Windows Registry maintains all system settings. Without it (or if it's messed up), Windows won't work. To uninstall, change, or repair an installed application properly, you should use the Programs And
 Features app in Control Panel, shown in Figure 4.21. To get to it, open Control Panel and
 click Programs And Features (if viewing by large or small icons) or Programs (if viewing
 by Category).
-In the next section, we’ll look at what to do when an application is not responding (aka
+In the next section, we'll look at what to do when an application is not responding (aka
 locks up or hangs).
 Where Did All These Popups Come Fr om?
 Recently, a friend was complaining about getting dozens of popup windows every time
@@ -1101,9 +1095,9 @@ Google seemed always to point her to a small, specific set of websites that had 
 do with what she had searched for. It was pretty annoying.
 FIGURE 4.21  Programs And Features
 
-Whenever something like this happens, you should always try to understand how long it’s
+Whenever something like this happens, you should always try to understand how long it's
 been happening and what has changed. A few weeks ago, she had downloaded a few free
-games for her small children to play. She couldn’t remember for sure, but she thought the
+games for her small children to play. She couldn't remember for sure, but she thought the
 popups started around the same time.
 W
 e opened Programs And Features and sorted the apps by install date. Sure enough, a few
@@ -1114,7 +1108,7 @@ Fortunately, we were able to remove both of the adware applications, and the pop
 search redirection stopped.
 Process Management
 Nearly every program running on a computer is run as a process. This includes system
-operations, background tasks, and applications. The reason it’s done this way is that it
+operations, background tasks, and applications. The reason it's done this way is that it
 makes it easy to control who or what has access to various system resources at a very
 granular level. Imagine how many different things Windows does at once. If Windows
 were run as a single process, any little bit of it hanging up would cause the entire
@@ -1125,37 +1119,37 @@ processes and system applications and utilities as subobjectives. Task
 and process management is also in objective 3.2. You should know what
 a process is and how to manage them.
 Some people might think that if they have no applications open that “nothing” is
-running on their computer. That couldn’t be further from the truth. The Task Manager utility
-helps you see everything that’s running on a computer. You can get to Task Manager in
+running on their computer. That couldn't be further from the truth. The Task Manager utility
+helps you see everything that's running on a computer. You can get to Task Manager in
 several ways.
 - Type Task Manager into the Windows search box and click it when it appears.
 - Press Ctrl+Alt+Del and click Task Manager.
 - Press Ctrl+Shift+Esc.
 - Press the Windows key+X and click Task Manager.
-- Rightclick the taskbar and click T ask Manager.
+- right-click the taskbar and click T ask Manager.
 Regardless of how you choose to get there, Task Manager will look a lot
 like Figure 4.22.
-Managing an Operating System 239
+
 You can see in Figure 4.22 that I have nine different apps open and that there are
 103 background processes running. If I scroll down further, I can also see that there are
 97 Windows processes running. All of the background and Windows processes are part of a collection of system applications and utilities, so named because they are managed by the operating
 system. Task Manager tells me how much each app is consuming in terms of resources, which is
-very nice. If I have an app that’s taking up way too much memory or is hogging the CPU, I can
+very nice. If I have an app that's taking up way too much memory or is hogging the CPU, I can
 click it and then click End Task to shut it down. This is also known as killing the process.
-It’s not recommended that you kill processes if you’re not sure what they do. I could
+It's not recommended that you kill processes if you're not sure what they do. I could
 safely kill Chrome or some of the other apps (although it will cause me to lose any unsaved
-data or work), but what about AdjustService? I’m not sure what it does, so I should probably just leave it alone. You can look up process names on the Internet to see what they
-do, if you’re curious. In the worstcase scenario, if you kill something critical and
+data or work), but what about AdjustService? I'm not sure what it does, so I should probably just leave it alone. You can look up process names on the Internet to see what they
+do, if you're curious. In the worstcase scenario, if you kill something critical and
 Windows
-starts acting weird, a system reboot generally restores it and you’ll be fine.
+starts acting weird, a system reboot generally restores it and you'll be fine.
 You can also schedule tasks to run at a certain time through the Task Scheduler app. To
 open it, type Task Scheduler in the Windows search box and then select it from the menu.
-It’s shown in Figure 4.23. It’s common to schedule tasks such as application update checks
+It's shown in Figure 4.23. It's common to schedule tasks such as application update checks
 and system backups.
 FIGURE 4.22  Task Manager
 
 Figure 4.23 shows that my system has several active tasks scheduled. The highlighted
-one checks to ensure that my Google software is up- to- date, and if not,
+one checks to ensure that my Google software is up-to-date, and if not,
  it will prompt me to
 install an updated version. Tasks include triggers that tell it when to start, actions that tell it
 what to do, conditions that might need to be present such as the system being idle, and various settings. Exercise 4.3 walks you through creating a task.
@@ -1164,7 +1158,7 @@ Creating a Task with Task Scheduler
 1. Open Task Scheduler by typing T ask Scheduler into the Windows search box and pressing Enter or clicking it on the menu.
 2. In the right pane of Task Scheduler, click Create Basic Task.
 FIGURE 4.23  Task S cheduler
-Managing an Operating System 241
+
 3. Give the task a name, and a description if you would like, as shown in Figure 4.24.
 Click Next.
 4. Create the trigger, stating when you want the task to start. If you choose any of the
@@ -1179,8 +1173,8 @@ program you want to start, as shown in Figure 4.25. Click Next.
 FIGURE 4.24  Create a basic task
 
 7. Click Finish to create the task. It will now open that program every time you log in.
-(There’s a Delete button in the right pane of Task Scheduler to remove unwanted tasks
-as well. That way you don’t wonder why Adobe Acrobat Reader started opening randomly at the same time every day.)
+(There's a Delete button in the right pane of Task Scheduler to remove unwanted tasks
+as well. That way you don't wonder why Adobe Acrobat Reader started opening randomly at the same time every day.)
 Service Management
 Windows extends its functionality by using services. A service is a software package that provides additional features. For example, all printing requests are handled by a service called
 the Print Spooler, and a service called UserManager controls user accounts. A computer will
@@ -1190,16 +1184,16 @@ Exam objective 3.1 wants you to be familiar with services as a component
 of an OS. Know what they are used for!
 The easiest way to see the services on your computer is to use the Services tab of Task
 Manager (see Figure 4.26).
-Much the same as processes, if I’m not sure what a service does, I’m probably not going
-to mess with it. If you do need to change the status of a service, though, rightclick it, and
+Much the same as processes, if I'm not sure what a service does, I'm probably not going
+to mess with it. If you do need to change the status of a service, though, right-click it, and
 you will have options to start,
  stop, or restart. You will also have the option of opening the
 Services management console (Figure 4.27), which provides more details on services on
 the computer. Services also allows you to start and stop services by using the buttons at the
-top of the window or by rightclicking the service you want to manage.
+top of the window or by right-clicking the service you want to manage.
 FIGURE 4.25  Starting a program
 EXERCISE 4.3  (continued)
-Managing an Operating System 243
+
 FIGURE 4.26  Services tab of T ask Manager
 FIGURE 4.27  Services management console
 
@@ -1207,27 +1201,27 @@ Device Management
 Windows refers to all the hardware installed in the computer as devices. In Windows 11, there
 are a few different ways that you can manage device settings. For basic settings, there is the
 Bluetooth & devices app. To get to it, click Start and then Settings. In Settings, click Bluetooth
-& Devices and you’ll get a screen similar to the one shown in Figure 4.28. This is the place to
+& Devices and you'll get a screen similar to the one shown in Figure 4.28. This is the place to
 go if you want to add a device, manage basic settings, or remove external peripherals.
 The more traditional hardware management interface is called Device Manager, shown in
-Figure 4.29. Device Manager is where to go if a device isn’t being detected or isn’t working
+Figure 4.29. Device Manager is where to go if a device isn't being detected or isn't working
 properly. You can open it through Control Panel, by typing Device Manager in the Windows search bar, and by clicking it in the Quick Access menu (press Windows+X). In many
 instances, if there is a problem with the device, it will appear in this list with a yellow circle
 and an exclamation point over its icon. Here, you can also see driver details, install and
 update drivers, roll back a driver if a driver update fails, disable the device, or uninstall
 the device. (Remember, drivers are small software apps that tell the OS how to talk to the
-hardware device.) To get to these features, rightclick a device, choose Properties,
+hardware device.) To get to these features, right-click a device, choose Properties,
  and then
 view the Driver tab, as shown in Figure 4.30.
 FIGURE 4.28  Bluetooth & Devices in Windows S ettings
-Managing an Operating System 245
+
 FIGURE 4.29  Device Manager
 FIGURE 4.30  Driver details
 
 Tech+ exam objective 3.1 wants you to identify what a driver is, and
 objective 3.2 says you should be able to explain device management.
 Managing devices typically means installing or uninstalling them, or
-updating the driver if the device isn’t working properly.
+updating the driver if the device isn't working properly.
 Disk Space Management
 Having reliable, long- term storage of data is an important feature of desktop and laptop
 computers.
@@ -1235,39 +1229,39 @@ You learned in Chapter 1, “Core Hardware Components,” that hard drives are
 responsible for storing data. Windows manages disk space on these drives through a utility
 called Disk Management, shown in Figure 4.31. You can open Disk Management in many
 different ways, but one of the easiest ways is through the Quick Access menu (Windows+X).
-Disk Management doesn’t care if the hard drive is HDD or SSD; it can manage either. In
+Disk Management doesn't care if the hard drive is HDD or SSD; it can manage either. In
 addition, removable media and optical drives will show up in the bottom pane.
-Be sure you know how to explain what disk management is, as it’s listed
+Be sure you know how to explain what disk management is, as it's listed
 in exam objective 3.2.
 Before a hard drive can store data, it needs to be prepared. The first step is to create a
-partition. You won’t need to know a lot of detail about partitions for the Tech+ exam, but
+partition. You won't need to know a lot of detail about partitions for the Tech+ exam, but
 think of them as walledoff sections of disk space that you intend to use for storage.
 A hard
 drive can have multiple partitions. After a partition is created, it needs to be formatted with
 FIGURE 4.31  Disk Management
-Managing an Operating System 247
-a file system. I’ll cover these concepts again in the “Managing Folder and File Structures”
-later in this chapter. Once a drive is partitioned and formatted, it’s generally referred to as a
-volume, and it’s ready to store data. Windows Disk Manager allows you to do these tasks.
+
+a file system. I'll cover these concepts again in the “Managing Folder and File Structures”
+later in this chapter. Once a drive is partitioned and formatted, it's generally referred to as a
+volume, and it's ready to store data. Windows Disk Manager allows you to do these tasks.
 Deleting a partition or formatting a volume will remove all data from that
 volume—  be s
-ure that’s what you want to do before performing the task!
+ure that's what you want to do before performing the task!
 Using the Command Line
 Windows and other operating systems provide beautiful visuals as the backdrop for the
 operating environment. The background, wallpaper, icons, color scheme, and all of those
 related objects are part of the graphical user interface (GUI). By now, you have seen dozens
-of examples of several different operating systems’ GUIs in action throughout this book and
-likely you’re quite familiar with them in real life as well.
+of examples of several different operating systems' GUIs in action throughout this book and
+likely you're quite familiar with them in real life as well.
 Before GUIs existed, though, early operating systems used a commandline interface (CLI)
 ,
 usually shortened to command line and sometimes called a console. This was a textbased way
 of entering commands,
  opening applications, changing systems settings, and receiving output.
-It wasn’t as sexy as GUIs are, but it got the job done. Today, you can still use the command line
+It wasn't as sexy as GUIs are, but it got the job done. Today, you can still use the command line
 with many OSs. In fact, some oldschool administrators actually prefer it.
 Know how to identify a GUI and console/command line per Tech+ exam
 objective 3.1.
-In Windows, it’s easy to get to the command line, also called the command prompt.
+In Windows, it's easy to get to the command line, also called the command prompt.
 Simply type cmd into the Windows search box and press Enter. You will get a screen like the
 one shown in Figure 4.32. (By default the background will be black with white text, but I
 changed the color scheme to reverse that.)
@@ -1280,7 +1274,7 @@ this chapter) type help attrib and press Enter. To close the command prompt, typ
 press Enter. Sure, you could have clicked the X in the upperright corner of the window,
  too,
 but the whole point was to use the command line!
-For now, that’s all you need to know about the command line— simply how to identify it.
+For now, that's all you need to know about the command line— simply how to identify it.
 Later in this chapter
 , in the “Viewing File Metadata” section, you will get the chance to play
 around with it a bit more.
@@ -1290,13 +1284,13 @@ What we like even more is the ability to find our files when we need them; the o
 system takes care of that. Stored on the hard drive, the data is nothing but a very long string
 of 0s and 1s. The operating system makes sense of all this, knowing where one file ends and
 the next one begins.
-Of course, what we see is far less complicated than that mess. We’re used to seeing a file
+Of course, what we see is far less complicated than that mess. We're used to seeing a file
 with a name we recognize and opening it to get to the information we want. Perhaps that
 file is located in a folder (also called a directory), which might be in another folder. But how
 does the computer take that mess of those 0s and 1s and make sense of it?
 FIGURE 4.33  Command prompt help
-Managing an Operating System 249
-Let’s start from the hard drive and work our way to a more granular level. When a hard drive
+
+Let's start from the hard drive and work our way to a more granular level. When a hard drive
 comes from the factory, there is basically nothing on it. That might not come as a surprise to you.
 Before anything can be stored on that drive, someone needs to prepare it properly for storage.
 The first step is to create what is called a partition. A partition is a logical area created
@@ -1322,7 +1316,7 @@ is responsible for finding it.
 Filenames and Directories Some file systems have limitations on how long a filename can be
 or what characters can be used; some file systems are case sensitive,
  whereas others are not.
-What’s in a Name?
+What's in a Name?
 The old file allocation table (FAT) file system and MS-  DOS influenced filenames for quite
 some time. In MS- DOS and FA
 T, filenames were limited to an 8.3 (“eight dot three”) filenaming restriction, meaning that the filename itself could be no more than eight characters
@@ -1337,26 +1331,26 @@ would look like gibberish.
 The extension was, and is today, particularly important because it defines the file type. That is,
 it tells the operating system what program is needed for that type of file. For example,.exe
 is an executable file (meaning the OS runs the program located in the file),.xls is Microsoft
-Excel, and.pdf is an Adobe Portable Document Format file. When you doubleclick a PDF
+Excel, and.pdf is an Adobe Portable Document Format file. When you double-click a PDF
 file, the OS has an association that tells it to open Adobe Reader and then the file you clicked.
-Extensions today aren’t limited to three characters, but many still are, and all extensions need
-to be unique to the file type. For example, someone couldn’t come along and create a new file
+Extensions today aren't limited to three characters, but many still are, and all extensions need
+to be unique to the file type. For example, someone couldn't come along and create a new file
 type called a Pretty Darn Funny file and give it a.pdf extension, because.pdf already means
 something else. You can see (and change) the programs associated with file types in Windows 11 by opening the Choose Defaults By File Type app. Start typing associate into the Search box
-and it will appear. When you open it, you’ll get a window like the one in Figure 4.34. If there is
+and it will appear. When you open it, you'll get a window like the one in Figure 4.34. If there is
 no default app, the OS will ask you which app you want to use to open the file.
 Directories are treated just like files in many OSs; files that are in the directory will just
 point to that directory as a parent. Directory systems can be flat, meaning that no other
 directories can be created in the parent directory, or hierarchical, meaning that several
 levels of directories can be placed inside each other.
 FIGURE 4.34  App associations
-Managing an Operating System 251
-File Metadata and Attributes Metadata is information such as the file’s name,  size, last
+
+File Metadata and Attributes Metadata is information such as the file's name,  size, last
 time it was saved, and other attributes, such as readonly,
  hidden, or that the file has been
 changed since the last time it was backed up.
 Some file systems also offer compression (making the file smaller to take up less disk
-space and then uncompressing the file when it’s needed) and encryption (encoding the file so
+space and then uncompressing the file when it's needed) and encryption (encoding the file so
 that only authorized users can read it).
 As part of Tech+ exam objective 3.1, you may be expected to identify file
 system characteristics such as compression, encryption, and file types,
@@ -1397,14 +1391,14 @@ Linux Modern Linux file system, supports larger volumes;
 maximum of 64,000 subdirectories in a directory;
 replaced ext3.
 
-If files are stored using a file system the OS doesn’t recognize, the OS will
+If files are stored using a file system the OS doesn't recognize, the OS will
 not be able to read those files. In Exercise 4.4, you will look at metadata
 for your hard drive and begin a disk cleanup.
 EXERCISE 4.4
 Managing Storage Space in Windows
 1. Open the Computer window. You can do this a few different ways. One way is to open
 File Explorer by pressing the Windows key+E and then clicking This PC in the left pane.
-2. Find your C: drive, rightclick it, and c hoose Properties. You will get a window similar to
+2. Find your C: drive, right-click it, and choose Properties. You will get a window similar to
 the one shown in Figure 4.35.
 FIGURE 4.35  C: Proper ties
 File system Usual OS Notes
@@ -1418,8 +1412,8 @@ Universal Disk Format
 n/a Used for Bluray and DVDs.
 T
 ABLE 4.6  Common file systems (continued)
-Managing an Operating System 253
-3. Identify the type of file system you have. If you run Windows, it’s most likely NTFS.
+
+3. Identify the type of file system you have. If you run Windows, it's most likely NTFS.
 4. Identify how much free hard disk space you have. Generally, you want to maintain at
 least 10 percent free space.
 5. Notice at the bottom of the screen you have a check box to compress this drive. Doing
@@ -1433,9 +1427,9 @@ pressing Enter. Choose C: and click OK.
 shows an example.
 9. Check the boxes next to the types of files you want to clean up and click OK for it to
 begin. Otherwise, click Cancel.
-Now that you understand how files are stored on the hard drive, let’s get into specifics
-on managing a file structure within an operating system. First, I’ll discuss how to navigate
-through a file structure. Then, I will talk about viewing file properties. Finally, I’ll cover how
+Now that you understand how files are stored on the hard drive, let's get into specifics
+on managing a file structure within an operating system. First, I'll discuss how to navigate
+through a file structure. Then, I will talk about viewing file properties. Finally, I'll cover how
 to “do something” to a file.
 FIGURE 4.36  Disk Cleanup
 
@@ -1455,23 +1449,23 @@ management concepts of folders and directories.
 Files are stored in directories, which can in turn be stored in other directories. Because of
 this structure, you will sometimes hear the file system called a directory tree. At the base of
 this tree is the root, typically designated by your drive letter, such as C:. That drive letter represents the partition on the hard drive itself, but it will be represented on the computer like
-any other folder. Let’s see what this really looks like in Figure 4.37. To get there, press the
+any other folder. Let's see what this really looks like in Figure 4.37. To get there, press the
 Windows key+E to open File Explorer and then click This PC on the left side.
 FIGURE 4.37  This PC window
-Managing an Operating System 255
+
 Among other things, you can see that my PC has two hard drives, C: and D:. From this
-view alone, it doesn’t tell you for sure that there are two physical drives, I just happen to
-know that. It’s possible that C: and D: could be on the same physical drive. For our purposes
-here, the distinction isn’t important. When you doubleclick the C: drive, you get the first
+view alone, it doesn't tell you for sure that there are two physical drives, I just happen to
+know that. It's possible that C: and D: could be on the same physical drive. For our purposes
+here, the distinction isn't important. When you double-click the C: drive, you get the first
 level of directories,
  as shown in Figure 4.38.
 All the items that you see on the left in these figures, such as Desktop, Downloads,
 Documents, and Pictures, are also folders on the C: drive. If you click Documents and
-then another folder, you’ll keep digging into further levels of folders. As you can see in
+then another folder, you'll keep digging into further levels of folders. As you can see in
 Figure 4.39, I have highlighted a folder called c04.
 And, if you want to know where you are in the directory tree, all you have to do is look
-at the address bar and it will tell you; it’s at the top of Figure 4.39.
-Using File Explorer, you can navigate to anywhere you want by doubleclicking folders in
+at the address bar and it will tell you; it's at the top of Figure 4.39.
+Using File Explorer, you can navigate to anywhere you want by double-clicking folders in
 the left pane.
 You can also click any of the directory names in the address bar (like the one at
 the top of Figure 4.39), and it will take you right to that directory. Clicking the little arrow
@@ -1496,7 +1490,7 @@ author. There are lots of choices for you here. The results will pop up in the s
 where the files are currently displayed.
 
 While in File Explorer, you can also easily view the metadata for your file. This includes the
-size, security, and all sorts of other useful information. To get there, rightclick the file (or
+size, security, and all sorts of other useful information. To get there, right-click the file (or
 folder), as shown in Figure 4.40,
  and choose Properties.
 Remember the menu you see in Figure 4.40 because we will come back to it. For now,
@@ -1509,11 +1503,11 @@ the Hidden box will hide it from view
 . Click the Security tab to see the security details of the
 file, like those shown in Figure 4.42.
 FIGURE 4.39  Several folder s and files
-Managing an Operating System 257
-FIGURE 4.40  Rightclicking a file
+
+FIGURE 4.40  right-clicking a file
 FIGURE 4.41  File properties
 
-On the Tech+ exam, you won’t need to know specifics about the different
+On the Tech+ exam, you won't need to know specifics about the different
 types of permissions shown in the bottom pane of Figure 4.42. However,
 objective 3.1 does state that you should understand the concepts of permissions, file attributes, and properties.
 If you change permissions (readonly), the hidden attribute,  or security on a file, it
@@ -1524,17 +1518,16 @@ command prompt.
 EXERCISE 4.5
 Modifying File Attributes and Using the Command Prompt
 1. Open your C: in File Explorer by pressing Windows+E, clicking This PC in the left pane,
-and doubleclicking C: in the right pane. (Y
-ou should have a window similar to the one
+and double-clicking C: in the right pane. (You should have a window similar to the one
 in Figure 4.38.)
-2. In the right pane of File Explorer, rightclick in an open space and c hoose New ➢
+2. In the right pane of File Explorer, right-click in an open space and choose New ➢
 Folder. Name the folder test. (Capitalization is not important in Windows.)
 FIGURE 4.42  File security
-Managing an Operating System 259
-3. Doubleclick test to open the folder.
-4. In the right pane, it should say This folder Is Empty. Rightclick in the open space
-below that and choose New ➢  Text Document. Name it text1. (It’s an empty file, but
-that’s fine for our purposes here.) Your Explorer window should look something like
+
+3. double-click test to open the folder.
+4. In the right pane, it should say This folder Is Empty. right-click in the open space
+below that and choose New ➢  Text Document. Name it text1. (It's an empty file, but
+that's fine for our purposes here.) Your Explorer window should look something like
 Figure 4.43.
 5. Right-click text1 and choose Properties. Select the Read-Only check box, and click OK.
 6. Right-click text1 and choose Properties again. Confirm that the Read-Only box is checked, and click either OK or Cancel to close the box. Leave File Explorer open to
@@ -1555,19 +1548,18 @@ FIGURE 4.43  Test folder with text1 file
 12. Type attrib text1.txt again and press Enter. You will get a response similar to the
 one in Figure 4.44, except the R should be gone.
 13. Close the command prompt by typing exit and pressing Enter.
-14. In File Explorer, rightclick the text1 file and choose Properties.
+14. In File Explorer, right-click the text1 file and choose Properties.
 15. Notice that the Read-Only check box is now cleared!
 16. (optional) Click the Advanced button. In the Advanced Attributes window (Figure 4.45),
 notice that the File Is Ready For Archiving option is checked. This corresponds to the A
-attribute we didn’t change from the command prompt. Also notice that this is where
+attribute we didn't change from the command prompt. Also notice that this is where
 you could compress or encrypt a file if desired.
-Don’t delete the test folder just yet; you will use that in the next exercise.
+Don't delete the test folder just yet; you will use that in the next exercise.
 FIGURE 4.44  File attributes in the command prompt
 FIGURE 4.45  Advanced attributes
 EXERCISE 4.5  (continued)
-Managing an Operating System 261
 
-When I discussed file metadata, I rightclicked the file to get the menu as shown in
+When I discussed file metadata, I right-clicked the file to get the menu as shown in
 Figure 4.40.
 You probably noticed that there were quite a few different options on the menu.
 Across the top there are buttons to cut, copy, rename, share, and delete. Then written out
@@ -1578,9 +1570,8 @@ of the key options for manipulating files about which you should be aware:
 Open Opens the file in the default program for that file. Sometimes you will also have the
 option Open
 With, which allows you to specify the program you want to open the file. You
-can also open a file by doubleclicking it.
-Edit Opens the file in the default editor for that program. If it’
-s a Word document, it will
+can also open a file by double-clicking it.
+Edit Opens the file in the default editor for that program. If it's a Word document, it will
 open Word just like the Open command will. For pictures, though, oftentimes you will have
 a different program to display the images versus edit the images.
 Move Takes the file from one folder and moves it to another
@@ -1605,22 +1596,19 @@ Paste If you have something on your clipboard, it will paste the contents into w
 
 executed the Paste command. If you cut and paste a file, the file does not physically move on the
 hard drive. It gets executed like a Move command. The keyboard shortcut for Paste is Ctrl+V.
-Delete Removes the file from the directory it’s in and moves it to the Recycle Bin (W
-in-
-dows) or Trash (macOS). It doesn’t actually erase the file from the hard drive; it just changes
+Delete Removes the file from the directory it's in and moves it to the Recycle Bin (Windows) or Trash (macOS). It doesn't actually erase the file from the hard drive; it just changes
 the metadata to say it now belongs to the Recycle Bin or Trash directory. Emptying the Trash
-will erase it from the hard drive and free up disk space. You can also delete files by high-
-lighting them and pressing the Del key on your keyboard.
+will erase it from the hard drive and free up disk space. You can also delete files by highlighting them and pressing the Del key on your keyboard.
 Rename Changes the metadata for the file, giving it a new name.
- Functionally, it’s very similar to Save As. You can’t have more than one file with the same name in any directory.
+ Functionally, it's very similar to Save As. You can't have more than one file with the same name in any directory.
 
-In Windows 11, the rightclick menu has been streamlined versus previous versions of
+In Windows 11, the right-click menu has been streamlined versus previous versions of
 Windows.
- To see the same list of options you would have seen in Windows 10, rightclick
+ To see the same list of options you would have seen in Windows 10, right-click
 and then choose Show More Options at the bottom of the list. Most of the choices will be
 the same between the two options screens,
  but the latter one will have a few more.
-In NTFS, you can’t change file metadata, such as renaming or moving,
+In NTFS, you can't change file metadata, such as renaming or moving,
 when the file is open. Other file systems such as ext3 and ext4 do not
 have this restriction.
 Exercise 4.6 has you manipulate files on your computer. Well, folders, really, but
@@ -1628,38 +1616,38 @@ remember that folders are files, too!
 EXERCISE 4.6
 Manipulating Files in Windows
 1. Open File Explorer by pressing the Windows key+E. Navigate to the C: drive by clicking
-This PC in the left pane and then doubleclicking C: in the right pane.
+This PC in the left pane and then double-clicking C: in the right pane.
 P
-rovided you didn’t delete it, you should still see your test folder from Exercise 4.5.
-2. Create a new folder by rightclicking in the right pane and c hoosing New ➢ Folder.
+rovided you didn't delete it, you should still see your test folder from Exercise 4.5.
+2. Create a new folder by right-clicking in the right pane and choosing New ➢ Folder.
 3. Name the new folder happy.
-4. Rightclick happy and choose Cut (it’s the scissors icon). Notice how the folder icon
+4. right-click happy and choose Cut (it's the scissors icon). Notice how the folder icon
 looks more transparent.
-5. Rightclick text and choose Paste (it’s the icon that looks like a clipboard). You could also
-open up test first and then rightclick the right side and c hoose Paste, or just open
+5. right-click text and choose Paste (it's the icon that looks like a clipboard). You could also
+open up test first and then right-click the right side and choose Paste, or just open
 test and press Ctrl+V.
-6. Doubleclick test. The happy folder should now be in there.
-7. Rightclick happy and choose Copy.
+6. double-click test. The happy folder should now be in there.
+7. right-click happy and choose Copy.
 8. Navigate back to your Documents folder and paste happy there. Now, you should have
 a happy folder in two locations.
-9. Delete the happy folder by highlighting it, rightclicking, and c hoosing Delete. Leave
+9. Delete the happy folder by highlighting it, right-clicking, and choosing Delete. Leave
 the test folder for now.
-We already talked about two ways to open a file, which are to rightclick it and choose
-Open or simply to doubleclick it. If what you are doubleclicking is an application, it will
+We already talked about two ways to open a file, which are to right-click it and choose
+Open or simply to double-click it. If what you are double-clicking is an application, it will
 execute that program.
  Additionally, you can open a file or execute a program using the Start
 menu. Click Start, find the file or program in the list, and click it. Or type the name of the
 program into the Windows search box and press Enter.
-Managing an Operating System 263
-There’s one last way to open a file and that’s to open a shortcut to the file or program.
-A shortcut is a file that points to the real file’s location. Sometimes, you will hear it referred
+
+There's one last way to open a file and that's to open a shortcut to the file or program.
+A shortcut is a file that points to the real file's location. Sometimes, you will hear it referred
 to as a pointer file. Normally, you will create these on your desktop to make it easier to
-access folders, files, or programs that you run a lot. The shortcut itself doesn’t contain the
+access folders, files, or programs that you run a lot. The shortcut itself doesn't contain the
 data, so you can delete a shortcut and not lose any data. You can identify a shortcut because
 it has a small arrow as part of the icon. Exercise 4.7 walks you through creating a shortcut.
 EXERCISE 4.7
 Creating a Shortcut in Windows
-1. Rightclick an open area of your desktop and choose New ➢ Shortcut.
+1. right-click an open area of your desktop and choose New ➢ Shortcut.
 2. Click Browse, and a window will appear similar to the one shown in Figure 4.46.
 FIGURE 4.46  Browsing for a folder or file
 
@@ -1670,7 +1658,7 @@ Shortcut window.
 5. Type a name for your shortcut (if you want) and click Finish.
 6. A new shortcut to the text1 file will appear on your desktop. Notice that it has a small
 arrow in the lowerleft corner
-, signifying that it’s a shortcut. Doubleclick the shor
+, signifying that it's a shortcut. double-click the shor
 tcut
 and notice that it opens the file.
 7. (Optional) Delete the shortcut if you want. Remember that deleting the shortcut will not
@@ -1701,7 +1689,7 @@ Understand file management concepts. They include folders/directories, permissio
  and
 naming restrictions.
 EXERCISE 4.7  (continued)
-Chapter 4 Lab 265
+
 Understand how to use different OS interfaces. Be familiar with the console/command line
 as well as graphical user interfaces (GUIs). Know how to view file attributes and properties
 in these interfaces.
@@ -1718,21 +1706,21 @@ Understand how files are stored on computers. Files are any items that have a fi
 Files are stored in folders (or directories),
  which in turn can be stored in other folders on the
 hard drive.
-Know how to view file properties. Metadata is part of a file’s properties.
+Know how to view file properties. Metadata is part of a file's properties.
  In Windows, you
-can rightclick the file and select Properties to view the metadata.
+can right-click the file and select Properties to view the metadata.
 Chapter 4 Lab
 You can find the answers in Appendix A.
-Most people are familiar with Microsoft Windows because it’s so popular. Not everyone is as
+Most people are familiar with Microsoft Windows because it's so popular. Not everyone is as
 familiar with Linux, though. In this lab, you are going to install Lubuntu on your machine.
 The goal is to familiarize yourself with another OS and to understand that other operating
-systems aren’t scary or mysterious. They all do similar things; it’s just a matter of figuring
+systems aren't scary or mysterious. They all do similar things; it's just a matter of figuring
 out how.
 Historically, installing a second OS involved a relatively complicated process where you
 needed to dual- boot your computer.
- We’re not going to do that here. You will use a technology called VirtualBox, which allows you to create a new virtual system on your hard
+ We're not going to do that here. You will use a technology called VirtualBox, which allows you to create a new virtual system on your hard
 drive and not affect your existing Windows installation. I promise you that this lab will
-not mess up Windows on your computer! And when you’re finished, you can just uninstall
+not mess up Windows on your computer! And when you're finished, you can just uninstall
  VirtualBox,
  if you want, and nothing will have changed on your system.
 The first two steps are for preparation. You need to download Oracle VirtualBox and a version of Lubuntu. Really, any version of Linux is fine; you will just have to slightly modify the
@@ -1747,7 +1735,7 @@ As of this writing, the newest release is
 later; it will essentially act as a bootable CD for your OS installation.
 Now you begin the installation of VirtualBox.
 
-3. Doubleclick the V irtualBox icon. If you get a security warning, click the Run button.
+3. double-click the V irtualBox icon. If you get a security warning, click the Run button.
 Then click Next on the Setup Wizard screen.
 4. On the Custom Setup screen, click Next and then Next again. It will give you a warning
 about your network interfaces. Click Yes. (Your network connections will come back
@@ -1755,11 +1743,11 @@ automatically.)
 5. Click Install. The installation may take several minutes. (You might also need to clear
 another security warning box.)
 6. Once the installation is complete, click Finish.
-It’s time to configure VirtualBox.
+It's time to configure VirtualBox.
 7. You might get a VirtualBox warning telling you that an image file is not currently accessible.
-That’s fine. Click Ignore. You should see a screen similar to the one shown in Figure 4.47.
+That's fine. Click Ignore. You should see a screen similar to the one shown in Figure 4.47.
 8. Click the blue New icon to create a new virtual machine. Give it a name. The Type and
-Version boxes aren’t critical; they don’t affect anything. If you type Lubuntu for a name,
+Version boxes aren't critical; they don't affect anything. If you type Lubuntu for a name,
 it will automatically set Type to Linux and Version to Ubuntu. Click Next.
 9. In the Hardware window, click Next to accept the default base memory and processor
 allocation.
@@ -1767,7 +1755,7 @@ allocation.
 Now. Leave that option selected and click Next. (If you were going to use this extensively, you would want to give the virtual machine more hard drive space than the
 default 10 GB.)
 FIGURE 4.47  VirtualBo x preconfiguration
-Chapter 4 Lab 267
+
 11. The Summary page appears with your choices. Click Finish. You should get a screen
 similar to the one shown in Figure 4.48.
 Great! You now have a virtual machine on your hard drive. Now you just need to put
@@ -1787,16 +1775,16 @@ Lubuntu. Click OK.
 18. Now you are back to the Oracle VirtualBox Manager screen. With Lubuntu on the left
 highlighted, click the green Start arrow. This will boot into a live session of Lubuntu,
 like what you see in Figure 4.50.
-19. Doubleclick the Install Lubuntu icon on the virtual desktop to begin installation.
+19. double-click the Install Lubuntu icon on the virtual desktop to begin installation.
 FIGURE 4.48  VirtualBo x with a virtual drive
 
 FIGURE 4.49  Lubuntu – Settings dialog
 FIGURE 4.50  Lubuntu live session
-Chapter 4 Lab 269
+
 In step 18 after you press the green Start arrow, you might get an error
 message saying the operating system was not bootable. If that happens,
 use the drop-down box at the bottom of the error message to point to the
-ISO file again, and retry. It should work. If not, it’s possible the ISO file is
+ISO file again, and retry. It should work. If not, it's possible the ISO file is
 corrupted. You can download again, or try downloading a different distribution to make it work, starting back at step 12.
 20. Choose a language, and click Next,
 21. Choose a location and click Next.
@@ -1843,18 +1831,17 @@ D. Chromebooks do not store files.
  What happened to the data in
 the presentation?
 A. Nothing.
-B. It’s in the Recycle Bin/T
+B. It's in the Recycle Bin/T
 rash.
-C. It’s deleted.
-D. It’s in the recovery partition.
+C. It's deleted.
+D. It's in the recovery partition.
 6
-. With which of the following file systems can you not rename a file when it’
-s open?
+. With which of the following file systems can you not rename a file when it's open?
 A. ext3
 B. ext4
 C. APFS
 D. NTFS
-Review Questions 271
+
 7. You are going to purchase a new iPhone. Which operating system will be installed on it?
 A
 . iOS
@@ -1942,7 +1929,7 @@ A. Device Manager
 B. Sound Card Manager
 C. Drivers app
 D. Control Panel
-Review Questions 273
+
 19. Which of the following would not be considered metadata for a spreadsheet file?
 A. Readonly
 attribute

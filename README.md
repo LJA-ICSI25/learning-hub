@@ -126,7 +126,7 @@ Load **order matters** (see `index.html`):
 | `assets/learn-hub-techplus-md-ch01.js` … `ch12.js` | **Study-guide segment HTML** (~**190** `tech-sg-*` keys total across chapters). Not listed individually in [File manifest](#file-manifest-integrity-reference)—sizes change when you rebuild. |
 | `assets/learn-hub-deep.js` | `window.LEARN_HUB_DEEP` — per-lesson **full reference HTML** plus shared drill blocks and external doc links. |
 | `assets/learn-hub-playground.js` | `window.LEARN_HUB_PLAYGROUND` — default **sandbox starters** for **learn** steps on web / Python / SQL. |
-| `assets/learn-hub-app.js` | UI, progress, merging `readHtml`, workspaces, Run/Check logic, Tech+ study-guide layout (TOC, full-pane reading, Skip lesson). |
+| `assets/learn-hub-app.js` | UI, progress, merging `readHtml`, workspaces, Run/Check logic, Tech+ study-guide layout (TOC, full-pane reading, Skip lesson). For **`tech-sg-*`** steps, **normalizes** the study-guide **source** line so the bold title matches headings inside that segment (avoids PDF/chapter bleed in the stored HTML). |
 | `package.json` / `package-lock.json` | Node metadata and lockfile; **`npm install`** pulls **`marked`** for `npm run build:techplus`. Not loaded by the browser. |
 
 ## How content is merged at runtime
@@ -181,8 +181,11 @@ Run from `Hubs/Learn-Hub` or adjust paths (this project lives at `G:\Hubs\Learn-
 | `npm run validate:techplus-md` | Runs **`scripts/validate-techplus-html.mjs`** — read-only checks (raw `<body>` / `<script>` / bad list markup outside `<pre>`, etc.). |
 | `npm run rebuild:techplus` | Runs **`normalize:techplus`** then **`build:techplus`** (full Markdown normalize + regenerate bundle). |
 | `npm run normalize:techplus` | Runs **`scripts/normalize-techplus-markdown.mjs`** — optional chapter Markdown cleanup before a build. |
-| `npm run verify:techplus` | Runs **`audit-techplus-consistency.mjs`** then **`validate-techplus-html.mjs`** — course ids vs segments, HTML safety. |
+| `npm run audit:techplus-md` | Runs **`audit-techplus-markdown-quality.mjs`** — scans **`chapters/*.md`** for common PDF artifacts (exam code spacing, page headers, split words). Use before stakeholder review. |
+| `npm run qa:techplus` | **Full gate:** **`normalize:techplus`** → **`build:techplus`** → **`verify:techplus`** → **`audit:techplus-md`**. Run after bulk chapter edits. |
+| `npm run verify:techplus` | Runs **`audit-techplus-consistency.mjs`**, **`validate-techplus-html.mjs`**, and **`audit-techplus-segment-foreign-ids.mjs`** — course ids vs segments, HTML safety, no stray other-lesson ids in a segment’s HTML. |
 | `npm run restore:techplus-md` | Runs **`scripts/restore-techplus-md-from-reference.mjs`** — copies **`learn-hub-courses.js`** from **`G:\All_Learn-hub\Learn-Hub`**, merges **missing** `tech-sg-*` HTML from that folder’s monolithic **`learn-hub-techplus-md.js`** into **`Hubs`** chapter chunks, regenerates loader hashes. Use when study-guide steps are listed but chunk HTML is incomplete. |
+| `npm run fix:techplus-banners` | Runs **`scripts/fix-techplus-source-banner-titles.mjs`** — optional **disk** repair when a banner’s **`Ch N —`** text disagrees with the chapter span (rare; render-time normalization usually suffices). |
 
 | Script | What it does |
 |--------|----------------|
@@ -204,9 +207,11 @@ Read each file’s header comment for exact usage.
 
 ## Tech+ source material
 
+**Editorial standard (terminology, hyphenation, code examples):** `docs/TECHPLUS_EDITORIAL_STANDARD.md`. **Chapter sign-off checklist:** `docs/TECHPLUS_CHAPTER_REVIEW_CHECKLIST.md`.
+
 | Source | Role |
 |--------|------|
-| `chapters/*.md` | Twelve **chapter sources** (Markdown) stored **inside Learn Hub**. Edit here, then run **`npm run build:techplus`** to regenerate segments and the Tech+ lesson list (polish runs inside that pipeline). |
+| `chapters/*.md` | Twelve **chapter sources** (Markdown) stored **inside Learn Hub**. Edit here, then run **`npm run build:techplus`** to regenerate segments and the Tech+ lesson list (polish runs inside that pipeline). Each chapter has **`### Introduction`** immediately **after** the exam-objectives list so the first study-guide step (**Chapter overview & objectives**) is **objectives-only**; chapter intro prose starts in the next lesson. Add **`### Section Title`** lines at every major topic boundary (see chapter 1 for density): the build splits lessons on `<h3>` headings, **`EXERCISE`**, and **Review Questions** — without enough `###` headings, one sidebar step can swallow unrelated book sections. Optional: **`npm run restore:techplus-md`** merges **only missing** `tech-sg-*` HTML from the **`G:\All_Learn-hub\Learn-Hub`** monolith into chapter chunks — it does **not** replace `learn-hub-courses.js` (sidebar titles must stay in sync with the build). |
 | `learn-hub-techplus-md.js` + `learn-hub-techplus-md-ch01.js` … `ch12.js` | **Per-lesson HTML** for study-guide ids `tech-sg-01-01`, … — the browser loads the **loader** first, then **lazy-loads** each chapter chunk. No runtime path outside this repo. After replacing or hand-editing chunks, run **`npm run polish:techplus-md`** / **`npm run verify:techplus`** and update **`index.html`** `?v=` strings. |
 | `learn-hub-techplus.js` | Shorter **topic excerpts** (regenerate with `scripts/build-techplus-import.mjs`, which reads a copy of the study guide HTML from your materials — **build-time only**). |
 | *(optional)* `TechPlus_Study_Guide.html` | Separate interactive guide (quizzes, practice exam) if you keep it alongside this project — not required for Learn Hub to run. |

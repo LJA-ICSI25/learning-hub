@@ -1,6 +1,7 @@
 /**
- * Restores Tech+ study-guide HTML (tech-sg-*) into chunked MD files from the
- * All_Learn-hub monolith, and syncs learn-hub-courses.js to the 626 reference.
+ * Merges **missing** Tech+ study-guide HTML (tech-sg-*) from the All_Learn-hub **monolith**
+ * into the local chapter chunk files. Does **not** copy learn-hub-courses.js — lesson titles and
+ * IDs must come from `npm run build:techplus` so sidebar labels match embedded segment banners.
  *
  * Run: node scripts/restore-techplus-md-from-reference.mjs
  */
@@ -57,8 +58,10 @@ function main() {
   }
 
   const destCourses = path.join(learnHubRoot, "assets", "learn-hub-courses.js");
-  fs.copyFileSync(REF_COURSES, destCourses);
-  console.log("Copied", REF_COURSES, "->", destCourses);
+  if (!fs.existsSync(destCourses)) {
+    console.error("Missing", destCourses, "— run npm run build:techplus first.");
+    process.exit(1);
+  }
 
   const courses = loadCourses(destCourses);
   const want = new Set(techSgIdsFromCourses(courses));

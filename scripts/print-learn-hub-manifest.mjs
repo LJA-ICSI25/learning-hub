@@ -48,7 +48,9 @@ const FILES = [
   "scripts/migrate-fcc-deep-playground.mjs",
   "scripts/print-learn-hub-manifest.mjs",
   "scripts/audit-techplus-consistency.mjs",
+  "scripts/audit-techplus-segment-foreign-ids.mjs",
   "scripts/compare-tech-curriculum.mjs",
+  "scripts/fix-techplus-source-banner-titles.mjs",
   "scripts/restore-techplus-md-from-reference.mjs",
 ];
 

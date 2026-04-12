@@ -413,6 +413,10 @@ function mergeSplitObjectiveLines(text) {
         if (t === "") break;
         if (/^[✓✔■△▶]/.test(t)) break;
         /**
+         * Nested sub-bullets under an objective (indented `- item`) — do not merge into the ✓ line.
+         */
+        if (/^\s{2,}-\s/.test(r)) break;
+        /**
          * PDF line-wrap continues the same bullet with a lowercase (or non-letter) start.
          * A new line that begins with a capital letter is almost always a new paragraph
          * (e.g. “■ … connectors” then “In the following sections…”) — do not absorb it into the list item.
@@ -647,8 +651,27 @@ function joinProseWordSplits(text) {
  * - Turn ✓ / ■ lines into real Markdown list items (otherwise one giant <p>).
  * - Promote isolated title-case lines before a new sentence to ### headings.
  */
+/**
+ * PDF often puts the hyphen on its own line: "bot" newline "-" newline "tom".
+ * Map known recombinations; unknown triplets are left unchanged.
+ */
+function joinHyphenOnOwnLine(s) {
+  const map = {
+    bottom: "bottom",
+    journalistic: "journalistic",
+    fingerprint: "fingerprint",
+    proprietary: "proprietary",
+    userfriendly: "user-friendly",
+  };
+  return s.replace(/([a-z]{2,})\s*\n\s*-\s*\n\s*([a-z]{2,})/gi, (full, a, b) => {
+    const k = (a + b).toLowerCase().replace(/[^a-z]/g, "");
+    return Object.prototype.hasOwnProperty.call(map, k) ? map[k] : full;
+  });
+}
+
 function preprocessMarkdown(raw) {
   let s = raw.replace(/\r\n/g, "\n");
+  s = joinHyphenOnOwnLine(s);
   /** Join hyphenated line breaks before figure stripping — otherwise “shows … bot-\ntom” breaks sentence regexes. */
   s = s.replace(/([A-Za-z])-\n([a-z])/g, "$1$2");
   s = s.replace(/([A-Za-z0-9])-\s*\n([a-z])/g, "$1$2");
@@ -754,6 +777,50 @@ function stripLeadingPdfListMarker(s) {
   return t;
 }
 
+/**
+ * Marked emits a flat <ul> for exam objectives; nest plain sub-bullets under each "N.M …" objective line.
+ */
+function nestExamObjectiveSubbullets(html) {
+  const stripObjectiveText = (inner) =>
+    inner
+      .replace(/<p>\s*/gi, "")
+      .replace(/\s*<\/p>/gi, "")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  return html.replace(/<ul class="lh-exam-objectives">([\s\S]*?)<\/ul>/gi, (_, inner) => {
+    const lis = [];
+    const re = /<li(?:\s[^>]*)?>([\s\S]*?)<\/li>/gi;
+    let m;
+    while ((m = re.exec(inner)) !== null) lis.push(m[1]);
+
+    const out = [];
+    let i = 0;
+    while (i < lis.length) {
+      const t = stripObjectiveText(lis[i]);
+      if (/^\d+\.\d+/.test(t)) {
+        const subs = [];
+        let j = i + 1;
+        while (j < lis.length && !/^\d+\.\d+/.test(stripObjectiveText(lis[j]))) {
+          subs.push(lis[j]);
+          j++;
+        }
+        if (subs.length > 0) {
+          out.push(
+            `<li>${lis[i]}<ul class="lh-exam-objectives-sub">${subs.map((s) => `<li>${s}</li>`).join("")}</ul></li>`
+          );
+          i = j;
+          continue;
+        }
+      }
+      out.push(`<li>${lis[i]}</li>`);
+      i++;
+    }
+    return `<ul class="lh-exam-objectives">${out.join("")}</ul>`;
+  });
+}
+
 function postprocessChapterHtml(html) {
   let h = html.trim();
   h = h.replace(
@@ -787,10 +854,25 @@ function postprocessChapterHtml(html) {
   h = h.replace(/<div class="lh-md-objectives-banner">([\s\S]*?)<\/div>/, (_, inner) => {
     return `<div class="lh-md-objectives-banner">${inner.trim()}</div>`;
   });
+  /**
+   * Marked often emits <hr><h2>…</h2><p><strong>THE FOLLOWING…</strong></p><ul> — the banner
+   * regex above may not wrap; still tag the exam objectives <ul> for layout + nesting pass.
+   */
+  h = h.replace(
+    /(<p><strong>THE FOLLOWING COMPTIA TECH\+[^<]*<\/strong><\/p>)\s*\n*<ul>/gi,
+    '$1\n<ul class="lh-exam-objectives">'
+  );
+  h = nestExamObjectiveSubbullets(h);
   h = h.replace(/\bOBJECTIVESARE\b/gi, "OBJECTIVES ARE");
   /** Common PDF/OCR spacing glitches in this corpus */
   h = h.replace(/\bint ernal\b/gi, "internal");
   h = h.replace(/\bcontr ast\b/g, "contrast");
+  h = h.replace(/\bnon-\s+volatile\b/gi, "non-volatile");
+  h = h.replace(/\bNon-\s+volatile\b/g, "Non-volatile");
+  h = h.replace(/\bReadonly memory \(R\s*<br\s*\/?>\s*OM\)/gi, "Read-only memory (ROM)");
+  h = h.replace(/\bReadonly memory\b/gi, "Read-only memory");
+  h = h.replace(/\bReadonly\b/g, "Read-only");
+  h = h.replace(/\bSolidstate\b/gi, "Solid-state");
   h = h.replace(/\bmo\s+therboard\b/gi, "motherboard");
   h = h.replace(/\bZ790-\s*E\b/g, "Z790-E");
   h = h.replace(/\bZ690-\s*E\b/g, "Z690-E");
@@ -974,7 +1056,8 @@ function canonicalSectionTitle(t) {
   if (!t || typeof t !== "string") return null;
   let s = t.trim().replace(/\s+/g, " ");
   for (;;) {
-    const next = s.replace(/\s+\(continued\)\s*$/i, "").trim();
+    let next = s.replace(/\s+\(continued\)\s*$/i, "").trim();
+    next = next.replace(/\s+[—–]\s*continued\s*$/i, "").trim();
     if (next === s) break;
     s = next;
   }
@@ -1002,6 +1085,25 @@ function formatLessonTitleLine(s, hardCap = TITLE_SOFT_MAX) {
   const one = t.match(/^.{12,}?[.!?](?=\s|$)/);
   const use = one ? one[0].trim() : t;
   return use.length <= hardCap ? use : truncateAtWord(use, hardCap);
+}
+
+/** Shorter nav labels: drop textbook-style h3 prefixes when the rest is still clear. */
+function polishLessonTitle(s) {
+  let t = String(s).replace(/\s+/g, " ").trim();
+  if (!t) return t;
+  for (const re of [/^Exploring\s+/i, /^Understanding\s+/i]) {
+    const m = t.match(re);
+    if (m && t.length - m[0].length >= 12) {
+      t = t.slice(m[0].length).trim();
+      break;
+    }
+  }
+  return t;
+}
+
+function titleFromHeadingHtml(h3Inner) {
+  const plain = stripTags(h3Inner);
+  return plain.length > 2 ? polishLessonTitle(formatLessonTitleLine(plain)) : "";
 }
 
 /**
@@ -1119,35 +1221,37 @@ function mergeTinyHtmlChunks(chunks, minLen) {
 }
 
 function segmentLessonTitle(html, chapterTitle, index, inheritSectionTitle) {
-  if (index === 0) return "Overview & exam objectives";
+  if (index === 0) return "Chapter overview & objectives";
   const htmlTrim = String(html).trim();
   const leadH3 = htmlTrim.match(/^<h3[^>]*>([\s\S]*?)<\/h3>/i);
   if (leadH3) {
-    const t = stripTags(leadH3[1]);
-    if (t.length > 2) return formatLessonTitleLine(t);
+    const t = titleFromHeadingHtml(leadH3[1]);
+    if (t) return t;
   }
   const exParsed = parseExerciseHeadingFromChunk(htmlTrim);
   if (exParsed) {
-    const sub = formatLessonTitleLine(exParsed.subtitle, 170);
+    const sub = polishLessonTitle(formatLessonTitleLine(exParsed.subtitle, 170));
     if (sub) return `Exercise ${exParsed.num} — ${sub}`;
     return `Exercise ${exParsed.num}`;
   }
   const exIntro = htmlTrim.match(/^<p(?:\s[^>]*)?>\s*(Exercise\s+\d+\.\d+\s+[^<]+)\s*<\/p>/i);
   if (exIntro) {
-    const t = formatLessonTitleLine(stripTags(exIntro[1]), TITLE_SOFT_MAX);
+    const t = polishLessonTitle(formatLessonTitleLine(stripTags(exIntro[1]), TITLE_SOFT_MAX));
     if (t.length > 2) return t;
   }
-  if (/^<p(?:\s[^>]*)?>\s*Review Questions\b/i.test(htmlTrim)) return "Review questions";
+  if (/^<p(?:\s[^>]*)?>\s*Review Questions\b/i.test(htmlTrim)) return "Chapter review questions";
   if (inheritSectionTitle && inheritSectionTitle.length > 2) {
     const base = formatLessonTitleLine(inheritSectionTitle, 170);
-    const cont = `${base} (continued)`;
-    return cont.length <= TITLE_SOFT_MAX + 14 ? cont : truncateAtWord(base, TITLE_SOFT_MAX - 12) + " (continued)";
+    const cont = `${base} — continued`;
+    return cont.length <= TITLE_SOFT_MAX + 14
+      ? cont
+      : truncateAtWord(base, TITLE_SOFT_MAX - 14) + " — continued";
   }
   /** Prose-only slices before the first ### (or broken inherit chain): use first heading in HTML. */
   const anywhere = htmlTrim.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
   if (anywhere) {
-    const t = stripTags(anywhere[1]);
-    if (t.length > 2) return formatLessonTitleLine(t);
+    const t = titleFromHeadingHtml(anywhere[1]);
+    if (t) return t;
   }
   return chapterTitle + " — Continued (" + (index + 1) + ")";
 }
@@ -1226,38 +1330,46 @@ function main() {
         if (allH3?.length) {
           const mm = allH3[allH3.length - 1].match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
           if (mm) {
-            const t = formatLessonTitleLine(stripTags(mm[1]));
+            const t = titleFromHeadingHtml(mm[1]);
             base = canonicalSectionTitle(t);
           }
         }
         if (!base) {
           const prevTitle = courseSgLessons[i - 1]?.title;
-          if (prevTitle && !/^Overview\b/i.test(prevTitle)) base = canonicalSectionTitle(prevTitle);
+          if (
+            prevTitle &&
+            !/^Chapter overview\b/i.test(prevTitle) &&
+            !/^Overview\b/i.test(prevTitle)
+          ) {
+            base = canonicalSectionTitle(prevTitle);
+          }
         }
         if (!base && i === 1) {
           const fromMd = firstMdH3Heading(raw);
-          if (fromMd) base = canonicalSectionTitle(fromMd);
+          if (fromMd) base = canonicalSectionTitle(polishLessonTitle(formatLessonTitleLine(fromMd)));
         }
         if (base) {
-          const cont = `${base} (continued)`;
+          const cont = `${base} — continued`;
           lessonTitle =
-            cont.length > TITLE_SOFT_MAX + 14 ? truncateAtWord(base, TITLE_SOFT_MAX - 12) + " (continued)" : cont;
+            cont.length > TITLE_SOFT_MAX + 14
+              ? truncateAtWord(base, TITLE_SOFT_MAX - 14) + " — continued"
+              : cont;
           sectionInherit = base;
         }
       }
 
       const leadH3 = htmlTrim.match(/^<h3[^>]*>([\s\S]*?)<\/h3>/i);
       if (leadH3) {
-        const t = formatLessonTitleLine(stripTags(leadH3[1]));
+        const t = titleFromHeadingHtml(leadH3[1]);
         sectionInherit = canonicalSectionTitle(t);
       } else if (/^<p(?:\s[^>]*)?>\s*EXERCISE\b/i.test(htmlTrim)) {
         sectionInherit = canonicalSectionTitle(lessonTitle);
       } else if (/^<p(?:\s[^>]*)?>\s*Review Questions\b/i.test(htmlTrim)) {
-        sectionInherit = "Review questions";
+        sectionInherit = "Chapter review questions";
       } else {
         const anyH3 = htmlTrim.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
         if (anyH3) {
-          const t = formatLessonTitleLine(stripTags(anyH3[1]));
+          const t = titleFromHeadingHtml(anyH3[1]);
           sectionInherit = canonicalSectionTitle(t);
         }
       }
