@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/learn-hub.css?v=lhOverviewInlineA11y20260411" />
+  <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhSplit20260411" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhSplit20260411" />
+  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhSplit20260411" />
 </head>
 <body>
   <a class="lh-skip-link" href="#lh-main">Skip to main content</a>
@@ -142,7 +144,7 @@
             <button type="button" class="tool success" id="btn-tech-check">Check answers</button>
           </div>
           <div class="panel-head"><span>Feedback</span><span id="tech-status" aria-live="polite">—</span></div>
-          <div id="tech-feedback" style="padding:0.6rem;min-height:72px;font-size:0.82rem;color:#c5ced9;" aria-live="polite"></div>
+          <div id="tech-feedback" class="lh-tech-feedback" aria-live="polite"></div>
         </div>
         </div>
         <article class="teach" id="teach">
@@ -179,7 +181,7 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub.css</code> next to this <code>index.html</code>.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
           );
       },
       true

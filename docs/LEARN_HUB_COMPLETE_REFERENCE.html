@@ -66,7 +66,7 @@
     <li>
       <div class="toc-part-label">Part III — Styling</div>
       <ul>
-        <li><a href="#css"><code>learn-hub.css</code> — overview &amp; tokens</a></li>
+        <li><a href="#css"><code>learn-hub-*.css</code> — tokens, layout, teach</a></li>
         <li><a href="#css-catalog">Class catalog (major groups)</a></li>
       </ul>
     </li>
@@ -186,7 +186,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <section class="chunk" id="index-detail">
 <h2><code>index.html</code> — regions &amp; element IDs</h2>
 <ul>
-  <li><strong>Head:</strong> charset, viewport, no-cache meta, fonts, <code>learn-hub.css?v=…</code></li>
+  <li><strong>Head:</strong> charset, viewport, no-cache meta, fonts, <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, <code>learn-hub-teach.css</code> (same <code>?v=…</code> query on each)</li>
   <li><strong><code>#lh-announcer</code></strong> — <code>aria-live</code> for SR announcements.</li>
   <li><strong><code>#sidebar</code></strong> — <code>#course-pills</code>, <code>#xp-bar</code>/<code>#xp-fill</code>/<code>#xp-label</code>, <code>#lesson-filter</code>, <code>#sidebar-track-name</code>, <code>#sidebar-lesson-nav</code>, a11y toggles, <code>#btn-reset-all</code>.</li>
   <li><strong><code>#lh-main</code></strong> — <code>#menu-toggle</code>, <code>#lesson-title</code>, <code>#lh-lesson-place</code>, <code>#lesson-picker</code>, <code>#progress-fill</code>, <code>#btn-toggle-teach</code>.</li>
@@ -269,7 +269,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <h2 class="part-head" id="part-iii">Part III — Styling</h2>
 
 <section class="chunk" id="css">
-<h2><code>learn-hub.css</code> — overview &amp; tokens</h2>
+<h2><code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, <code>learn-hub-teach.css</code> — overview</h2>
 <p>~2600 lines: <code>:root</code> tokens, layout (<code>.app</code>, sidebar grid, main), components (pills, XP, lesson rows, workspaces, iframe preview), Tech+ prose (<code>.lh-notes-prose</code>, <code>.lh-chapter-markdown</code>), a11y toggles, responsive (960px / 720px), <code>@media print</code>.</p>
 <p><strong>Tokens (sample):</strong> <code>--bg</code>, <code>--surface</code>, <code>--accent</code>, <code>--blue</code>, <code>--tech</code>, <code>--gold</code>, <code>--notes-*</code>. <code>body.lh-high-contrast</code> overrides.</p>
 <p><strong>Layout notes:</strong> <code>content.single-pane</code>; <code>body.teach-collapsed</code> hides teach; <code>data-lh-track</code> tints teach for html/css/js/py/sql.</p>
@@ -363,7 +363,9 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <table>
   <thead><tr><th>File</th><th>Role</th></tr></thead>
   <tbody>
-    <tr><td><code>learn-hub.css</code></td><td>All styles.</td></tr>
+    <tr><td><code>learn-hub-tokens.css</code></td><td>Design tokens and high-contrast overrides.</td></tr>
+    <tr><td><code>learn-hub-layout.css</code></td><td>App shell, sidebar, practice, workspaces, utilities.</td></tr>
+    <tr><td><code>learn-hub-teach.css</code></td><td>Right column: lesson shell, strips, reference, Tech+ prose.</td></tr>
     <tr><td><code>learn-hub-app.js</code></td><td>Application logic.</td></tr>
     <tr><td><code>learn-hub-courses.js</code></td><td>Minified <code>LEARN_HUB_COURSES</code> — full curriculum.</td></tr>
     <tr><td><code>learn-hub-depth.js</code></td><td><code>LEARN_HUB_DEPTH = {}</code></td></tr>

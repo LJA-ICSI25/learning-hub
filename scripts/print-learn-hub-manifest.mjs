@@ -13,7 +13,9 @@ const root = path.resolve(__dirname, "..");
 const FILES = [
   "README.md",
   "index.html",
-  "assets/learn-hub.css",
+  "assets/learn-hub-tokens.css",
+  "assets/learn-hub-layout.css",
+  "assets/learn-hub-teach.css",
   "assets/learn-hub-app.js",
   "assets/learn-hub-courses.js",
   "assets/learn-hub-deep.js",

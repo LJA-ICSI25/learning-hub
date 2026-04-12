@@ -35,7 +35,9 @@ G:\Hubs\Learn-Hub\chapters\12_Data_Continuity_and_Computer_Support.md
 G:\Hubs\Learn-Hub\expand-capstone-and-quiz-bank.mjs
 G:\Hubs\Learn-Hub\expand-tracks-more.mjs
 G:\Hubs\Learn-Hub\index.html
-G:\Hubs\Learn-Hub\assets\learn-hub.css
+G:\Hubs\Learn-Hub\assets\learn-hub-tokens.css
+G:\Hubs\Learn-Hub\assets\learn-hub-layout.css
+G:\Hubs\Learn-Hub\assets\learn-hub-teach.css
 G:\Hubs\Learn-Hub\assets\learn-hub-app.js
 G:\Hubs\Learn-Hub\assets\learn-hub-courses.js
 G:\Hubs\Learn-Hub\assets\learn-hub-deep.js
@@ -118,7 +120,9 @@ Load **order matters** (see `index.html`):
 | File | Purpose |
 |------|---------|
 | `index.html` | Shell; links to CSS/JS under `assets/`. |
-| `assets/learn-hub.css` | App layout, teach column, workspace, Tech+ reading styles. |
+| `assets/learn-hub-tokens.css` | Design tokens + high-contrast variable overrides. |
+| `assets/learn-hub-layout.css` | Shell, sidebar, practice column, workspaces, utilities. |
+| `assets/learn-hub-teach.css` | Lesson shell, strips, reference, Tech+ reading prose. |
 | `assets/learn-hub-courses.js` | `window.LEARN_HUB_COURSES` — lesson list, kinds, titles, starters, checks, quiz questions. Lesson `narrative` fields are kept **empty** for most lessons; reading is supplied by merged bundles (see below). |
 | `assets/learn-hub-depth.js` | Stub: `window.LEARN_HUB_DEPTH = {}` (reserved for optional future append-only snippets). |
 | `assets/learn-hub-techplus.js` | `window.LEARN_HUB_TECHPLUS` — HTML excerpts from the local Tech+ study guide for selected Tech+ lesson IDs (topic notes, tables, drills). |
@@ -253,7 +257,9 @@ Paste the command output **over the table below** (from the header row through t
 |------|------:|-------------:|-------------------------:|
 | `README.md` | 295 | 24,138 | 24,018 |
 | `index.html` | 188 | 11,335 | 11,295 |
-| `assets/learn-hub.css` | 2,443 | 55,603 | 55,581 |
+| `assets/learn-hub-tokens.css` | 143 | 4,810 | 4,795 |
+| `assets/learn-hub-layout.css` | 1,397 | 30,486 | 30,472 |
+| `assets/learn-hub-teach.css` | 1,171 | 27,513 | 27,495 |
 | `assets/learn-hub-app.js` | 1,916 | 73,992 | 73,885 |
 | `assets/learn-hub-courses.js` | 2 | 339,067 | 338,581 |
 | `assets/learn-hub-deep.js` | 439 | 996,504 | 986,700 |

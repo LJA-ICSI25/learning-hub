@@ -5,7 +5,7 @@ CANONICAL (edit and run this):
   G:\Hubs\Learn-Hub
 
   Open: G:\Hubs\Learn-Hub\index.html
-  Runtime bundles: assets\learn-hub-*.js and assets\learn-hub.css
+  Runtime bundles: assets\learn-hub-*.js and assets\learn-hub-tokens.css, learn-hub-layout.css, learn-hub-teach.css
   Tech+ study guide HTML: assets\learn-hub-techplus-md.js (bundled segments; large file)
   Lesson list (must match segment IDs): assets\learn-hub-courses.js
   Chapter Markdown sources (build input): chapters\*.md

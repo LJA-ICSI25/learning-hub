@@ -1,0 +1,142 @@
+/* =============================================================================
+   Learn Hub — design tokens only (load first).
+   Layout: learn-hub-layout.css · Reading column: learn-hub-teach.css
+   ============================================================================= */
+
+/* ---------- Design tokens: primary = black, secondary = navy ---------- */
+:root {
+  /* Primary fills — near-black (dominant), stepped so panels don’t vanish */
+  --primary: #030508;
+  --primary-soft: #0a0e16;
+  --primary-card: #101620;
+  /* Secondary — navy (accents, rims, secondary controls) */
+  --secondary: #141e30;
+  --secondary-mid: #1c2d46;
+  --secondary-bright: #283d5e;
+  --secondary-edge: #3d6494;
+  --bg: var(--primary);
+  --surface: var(--primary-soft);
+  --surface2: var(--primary-card);
+
+  /* Borders: one ramp (solid + navy-tinted rims) + focus */
+  --border: #2a3d5c;
+  --border-subtle: rgba(72, 102, 158, 0.45);
+  --border-muted: rgba(72, 102, 158, 0.55);
+  --border-strong: rgba(72, 102, 158, 0.68);
+  --border-focus: rgba(92, 132, 205, 0.95);
+  --focus-ring: 0 0 0 2px rgba(48, 78, 125, 0.55);
+  /* Legacy name — maps to subtle rim (prefer --border-subtle in new rules) */
+  --border-soft: var(--border-subtle);
+
+  /* Semantic surfaces (intent; tweak tokens above, not every selector) */
+  --chrome: var(--surface);
+  --panel: var(--surface2);
+  --code: var(--surface2);
+
+  --text: #f2f5fb;
+  --muted: #9aa8bc;
+  --accent: #3d7a4a;
+  --accent-dim: #2a5a36;
+  /* Links / focus — readable blue on black */
+  --blue: #6b8fd4;
+  --blue-dim: #3d5a85;
+  --gold: #c9a227;
+  --tech: #7a9bc4;
+  --py: #d4b84a;
+  --font-ui: "Space Grotesk", system-ui, "Segoe UI", sans-serif;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  /* Navy glow — depth on primary surfaces */
+  --glow-navy: 0 0 22px rgba(48, 78, 128, 0.38);
+  --glow-navy-soft: 0 0 36px rgba(40, 68, 115, 0.2);
+  --glow-navy-inset: inset 0 0 40px rgba(20, 35, 62, 0.14);
+  --glow-blue: rgba(72, 102, 158, 0.55);
+  --glow-blue-soft: rgba(38, 62, 105, 0.2);
+  --glow-cyan: rgba(55, 78, 118, 0.28);
+  --glow-cyan-soft: rgba(40, 58, 92, 0.14);
+  --glow-green: rgba(45, 110, 72, 0.35);
+  --glow-green-soft: rgba(40, 90, 60, 0.16);
+  --glow-violet: rgba(48, 62, 100, 0.28);
+  --glow-ring: var(--glow-navy-soft), 0 0 48px rgba(20, 38, 72, 0.15);
+  /* Soft text halo (not the same as border tokens) */
+  --glow-text-navy: rgba(72, 102, 158, 0.42);
+  --glow-text-navy-soft: rgba(72, 102, 158, 0.28);
+  --mono: "Cascadia Code", "Fira Code", Consolas, monospace;
+
+  /* Tech+ reading */
+  --notes-font: "Space Grotesk", system-ui, "Segoe UI", sans-serif;
+  --notes-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --notes-accent: #6b8fd4;
+  --notes-text: #f0f3f9;
+  --notes-text-soft: #b8c4d6;
+  --notes-muted: #8b99ae;
+  --notes-orange: #d4925c;
+  --notes-purple: #8b7fd4;
+  --notes-green: #4a9e78;
+  --notes-card: #06080e;
+  --notes-elevated: #121c2c;
+  --notes-border: var(--border);
+  --notes-glow: rgba(38, 62, 105, 0.2);
+
+  /* Lesson nav: incomplete vs complete */
+  --lesson-todo-ring: rgba(130, 148, 178, 0.72);
+  --lesson-todo-inner: rgba(12, 18, 30, 0.65);
+  --lesson-done-fill: #3d8f68;
+  --lesson-done-ring: #6bc99a;
+  --lesson-done-row: rgba(45, 110, 82, 0.14);
+}
+
+/* ---------- Higher contrast (user toggle) ---------- */
+body.lh-high-contrast {
+  --text: #ffffff;
+  --muted: #d0d8e8;
+  --bg: #020308;
+  --surface: #0a0e16;
+  --surface2: #121a28;
+  --chrome: var(--surface);
+  --panel: var(--surface2);
+  --code: var(--surface2);
+  --border: #3d5280;
+  --border-subtle: rgba(100, 140, 210, 0.55);
+  --border-muted: rgba(110, 150, 220, 0.62);
+  --border-strong: rgba(120, 165, 235, 0.75);
+  --border-focus: #b8d4ff;
+  --focus-ring: 0 0 0 2px rgba(255, 255, 255, 0.45);
+  --blue: #8aa8e8;
+  --notes-text: #ffffff;
+  --notes-text-soft: #e4eaf5;
+  --notes-muted: #aab6ca;
+  --notes-card: #04060c;
+  --notes-elevated: #161f30;
+}
+
+body.lh-high-contrast .app::before {
+  opacity: 0.42;
+}
+
+body.lh-high-contrast a:hover {
+  color: #b8c8f0;
+}
+
+body.lh-high-contrast .lesson-btn .dot {
+  border-color: #c8d4e8;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body.lh-high-contrast .lesson-btn.done .dot {
+  border-color: #b8f0d0;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), 0 0 12px rgba(80, 200, 140, 0.45);
+}
+
+body.lh-high-contrast .lesson-btn.done .idx {
+  color: #b8f5d8;
+}
+
+body.lh-high-contrast .lesson-btn.done:not(.active) {
+  background: linear-gradient(90deg, rgba(60, 140, 100, 0.22), transparent 75%);
+}
+
+body.lh-high-contrast .lesson-btn.done .lbl {
+  color: #e8faf0;
+}

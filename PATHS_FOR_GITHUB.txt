@@ -13,7 +13,9 @@ G:\Hubs\Learn-Hub\PATHS_FOR_GITHUB.txt
 G:\Hubs\Learn-Hub\README.md
 G:\Hubs\Learn-Hub\WORKING_COPY.txt
 
-G:\Hubs\Learn-Hub\assets\learn-hub.css
+G:\Hubs\Learn-Hub\assets\learn-hub-tokens.css
+G:\Hubs\Learn-Hub\assets\learn-hub-layout.css
+G:\Hubs\Learn-Hub\assets\learn-hub-teach.css
 G:\Hubs\Learn-Hub\assets\learn-hub-app.js
 G:\Hubs\Learn-Hub\assets\learn-hub-courses.js
 G:\Hubs\Learn-Hub\assets\learn-hub-deep.js
@@ -52,7 +54,9 @@ PATHS_FOR_GITHUB.txt
 README.md
 WORKING_COPY.txt
 
-assets/learn-hub.css
+assets/learn-hub-tokens.css
+assets/learn-hub-layout.css
+assets/learn-hub-teach.css
 assets/learn-hub-app.js
 assets/learn-hub-courses.js
 assets/learn-hub-deep.js
