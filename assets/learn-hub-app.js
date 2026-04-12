@@ -976,11 +976,10 @@ function learnHubRunApp() {
     });
   }
 
+  /** Scroll reading/main panes to top when changing lessons — do not reset sidebar lesson list scroll (avoids jump-to-top then scroll-down). */
   function scrollLessonToTop() {
     requestAnimationFrame(function () {
       if (el.teach) el.teach.scrollTop = 0;
-      var navScroll = document.querySelector(".nav-scroll");
-      if (navScroll) navScroll.scrollTop = 0;
       var appRoot = document.getElementById("app-root");
       if (appRoot) appRoot.scrollTop = 0;
       window.scrollTo(0, 0);
