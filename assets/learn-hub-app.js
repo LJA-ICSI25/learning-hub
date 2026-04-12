@@ -771,11 +771,6 @@ function learnHubRunApp() {
     return typeof lessonId === "string" && /^tech-sg-\d{2}(?:-\d{2})?$/.test(lessonId);
   }
 
-  /** First segment per chapter (objectives + overview) — `tech-sg-NN-01`. */
-  function isTechSgChapterOverviewLesson(lessonId) {
-    return typeof lessonId === "string" && /^tech-sg-\d{2}-01$/.test(lessonId);
-  }
-
   /**
    * Insert “On this page” links for long chapter HTML (h1–h3 inside the reading pane).
    */
@@ -1669,19 +1664,13 @@ function learnHubRunApp() {
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
     const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
-    const isChapterOverviewSg = isFullChapterTechLearn && isTechSgChapterOverviewLesson(Ls.id);
     const read = getResolvedReadHtml(Ls);
     const refBody = isTech ? '<div class="tech-prose lh-ref-body lh-notes-prose">' + read + "</div>" : read;
     let refBlock = "";
     if (read && String(read).trim()) {
       if (isFullChapterTechLearn) {
-        const chapterTipHtml = isChapterOverviewSg
-          ? ""
-          : '<p class="lh-notes-chapter-tip" role="note">The study guide text for this lesson is below. Use <strong>On this page</strong> when it shows up. <strong>Continue</strong> or <strong>Skip lesson</strong> when you are finished—both mark this step complete.</p>';
         refBlock =
-          '<div class="lh-full-chapter' +
-          (isChapterOverviewSg ? " lh-chapter-overview" : "") +
-          '">' +
+          '<div class="lh-full-chapter">' +
           '<div class="lh-chapter-search-wrap" role="search" aria-label="Search in this book chapter">' +
           '<label class="lh-ch-search-label" for="lh-ch-search-input">Search in chapter</label>' +
           '<div class="lh-ch-search-row">' +
@@ -1691,7 +1680,6 @@ function learnHubRunApp() {
           "</div>" +
           '<p class="lh-ch-search-status" id="lh-ch-search-status" aria-live="polite"></p>' +
           "</div>" +
-          chapterTipHtml +
           '<article class="lh-tech-reading lh-full-chapter-body lh-notes-surface" aria-label="Study guide reading">' +
           refBody +
           "</article></div>";
@@ -1721,7 +1709,7 @@ function learnHubRunApp() {
       escapeHtml(c.name) +
       "</span></header>" +
       '<div class="lesson-shell-body">' +
-      (isChapterOverviewSg ? "" : fccLessonStrip(Ls, c)) +
+      (isFullChapterTechLearn ? "" : fccLessonStrip(Ls, c)) +
       refBlock +
       "</div></div>";
 
