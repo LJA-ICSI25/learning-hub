@@ -1093,6 +1093,17 @@ table.result th {
   display: none;
 }
 
+/* Hide left sidebar (Display setting) — main uses full width; ☰ Menu shows sidebar again */
+body.lh-sidebar-hidden #sidebar,
+body.lh-sidebar-hidden #sidebar.open {
+  display: none !important;
+}
+
+body.lh-sidebar-hidden #menu-toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
 .toast {
   position: fixed;
   bottom: 1rem;

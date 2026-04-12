@@ -87,6 +87,7 @@ function learnHubRunApp() {
   const TEACH_COLLAPSED_KEY = "learn-hub-teach-collapsed";
   const A11Y_CONTRAST_KEY = "learn-hub-a11y-contrast-v1";
   const A11Y_MOTION_KEY = "learn-hub-a11y-reduce-motion-v1";
+  const A11Y_SIDEBAR_HIDDEN_KEY = "learn-hub-a11y-hide-sidebar-v1";
   const INDENT = "  ";
 
   const el = {
@@ -1980,12 +1981,17 @@ function learnHubRunApp() {
       try {
         var c = localStorage.getItem(A11Y_CONTRAST_KEY) === "1";
         var m = localStorage.getItem(A11Y_MOTION_KEY) === "1";
+        var h = localStorage.getItem(A11Y_SIDEBAR_HIDDEN_KEY) === "1";
         document.body.classList.toggle("lh-high-contrast", c);
         document.body.classList.toggle("lh-force-reduce-motion", m);
+        document.body.classList.toggle("lh-sidebar-hidden", h);
         var ce = document.getElementById("lh-a11y-contrast");
         var me = document.getElementById("lh-a11y-reduce-motion");
+        var he = document.getElementById("lh-a11y-hide-sidebar");
         if (ce) ce.checked = c;
         if (me) me.checked = m;
+        if (he) he.checked = h;
+        if (h && el.sidebar) el.sidebar.classList.remove("open");
       } catch (_) {}
     }
     applyA11yFromStorage();
@@ -2001,6 +2007,14 @@ function learnHubRunApp() {
       document.body.classList.toggle("lh-force-reduce-motion", !!onCh);
       try {
         localStorage.setItem(A11Y_MOTION_KEY, onCh ? "1" : "0");
+      } catch (_) {}
+    });
+    on("lh-a11y-hide-sidebar", "change", function (ev) {
+      var hide = !!(ev.target && ev.target.checked);
+      document.body.classList.toggle("lh-sidebar-hidden", hide);
+      if (hide && el.sidebar) el.sidebar.classList.remove("open");
+      try {
+        localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, hide ? "1" : "0");
       } catch (_) {}
     });
 
@@ -2075,6 +2089,16 @@ function learnHubRunApp() {
     on(el.btnSkipChapter, "click", completeLearn);
 
     on(el.menuToggle, "click", () => {
+      if (document.body.classList.contains("lh-sidebar-hidden")) {
+        document.body.classList.remove("lh-sidebar-hidden");
+        try {
+          localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, "0");
+        } catch (_) {}
+        var he = document.getElementById("lh-a11y-hide-sidebar");
+        if (he) he.checked = false;
+        if (el.sidebar) el.sidebar.classList.remove("open");
+        return;
+      }
       if (el.sidebar) el.sidebar.classList.toggle("open");
     });
 
