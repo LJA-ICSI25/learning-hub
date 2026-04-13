@@ -81,7 +81,9 @@ var COURSES;
         }
       }
     }
-  } catch (_) {}
+  } catch (mergeErr) {
+    console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali reading failed for some lessons.", mergeErr);
+  }
 })();
 if (!Array.isArray(COURSES) || COURSES.length === 0) {
   COURSES = [{ id: "setup", name: "Setup", ws: "tech", lessons: [{ unit: "Help", id: "setup-1", kind: "learn", title: "Curriculum did not load", narrative: "<p>Open DevTools (F12) → Console. Hard-refresh this file (Ctrl+F5).</p>" }] }];
@@ -105,6 +107,18 @@ function learnHubRunApp() {
   const A11Y_MOTION_KEY = "learn-hub-a11y-reduce-motion-v1";
   const A11Y_SIDEBAR_HIDDEN_KEY = "learn-hub-a11y-hide-sidebar-v1";
   const INDENT = "  ";
+
+  function prefersReducedNavMotion() {
+    return (
+      document.body.classList.contains("lh-force-reduce-motion") ||
+      (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    );
+  }
+
+  function syncMenuToggleExpanded() {
+    var mt = document.getElementById("menu-toggle");
+    if (mt && el.sidebar) mt.setAttribute("aria-expanded", el.sidebar.classList.contains("open") ? "true" : "false");
+  }
 
   const el = {
     pills: document.getElementById("course-pills"),
@@ -217,17 +231,57 @@ function learnHubRunApp() {
   let lessonIndex = 0;
 
   let progress = {
-    xp: 0,
     activeCourseId: COURSES[0].id,
     courses: {},
   };
 
-  const totalLessonsAll = COURSES.reduce((n, c) => n + ((c && c.lessons && c.lessons.length) || 0), 0);
-  const maxXp = totalLessonsAll * XP_PER;
+  function courseXpFromDone(courseId) {
+    var c = courseById[courseId];
+    var row = progress.courses[courseId];
+    if (!c || !Array.isArray(c.lessons) || !row || !row.done) return 0;
+    var total = 0;
+    for (var i = 0; i < c.lessons.length; i++) {
+      if (row.done[c.lessons[i].id]) total += XP_PER;
+    }
+    return total;
+  }
+
+  function maxXpForCourse(courseId) {
+    var c = courseById[courseId];
+    var len = c && Array.isArray(c.lessons) ? c.lessons.length : 0;
+    return len * XP_PER;
+  }
+
+  function ensureLearnProgressShape(cp) {
+    if (!cp.learnVisited) cp.learnVisited = {};
+    if (!cp.learnOutcome) cp.learnOutcome = {};
+  }
 
   function courseProgress(id) {
     if (!progress.courses[id]) progress.courses[id] = { done: {}, idx: 0 };
-    return progress.courses[id];
+    var cp = progress.courses[id];
+    ensureLearnProgressShape(cp);
+    if (typeof cp.xp !== "number") cp.xp = courseXpFromDone(id);
+    return cp;
+  }
+
+  /** First time the user opens this learn step in the sidebar (persisted). */
+  function markLearnLessonVisited(lessonId) {
+    if (!lessonId) return;
+    var cp = courseProgress(activeCourseId);
+    if (cp.learnVisited[lessonId]) return;
+    cp.learnVisited[lessonId] = true;
+    saveProgress();
+  }
+
+  /** Gold “pending” row: visited learn not finished with Continue, or re-opened after Skip. */
+  function learnPendingFromProgress(learn, Ls) {
+    if (!learn || !Ls || !Ls.id) return false;
+    var cp = courseProgress(activeCourseId);
+    if (!cp.learnVisited[Ls.id]) return false;
+    var done = !!cp.done[Ls.id];
+    if (!done) return true;
+    return cp.learnOutcome[Ls.id] === "skip";
   }
 
   function lessons() {
@@ -844,7 +898,7 @@ function learnHubRunApp() {
       const raw = localStorage.getItem(PROGRESS_KEY);
       if (raw) progress = JSON.parse(raw);
     } catch (_) {}
-    if (typeof progress.xp !== "number") progress.xp = 0;
+    if (typeof progress.xp === "number") delete progress.xp;
     if (!progress.courses) progress.courses = {};
     if (progress.activeCourseId && courseById[progress.activeCourseId]) activeCourseId = progress.activeCourseId;
     else activeCourseId = COURSES[0].id;
@@ -869,9 +923,9 @@ function learnHubRunApp() {
     const cp = courseProgress(activeCourseId);
     if (cp.done[lessonId]) return;
     cp.done[lessonId] = true;
-    progress.xp += XP_PER;
+    cp.xp += XP_PER;
     saveProgress();
-    toast("+" + XP_PER + " XP");
+    toast("+" + XP_PER + " XP · " + (courseById[activeCourseId] && courseById[activeCourseId].name ? courseById[activeCourseId].name : "this track"));
   }
 
   function lessonLocked(i) {
@@ -984,9 +1038,10 @@ function learnHubRunApp() {
     if (el.lessonNav) {
       requestAnimationFrame(function () {
         const b = el.lessonNav.querySelector(".lesson-btn.active");
-        if (b) b.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        if (b) b.scrollIntoView({ block: "nearest", behavior: prefersReducedNavMotion() ? "auto" : "smooth" });
       });
     }
+    syncMenuToggleExpanded();
   }
 
   function renderPills() {
@@ -1012,14 +1067,20 @@ function learnHubRunApp() {
 
   function updateChrome() {
     const list = lessons();
+    const c = courseById[activeCourseId];
     const cp = courseProgress(activeCourseId);
     const doneCount = list.filter((l) => cp.done[l.id]).length;
     if (el.progressFill) el.progressFill.style.width = list.length ? Math.round((doneCount / list.length) * 100) + "%" : "0%";
-    const xpPct = Math.min(100, Math.round((progress.xp / Math.max(maxXp, 1)) * 100));
+    const maxThis = maxXpForCourse(activeCourseId);
+    const xpThis = typeof cp.xp === "number" ? cp.xp : courseXpFromDone(activeCourseId);
+    const xpPct = Math.min(100, Math.round((xpThis / Math.max(maxThis, 1)) * 100));
     if (el.xpFill) el.xpFill.style.width = xpPct + "%";
     if (el.xpBar) el.xpBar.setAttribute("aria-valuenow", String(xpPct));
-    if (el.xpLabel)
-      el.xpLabel.textContent = progress.xp + " XP · " + doneCount + "/" + list.length + " in track · " + totalLessonsAll + " total lessons";
+    if (el.xpLabel) {
+      const name = c ? c.name : "—";
+      el.xpLabel.textContent =
+        name + " · " + xpThis + " / " + maxThis + " XP · " + doneCount + "/" + list.length + " lessons in this track";
+    }
   }
 
   function workspaceForCourse(c) {
@@ -1078,8 +1139,9 @@ function learnHubRunApp() {
   }
 
   function refreshWebPreview() {
+    if (!el.webIframe || !el.webHtml || !el.webCss || !el.webJs) return;
     el.webIframe.srcdoc = buildSrcdoc(el.webHtml.value, el.webCss.value, el.webJs.value);
-    el.webStatus.textContent = "Preview updated";
+    if (el.webStatus) el.webStatus.textContent = "Preview updated";
     updateWebPreviewHint();
   }
 
@@ -1520,6 +1582,7 @@ function learnHubRunApp() {
   }
 
   function renderTechQuiz(lesson) {
+    if (!el.techQuiz) return;
     const qs = lesson.questions || [];
     if (!qs.length) {
       el.techQuiz.innerHTML = "<p class='msg info'>No questions for this step.</p>";
@@ -1543,6 +1606,7 @@ function learnHubRunApp() {
     const qs = lesson.questions || [];
     const gPrefix = quizRadioGroupPrefix(lesson);
     let wrong = 0;
+    if (!el.techQuiz) return { ok: false, msg: "Quiz panel is not available." };
     for (let qi = 0; qi < qs.length; qi++) {
       const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${qi}"]:checked`);
       if (!sel || +sel.value !== qs[qi].correct) wrong++;
@@ -1566,6 +1630,9 @@ function learnHubRunApp() {
       if (c.id === "security") {
         hint =
           "Open <strong>Notes</strong> for the workplace curriculum reading (from <code>docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md</code>). After each level you will see <strong>Quiz</strong> steps in the sidebar — same layout as Tech+ check-ins: answer in the left column, then <strong>Check answers</strong>.";
+      } else if (c.id === "labs") {
+        hint =
+          "These steps are a <strong>hands-on lab script</strong> for your <strong>Kali Linux VM</strong>. Nothing in the left column runs on the VM—open a terminal on Kali and follow <strong>Notes</strong> step by step. When you are done with this lab, press <strong>Continue</strong>.";
       } else if (isFullChapterTechLesson(Ls.id)) {
         hint =
           "This step is a <strong>study guide lesson</strong> (one section of the book) bundled inside Learn Hub. Use <strong>On this page</strong> when it appears to jump headings. When you are done reading, press <strong>Continue</strong>. If you already know this material, use <strong>Skip lesson</strong> in the footer—it marks the step complete and moves on (same progress as Continue).";
@@ -1647,6 +1714,7 @@ function learnHubRunApp() {
       if (el.teach) el.teach.innerHTML = '<p class="msg err">Missing lesson data for this track or index.</p>';
       const cc = courseById[activeCourseId];
       document.body.classList.toggle("lh-compact-teach", !!(cc && cc.ws !== "tech"));
+      document.body.classList.remove("lh-learn-pending");
       return;
     }
 
@@ -1656,7 +1724,7 @@ function learnHubRunApp() {
       (!window.LEARN_HUB_TECHPLUS_MD || !window.LEARN_HUB_TECHPLUS_MD[Ls.id]);
     if (needSg) {
       const ch = techSgChapterFromLessonId(Ls.id) || 1;
-      if (el.teach)
+      if (el.teach) {
         el.teach.innerHTML =
           '<div class="lesson-shell">' +
           '<header class="lesson-shell-head"><span class="lesson-shell-badge">Loading</span>' +
@@ -1666,6 +1734,7 @@ function learnHubRunApp() {
           '<p class="msg info" role="status" aria-live="polite">Loading study guide (chapter ' +
           ch +
           ")…</p></div></div>";
+      }
       document.body.setAttribute("data-lh-track", c.id || "");
       document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
       if (el.title) el.title.textContent = (Ls.title && decodeLessonTitle(Ls.title)) || "Loading…";
@@ -1675,6 +1744,8 @@ function learnHubRunApp() {
       if (pc0) pc0.classList.toggle("is-hidden", Ls.kind === "learn");
       const cg0 = document.getElementById("content-grid");
       if (cg0) cg0.classList.toggle("single-pane", Ls.kind === "learn");
+      if (Ls.kind === "learn") markLearnLessonVisited(Ls.id);
+      document.body.classList.toggle("lh-learn-pending", learnPendingFromProgress(Ls.kind === "learn", Ls));
       window
         .loadLearnHubTechplusChapter(ch)
         .then(function () {
@@ -1693,11 +1764,13 @@ function learnHubRunApp() {
 
     document.body.setAttribute("data-lh-track", c.id || "");
     document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
-    el.title.textContent = decodeLessonTitle(Ls.title || "");
+    if (el.title) el.title.textContent = decodeLessonTitle(Ls.title || "");
     const isTech = c.ws === "tech";
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
     const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
+    if (learn) markLearnLessonVisited(Ls.id);
+    document.body.classList.toggle("lh-learn-pending", learnPendingFromProgress(learn, Ls));
     const read = getResolvedReadHtml(Ls);
     const refBody = isTech ? '<div class="tech-prose lh-ref-body lh-notes-prose">' + read + "</div>" : read;
     let refBlock = "";
@@ -1731,6 +1804,7 @@ function learnHubRunApp() {
           "</div></details>";
       }
     }
+    if (!el.teach) return;
     el.teach.classList.remove("tech-prose");
     el.teach.classList.toggle("teach-full-chapter", !!isFullChapterTechLearn);
     el.teach.classList.toggle("teach-notes", !!isTechLearn);
@@ -1758,25 +1832,33 @@ function learnHubRunApp() {
     applyTeachCollapsedPreference(!!isTechLearn);
 
     const strict = Ls.kind === "challenge" || (Ls.check && Ls.check.strict);
-    el.footerHint.textContent = learn && !isTech
-      ? c.ws === "sql"
-        ? "Open Reference when a term is new. Try Run on sample SQL, then Continue."
-        : c.ws === "py"
-          ? "Reference on the right has the notes. Use Run to experiment, then Continue."
-          : c.ws === "web"
-            ? "Reference on the right has the full lesson. Use Run on the left, then Continue."
-            : "Experiment in the editor, then Continue."
-      : learn && isTech
-        ? isFullChapterTechLearn
-          ? "Scroll the reading below. Continue or Skip lesson when you are ready—both complete this step."
-          : "Lesson reading is open below—study it, then Continue."
-        : isTech && Ls.kind === "quiz"
-          ? "Select the best answer for each question, then Check."
-          : strict
-            ? "Solo check: the grader will not teach the solution."
-            : "Run freely, then Check when you are ready.";
+    var footerLearnTech = "";
+    if (learn && isTech) {
+      if (isFullChapterTechLearn)
+        footerLearnTech = "Scroll the reading below. Continue or Skip lesson when you are ready—both complete this step.";
+      else if (c.id === "labs")
+        footerLearnTech =
+          "Labs run on your Kali VM—this browser only shows the script. Read Notes, work in the VM, then Continue.";
+      else footerLearnTech = "Lesson reading is open below—study it, then Continue.";
+    }
+    if (el.footerHint)
+      el.footerHint.textContent = learn && !isTech
+        ? c.ws === "sql"
+          ? "Open Reference when a term is new. Try Run on sample SQL, then Continue."
+          : c.ws === "py"
+            ? "Reference on the right has the notes. Use Run to experiment, then Continue."
+            : c.ws === "web"
+              ? "Reference on the right has the full lesson. Use Run on the left, then Continue."
+              : "Experiment in the editor, then Continue."
+        : learn && isTech
+          ? footerLearnTech
+          : isTech && Ls.kind === "quiz"
+            ? "Select the best answer for each question, then Check."
+            : strict
+              ? "Solo check: the grader will not teach the solution."
+              : "Run freely, then Check when you are ready.";
 
-    el.btnContinue.style.display = learn ? "inline-flex" : "none";
+    if (el.btnContinue) el.btnContinue.style.display = learn ? "inline-flex" : "none";
     if (el.btnSkipChapter) el.btnSkipChapter.style.display = learn && isFullChapterTechLearn ? "inline-flex" : "none";
 
     const w = workspaceForCourse(c);
@@ -1882,9 +1964,12 @@ function learnHubRunApp() {
     scrollLessonToTop();
   }
 
-  function completeLearn() {
+  function completeLearn(viaSkip) {
     const Ls = currentLesson();
-    if (Ls.kind !== "learn") return;
+    if (!Ls || Ls.kind !== "learn") return;
+    var cp = courseProgress(activeCourseId);
+    cp.learnOutcome[Ls.id] = viaSkip ? "skip" : "continue";
+    saveProgress();
     awardIfNew(Ls.id);
     if (lessonIndex + 1 < lessons().length) goLesson(lessonIndex + 1);
     else {
@@ -1897,15 +1982,17 @@ function learnHubRunApp() {
 
   async function completePractice() {
     const Ls = currentLesson();
-    if (Ls.kind === "learn") return;
+    if (!Ls || Ls.kind === "learn") return;
     const c = courseById[activeCourseId];
+    if (!c) return;
     if (c.ws === "tech" && Ls.kind === "quiz") {
       const g = gradeTechQuiz(Ls);
       /* Error copy includes <strong> for emphasis — do not escape (message is app-authored only). */
-      el.techFeedback.innerHTML = g.ok
-        ? "<div class='msg ok'>" + escapeHtml(g.msg) + "</div>"
-        : "<div class='msg err'>" + g.msg + "</div>";
-      el.techStatus.textContent = g.ok ? "Passed" : "Try again";
+      if (el.techFeedback)
+        el.techFeedback.innerHTML = g.ok
+          ? "<div class='msg ok'>" + escapeHtml(g.msg) + "</div>"
+          : "<div class='msg err'>" + g.msg + "</div>";
+      if (el.techStatus) el.techStatus.textContent = g.ok ? "Passed" : "Try again";
       if (el.announcer) el.announcer.textContent = g.ok ? "Quiz check passed." : "Quiz check: " + (g.msg || "Try again");
       if (!g.ok) return;
       awardIfNew(Ls.id);
@@ -2055,14 +2142,39 @@ function learnHubRunApp() {
     document.querySelectorAll("#editor-tabs button").forEach((btn) => {
       btn.addEventListener("click", () => {
         const tab = btn.getAttribute("data-tab");
-        document.querySelectorAll("#editor-tabs button").forEach((b) => b.classList.toggle("active", b === btn));
+        document.querySelectorAll("#editor-tabs button").forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+          b.tabIndex = on ? 0 : -1;
+        });
         document.querySelectorAll(".web-ta-wrap").forEach((w) => w.classList.toggle("active", w.getAttribute("data-pane") === tab));
+        var ta =
+          tab === "html" ? el.webHtml : tab === "css" ? el.webCss : tab === "js" ? el.webJs : null;
+        if (ta) requestAnimationFrame(() => ta.focus());
       });
     });
+    var editorTablist = document.getElementById("editor-tabs");
+    if (editorTablist) {
+      editorTablist.addEventListener("keydown", function (ev) {
+        var tabs = [].slice.call(editorTablist.querySelectorAll('button[role="tab"]'));
+        if (!tabs.length) return;
+        var i = tabs.indexOf(ev.target);
+        if (i < 0) return;
+        var ni = -1;
+        if (ev.key === "ArrowRight") ni = (i + 1) % tabs.length;
+        else if (ev.key === "ArrowLeft") ni = (i - 1 + tabs.length) % tabs.length;
+        else if (ev.key === "Home") ni = 0;
+        else if (ev.key === "End") ni = tabs.length - 1;
+        if (ni < 0) return;
+        ev.preventDefault();
+        tabs[ni].click();
+      });
+    }
     on("btn-web-run", "click", refreshWebPreview);
     on("btn-web-reset", "click", () => {
       const Ls = currentLesson();
-      const st = Ls.starter || {};
+      const st = (Ls && Ls.starter) || {};
       if (el.webHtml) el.webHtml.value = st.html != null ? st.html : "";
       if (el.webCss) el.webCss.value = st.css != null ? st.css : "";
       if (el.webJs) el.webJs.value = st.js != null ? st.js : "";
@@ -2090,7 +2202,7 @@ function learnHubRunApp() {
     });
     on("btn-py-reset", "click", () => {
       const Ls = currentLesson();
-      if (el.pyInput) el.pyInput.value = Ls.starterPy != null ? Ls.starterPy : "";
+      if (el.pyInput) el.pyInput.value = Ls && Ls.starterPy != null ? Ls.starterPy : "";
       if (el.pyOutput) el.pyOutput.textContent = "";
     });
     on("btn-py-check", "click", () => completePractice());
@@ -2104,6 +2216,7 @@ function learnHubRunApp() {
     });
     on("btn-sql-reset-db", "click", () => {
       const Ls = currentLesson();
+      if (!Ls) return;
       ensureSqlJs()
         .then(function () {
           freshLessonDb(Ls.seed || "");
@@ -2119,8 +2232,12 @@ function learnHubRunApp() {
 
     on("btn-tech-check", "click", () => completePractice());
 
-    on(el.btnContinue, "click", completeLearn);
-    on(el.btnSkipChapter, "click", completeLearn);
+    on(el.btnContinue, "click", function () {
+      completeLearn(false);
+    });
+    on(el.btnSkipChapter, "click", function () {
+      completeLearn(true);
+    });
 
     on(el.menuToggle, "click", () => {
       if (document.body.classList.contains("lh-sidebar-hidden")) {
@@ -2131,9 +2248,11 @@ function learnHubRunApp() {
         var he = document.getElementById("lh-a11y-hide-sidebar");
         if (he) he.checked = false;
         if (el.sidebar) el.sidebar.classList.remove("open");
+        syncMenuToggleExpanded();
         return;
       }
       if (el.sidebar) el.sidebar.classList.toggle("open");
+      syncMenuToggleExpanded();
     });
 
     on("btn-toggle-teach", "click", () => {
@@ -2184,6 +2303,30 @@ function learnHubRunApp() {
     }, () => completePractice());
 
     [el.webHtml, el.webCss, el.webJs, el.sqlInput, el.pyInput].forEach(bindTabIndent);
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.defaultPrevented) return;
+      if (ev.key === "Escape") {
+        if (el.sidebar && el.sidebar.classList.contains("open")) {
+          ev.preventDefault();
+          el.sidebar.classList.remove("open");
+          syncMenuToggleExpanded();
+        }
+      }
+      /* Ctrl+/ focuses filter (plain / is reserved for Quick Find in Firefox). */
+      if (ev.key === "/" && ev.ctrlKey && !ev.metaKey && !ev.altKey) {
+        var tag = ev.target && ev.target.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (ev.target && ev.target.isContentEditable)) return;
+        if (el.lessonFilter) {
+          ev.preventDefault();
+          el.lessonFilter.focus();
+          try {
+            el.lessonFilter.select();
+          } catch (_) {}
+        }
+      }
+    });
+    syncMenuToggleExpanded();
   }
 
   let bootOk = false;
@@ -2255,19 +2398,20 @@ function learnHubRunApp() {
         if (c.ws === "sql" && currentLesson()) {
           freshLessonDb(currentLesson().seed || "");
           clearSqlOut();
-          el.sqlStatus.textContent = "Ready";
+          if (el.sqlStatus) el.sqlStatus.textContent = "Ready";
         }
       })
       .catch(function (err) {
         console.warn("Learn Hub: SQLite optional load failed:", err);
-        if (courseById[activeCourseId].ws === "sql") {
+        var bc = courseById[activeCourseId];
+        if (bc && bc.ws === "sql") {
           clearSqlOut();
           appendSql(
             "<div class='msg err'><strong>SQLite did not load.</strong> " +
               escapeHtml(err.message || String(err)) +
               "</div><div class='msg info'>HTML, CSS, JavaScript, Python, and Tech+ still work. Try opening this file through a local server (e.g. <code>python -m http.server</code>) or check your connection.</div>"
           );
-          el.sqlStatus.textContent = "Unavailable";
+          if (el.sqlStatus) el.sqlStatus.textContent = "Unavailable";
         }
       });
   }
