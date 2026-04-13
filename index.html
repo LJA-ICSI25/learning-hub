@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhLearnPendingGold20260412" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTitleUserInline20260413" />
   <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhTeachSlateTeal20260412" />
 </head>
 <body>
@@ -28,9 +28,16 @@
     aria-hidden="true"
   >
     <div class="lh-auth-card">
-      <h2 id="lh-auth-title" class="lh-auth-title">Sign in to Learn Hub</h2>
+      <div class="lh-auth-brand" aria-hidden="true">
+        <span class="lh-auth-brand-mark">LH</span>
+        <div class="lh-auth-brand-copy">
+          <span class="lh-auth-brand-name">Learn Hub</span>
+          <span class="lh-auth-brand-tag">Local profile</span>
+        </div>
+      </div>
+      <h2 id="lh-auth-title" class="lh-auth-title">Sign in</h2>
       <p class="lh-auth-lead">
-        Create a local profile with a username and password. Your place in each track, XP, and lesson state are saved in this browser for that profile only.
+        Create an account or sign in. Progress and XP stay in this browser for each username — nothing is sent to a server.
       </p>
       <p id="lh-auth-msg" class="lh-auth-msg" role="status" aria-live="polite"></p>
       <div class="lh-auth-tabs" role="tablist" aria-label="Account">
@@ -62,8 +69,15 @@
   <div class="app" id="app-root">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-head">
-        <h1>Learn Hub</h1>
-        <p class="lh-user-line" id="lh-user-line"><span class="lh-user-pill" id="lh-user-label"></span></p>
+        <div class="lh-title-row">
+          <h1 class="lh-brand-title">Learn Hub</h1>
+          <div class="lh-user-inline" id="lh-user-line" role="status" aria-live="polite" hidden>
+            <span class="lh-user-chip">
+              <span class="lh-user-chip-dot" aria-hidden="true"></span>
+              <span class="lh-user-chip-name" id="lh-user-label"></span>
+            </span>
+          </div>
+        </div>
         <p class="sub"><a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> · <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a></p>
         <div class="course-pills" id="course-pills"></div>
         <div class="xp-strip">
@@ -243,7 +257,7 @@
   <script src="assets/learn-hub-kali-md.js?v=kaliLabsBuild2"></script>
   <script src="assets/learn-hub-deep.js"></script>
   <script src="assets/learn-hub-playground.js"></script>
-  <script src="assets/learn-hub-app.js?v=lhAuthHardening20260413"></script>
+  <script src="assets/learn-hub-app.js?v=lhUserInlineUi20260413"></script>
 
 
 

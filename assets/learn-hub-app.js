@@ -2429,11 +2429,12 @@ function learnHubRunApp() {
   function syncUserLabel() {
     var lab = el.userLabel || document.getElementById("lh-user-label");
     var line = document.getElementById("lh-user-line");
-    if (lab) {
-      if (currentUsername) lab.textContent = "Signed in as " + currentUsername;
-      else lab.textContent = "";
+    if (lab) lab.textContent = currentUsername || "";
+    if (line) {
+      line.hidden = !currentUsername;
+      if (currentUsername) line.setAttribute("aria-label", "Signed in as " + currentUsername);
+      else line.removeAttribute("aria-label");
     }
-    if (line) line.style.display = currentUsername ? "" : "none";
   }
 
   function runInitialBootAfterAuth() {
