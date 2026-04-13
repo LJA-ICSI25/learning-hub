@@ -1538,3 +1538,134 @@ body.lh-force-reduce-motion .progress-fill {
     text-decoration: underline;
   }
 }
+
+/* ---------- Local login (per-browser profiles) ---------- */
+.lh-user-line {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.lh-user-pill {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(55, 92, 150, 0.28);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.lh-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(3, 5, 12, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.lh-auth-overlay.is-open {
+  display: flex;
+}
+
+.lh-auth-card {
+  width: min(100%, 26rem);
+  max-height: min(92vh, 640px);
+  overflow: auto;
+  padding: 1.35rem 1.4rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgba(120, 150, 200, 0.22);
+  background: var(--panel, rgba(14, 20, 34, 0.96));
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.lh-auth-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.lh-auth-lead {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lh-auth-msg {
+  min-height: 1.25rem;
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+}
+
+.lh-auth-msg.lh-auth-err {
+  color: #fecaca;
+}
+
+.lh-auth-msg.lh-auth-ok {
+  color: #86efac;
+}
+
+.lh-auth-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.lh-auth-tab {
+  flex: 1;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(120, 150, 200, 0.2);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.lh-auth-tab:hover {
+  color: var(--text);
+  border-color: rgba(120, 150, 200, 0.35);
+}
+
+.lh-auth-tab.active {
+  color: var(--text);
+  background: rgba(55, 92, 150, 0.35);
+  border-color: rgba(100, 140, 200, 0.4);
+}
+
+.lh-auth-panel-hidden {
+  display: none !important;
+}
+
+.lh-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.lh-auth-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.lh-auth-input {
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid rgba(120, 150, 200, 0.25);
+  background: rgba(3, 6, 14, 0.55);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.lh-auth-submit {
+  margin-top: 0.65rem;
+  width: 100%;
+}

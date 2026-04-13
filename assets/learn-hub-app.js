@@ -101,7 +101,15 @@ window.addEventListener("error", function (ev) {
 function learnHubRunApp() {
   "use strict";
 
-  const PROGRESS_KEY = "learn-hub-progress-v9";
+  const ACCOUNTS_KEY = "learn-hub-accounts-v1";
+  const SESSION_KEY = "learn-hub-session-v1";
+  var currentUsername = null;
+
+  function lhProgressStorageKey() {
+    if (!currentUsername) throw new Error("Learn Hub: no signed-in user for progress storage.");
+    return "learn-hub-progress-v9-u-" + encodeURIComponent(String(currentUsername).toLowerCase());
+  }
+
   const TEACH_COLLAPSED_KEY = "learn-hub-teach-collapsed";
   const A11Y_CONTRAST_KEY = "learn-hub-a11y-contrast-v1";
   const A11Y_MOTION_KEY = "learn-hub-a11y-reduce-motion-v1";
@@ -161,6 +169,7 @@ function learnHubRunApp() {
     lessonFilter: document.getElementById("lesson-filter"),
     lessonPlace: document.getElementById("lh-lesson-place"),
     announcer: document.getElementById("lh-announcer"),
+    userLabel: document.getElementById("lh-user-label"),
   };
 
   let SQL = null;
@@ -263,6 +272,57 @@ function learnHubRunApp() {
     ensureLearnProgressShape(cp);
     if (typeof cp.xp !== "number") cp.xp = courseXpFromDone(id);
     return cp;
+  }
+
+  function normalizeUsername(s) {
+    return String(s || "")
+      .trim()
+      .toLowerCase();
+  }
+
+  function readAccounts() {
+    try {
+      var raw = localStorage.getItem(ACCOUNTS_KEY);
+      if (!raw) return {};
+      var o = JSON.parse(raw);
+      return o && typeof o === "object" ? o : {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function writeAccounts(obj) {
+    try {
+      localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(obj));
+    } catch (e) {
+      console.warn("Learn Hub: could not save accounts.", e);
+    }
+  }
+
+  function encodePw(plain) {
+    try {
+      return btoa(unescape(encodeURIComponent(String(plain))));
+    } catch (_) {
+      return btoa(String(plain));
+    }
+  }
+
+  function passwordMatches(stored, plain) {
+    return stored === encodePw(plain);
+  }
+
+  function clearSession() {
+    try {
+      localStorage.removeItem(SESSION_KEY);
+    } catch (_) {}
+  }
+
+  function saveSession(username) {
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: username }));
+    } catch (e) {
+      console.warn("Learn Hub: could not save session.", e);
+    }
   }
 
   /** First time the user opens this learn step in the sidebar (persisted). */
@@ -894,8 +954,9 @@ function learnHubRunApp() {
   }
 
   function loadProgress() {
+    if (!currentUsername) return;
     try {
-      const raw = localStorage.getItem(PROGRESS_KEY);
+      const raw = localStorage.getItem(lhProgressStorageKey());
       if (raw) progress = JSON.parse(raw);
     } catch (_) {}
     if (typeof progress.xp === "number") delete progress.xp;
@@ -910,10 +971,11 @@ function learnHubRunApp() {
   }
 
   function saveProgress() {
+    if (!currentUsername) return;
     progress.activeCourseId = activeCourseId;
     courseProgress(activeCourseId).idx = lessonIndex;
     try {
-      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+      localStorage.setItem(lhProgressStorageKey(), JSON.stringify(progress));
     } catch (e) {
       console.warn("Learn Hub: could not save progress (storage blocked or full).", e);
     }
@@ -2264,8 +2326,15 @@ function learnHubRunApp() {
     });
 
     on("btn-reset-all", "click", () => {
-      if (!confirm("Reset ALL progress and XP on this site?")) return;
-      localStorage.removeItem(PROGRESS_KEY);
+      if (!confirm("Reset ALL progress and XP for the signed-in profile on this site?")) return;
+      try {
+        localStorage.removeItem(lhProgressStorageKey());
+      } catch (_) {}
+      location.reload();
+    });
+
+    on("btn-lh-logout", "click", () => {
+      clearSession();
       location.reload();
     });
 
@@ -2330,96 +2399,282 @@ function learnHubRunApp() {
   }
 
   let bootOk = false;
-  try {
-    loadProgress();
-    applyUrlLessonOverride();
-    renderPills();
-    wire();
 
-    renderNav();
-    const len = lessons().length;
-    let idx = Math.floor(Number(lessonIndex));
-    if (!Number.isFinite(idx) || idx < 0 || idx >= len) idx = 0;
-    if (len > 0 && lessonLocked(idx)) {
-      const first = lessons().findIndex((_, i) => !lessonLocked(i));
-      idx = first >= 0 ? first : 0;
+  function syncUserLabel() {
+    var lab = el.userLabel || document.getElementById("lh-user-label");
+    var line = document.getElementById("lh-user-line");
+    if (lab) {
+      if (currentUsername) lab.textContent = "Signed in as " + currentUsername;
+      else lab.textContent = "";
     }
-    if (len === 0) {
-      if (el.title) el.title.textContent = "No lessons";
-      if (el.teach)
-        el.teach.innerHTML =
-          "<p class='msg err'>This track has no lessons in the loaded curriculum.</p><p class='msg info'>Try resetting progress or redownloading <code>Learn-Hub</code>.</p>";
-      if (el.sidebarTrackName) el.sidebarTrackName.textContent = courseById[activeCourseId] ? courseById[activeCourseId].name : "—";
-      const cEmpty = courseById[activeCourseId];
-      document.body.classList.toggle("lh-compact-teach", !!(cEmpty && cEmpty.ws !== "tech"));
-    } else {
-      goLesson(idx);
-      if (el.title && el.title.textContent === "Loading…") {
-        lessonIndex = 0;
-        goLesson(0);
-      }
-      if (el.title && el.title.textContent === "Loading…") {
-        try {
-          lessonIndex = 0;
-          courseProgress(activeCourseId).idx = 0;
-          renderNav();
-          applyLessonUI();
-        } catch (_) {}
-      }
-    }
-    bootOk = true;
-    try {
-      window.__LH_BOOT_OK = true;
-    } catch (_) {}
-    requestAnimationFrame(function () {
-      try {
-        var nLess = lessons().length;
-        if (nLess > 0) {
-          if (el.lessonPicker && el.lessonPicker.options.length === 0) renderNav();
-          if (el.lessonNav && el.lessonNav.childElementCount === 0) renderNav();
-        }
-      } catch (_) {}
-    });
-  } catch (bootErr) {
-    console.error("Learn Hub boot:", bootErr);
-    if (el.title) el.title.textContent = "Startup error";
-    if (el.teach)
-      el.teach.innerHTML =
-        "<p class='msg err'>The app hit an error while starting: " +
-        escapeHtml(bootErr && bootErr.message ? bootErr.message : String(bootErr)) +
-        "</p><p class='msg info'>Open DevTools (F12) → Console for the full stack. If the page was opened as a downloaded copy, use the original <code>index.html</code> from your Learn-Hub folder.</p>";
-    if (el.lessonNav) el.lessonNav.innerHTML = "";
+    if (line) line.style.display = currentUsername ? "" : "none";
   }
 
-  if (bootOk) {
-    ensureSqlJs()
-      .then(function () {
-        const c = courseById[activeCourseId];
-        if (c.ws === "sql" && currentLesson()) {
-          freshLessonDb(currentLesson().seed || "");
-          clearSqlOut();
-          if (el.sqlStatus) el.sqlStatus.textContent = "Ready";
+  function runInitialBootAfterAuth() {
+    if (bootOk) return;
+    try {
+      loadProgress();
+      applyUrlLessonOverride();
+      renderPills();
+      wire();
+
+      renderNav();
+      const len = lessons().length;
+      let idx = Math.floor(Number(lessonIndex));
+      if (!Number.isFinite(idx) || idx < 0 || idx >= len) idx = 0;
+      if (len > 0 && lessonLocked(idx)) {
+        const first = lessons().findIndex((_, i) => !lessonLocked(i));
+        idx = first >= 0 ? first : 0;
+      }
+      if (len === 0) {
+        if (el.title) el.title.textContent = "No lessons";
+        if (el.teach)
+          el.teach.innerHTML =
+            "<p class='msg err'>This track has no lessons in the loaded curriculum.</p><p class='msg info'>Try resetting progress or redownloading <code>Learn-Hub</code>.</p>";
+        if (el.sidebarTrackName) el.sidebarTrackName.textContent = courseById[activeCourseId] ? courseById[activeCourseId].name : "—";
+        const cEmpty = courseById[activeCourseId];
+        document.body.classList.toggle("lh-compact-teach", !!(cEmpty && cEmpty.ws !== "tech"));
+      } else {
+        goLesson(idx);
+        if (el.title && el.title.textContent === "Loading…") {
+          lessonIndex = 0;
+          goLesson(0);
         }
-      })
-      .catch(function (err) {
-        console.warn("Learn Hub: SQLite optional load failed:", err);
-        var bc = courseById[activeCourseId];
-        if (bc && bc.ws === "sql") {
-          clearSqlOut();
-          appendSql(
-            "<div class='msg err'><strong>SQLite did not load.</strong> " +
-              escapeHtml(err.message || String(err)) +
-              "</div><div class='msg info'>HTML, CSS, JavaScript, Python, and Tech+ still work. Try opening this file through a local server (e.g. <code>python -m http.server</code>) or check your connection.</div>"
-          );
-          if (el.sqlStatus) el.sqlStatus.textContent = "Unavailable";
+        if (el.title && el.title.textContent === "Loading…") {
+          try {
+            lessonIndex = 0;
+            courseProgress(activeCourseId).idx = 0;
+            renderNav();
+            applyLessonUI();
+          } catch (_) {}
         }
+      }
+      bootOk = true;
+      try {
+        window.__LH_BOOT_OK = true;
+      } catch (_) {}
+      requestAnimationFrame(function () {
+        try {
+          var nLess = lessons().length;
+          if (nLess > 0) {
+            if (el.lessonPicker && el.lessonPicker.options.length === 0) renderNav();
+            if (el.lessonNav && el.lessonNav.childElementCount === 0) renderNav();
+          }
+        } catch (_) {}
       });
+      syncUserLabel();
+    } catch (bootErr) {
+      console.error("Learn Hub boot:", bootErr);
+      if (el.title) el.title.textContent = "Startup error";
+      if (el.teach)
+        el.teach.innerHTML =
+          "<p class='msg err'>The app hit an error while starting: " +
+          escapeHtml(bootErr && bootErr.message ? bootErr.message : String(bootErr)) +
+          "</p><p class='msg info'>Open DevTools (F12) → Console for the full stack. If the page was opened as a downloaded copy, use the original <code>index.html</code> from your Learn-Hub folder.</p>";
+      if (el.lessonNav) el.lessonNav.innerHTML = "";
+    }
+
+    if (bootOk) {
+      ensureSqlJs()
+        .then(function () {
+          const c = courseById[activeCourseId];
+          if (c.ws === "sql" && currentLesson()) {
+            freshLessonDb(currentLesson().seed || "");
+            clearSqlOut();
+            if (el.sqlStatus) el.sqlStatus.textContent = "Ready";
+          }
+        })
+        .catch(function (err) {
+          console.warn("Learn Hub: SQLite optional load failed:", err);
+          var bc = courseById[activeCourseId];
+          if (bc && bc.ws === "sql") {
+            clearSqlOut();
+            appendSql(
+              "<div class='msg err'><strong>SQLite did not load.</strong> " +
+                escapeHtml(err.message || String(err)) +
+                "</div><div class='msg info'>HTML, CSS, JavaScript, Python, and Tech+ still work. Try opening this file through a local server (e.g. <code>python -m http.server</code>) or check your connection.</div>"
+            );
+            if (el.sqlStatus) el.sqlStatus.textContent = "Unavailable";
+          }
+        });
+    }
+  }
+
+  function hideAuthOverlay() {
+    var ov = document.getElementById("lh-auth-overlay");
+    if (!ov) return;
+    ov.classList.remove("is-open");
+    ov.setAttribute("aria-hidden", "true");
+  }
+
+  function setAuthMsg(text, kind) {
+    var m = document.getElementById("lh-auth-msg");
+    if (!m) return;
+    m.textContent = text || "";
+    m.className = "lh-auth-msg" + (kind === "err" ? " lh-auth-err" : kind === "ok" ? " lh-auth-ok" : "");
+  }
+
+  function tryLogin(username, password) {
+    var u = normalizeUsername(username);
+    if (!u) {
+      setAuthMsg("Enter a username.", "err");
+      return false;
+    }
+    if (!password || String(password).length < 4) {
+      setAuthMsg("Enter your password (at least 4 characters).", "err");
+      return false;
+    }
+    var accounts = readAccounts();
+    if (!accounts[u]) {
+      setAuthMsg("Unknown username.", "err");
+      return false;
+    }
+    if (!passwordMatches(accounts[u].p, password)) {
+      setAuthMsg("Wrong password.", "err");
+      return false;
+    }
+    currentUsername = u;
+    saveSession(u);
+    setAuthMsg("Signed in.", "ok");
+    hideAuthOverlay();
+    runInitialBootAfterAuth();
+    syncUserLabel();
+    return true;
+  }
+
+  function tryRegister(username, password, password2) {
+    if (String(password) !== String(password2)) {
+      setAuthMsg("Passwords do not match.", "err");
+      return false;
+    }
+    var u = normalizeUsername(username);
+    if (!/^[a-z0-9_-]{2,24}$/.test(u)) {
+      setAuthMsg("Username must be 2–24 characters: letters, digits, underscore, or hyphen.", "err");
+      return false;
+    }
+    if (!password || String(password).length < 4) {
+      setAuthMsg("Password must be at least 4 characters.", "err");
+      return false;
+    }
+    var accounts = readAccounts();
+    if (accounts[u]) {
+      setAuthMsg("That username is already taken.", "err");
+      return false;
+    }
+    accounts[u] = { p: encodePw(password) };
+    writeAccounts(accounts);
+    currentUsername = u;
+    saveSession(u);
+    progress = { activeCourseId: COURSES[0].id, courses: {} };
+    activeCourseId = progress.activeCourseId;
+    lessonIndex = 0;
+    saveProgress();
+    setAuthMsg("Account created.", "ok");
+    hideAuthOverlay();
+    runInitialBootAfterAuth();
+    syncUserLabel();
+    return true;
+  }
+
+  function resumeSessionIfValid() {
+    try {
+      var raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return false;
+      var o = JSON.parse(raw);
+      if (!o || !o.username) return false;
+      var u = normalizeUsername(o.username);
+      var accounts = readAccounts();
+      if (u === "default" && !accounts[u]) {
+        currentUsername = u;
+        return true;
+      }
+      if (!accounts[u]) {
+        clearSession();
+        return false;
+      }
+      currentUsername = u;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  var authWired = false;
+  function prepareAuthOverlay() {
+    var ov = document.getElementById("lh-auth-overlay");
+    if (!ov) {
+      currentUsername = "default";
+      saveSession("default");
+      runInitialBootAfterAuth();
+      return;
+    }
+    ov.classList.add("is-open");
+    ov.setAttribute("aria-hidden", "false");
+    if (authWired) return;
+    authWired = true;
+
+    function switchAuthTab(which) {
+      var up = which === "up";
+      var tin = document.getElementById("lh-auth-tab-in");
+      var tup = document.getElementById("lh-auth-tab-up");
+      var pin = document.getElementById("lh-auth-panel-in");
+      var pup = document.getElementById("lh-auth-panel-up");
+      if (tin) {
+        tin.classList.toggle("active", !up);
+        tin.setAttribute("aria-selected", !up ? "true" : "false");
+      }
+      if (tup) {
+        tup.classList.toggle("active", up);
+        tup.setAttribute("aria-selected", up ? "true" : "false");
+      }
+      if (pin) pin.classList.toggle("lh-auth-panel-hidden", up);
+      if (pup) pup.classList.toggle("lh-auth-panel-hidden", !up);
+      setAuthMsg("", "");
+    }
+
+    var tinBtn = document.getElementById("lh-auth-tab-in");
+    var tupBtn = document.getElementById("lh-auth-tab-up");
+    if (tinBtn) tinBtn.addEventListener("click", () => switchAuthTab("in"));
+    if (tupBtn) tupBtn.addEventListener("click", () => switchAuthTab("up"));
+
+    var fin = document.getElementById("lh-auth-form-in");
+    if (fin)
+      fin.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var uEl = document.getElementById("lh-auth-in-user");
+        var pEl = document.getElementById("lh-auth-in-pass");
+        tryLogin(uEl && uEl.value, pEl && pEl.value);
+      });
+
+    var fup = document.getElementById("lh-auth-form-up");
+    if (fup)
+      fup.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var uEl = document.getElementById("lh-auth-up-user");
+        var pEl = document.getElementById("lh-auth-up-pass");
+        var p2El = document.getElementById("lh-auth-up-pass2");
+        tryRegister(uEl && uEl.value, pEl && pEl.value, p2El && p2El.value);
+      });
+
+    syncUserLabel();
+  }
+
+  if (resumeSessionIfValid()) {
+    runInitialBootAfterAuth();
+  } else if (!document.getElementById("lh-auth-overlay")) {
+    currentUsername = "default";
+    saveSession("default");
+    runInitialBootAfterAuth();
+  } else {
+    prepareAuthOverlay();
   }
 }
 
 setTimeout(function __lhWatchdog() {
   try {
     if (!window.__LH_BOOT_OK) {
+      var authOv = document.getElementById("lh-auth-overlay");
+      if (authOv && authOv.classList.contains("is-open")) return;
       var ph = document.getElementById("teach-boot-placeholder");
       if (ph) {
         ph.innerHTML =
