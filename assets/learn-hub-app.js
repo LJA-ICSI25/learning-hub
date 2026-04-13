@@ -267,7 +267,10 @@ function learnHubRunApp() {
   }
 
   function courseProgress(id) {
-    if (!progress.courses[id]) progress.courses[id] = { done: {}, idx: 0 };
+    var row0 = progress.courses[id];
+    if (!row0 || typeof row0 !== "object" || Array.isArray(row0)) {
+      progress.courses[id] = { done: {}, idx: 0 };
+    }
     var cp = progress.courses[id];
     ensureLearnProgressShape(cp);
     if (typeof cp.xp !== "number") cp.xp = courseXpFromDone(id);
@@ -285,13 +288,15 @@ function learnHubRunApp() {
       var raw = localStorage.getItem(ACCOUNTS_KEY);
       if (!raw) return {};
       var o = JSON.parse(raw);
-      return o && typeof o === "object" ? o : {};
+      if (!o || typeof o !== "object" || Array.isArray(o)) return {};
+      return o;
     } catch (_) {
       return {};
     }
   }
 
   function writeAccounts(obj) {
+    if (!obj || typeof obj !== "object" || Array.isArray(obj)) return;
     try {
       localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(obj));
     } catch (e) {
@@ -308,7 +313,7 @@ function learnHubRunApp() {
   }
 
   function passwordMatches(stored, plain) {
-    return stored === encodePw(plain);
+    return stored != null && String(stored) === encodePw(plain);
   }
 
   function clearSession() {
@@ -957,10 +962,31 @@ function learnHubRunApp() {
     if (!currentUsername) return;
     try {
       const raw = localStorage.getItem(lhProgressStorageKey());
-      if (raw) progress = JSON.parse(raw);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+          progress = parsed;
+        }
+      }
     } catch (_) {}
+    if (!progress || typeof progress !== "object" || Array.isArray(progress)) {
+      progress = { activeCourseId: COURSES[0].id, courses: {} };
+    }
     if (typeof progress.xp === "number") delete progress.xp;
-    if (!progress.courses) progress.courses = {};
+    if (!progress.courses || typeof progress.courses !== "object" || Array.isArray(progress.courses)) {
+      progress.courses = {};
+    }
+    Object.keys(progress.courses).forEach(function (cid) {
+      var row = progress.courses[cid];
+      if (!row || typeof row !== "object" || Array.isArray(row)) {
+        delete progress.courses[cid];
+        return;
+      }
+      if (!row.done || typeof row.done !== "object" || Array.isArray(row.done)) row.done = {};
+      if (!row.learnVisited || typeof row.learnVisited !== "object" || Array.isArray(row.learnVisited)) row.learnVisited = {};
+      if (!row.learnOutcome || typeof row.learnOutcome !== "object" || Array.isArray(row.learnOutcome)) row.learnOutcome = {};
+      if (typeof row.idx !== "number" || !Number.isFinite(row.idx) || row.idx < 0) row.idx = 0;
+    });
     if (progress.activeCourseId && courseById[progress.activeCourseId]) activeCourseId = progress.activeCourseId;
     else activeCourseId = COURSES[0].id;
     progress.activeCourseId = activeCourseId;
@@ -2328,7 +2354,7 @@ function learnHubRunApp() {
     on("btn-reset-all", "click", () => {
       if (!confirm("Reset ALL progress and XP for the signed-in profile on this site?")) return;
       try {
-        localStorage.removeItem(lhProgressStorageKey());
+        if (currentUsername) localStorage.removeItem(lhProgressStorageKey());
       } catch (_) {}
       location.reload();
     });
@@ -2478,7 +2504,7 @@ function learnHubRunApp() {
       ensureSqlJs()
         .then(function () {
           const c = courseById[activeCourseId];
-          if (c.ws === "sql" && currentLesson()) {
+          if (c && c.ws === "sql" && currentLesson()) {
             freshLessonDb(currentLesson().seed || "");
             clearSqlOut();
             if (el.sqlStatus) el.sqlStatus.textContent = "Ready";
@@ -2525,8 +2551,12 @@ function learnHubRunApp() {
       return false;
     }
     var accounts = readAccounts();
-    if (!accounts[u]) {
+    if (!accounts[u] || typeof accounts[u] !== "object") {
       setAuthMsg("Unknown username.", "err");
+      return false;
+    }
+    if (accounts[u].p == null) {
+      setAuthMsg("This account’s saved data is incomplete. Create a new username or clear site data.", "err");
       return false;
     }
     if (!passwordMatches(accounts[u].p, password)) {
@@ -2557,7 +2587,7 @@ function learnHubRunApp() {
       return false;
     }
     var accounts = readAccounts();
-    if (accounts[u]) {
+    if (accounts[u] && typeof accounts[u] === "object") {
       setAuthMsg("That username is already taken.", "err");
       return false;
     }
@@ -2583,12 +2613,16 @@ function learnHubRunApp() {
       var o = JSON.parse(raw);
       if (!o || !o.username) return false;
       var u = normalizeUsername(o.username);
+      if (!u) {
+        clearSession();
+        return false;
+      }
       var accounts = readAccounts();
       if (u === "default" && !accounts[u]) {
         currentUsername = u;
         return true;
       }
-      if (!accounts[u]) {
+      if (!accounts[u] || typeof accounts[u] !== "object") {
         clearSession();
         return false;
       }
