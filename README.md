@@ -45,6 +45,15 @@ G:\Hubs\Learn-Hub\assets\learn-hub-depth.js
 G:\Hubs\Learn-Hub\assets\learn-hub-playground.js
 G:\Hubs\Learn-Hub\assets\learn-hub-techplus.js
 G:\Hubs\Learn-Hub\assets\learn-hub-techplus-md.js
+G:\Hubs\Learn-Hub\assets\learn-hub-security-md.js
+G:\Hubs\Learn-Hub\assets\learn-hub-kali-md.js
+G:\Hubs\Learn-Hub\docs\KALI_HANDS_ON_LAB_CURRICULUM.md
+G:\Hubs\Learn-Hub\docs\SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md
+G:\Hubs\Learn-Hub\docs\LEARN_HUB_COMPLETE_REFERENCE.html
+G:\Hubs\Learn-Hub\scripts\build-kali-from-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\build-security-from-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\emit-kali-slow-curriculum.mjs
+G:\Hubs\Learn-Hub\scripts\kali-lab-rich-procedures.mjs
 G:\Hubs\Learn-Hub\package-lock.json
 G:\Hubs\Learn-Hub\package.json
 G:\Hubs\Learn-Hub\PATHS_FOR_GITHUB.txt
@@ -70,9 +79,9 @@ G:\Hubs\Learn-Hub\scripts\vendor\marked.esm.mjs
 G:\Hubs\Learn-Hub\WORKING_COPY.txt
 ```
 
-Self-hosted, **practice-first** study app (FreeCodeCamp-style): **editor and Run/Check on top**, optional **Reference** fold-out for theory on most tracks.
+Self-hosted, **practice-first** study app (FreeCodeCamp-style): **editor and Run/Check on top**, optional **Reference** fold-out for theory on most tracks. **Eight courses** ship in `learn-hub-courses.js`: HTML, CSS, JavaScript, Python, SQL, **Security** (workplace Security+ prep + quizzes), **Labs** (slow Kali VM hands-on curriculum), and **Tech+** (CompTIA Tech+ study guide + quizzes).
 
-**Curriculum size (bundled `assets/learn-hub-courses.js`):** **626** lessons — HTML **66**, CSS **64**, JavaScript **64**, Python **85**, SQL **83**, Tech+ **264**. Of those, **190** are **Tech+ study-guide** steps (IDs `tech-sg-01-01` … through chapter **12**); the remaining Tech+ entries are intro, quiz, and non-study-guide learn steps served from **`learn-hub-techplus.js`** and related bundles.
+**Curriculum size (bundled `assets/learn-hub-courses.js`):** **875** lessons — HTML **66**, CSS **64**, JavaScript **64**, Python **85**, SQL **83**, Tech+ **264**, Security **146**, Labs **93** (welcome plus **one lesson per Kali lab** from `docs/KALI_HANDS_ON_LAB_CURRICULUM.md`). To **regenerate** that Markdown from the emitter, run `npm run emit:kali-slow` (pulls phased lab text from **`scripts/kali-lab-rich-procedures.mjs`** into **`scripts/emit-kali-slow-curriculum.mjs`**), then `npm run build:kali`. You can also edit **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`** directly and only run **`npm run build:kali`**. Of those, **190** are **Tech+ study-guide** steps (IDs `tech-sg-01-01` … through chapter **12**); the remaining Tech+ entries are intro, quiz, and non-study-guide learn steps served from **`learn-hub-techplus.js`** and related bundles.
 
 **Tech+ Markdown output** is split for loading: **`assets/learn-hub-techplus-md.js`** is a **loader** (chapter hashes + `loadLearnHubTechplusChapter`). The actual segment HTML lives in **`assets/learn-hub-techplus-md-ch01.js`** … **`ch12.js`** (merged into `window.LEARN_HUB_TECHPLUS_MD` as each chapter loads). Regenerate from **`chapters/*.md`** with **`npm run build:techplus`** (runs **marked** + **`polishTechplusHtml`**). If **`learn-hub-courses.js`** ever lists `tech-sg-*` steps whose HTML is missing from the chunks (for example after a partial build), run **`npm run restore:techplus-md`**, which copies the canonical course list from **`G:\All_Learn-hub\Learn-Hub\learn-hub-courses.js`** and inserts **only missing** study-guide segments from that tree’s monolithic **`learn-hub-techplus-md.js`** into the chapter files—without overwriting segments already present in **`Hubs\Learn-Hub`**.
 
@@ -84,7 +93,7 @@ Use this table so you always know what to open, serve, and edit.
 
 | Path | What it is |
 |------|------------|
-| **`G:\Hubs\Learn-Hub`** | **Canonical working project.** This is the copy you run (`index.html`), edit, and rebuild. **`assets/learn-hub-courses.js`** must list every lesson id the app can open; **Tech+ study-guide** reading for `tech-sg-*` ids must exist in the **chapter chunk** files (or be loadable after **`restore:techplus-md`**). The small **`assets/learn-hub-techplus-md.js`** loader and each **`learn-hub-techplus-md-chNN.js`** chunk include content hashes—bump **`index.html`** `?v=` on the loader (and **`learn-hub-courses.js`**) after you change bundles. |
+| **`G:\Hubs\Learn-Hub`** | **Canonical working project.** This is the copy you run (`index.html`), edit, and rebuild. **`assets/learn-hub-courses.js`** must list every lesson id the app can open; **Tech+ study-guide** reading for `tech-sg-*` ids must exist in the **chapter chunk** files (or be loadable after **`restore:techplus-md`**). **Security** (`learn-hub-security-md.js`) and **Labs** (`learn-hub-kali-md.js`) lesson ids must match their bundles after **`build:security`** / **`build:kali`**. The small **`assets/learn-hub-techplus-md.js`** loader and each **`learn-hub-techplus-md-chNN.js`** chunk include content hashes—bump **`index.html`** `?v=` on the loader, **Security**, **Kali**, and **`learn-hub-courses.js`** after you change bundles. |
 | **`G:\Learn-Hub_Backup`** | **Point-in-time mirror** of `Hubs\Learn-Hub` (last full robocopy). Restore from here if the working tree is corrupted; after restoring, redo any edits made after the backup. Re-run a folder mirror when you want an updated snapshot. |
 | **`G:\All_Learn-hub\Learn-hub_recent`** | **Upload-friendly mirror** of **`G:\Hubs\Learn-Hub`** (same files and folders, **`node_modules` excluded**). Regenerate with `robocopy "G:\Hubs\Learn-Hub" "G:\All_Learn-hub\Learn-hub_recent" /MIR /XD node_modules` before zipping or pointing GitHub Desktop at a clean tree. |
 | **`G:\Hubs\TechPlus_Lessons\learning-hub-main`** | **Reference / donor tree** that held a known-good study-guide bundle used to repair Learn-Hub. Unless you maintain that repo on purpose, **do not treat it as your primary app**—day-to-day work lives under **`Hubs\Learn-Hub`**. |
@@ -111,11 +120,13 @@ Use this table so you always know what to open, serve, and edit.
 | JavaScript  | Same                              | |
 | Python      | Pyodide (downloads on first run)  | Needs network for the runtime CDN. |
 | SQL         | sql.js + per-lesson DB seed       | Needs network for the wasm CDN. |
+| Security    | Quiz panel on quiz steps          | Long-form reading from `docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md` → **`learn-hub-security-md.js`** (run `npm run build:security`). Same **Notes** / **Check-in** layout as Tech+ for learn vs quiz steps. |
+| Labs        | No editor (read-only **Notes**)   | **Kali VM lab curriculum**: one sidebar lesson per lab, slow pace. Source **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`**. Regenerating from code: **`npm run emit:kali-slow`** (Markdown from **`emit-kali-slow-curriculum.mjs`** + **`kali-lab-rich-procedures.mjs`**), then **`npm run build:kali`** → **`learn-hub-kali-md.js`** + Labs rows in **`learn-hub-courses.js`**. |
 | Tech+       | Quiz panel on quiz steps          | **Study guide lessons** (`tech-sg-XX-YY`): one section/exercise/review block per step in the main reading column; sidebar **unit** groups steps by book chapter (`Ch N — …`). Optional **On this page** outline when headings allow. Other **Learn** steps: **Lesson reading** (topic excerpts from `learn-hub-techplus.js`). **Continue** / **Skip lesson** / **Check** as usual. |
 
 ## Core files
 
-Load **order matters** (see `index.html`):
+Load **order matters** (see `index.html`; **Security** and **Kali** MD bundles load before `learn-hub-deep.js` / `learn-hub-app.js` so `readHtml` merge sees them):
 
 | File | Purpose |
 |------|---------|
@@ -127,6 +138,8 @@ Load **order matters** (see `index.html`):
 | `assets/learn-hub-depth.js` | Stub: `window.LEARN_HUB_DEPTH = {}` (reserved for optional future append-only snippets). |
 | `assets/learn-hub-techplus.js` | `window.LEARN_HUB_TECHPLUS` — HTML excerpts from the local Tech+ study guide for selected Tech+ lesson IDs (topic notes, tables, drills). |
 | `assets/learn-hub-techplus-md.js` | **Loader** for Tech+ Markdown segments: defines `loadLearnHubTechplusChapter` and per-chapter **`?v=`** hashes. Actual HTML lives in **`learn-hub-techplus-md-ch01.js`** … **`ch12.js`** (each assigns into `window.LEARN_HUB_TECHPLUS_MD`). Generated by **`npm run build:techplus`** from **`chapters/*.md`** via **`marked`** + **`polishTechplusHtml`** (see `scripts/techplus-chapter-io.mjs`). |
+| `assets/learn-hub-security-md.js` | **`window.LEARN_HUB_SECURITY_MD`** — per-lesson HTML for Security track ids (`lh-sec-*`, quizzes). Generated by **`npm run build:security`** from **`docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md`**. Large single-line JSON payload; edit the Markdown source or build script, not by hand. |
+| `assets/learn-hub-kali-md.js` | **`window.LEARN_HUB_KALI_MD`** — per-lesson HTML for **Labs** track ids (`labs-kali-*`). Generated by **`npm run build:kali`**, which parses **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`** for `<!-- id: … -->` blocks. Optional full Markdown regen: **`npm run emit:kali-slow`** (uses **`scripts/kali-lab-rich-procedures.mjs`** for long **Procedure** sections). |
 | `assets/learn-hub-techplus-md-ch01.js` … `ch12.js` | **Study-guide segment HTML** (~**190** `tech-sg-*` keys total across chapters). Not listed individually in [File manifest](#file-manifest-integrity-reference)—sizes change when you rebuild. |
 | `assets/learn-hub-deep.js` | `window.LEARN_HUB_DEEP` — per-lesson **full reference HTML** plus shared drill blocks and external doc links. |
 | `assets/learn-hub-playground.js` | `window.LEARN_HUB_PLAYGROUND` — default **sandbox starters** for **learn** steps on web / Python / SQL. |
@@ -143,6 +156,8 @@ readHtml = (narrative from course, usually "")
          + (LEARN_HUB_DEEP[id] if any)
          + (LEARN_HUB_TECHPLUS[id] if any)
          + (LEARN_HUB_TECHPLUS_MD[id] if any)
+         + (LEARN_HUB_SECURITY_MD[id] if any)
+         + (LEARN_HUB_KALI_MD[id] if any)
 ```
 
 The **teach** column shows:
@@ -151,15 +166,16 @@ The **teach** column shows:
 2. **Reading content** — behavior depends on track and lesson:
    - **Tech+ study guide readings** (`tech-sg-XX-YY`): the merged HTML is the **main lesson** for that step (scroll the column). Includes a short **source** line (lesson title + chapter), and when there are enough headings, an **On this page** outline with in-page links. Use **Skip lesson** to mark a step done without re-reading.
    - **Other Tech+ learn** steps: content is inside **`<details open>`** labeled **Lesson reading — notes, tables & drills** so excerpts stay visible without an extra click. The inner panel is **not** height-capped so long notes read like a normal page.
-   - **Other tracks**: theory stays in a **Reference** `<details>` (collapsed by default) with a scroll region for long pages.
+   - **Other tracks** (HTML/CSS/JS/Python/SQL): theory stays in a **Reference** `<details>` (collapsed by default) with a scroll region for long pages.
+   - **Security** and **Labs**: long-form content is merged from **`LEARN_HUB_SECURITY_MD`** / **`LEARN_HUB_KALI_MD`** into the same **Notes** / full-reading column as Tech+ (practice column hidden on learn steps). **Security** quizzes use the **Check-in** panel like Tech+.
 
-**Tech+ learn** steps hide the code workspace; use **Continue** after reading. **Tech+ quiz** steps use the **Check-in** panel.
+**Tech+ learn** steps hide the code workspace; use **Continue** after reading. **Tech+ quiz** steps use the **Check-in** panel. **Labs** learn steps are read-only in the browser (real commands run on your **Kali VM**, not inside Learn Hub).
 
 ## Lesson kinds
 
-- **`learn`** — Explore the editor (HTML/CSS/JS/Python/SQL) or read the lesson text (Tech+). **Check** is disabled when there is no `check` object. **Continue** advances.
+- **`learn`** — Explore the editor (HTML/CSS/JS/Python/SQL) or read the lesson text (**Tech+**, **Security**, **Labs**). **Check** is disabled when there is no `check` object. **Continue** advances.
 - **`practice` / `challenge`** — Graded with **Check** (DOM/CSS/JS/SQL/Python checks as defined in the lesson).
-- **`quiz`** — Multiple choice; **Tech+** uses the in-page quiz panel.
+- **`quiz`** — Multiple choice; **Tech+** and **Security** use the in-page **Check-in** quiz panel.
 
 ## Keyboard shortcuts (web / SQL)
 
@@ -170,7 +186,7 @@ The **teach** column shows:
 
 Progress is stored in **browser `localStorage`** (key managed inside `learn-hub-app.js`). Use **Reset all saved progress** in the sidebar to clear it.
 
-The sidebar shows **XP** and progress vs **all tracks combined** (currently **626** lessons in the bundled curriculum). Rebuilding or re-ordering **Tech+** steps changes total lesson count and lesson IDs; if progress feels “off,” use **Reset all saved progress** in the sidebar (the app may bump its storage key when the Tech+ shape changes).
+The sidebar shows **XP** and progress vs **all tracks combined** (currently **875** lessons in the bundled curriculum). Rebuilding **Tech+**, **Security**, or **Labs** bundles changes lesson counts and ids; if progress feels “off,” use **Reset all saved progress** in the sidebar (the app may bump its storage key when bundle shapes change).
 
 ## Maintenance scripts (Node)
 
@@ -190,6 +206,9 @@ Run from `Hubs/Learn-Hub` or adjust paths (this project lives at `G:\Hubs\Learn-
 | `npm run verify:techplus` | Runs **`audit-techplus-consistency.mjs`**, **`validate-techplus-html.mjs`**, and **`audit-techplus-segment-foreign-ids.mjs`** — course ids vs segments, HTML safety, no stray other-lesson ids in a segment’s HTML. |
 | `npm run restore:techplus-md` | Runs **`scripts/restore-techplus-md-from-reference.mjs`** — copies **`learn-hub-courses.js`** from **`G:\All_Learn-hub\Learn-Hub`**, merges **missing** `tech-sg-*` HTML from that folder’s monolithic **`learn-hub-techplus-md.js`** into **`Hubs`** chapter chunks, regenerates loader hashes. Use when study-guide steps are listed but chunk HTML is incomplete. |
 | `npm run fix:techplus-banners` | Runs **`scripts/fix-techplus-source-banner-titles.mjs`** — optional **disk** repair when a banner’s **`Ch N —`** text disagrees with the chapter span (rare; render-time normalization usually suffices). |
+| `npm run build:security` | Runs **`scripts/build-security-from-markdown.mjs`** — regenerates **`learn-hub-security-md.js`** and patches the **Security** lesson list in **`learn-hub-courses.js`**. Edit **`docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md`** first. (Re-run **`scripts/build-security-quizzes.mjs`** separately if your workflow regenerates quiz steps from the same Markdown.) |
+| `npm run emit:kali-slow` | Runs **`scripts/emit-kali-slow-curriculum.mjs`** — overwrites **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`**. Imports **`scripts/kali-lab-rich-procedures.mjs`** (per-lab focus strings and phased wrappers: Apache mapping/reload/verify, Python/SQL/Security/Tech templates). Use for a full regen from source tables; otherwise edit the Markdown and run **`build:kali`** only. |
+| `npm run build:kali` | Runs **`scripts/build-kali-from-markdown.mjs`** — parses **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`** (`<!-- id: labs-kali-… -->`), writes **`assets/learn-hub-kali-md.js`**, patches the **Labs** lesson list in **`learn-hub-courses.js`**. Bump **`index.html`** `learn-hub-kali-md.js?v=` after changes. |
 
 | Script | What it does |
 |--------|----------------|
@@ -199,6 +218,7 @@ Run from `Hubs/Learn-Hub` or adjust paths (this project lives at `G:\Hubs\Learn-
 | `scripts/build-techplus-import.mjs` | Reads `../../TechPlus-Stuff/TechPlus/TechPlus_Study_Guide.html`, writes **`learn-hub-techplus.js`** (condensed excerpts for mapped lesson IDs). |
 | `scripts/migrate-fcc-deep-playground.mjs` | Reads `assets/learn-hub-courses.js`, moves any non-empty `narrative` into `assets/learn-hub-deep.js` (plus expansion/footer blocks), clears narratives, regenerates `assets/learn-hub-playground.js` learn-step sandboxes. **Re-run after you edit lesson text inside the courses file.** |
 | `scripts/fold-depth-into-courses.mjs` | Legacy helper: merged old `learn-hub-depth.js` scaffolding into courses (only useful if you restore historical depth data from git). |
+| `scripts/kali-lab-rich-procedures.mjs` | Exports phased **Procedure** Markdown for Kali labs (`apachePhasesPreamble` / `apachePhasesEpilogue`, `fullApacheCssLikeProcedure`, `pythonLabProcedure`, `sqlLabProcedure`, `secLabProcedure`, `techLabProcedure`, and per-track **`_*_LAB_FOCUS`** arrays). Consumed only by **`emit-kali-slow-curriculum.mjs`**. |
 
 Other repo tools (curriculum expansion / capstones):
 
@@ -216,6 +236,8 @@ Read each file’s header comment for exact usage.
 | Source | Role |
 |--------|------|
 | `chapters/*.md` | Twelve **chapter sources** (Markdown) stored **inside Learn Hub**. Edit here, then run **`npm run build:techplus`** to regenerate segments and the Tech+ lesson list (polish runs inside that pipeline). Each chapter has **`### Introduction`** immediately **after** the exam-objectives list so the first study-guide step (**Chapter overview & objectives**) is **objectives-only**; chapter intro prose starts in the next lesson. Add **`### Section Title`** lines at every major topic boundary (see chapter 1 for density): the build splits lessons on `<h3>` headings, **`EXERCISE`**, and **Review Questions** — without enough `###` headings, one sidebar step can swallow unrelated book sections. Optional: **`npm run restore:techplus-md`** merges **only missing** `tech-sg-*` HTML from the **`G:\All_Learn-hub\Learn-Hub`** monolith into chapter chunks — it does **not** replace `learn-hub-courses.js` (sidebar titles must stay in sync with the build). |
+| `docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md` | **Security** track source Markdown. Lesson markers use `<!-- id: lh-sec-… -->` style comments (see repo **`scripts/build-security-from-markdown.mjs`**). Run **`npm run build:security`** after edits. |
+| `docs/KALI_HANDS_ON_LAB_CURRICULUM.md` | **Labs** track source Markdown: `<!-- id: labs-kali-… -->` + optional `<!-- unit: … -->` per lesson. Run **`npm run build:kali`** after any edit. For a **full regen** of lab prose from the emitter, run **`npm run emit:kali-slow`** first (updates this file from **`emit-kali-slow-curriculum.mjs`** + **`kali-lab-rich-procedures.mjs`**), then **`npm run build:kali`**. |
 | `learn-hub-techplus-md.js` + `learn-hub-techplus-md-ch01.js` … `ch12.js` | **Per-lesson HTML** for study-guide ids `tech-sg-01-01`, … — the browser loads the **loader** first, then **lazy-loads** each chapter chunk. No runtime path outside this repo. After replacing or hand-editing chunks, run **`npm run polish:techplus-md`** / **`npm run verify:techplus`** and update **`index.html`** `?v=` strings. |
 | `learn-hub-techplus.js` | Shorter **topic excerpts** (regenerate with `scripts/build-techplus-import.mjs`, which reads a copy of the study guide HTML from your materials — **build-time only**). |
 | *(optional)* `TechPlus_Study_Guide.html` | Separate interactive guide (quizzes, practice exam) if you keep it alongside this project — not required for Learn Hub to run. |
@@ -223,12 +245,13 @@ Read each file’s header comment for exact usage.
 ## Requirements
 
 - Modern browser with JavaScript enabled.
-- **Network** for Python (Pyodide) and SQL (sql.js) CDN loads on first use; **`npm install`** in this folder for the **marked** devDependency (used by `build-techplus-from-markdown.mjs`).
+- **Network** for Python (Pyodide) and SQL (sql.js) CDN loads on first use; **`npm install`** in this folder for the **marked** devDependency (used by **`build:techplus`**, **`build:security`**, **`build:kali`**, and **`emit:kali-slow`**).
 - All core `.js` files under **`assets/`** must be **same-origin** with `index.html` (local server or static host such as GitHub Pages).
 
 ## Troubleshooting
 
-- **Blank or stuck UI** — Hard refresh (Ctrl+Shift+R), confirm no 404s in DevTools → Network, verify every script under **`assets/`** loaded (including **`learn-hub-techplus-md.js`**).
+- **Blank or stuck UI** — Hard refresh (Ctrl+Shift+R), confirm no 404s in DevTools → Network, verify every script under **`assets/`** loaded (including **`learn-hub-techplus-md.js`**, **`learn-hub-security-md.js`**, **`learn-hub-kali-md.js`**).
+- **Labs or Security reading missing** — Confirm `index.html` loads **`learn-hub-kali-md.js`** / **`learn-hub-security-md.js`** before **`learn-hub-app.js`**. Re-run **`npm run build:kali`** or **`npm run build:security`** after editing the source Markdown; bump the matching **`?v=`** cache-bust query on those script tags if the browser keeps old bundles.
 - **Slow first load on Tech+** — The first chapter chunk still parses a large script; prefer Chrome/Edge and a local server; avoid IDE embedded preview if it struggles. Subsequent chapters load on demand.
 - **IDE preview issues** — Open the same folder in Chrome/Edge with a local server; some embedded previews mishandle large single-file apps.
 - **SQLite / Python errors** — Check connectivity; HTML/CSS/JS/Tech+ reading still work offline once scripts are loaded.
@@ -251,54 +274,63 @@ cd Hubs/Learn-Hub
 node scripts/print-learn-hub-manifest.mjs
 ```
 
-Paste the command output **over the table below** (from the header row through the **Total** row). The script lists core Learn-Hub files, Tech+ polish/validate scripts, and all **`chapters/*.md`** sources.
+Paste the command output **over the table below** (from the header row through the **Total** row). The script lists core Learn-Hub bundles, **Security** / **Kali** outputs, **`docs/KALI_HANDS_ON_LAB_CURRICULUM.md`**, Kali emitter helpers (**`kali-lab-rich-procedures.mjs`**), Tech+ polish/validate scripts, and all **`chapters/*.md`** sources.
 
 | File | Lines | UTF-8 bytes | Unicode scalar values* |
 |------|------:|-------------:|-------------------------:|
-| `README.md` | 295 | 24,138 | 24,018 |
-| `index.html` | 188 | 11,335 | 11,295 |
+| `README.md` | 338 | 33,349 | 33,183 |
+| `index.html` | 208 | 12,458 | 12,417 |
 | `assets/learn-hub-tokens.css` | 143 | 4,810 | 4,795 |
-| `assets/learn-hub-layout.css` | 1,397 | 30,486 | 30,472 |
-| `assets/learn-hub-teach.css` | 1,171 | 27,513 | 27,495 |
-| `assets/learn-hub-app.js` | 1,916 | 73,992 | 73,885 |
-| `assets/learn-hub-courses.js` | 2 | 339,067 | 338,581 |
+| `assets/learn-hub-layout.css` | 1,408 | 30,785 | 30,767 |
+| `assets/learn-hub-teach.css` | 1,222 | 28,698 | 28,680 |
+| `assets/learn-hub-app.js` | 2,309 | 89,873 | 89,744 |
+| `assets/learn-hub-courses.js` | 2 | 426,502 | 424,975 |
 | `assets/learn-hub-deep.js` | 439 | 996,504 | 986,700 |
 | `assets/learn-hub-depth.js` | 3 | 160 | 158 |
 | `assets/learn-hub-playground.js` | 3 | 71,367 | 70,539 |
 | `assets/learn-hub-techplus.js` | 3 | 128,256 | 127,156 |
-| `assets/learn-hub-techplus-md.js` | 38 | 1,419 | 1,417 |
+| `assets/learn-hub-techplus-md.js` | 37 | 1,305 | 1,303 |
+| `assets/learn-hub-security-md.js` | 9 | 1,849,671 | 1,823,458 |
+| `assets/learn-hub-kali-md.js` | 9 | 372,445 | 368,633 |
+| `docs/KALI_HANDS_ON_LAB_CURRICULUM.md` | 6,377 | 264,221 | 260,873 |
 | `scripts/learn-hub-paths.mjs` | 19 | 554 | 554 |
 | `scripts/techplus-chapter-io.mjs` | 120 | 4,750 | 4,750 |
-| `chapters/01_Core_Hardware_Components.md` | 1,709 | 107,207 | 106,604 |
-| `chapters/02_Peripherals_and_Connectors.md` | 1,729 | 105,095 | 104,470 |
-| `chapters/03_Computing_Devices_and_the_Internet_of_Things.md` | 1,699 | 106,382 | 105,775 |
-| `chapters/04_Operating_Systems.md` | 1,959 | 124,886 | 124,148 |
-| `chapters/05_Software_Applications.md` | 1,919 | 119,737 | 118,968 |
-| `chapters/06_Software_Development.md` | 1,079 | 61,451 | 60,993 |
-| `chapters/07_Database_Fundamentals.md` | 1,041 | 62,106 | 61,744 |
-| `chapters/08_Networking_Concepts_and_Technologies.md` | 1,959 | 119,148 | 118,425 |
-| `chapters/09_Cloud_Computing_and_Artificial_Intelligence.md` | 984 | 58,982 | 58,616 |
-| `chapters/10_Security_Concepts_and_Threats.md` | 1,590 | 104,979 | 104,269 |
-| `chapters/11_Security_Best_Practices.md` | 1,515 | 91,399 | 90,831 |
-| `chapters/12_Data_Continuity_and_Computer_Support.md` | 1,848 | 121,618 | 120,574 |
+| `chapters/01_Core_Hardware_Components.md` | 1,675 | 107,181 | 106,925 |
+| `chapters/02_Peripherals_and_Connectors.md` | 1,717 | 104,636 | 104,497 |
+| `chapters/03_Computing_Devices_and_the_Internet_of_Things.md` | 1,689 | 105,970 | 105,773 |
+| `chapters/04_Operating_Systems.md` | 1,946 | 123,337 | 123,083 |
+| `chapters/05_Software_Applications.md` | 1,894 | 118,930 | 118,683 |
+| `chapters/06_Software_Development.md` | 1,070 | 61,153 | 60,929 |
+| `chapters/07_Database_Fundamentals.md` | 1,039 | 61,838 | 61,702 |
+| `chapters/08_Networking_Concepts_and_Technologies.md` | 1,918 | 118,674 | 118,407 |
+| `chapters/09_Cloud_Computing_and_Artificial_Intelligence.md` | 978 | 58,702 | 58,556 |
+| `chapters/10_Security_Concepts_and_Threats.md` | 1,566 | 104,459 | 104,257 |
+| `chapters/11_Security_Best_Practices.md` | 1,475 | 89,900 | 89,730 |
+| `chapters/12_Data_Continuity_and_Computer_Support.md` | 1,838 | 120,827 | 120,541 |
 | `scripts/add-more-lessons.mjs` | 753 | 30,289 | 30,255 |
 | `scripts/build-split.mjs` | 66 | 2,867 | 2,865 |
 | `scripts/expand-capstone-and-quiz-bank.mjs` | 529 | 22,908 | 22,881 |
 | `scripts/expand-tracks-more.mjs` | 519 | 29,908 | 29,842 |
-| `scripts/build-techplus-from-markdown.mjs` | 1,324 | 57,510 | 57,085 |
+| `scripts/build-techplus-from-markdown.mjs` | 1,436 | 61,251 | 60,802 |
 | `scripts/build-techplus-import.mjs` | 126 | 4,769 | 4,767 |
 | `scripts/apply-techplus-html-polish.mjs` | 47 | 1,958 | 1,954 |
 | `scripts/techplus-html-polish.mjs` | 293 | 31,848 | 31,760 |
 | `scripts/validate-techplus-html.mjs` | 68 | 2,481 | 2,479 |
 | `scripts/fold-depth-into-courses.mjs` | 81 | 3,393 | 3,391 |
 | `scripts/migrate-fcc-deep-playground.mjs` | 155 | 6,541 | 6,509 |
-| `scripts/print-learn-hub-manifest.mjs` | 81 | 3,290 | 3,290 |
+| `scripts/print-learn-hub-manifest.mjs` | 93 | 3,895 | 3,895 |
 | `scripts/audit-techplus-consistency.mjs` | 135 | 4,826 | 4,788 |
+| `scripts/audit-techplus-segment-foreign-ids.mjs` | 49 | 1,473 | 1,469 |
 | `scripts/compare-tech-curriculum.mjs` | 61 | 2,253 | 2,253 |
-| `scripts/restore-techplus-md-from-reference.mjs` | 96 | 3,308 | 3,304 |
-| **Total (listed files)** | **28,834** | **3,098,284** | **3,077,474** |
+| `scripts/fix-techplus-source-banner-titles.mjs` | 129 | 4,416 | 4,400 |
+| `scripts/restore-techplus-md-from-reference.mjs` | 99 | 3,487 | 3,479 |
+| `scripts/build-security-from-markdown.mjs` | 143 | 6,699 | 6,684 |
+| `scripts/build-kali-from-markdown.mjs` | 139 | 5,559 | 5,548 |
+| `scripts/emit-kali-slow-curriculum.mjs` | 883 | 41,907 | 41,667 |
+| `scripts/kali-lab-rich-procedures.mjs` | 509 | 42,675 | 42,341 |
+| **Total (listed files)** | **37,767** | **5,806,718** | **5,755,797** |
 
-\*Same as “Unicode scalar values” column header above. Last aligned with `node scripts/print-learn-hub-manifest.mjs` on **2026-04-11** (UTC calendar date). The manifest omits **`learn-hub-techplus-md-ch01.js` … `ch12.js`** (large generated bundles), `package.json`, `PATHS_FOR_GITHUB.txt`, and other helpers; see [Current file paths](#current-file-paths-for-github--uploads) for upload-oriented lists.
+\*Same as “Unicode scalar values” column header above. Last aligned with `node scripts/print-learn-hub-manifest.mjs` on **2026-04-13** (UTC calendar date). The manifest still omits **`learn-hub-techplus-md-ch01.js` … `ch12.js`** (very large generated bundles), **`docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md`** (large Security source Markdown), `package.json`, `PATHS_FOR_GITHUB.txt`, and other helpers; see [Current file paths](#current-file-paths-for-github--uploads) for upload-oriented lists.
 
 ## License / data
 

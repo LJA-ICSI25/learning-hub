@@ -1,4 +1,4 @@
-Learn Hub — flat file list for uploads (2026-04-11)
+Learn Hub — flat file list for uploads (2026-04-13)
 Canonical root: G:\Hubs\Learn-Hub
 Snapshot mirror: G:\All_Learn-hub\Learn-hub_recent (robocopy /XD node_modules)
 
@@ -23,6 +23,12 @@ G:\Hubs\Learn-Hub\assets\learn-hub-depth.js
 G:\Hubs\Learn-Hub\assets\learn-hub-playground.js
 G:\Hubs\Learn-Hub\assets\learn-hub-techplus.js
 G:\Hubs\Learn-Hub\assets\learn-hub-techplus-md.js
+G:\Hubs\Learn-Hub\assets\learn-hub-security-md.js
+G:\Hubs\Learn-Hub\assets\learn-hub-kali-md.js
+
+G:\Hubs\Learn-Hub\docs\KALI_HANDS_ON_LAB_CURRICULUM.md
+G:\Hubs\Learn-Hub\docs\SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md
+G:\Hubs\Learn-Hub\docs\LEARN_HUB_COMPLETE_REFERENCE.html
 
 G:\Hubs\Learn-Hub\chapters\01_Core_Hardware_Components.md
 G:\Hubs\Learn-Hub\chapters\02_Peripherals_and_Connectors.md
@@ -43,6 +49,9 @@ G:\Hubs\Learn-Hub\scripts\expand-capstone-and-quiz-bank.mjs
 G:\Hubs\Learn-Hub\scripts\expand-tracks-more.mjs
 G:\Hubs\Learn-Hub\scripts\learn-hub-paths.mjs
 G:\Hubs\Learn-Hub\scripts\techplus-chapter-io.mjs
+G:\Hubs\Learn-Hub\scripts\emit-kali-slow-curriculum.mjs
+G:\Hubs\Learn-Hub\scripts\build-kali-from-markdown.mjs
+G:\Hubs\Learn-Hub\scripts\kali-lab-rich-procedures.mjs
 (plus other scripts under scripts\ — see folder)
 
 --- Relative paths (repo root = folder that contains index.html) ---
@@ -64,6 +73,12 @@ assets/learn-hub-depth.js
 assets/learn-hub-playground.js
 assets/learn-hub-techplus.js
 assets/learn-hub-techplus-md.js
+assets/learn-hub-security-md.js
+assets/learn-hub-kali-md.js
+
+docs/KALI_HANDS_ON_LAB_CURRICULUM.md
+docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md
+docs/LEARN_HUB_COMPLETE_REFERENCE.html
 
 chapters/01_Core_Hardware_Components.md
 chapters/02_Peripherals_and_Connectors.md
@@ -82,3 +97,8 @@ scripts/add-more-lessons.mjs
 scripts/build-split.mjs
 scripts/expand-capstone-and-quiz-bank.mjs
 scripts/expand-tracks-more.mjs
+scripts/learn-hub-paths.mjs
+scripts/techplus-chapter-io.mjs
+scripts/emit-kali-slow-curriculum.mjs
+scripts/build-kali-from-markdown.mjs
+scripts/kali-lab-rich-procedures.mjs

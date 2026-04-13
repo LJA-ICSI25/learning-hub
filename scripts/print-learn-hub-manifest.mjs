@@ -2,6 +2,7 @@
  * Prints a Markdown table of line / byte / character counts for Learn-Hub files.
  * Run from repo root: node scripts/print-learn-hub-manifest.mjs
  * Use to refresh the "File manifest" section in README.md after intentional edits.
+ * Includes Tech+ sources, Security/Kali bundles + builders, Kali curriculum emit helpers, and docs/KALI_HANDS_ON_LAB_CURRICULUM.md.
  */
 import fs from "fs";
 import path from "path";
@@ -23,6 +24,9 @@ const FILES = [
   "assets/learn-hub-playground.js",
   "assets/learn-hub-techplus.js",
   "assets/learn-hub-techplus-md.js",
+  "assets/learn-hub-security-md.js",
+  "assets/learn-hub-kali-md.js",
+  "docs/KALI_HANDS_ON_LAB_CURRICULUM.md",
   "scripts/learn-hub-paths.mjs",
   "scripts/techplus-chapter-io.mjs",
   "chapters/01_Core_Hardware_Components.md",
@@ -54,6 +58,10 @@ const FILES = [
   "scripts/compare-tech-curriculum.mjs",
   "scripts/fix-techplus-source-banner-titles.mjs",
   "scripts/restore-techplus-md-from-reference.mjs",
+  "scripts/build-security-from-markdown.mjs",
+  "scripts/build-kali-from-markdown.mjs",
+  "scripts/emit-kali-slow-curriculum.mjs",
+  "scripts/kali-lab-rich-procedures.mjs",
 ];
 
 function stats(rel) {

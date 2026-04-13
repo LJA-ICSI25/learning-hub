@@ -6,8 +6,10 @@ CANONICAL (edit and run this):
 
   Open: G:\Hubs\Learn-Hub\index.html
   Runtime bundles: assets\learn-hub-*.js and assets\learn-hub-tokens.css, learn-hub-layout.css, learn-hub-teach.css
-  Tech+ study guide HTML: assets\learn-hub-techplus-md.js (bundled segments; large file)
-  Lesson list (must match segment IDs): assets\learn-hub-courses.js
+  Tech+ study guide: assets\learn-hub-techplus-md.js (loader) + assets\learn-hub-techplus-md-ch01.js … ch12.js (lazy segments; large)
+  Security curriculum bundle: assets\learn-hub-security-md.js (from docs\SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md — npm run build:security)
+  Labs / Kali bundle: assets\learn-hub-kali-md.js (from docs\KALI_HANDS_ON_LAB_CURRICULUM.md — npm run build:kali; optional npm run emit:kali-slow regens Markdown from scripts\emit-kali-slow-curriculum.mjs + scripts\kali-lab-rich-procedures.mjs)
+  Lesson list (must match lesson ids in bundles): assets\learn-hub-courses.js
   Chapter Markdown sources (build input): chapters\*.md
 
   Good bundle check: tech-sg-01-01 contains "Lesson 1: Core Hardware Components"

@@ -37,6 +37,14 @@ var COURSES;
       typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS_MD && typeof window.LEARN_HUB_TECHPLUS_MD === "object"
         ? window.LEARN_HUB_TECHPLUS_MD
         : null;
+    const SecMd =
+      typeof window !== "undefined" && window.LEARN_HUB_SECURITY_MD && typeof window.LEARN_HUB_SECURITY_MD === "object"
+        ? window.LEARN_HUB_SECURITY_MD
+        : null;
+    const KaliMd =
+      typeof window !== "undefined" && window.LEARN_HUB_KALI_MD && typeof window.LEARN_HUB_KALI_MD === "object"
+        ? window.LEARN_HUB_KALI_MD
+        : null;
     const Deep = typeof window !== "undefined" && window.LEARN_HUB_DEEP && typeof window.LEARN_HUB_DEEP === "object" ? window.LEARN_HUB_DEEP : null;
     if (Array.isArray(COURSES)) {
       for (const c of COURSES) {
@@ -59,6 +67,14 @@ var COURSES;
           if (Tmd) {
             const addMd = Tmd[L.id];
             if (addMd) read += addMd;
+          }
+          if (SecMd) {
+            const addSec = SecMd[L.id];
+            if (addSec) read += addSec;
+          }
+          if (KaliMd) {
+            const addKali = KaliMd[L.id];
+            if (addKali) read += addKali;
           }
           L.readHtml = read;
           L.narrative = "";
@@ -295,12 +311,16 @@ function learnHubRunApp() {
     return (el.textContent || el.innerText || "").replace(/\s+/g, " ").trim();
   }
 
-  /** Book chapter index (1–12) for Tech+ study-guide ids, or from a `Ch N — …` unit label; otherwise null. */
+  /** Book chapter index (1–12) for Tech+ study-guide ids, or curriculum level (1–5) for Security <code>lh-sec-lN-…</code>; or from a `Ch N — …` unit label; otherwise null. */
   function chapterNumberForLesson(lesson, courseId) {
     if (!lesson) return null;
     var id = String(lesson.id || "");
     var idm = id.match(/^tech-sg-(\d{2})-/i);
     if (idm) return parseInt(idm[1], 10);
+    if (courseId === "security") {
+      var sm = id.match(/^lh-sec-l(\d+)-/i);
+      if (sm) return parseInt(sm[1], 10);
+    }
     var u = plainTextFromHtml(lesson.unit || "");
     var um = u.match(/^\s*Ch\s*(\d{1,2})\s*[—\-–]/);
     if (um) return parseInt(um[1], 10);
@@ -363,6 +383,8 @@ function learnHubRunApp() {
 
   function chapterConstraintsMatch(wanted, lessonCh) {
     if (!wanted || wanted.length === 0) return true;
+    /* Tracks without book chapters (Security, Labs, …) yield null — do not hide every lesson when the filter still contains e.g. "ch 8" from Tech+ browsing. */
+    if (lessonCh == null) return true;
     var seen = {};
     for (var i = 0; i < wanted.length; i++) seen[wanted[i]] = true;
     var keys = Object.keys(seen);
@@ -853,8 +875,9 @@ function learnHubRunApp() {
   }
 
   function lessonLocked(i) {
-    /* Tech+ (course id "tech"): open navigation — any lesson from the list or picker, any time. */
-    if (activeCourseId === "tech") return false;
+    /* Tracks with ws "tech" (Tech+, Security, Labs, …): open navigation — any lesson any time. */
+    const cNav = courseById[activeCourseId];
+    if (cNav && cNav.ws === "tech") return false;
     if (i === 0) return false;
     const Ls = lessons()[i - 1];
     if (!Ls || !Ls.id) return false;
@@ -1491,19 +1514,25 @@ function learnHubRunApp() {
     return { ok: false, msg: "Unknown check type." };
   }
 
+  function quizRadioGroupPrefix(lesson) {
+    const raw = lesson && lesson.id != null ? String(lesson.id) : "quiz";
+    return "lh_" + raw.replace(/[^a-zA-Z0-9_-]+/g, "_");
+  }
+
   function renderTechQuiz(lesson) {
     const qs = lesson.questions || [];
     if (!qs.length) {
       el.techQuiz.innerHTML = "<p class='msg info'>No questions for this step.</p>";
       return;
     }
+    const gPrefix = quizRadioGroupPrefix(lesson);
     let h =
       "<p class=\"msg info\" style=\"font-size:0.78rem;margin:0 0 0.65rem;line-height:1.45\">Local curriculum only — answers are checked in your browser. On <strong>Learn</strong> steps, re-read the chapter or topic notes in the right column if you miss a question.</p>";
     qs.forEach((q, qi) => {
       h += `<div class="quiz-q" data-q="${qi}"><p>${escapeHtml(q.q)}</p>`;
       (q.choices || []).forEach((c, ci) => {
-        const id = "q" + qi + "c" + ci;
-        h += `<label><input type="radio" name="quiz_${qi}" value="${ci}" id="${id}"/> ${escapeHtml(c)}</label>`;
+        const id = gPrefix + "_q" + qi + "c" + ci;
+        h += `<label><input type="radio" name="${gPrefix}_quiz_${qi}" value="${ci}" id="${id}"/> ${escapeHtml(c)}</label>`;
       });
       h += "</div>";
     });
@@ -1512,17 +1541,19 @@ function learnHubRunApp() {
 
   function gradeTechQuiz(lesson) {
     const qs = lesson.questions || [];
+    const gPrefix = quizRadioGroupPrefix(lesson);
     let wrong = 0;
     for (let qi = 0; qi < qs.length; qi++) {
-      const sel = el.techQuiz.querySelector(`input[name="quiz_${qi}"]:checked`);
+      const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${qi}"]:checked`);
       if (!sel || +sel.value !== qs[qi].correct) wrong++;
     }
+    const secHint =
+      activeCourseId === "security"
+        ? "review the matching <strong>level lessons</strong> in the sidebar, then try again."
+        : "go back to the matching <strong>study guide lesson</strong> or <strong>Lesson reading</strong> step and study it again.";
     return {
       ok: wrong === 0,
-      msg:
-        wrong === 0
-          ? "All correct."
-          : wrong + " answer(s) need work — go back to the matching <strong>study guide lesson</strong> or <strong>Lesson reading</strong> step and study it again.",
+      msg: wrong === 0 ? "All correct." : wrong + " answer(s) need work — " + secHint,
     };
   }
 
@@ -1532,7 +1563,10 @@ function learnHubRunApp() {
     const ws = c.ws || "";
     let hint = "";
     if (kind === "learn" && ws === "tech") {
-      if (isFullChapterTechLesson(Ls.id)) {
+      if (c.id === "security") {
+        hint =
+          "Open <strong>Notes</strong> for the workplace curriculum reading (from <code>docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md</code>). After each level you will see <strong>Quiz</strong> steps in the sidebar — same layout as Tech+ check-ins: answer in the left column, then <strong>Check answers</strong>.";
+      } else if (isFullChapterTechLesson(Ls.id)) {
         hint =
           "This step is a <strong>study guide lesson</strong> (one section of the book) bundled inside Learn Hub. Use <strong>On this page</strong> when it appears to jump headings. When you are done reading, press <strong>Continue</strong>. If you already know this material, use <strong>Skip lesson</strong> in the footer—it marks the step complete and moves on (same progress as Continue).";
       } else {

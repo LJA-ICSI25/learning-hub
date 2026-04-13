@@ -7,6 +7,9 @@
   "scripts": {
     "normalize:techplus": "node scripts/normalize-techplus-markdown.mjs",
     "build:techplus": "node scripts/build-techplus-from-markdown.mjs",
+    "build:security": "node scripts/build-security-from-markdown.mjs",
+    "build:kali": "node scripts/build-kali-from-markdown.mjs",
+    "emit:kali-slow": "node scripts/emit-kali-slow-curriculum.mjs",
     "polish:techplus-md": "node scripts/apply-techplus-html-polish.mjs",
     "validate:techplus-md": "node scripts/validate-techplus-html.mjs",
     "verify:techplus": "node scripts/audit-techplus-consistency.mjs && node scripts/validate-techplus-html.mjs && node scripts/audit-techplus-segment-foreign-ids.mjs && node scripts/audit-banner-title-sync.mjs",

@@ -53,7 +53,7 @@
       <ul>
         <li><a href="#boot">Boot sequence &amp; script load order</a></li>
         <li><a href="#data">Curriculum model &amp; merge rules</a></li>
-        <li><a href="#deep-techplus"><code>LEARN_HUB_DEEP</code>, <code>TECHPLUS</code>, <code>TECHPLUS_MD</code></a></li>
+        <li><a href="#deep-techplus"><code>LEARN_HUB_DEEP</code>, Tech+, Security, Labs bundles</a></li>
         <li><a href="#storage">Progress, <code>localStorage</code>, XP &amp; constants</a></li>
         <li><a href="#index-detail"><code>index.html</code> — regions &amp; element IDs</a></li>
         <li><a href="#app"><code>learn-hub-app.js</code> — subsystems &amp; functions</a></li>
@@ -104,7 +104,7 @@
 
 <section class="chunk" id="purpose">
 <h2>What this project is</h2>
-<p>Learn Hub is a <strong>client-only</strong> learning application: one <code>index.html</code> loads several large JavaScript bundles that define hundreds of lessons across tracks (HTML, CSS, JavaScript, Python, SQL, and CompTIA Tech+). There is no backend; progress and preferences live in <code>localStorage</code>. Practice tracks embed live editors (HTML/CSS/JS in a sandboxed iframe, Python via Pyodide, SQL via sql.js). The Tech+ track adds long-form study-guide content derived from Markdown, split into lazy-loaded chapter chunks to keep initial load manageable.</p>
+<p>Learn Hub is a <strong>client-only</strong> learning application: one <code>index.html</code> loads several large JavaScript bundles that define hundreds of lessons across <strong>eight</strong> tracks (HTML, CSS, JavaScript, Python, SQL, <strong>Security</strong> (workplace / Security+ prep), <strong>Labs</strong> (Kali VM hands-on curriculum), and CompTIA <strong>Tech+</strong>). There is no backend; progress and preferences live in <code>localStorage</code>. Practice tracks embed live editors (HTML/CSS/JS in a sandboxed iframe, Python via Pyodide, SQL via sql.js). <strong>Tech+</strong> adds long-form study-guide content from Markdown, split into lazy-loaded chapter chunks. <strong>Security</strong> and <strong>Labs</strong> ship similar long-form HTML from Markdown-derived bundles (<code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>) merged at boot.</p>
 </section>
 
 <section class="chunk" id="architecture">
@@ -114,7 +114,7 @@
 │  Sidebar: courses · XP · lesson nav + filter · a11y · reset  │
 ├──────────────────────────────┬──────────────────────────────┤
 │  Practice: web | py | sql    │  Teach: strip + reference /  │
-│  or Tech quiz panel          │  full-chapter reading        │
+│  or Tech / Security quiz      │  full-chapter reading        │
 ├──────────────────────────────┴──────────────────────────────┤
 │  Footer: Continue | Skip lesson | hints                     │
 └─────────────────────────────────────────────────────────────┘
@@ -132,28 +132,32 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
   <li><code>learn-hub-depth.js</code> → <code>window.LEARN_HUB_DEPTH</code> (reserved; often empty)</li>
   <li><code>learn-hub-techplus.js</code> → <code>window.LEARN_HUB_TECHPLUS</code></li>
   <li><code>learn-hub-techplus-md.js</code> → loader, hashes, <code>loadLearnHubTechplusChapter(n)</code></li>
+  <li><code>learn-hub-security-md.js</code> → <code>window.LEARN_HUB_SECURITY_MD</code> (Security track HTML segments)</li>
+  <li><code>learn-hub-kali-md.js</code> → <code>window.LEARN_HUB_KALI_MD</code> (Labs / Kali curriculum segments)</li>
   <li><code>learn-hub-deep.js</code> → <code>window.LEARN_HUB_DEEP</code></li>
   <li><code>learn-hub-playground.js</code> → <code>window.LEARN_HUB_PLAYGROUND</code></li>
   <li><code>learn-hub-app.js</code> → merges curriculum, binds UI, <code>learnHubRunApp</code> on DOM ready</li>
 </ol>
-<p>Immediately after the first IIFE in <code>learn-hub-app.js</code>, each lesson’s <code>narrative</code> is concatenated with <code>LEARN_HUB_DEPTH[id]</code>, <code>LEARN_HUB_DEEP[id]</code>, <code>LEARN_HUB_TECHPLUS[id]</code> → <code>readHtmlBase</code>; <code>LEARN_HUB_TECHPLUS_MD[id]</code> is appended into <code>readHtml</code>; <code>narrative</code> is cleared. On failure, a minimal “Setup” course is injected.</p>
+<p>Immediately after the first IIFE in <code>learn-hub-app.js</code>, each lesson’s <code>narrative</code> is concatenated with <code>LEARN_HUB_DEPTH[id]</code>, <code>LEARN_HUB_DEEP[id]</code>, <code>LEARN_HUB_TECHPLUS[id]</code> → <code>readHtmlBase</code>; then <code>LEARN_HUB_TECHPLUS_MD[id]</code>, <code>LEARN_HUB_SECURITY_MD[id]</code>, and <code>LEARN_HUB_KALI_MD[id]</code> are appended (in that order) into <code>readHtml</code>; <code>narrative</code> is cleared. On failure, a minimal “Setup” course is injected.</p>
 </section>
 
 <section class="chunk" id="data">
 <h2>Curriculum model &amp; merge rules</h2>
-<p><strong>Course:</strong> <code>id</code>, <code>name</code>, <code>ws</code> (<code>web</code> | <code>py</code> | <code>sql</code>; Tech+ reading/quiz uses tech workspace), <code>lessons[]</code>.</p>
+<p><strong>Course:</strong> <code>id</code>, <code>name</code>, <code>ws</code> (<code>web</code> | <code>py</code> | <code>sql</code> | <code>tech</code> for Tech+, Security, and Labs — reading/quiz layout without web/py/sql editors), <code>lessons[]</code>.</p>
 <p><strong>Lesson:</strong> <code>id</code>, <code>unit</code> (sidebar grouping), <code>kind</code> (<code>learn</code> | <code>practice</code> | <code>challenge</code> | <code>quiz</code>), <code>title</code>, optional <code>narrative</code> (usually empty in bundle), <code>starter</code> / <code>starterPy</code> / <code>starterSql</code>, <code>seed</code> (SQL), <code>check</code> (autograder), <code>questions</code> (Tech+ MCQ).</p>
 <p><strong>Tech+ study-guide ids:</strong> <code>tech-sg-NN-MM</code> (chapter NN, segment MM). Reading often loads from <code>LEARN_HUB_TECHPLUS_MD</code> after <code>loadLearnHubTechplusChapter(N)</code>.</p>
-<p><strong>Locking:</strong> Non–Tech+ tracks require the previous lesson to be in <code>done</code>. Course <code>tech</code> unlocks all lessons.</p>
+<p><strong>Locking:</strong> Courses whose <code>ws</code> is <code>"tech"</code> (Tech+, Security, Labs) have <strong>no</strong> linear lock — any lesson can be opened anytime. All other workspaces (<code>web</code>, <code>py</code>, <code>sql</code>) require the previous lesson in that course to be marked <code>done</code> before the next unlocks.</p>
 </section>
 
 <section class="chunk" id="deep-techplus">
-<h2><code>LEARN_HUB_DEEP</code>, <code>TECHPLUS</code>, and <code>TECHPLUS_MD</code></h2>
-<p>Objects keyed by <strong>lesson id</strong> → HTML string. Merge order into readable content: DEPTH → DEEP → TECHPLUS as <code>readHtmlBase</code>, then TECHPLUS_MD appended for <code>readHtml</code> (so MD segments are always last).</p>
+<h2><code>LEARN_HUB_DEEP</code>, Tech+, Security, and Labs bundles</h2>
+<p>Objects keyed by <strong>lesson id</strong> → HTML string. Merge order into readable content: <code>LEARN_HUB_DEPTH</code> → <code>LEARN_HUB_DEEP</code> → <code>LEARN_HUB_TECHPLUS</code> as <code>readHtmlBase</code>, then <code>LEARN_HUB_TECHPLUS_MD</code>, <code>LEARN_HUB_SECURITY_MD</code>, and <code>LEARN_HUB_KALI_MD</code> are appended in order for <code>readHtml</code>.</p>
 <ul>
   <li><strong>DEEP</strong> — Long-form reference for web/css/js/py/sql tracks (MDN links, recurring footers, callouts).</li>
   <li><strong>TECHPLUS</strong> — Shorter Tech+ excerpts for lessons that are not full MD segments (intros, etc.).</li>
   <li><strong>TECHPLUS_MD</strong> — Large study-guide segments for <code>tech-sg-*</code>; populated by lazy-loaded <code>learn-hub-techplus-md-chNN.js</code> files.</li>
+  <li><strong>SECURITY_MD</strong> — Segments for <code>lh-sec-*</code> and Security quizzes; built from <code>docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md</code> (<code>npm run build:security</code>).</li>
+  <li><strong>KALI_MD</strong> — Segments for <code>labs-kali-*</code>; built from <code>docs/KALI_HANDS_ON_LAB_CURRICULUM.md</code> (<code>npm run build:kali</code>). Optional <code>npm run emit:kali-slow</code> overwrites that Markdown from <code>emit-kali-slow-curriculum.mjs</code>, which imports phased lab prose from <code>kali-lab-rich-procedures.mjs</code>.</li>
 </ul>
 </section>
 
@@ -373,6 +377,8 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
     <tr><td><code>learn-hub-techplus.js</code></td><td><code>LEARN_HUB_TECHPLUS</code> excerpts.</td></tr>
     <tr><td><code>learn-hub-techplus-md.js</code></td><td>Loader + chapter hashes.</td></tr>
     <tr><td><code>learn-hub-techplus-md-ch01.js</code>–<code>ch12.js</code></td><td>Generated segment maps per chapter.</td></tr>
+    <tr><td><code>learn-hub-security-md.js</code></td><td><code>LEARN_HUB_SECURITY_MD</code> — generated; very large.</td></tr>
+    <tr><td><code>learn-hub-kali-md.js</code></td><td><code>LEARN_HUB_KALI_MD</code> — generated from Kali lab Markdown.</td></tr>
     <tr><td><code>learn-hub-playground.js</code></td><td>Default starters for learn steps.</td></tr>
   </tbody>
 </table>
@@ -400,6 +406,11 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
     <tr><td><code>_dump-segments.mjs</code>, <code>_audit-banners.mjs</code></td><td>Debug / internal.</td></tr>
     <tr><td><code>rebuild-techplus.cmd</code>, <code>apply-techplus-readability-ps1.ps1</code></td><td>Windows helpers.</td></tr>
     <tr><td><code>vendor/marked.esm.mjs</code></td><td>Vendored marked.</td></tr>
+    <tr><td><code>build-security-from-markdown.mjs</code></td><td>Security curriculum → <code>learn-hub-security-md.js</code> + course rows.</td></tr>
+    <tr><td><code>build-security-quizzes.mjs</code></td><td>Optional: MCQ extraction for Security (run when your workflow regenerates quizzes).</td></tr>
+    <tr><td><code>build-kali-from-markdown.mjs</code></td><td>Kali lab Markdown (<code>&lt;!-- id: --&gt;</code>) → <code>learn-hub-kali-md.js</code> + Labs rows.</td></tr>
+    <tr><td><code>emit-kali-slow-curriculum.mjs</code></td><td>Regenerates <code>docs/KALI_HANDS_ON_LAB_CURRICULUM.md</code> from embedded lesson tables; merges long <strong>Procedure</strong> sections from <code>kali-lab-rich-procedures.mjs</code>.</td></tr>
+    <tr><td><code>kali-lab-rich-procedures.mjs</code></td><td>Phased lab instructions (Apache / Python / SQL / Security / Tech wrappers + per-lab focus strings). Imported only by the Kali emitter.</td></tr>
   </tbody>
 </table>
 </section>
@@ -409,6 +420,8 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <ul>
   <li><code>TECHPLUS_EDITORIAL_STANDARD.md</code> — Authoring rules.</li>
   <li><code>TECHPLUS_CHAPTER_REVIEW_CHECKLIST.md</code> — Sign-off checklist.</li>
+  <li><code>SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md</code> — Security track source Markdown (<code>npm run build:security</code>).</li>
+  <li><code>KALI_HANDS_ON_LAB_CURRICULUM.md</code> — Labs / Kali VM curriculum (slow pace; one <code>&lt;!-- id: labs-kali-… --&gt;</code> block per sidebar lesson). Optional regen: <code>npm run emit:kali-slow</code> (uses <code>kali-lab-rich-procedures.mjs</code>); build bundle: <code>npm run build:kali</code>.</li>
   <li><code>LEARN_HUB_COMPLETE_REFERENCE.html</code> — This document.</li>
   <li><code>.cursor/rules/techplus-chapters.mdc</code> — AI/editor guidance for <code>chapters/*.md</code>.</li>
 </ul>
@@ -424,6 +437,9 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
     <tr><td><code>verify:techplus</code></td><td>consistency + validate + segment ids + banners</td></tr>
     <tr><td><code>qa:techplus</code></td><td>normalize → build → verify → audit MD</td></tr>
     <tr><td><code>restore:techplus-md</code></td><td>Reference merge</td></tr>
+    <tr><td><code>build:security</code></td><td><code>build-security-from-markdown.mjs</code></td></tr>
+    <tr><td><code>build:kali</code></td><td><code>build-kali-from-markdown.mjs</code></td></tr>
+    <tr><td><code>emit:kali-slow</code></td><td><code>emit-kali-slow-curriculum.mjs</code> (rewrites Kali Markdown)</td></tr>
     <tr><td colspan="2">See <code>package.json</code> for full list (<code>polish:</code>, <code>validate:</code>, <code>fix:</code>, <code>patch:</code>, …).</td></tr>
   </tbody>
 </table>
@@ -458,7 +474,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <section class="chunk" id="large-bundles">
 <h2>Large generated bundles</h2>
 <div class="note">
-<p><code>learn-hub-courses.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-techplus.js</code>, and each <code>learn-hub-techplus-md-chNN.js</code> are data-dense (often one very long line). Document their <em>schema</em> (Parts II &amp; IV) and edit <em>sources</em> (<code>chapters/*.md</code>, generators) rather than hand-editing minified output unless you intend to.</p>
+<p><code>learn-hub-courses.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, and each <code>learn-hub-techplus-md-chNN.js</code> are data-dense (often one very long line). Document their <em>schema</em> (Parts II &amp; IV) and edit <em>sources</em> (<code>chapters/*.md</code>, Security/Kali Markdown, generators) rather than hand-editing minified output unless you intend to.</p>
 </div>
 </section>
 
