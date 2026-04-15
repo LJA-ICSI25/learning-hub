@@ -7,6 +7,28 @@
   box-sizing: border-box;
 }
 
+/* Scrollbars hidden on scrollports — wheel, touch, trackpad, and keyboard still scroll */
+html,
+#lh-auth-overlay,
+.app,
+.app * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+#lh-auth-overlay::-webkit-scrollbar,
+.app::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.app *::-webkit-scrollbar,
+#lh-auth-overlay *::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 html {
   height: 100%;
   overflow: hidden;
@@ -190,10 +212,24 @@ a:hover {
   white-space: nowrap;
 }
 
-.sidebar-head .sub {
+.lh-sidebar-docs-top.sub {
   margin: 0.35rem 0 0;
   font-size: 0.78rem;
   color: var(--muted);
+  line-height: 1.45;
+}
+
+.lh-sidebar-docs-drawer.sub {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (min-width: 721px) {
+  .lh-sidebar-docs-drawer {
+    display: none !important;
+  }
 }
 
 .course-pills {
@@ -634,6 +670,68 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
   box-shadow: var(--glow-navy);
 }
 
+/* Collapsible docs + a11y + account (closed by default on phones via small inline sync) */
+.lh-sidebar-advanced.sidebar-foot {
+  gap: 0;
+  min-height: 0;
+}
+
+.lh-sidebar-advanced-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-top: 0.15rem;
+}
+
+.lh-sidebar-advanced-sum {
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #aab6ca;
+  padding: 0.45rem 0.35rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-muted);
+  background: linear-gradient(180deg, var(--secondary-mid) 0%, var(--secondary) 100%);
+  user-select: none;
+}
+
+.lh-drawer-sum-short {
+  display: none;
+}
+
+.lh-sidebar-advanced-sum::-webkit-details-marker {
+  display: none;
+}
+
+.lh-sidebar-advanced[open] > .lh-sidebar-advanced-sum {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+  color: #dce4f4;
+}
+
+@media (min-width: 721px) {
+  .lh-sidebar-advanced-sum {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    clip-path: inset(50%);
+  }
+
+  .lh-sidebar-advanced-inner {
+    padding-top: 0;
+  }
+}
+
 /* ---------- Main column / topbar ---------- */
 .main {
   flex: 1;
@@ -646,7 +744,7 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
 
 .topbar {
   flex-shrink: 0;
-  padding: 0.75rem 1.25rem;
+  padding: 0.52rem 1rem;
   border-bottom: 1px solid var(--border-muted);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, transparent 22%), linear-gradient(180deg, var(--bg) 0%, var(--chrome) 52%, var(--bg) 100%);
   box-shadow:
@@ -658,6 +756,8 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 0;
 }
 
 @supports (backdrop-filter: blur(12px)) {
@@ -707,12 +807,23 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
   border-bottom: 1px solid var(--border);
   min-height: 0;
   align-items: stretch;
+  position: relative;
+  z-index: 1;
+}
+
+.content > .practice-column,
+.content > #teach {
+  min-height: 0;
+  /* Let fr tracks shrink so min-content width does not paint the teach column over the editor */
+  min-width: 0;
 }
 
 .practice-column {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  position: relative;
+  z-index: 3;
   border-right: 1px solid var(--border-subtle);
   background:
     linear-gradient(125deg, rgba(45, 72, 118, 0.06) 0%, transparent 42%),
@@ -726,11 +837,13 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
 
 .content.single-pane {
   grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 /* Hide This step column — full-width practice (saved in localStorage) */
 body.teach-collapsed:not(.learn-only) #content-grid {
   grid-template-columns: 1fr !important;
+  grid-template-rows: minmax(0, 1fr) !important;
 }
 
 body.teach-collapsed:not(.learn-only) #teach {
@@ -742,48 +855,12 @@ body.teach-collapsed:not(.learn-only) #teach {
   min-height: 0;
 }
 
-.practice-column-header {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.55rem 1rem;
-  background: linear-gradient(90deg, var(--bg) 0%, var(--surface) 100%);
-  border-bottom: 1px solid var(--border-strong);
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: #b8c6de;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), var(--glow-navy-soft);
-  font-family: var(--font-ui);
-}
-
-.practice-column-header span:last-child {
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--muted);
-  font-size: 0.68rem;
-}
-
-.practice-where-narrow {
-  display: none;
-}
-
-@media (max-width: 960px) {
-  .practice-where-wide {
-    display: none;
-  }
-  .practice-where-narrow {
-    display: inline;
-  }
-}
 /* ---------- Responsive: main grid ---------- */
 @media (max-width: 960px) {
   .content {
     grid-template-columns: 1fr;
+    /* Two stacked panes share the main column height so #teach can clip and scroll inside */
+    grid-template-rows: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 
   .practice-column {
@@ -796,34 +873,252 @@ body.teach-collapsed:not(.learn-only) #teach {
     border-right: none;
     max-height: none;
   }
+
+  /*
+   * iOS Safari zooms the viewport when a focused control’s computed font-size is below 16px.
+   * Keep code editors and common text fields at 16px on narrow layouts so typing stays readable.
+   */
+  .web-ta-wrap textarea,
+  #py-input,
+  #sql-input {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .lesson-filter-input {
+    font-size: 16px;
+  }
+
+  .lh-auth-input {
+    font-size: 16px;
+  }
 }
 
+/* ---------- Narrow screens (~phone): off-canvas nav + full-height main ---------- */
 @media (max-width: 720px) {
+  :root {
+    --lh-drawer-w: min(90vw, 320px);
+  }
+
+  /* Drawer must stay in the DOM for “Hide sidebar” a11y setting; off-canvas instead of display:none */
+  body.lh-sidebar-hidden #sidebar {
+    display: grid !important;
+  }
+
+  #menu-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    order: 1;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0.4rem 0.65rem !important;
+    flex-shrink: 0;
+    touch-action: manipulation;
+  }
+
+  .lh-nav-backdrop:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 2400;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(2, 6, 12, 0.58);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+  }
+
+  @supports (backdrop-filter: blur(4px)) {
+    .lh-nav-backdrop:not([hidden]) {
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+  }
+
   .app {
-    flex-direction: column;
+    flex-direction: row;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
   .sidebar {
-    width: 100%;
-    max-height: min(44vh, 360px);
-    height: min(44vh, 360px);
-    position: relative;
-    top: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: calc(-1 * var(--lh-drawer-w));
+    width: var(--lh-drawer-w);
+    max-width: var(--lh-drawer-w);
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: none !important;
+    z-index: 2500;
     align-self: stretch;
+    border-right: 1px solid var(--border-muted);
+    border-bottom: none;
+    overflow: hidden;
+    box-shadow: none;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    transition: left 0.24s var(--ease-out);
   }
 
   .sidebar.open {
-    position: relative;
-    left: auto;
-    box-shadow: none;
-    max-height: min(44vh, 360px);
-    height: min(44vh, 360px);
-    overflow: hidden;
+    left: 0;
+    box-shadow:
+      var(--shadow-inset-soft),
+      inset -1px 0 0 var(--border-muted),
+      var(--glow-navy),
+      12px 0 56px rgba(0, 0, 0, 0.65);
   }
 
+  .main {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .topbar {
+    padding: 0.42rem 0.55rem;
+    padding-top: calc(0.42rem + env(safe-area-inset-top));
+    gap: 0.45rem 0.55rem;
+  }
+
+  .topbar h2 {
+    font-size: 1rem;
+    line-height: 1.22;
+  }
+
+  .progress-track {
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: 0;
+    order: 10;
+  }
+
+  .topbar-mid {
+    flex: 1 1 100%;
+    min-width: 0;
+    order: 5;
+  }
+
+  .footer-actions {
+    flex-wrap: nowrap;
+    padding: 0.5rem 0.6rem calc(0.5rem + env(safe-area-inset-bottom));
+    gap: 0.32rem;
+  }
+
+  .toast {
+    right: max(0.65rem, env(safe-area-inset-right));
+    bottom: max(0.65rem, env(safe-area-inset-bottom));
+    left: auto;
+    max-width: calc(100vw - 1.3rem - env(safe-area-inset-left) - env(safe-area-inset-right));
+  }
+
+  .web-editors {
+    flex: 1 1 auto;
+    min-height: 11.5rem;
+  }
+
+  .web-preview {
+    flex: 1 1 auto;
+    min-height: 10rem;
+  }
+
+  #py-input,
+  #sql-input {
+    min-height: 8.5rem;
+  }
+
+  #output,
+  #py-output {
+    max-height: min(40vh, 280px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table.result {
+    font-size: 0.68rem;
+  }
+
+  .topbar-sub {
+    display: none;
+  }
+
+  #footer-hint {
+    display: none !important;
+  }
+
+  .lh-kbd-hints {
+    display: none !important;
+  }
+
+  .panel-head--with-hints .panel-head-title {
+    flex: 1 1 auto;
+  }
+
+  .sidebar-head {
+    padding: 0.65rem 0.85rem 0.55rem;
+  }
+
+  .xp-strip {
+    margin-top: 0.45rem;
+    padding: 0.5rem 0.6rem 0.45rem;
+  }
+
+  .course-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 0.45rem;
+    padding-bottom: 0.15rem;
+    gap: 0.3rem;
+    scrollbar-width: thin;
+  }
+
+  .course-pill {
+    flex-shrink: 0;
+  }
+
+  .lh-a11y-hide-sidebar-wrap {
+    display: none !important;
+  }
+
+  .lh-sidebar-docs-top {
+    display: none !important;
+  }
+
+  .lh-sidebar-advanced-sum {
+    font-size: 0.68rem;
+    padding: 0.55rem 0.65rem;
+    text-align: center;
+  }
+
+  .lh-drawer-sum-long {
+    display: none;
+  }
+
+  .lh-drawer-sum-short {
+    display: inline;
+  }
+
+  .lh-sidebar-advanced-inner {
+    padding: 0.35rem 0.25rem 0.15rem;
+    border: 1px solid var(--border-muted);
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    background: linear-gradient(180deg, rgba(12, 18, 28, 0.5) 0%, transparent 100%);
+  }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
 }
 
 .topbar-mid {
@@ -831,34 +1126,7 @@ body.teach-collapsed:not(.learn-only) #teach {
   min-width: 10rem;
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
-}
-
-#lesson-picker {
-  width: 100%;
-  max-width: 36rem;
-  font: inherit;
-  font-size: 0.78rem;
-  padding: 0.42rem 0.6rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-soft);
-  background: linear-gradient(180deg, var(--surface2) 0%, var(--bg) 100%);
-  color: var(--text);
-  cursor: pointer;
-  box-shadow: var(--shadow-inset-soft);
-  transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
-}
-
-#lesson-picker:hover {
-  border-color: var(--border-muted);
-}
-
-#lesson-picker:focus {
-  border-color: var(--border-focus);
-  box-shadow:
-    var(--shadow-inset-soft),
-    var(--focus-ring),
-    var(--glow-navy);
+  gap: 0.12rem;
 }
 
 .btn-teach-toggle {
@@ -872,7 +1140,8 @@ body.teach-collapsed:not(.learn-only) #teach {
 .workspace {
   display: flex;
   flex-direction: column;
-  min-height: 360px;
+  flex: 1 1 auto;
+  min-height: 0;
   background: var(--code);
 }
 
@@ -884,6 +1153,8 @@ body.teach-collapsed:not(.learn-only) #teach {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
+  gap: 0.4rem 0.65rem;
   padding: 0.4rem 0.65rem;
   background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
   border-bottom: 1px solid var(--border-muted);
@@ -895,31 +1166,140 @@ body.teach-collapsed:not(.learn-only) #teach {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
-/* Code on top, Result below (single column) */
+.panel-head--with-hints {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.panel-head--with-hints .panel-head-title {
+  flex: 1 1 12rem;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+/* Readable shortcut strip (not all-caps) */
+.lh-kbd-hints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem 0.45rem;
+  max-width: 100%;
+  flex: 1 1 14rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  color: #c4d0e6;
+}
+
+.lh-kbd-hints--compact {
+  flex: 1 1 18rem;
+  justify-content: flex-end;
+}
+
+.lh-kbd-hint {
+  display: inline;
+  white-space: nowrap;
+}
+
+.lh-kbd-meta {
+  flex: 1 1 100%;
+  width: 100%;
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+@media (min-width: 720px) {
+  .lh-kbd-hints--compact .lh-kbd-meta {
+    flex: 0 1 auto;
+    width: auto;
+    margin-left: auto;
+    text-align: right;
+    max-width: 16rem;
+  }
+}
+
+.lh-kbd-sep {
+  color: rgba(148, 163, 184, 0.55);
+  user-select: none;
+}
+
+.lh-kbd-sep--wide {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .lh-kbd-sep--wide {
+    display: inline;
+  }
+}
+
+.lh-kbd-hints kbd {
+  display: inline-block;
+  margin: 0 0.04em;
+  padding: 0.1em 0.38em;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #e8edf6;
+  vertical-align: baseline;
+  border-radius: 4px;
+  border: 1px solid rgba(100, 140, 168, 0.55);
+  background: linear-gradient(180deg, rgba(22, 34, 48, 0.95) 0%, rgba(8, 12, 20, 0.92) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.lh-kbd-plus {
+  margin: 0 0.06em;
+  font-weight: 600;
+  font-size: 0.68em;
+  color: rgba(180, 192, 212, 0.75);
+  user-select: none;
+}
+
+.lh-kbd-verb {
+  font-weight: 700;
+  color: #dce8f8;
+}
+
+/* Code on top, Result below — flex so rows never paint over each other */
 .web-split {
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: minmax(160px, 1fr) minmax(140px, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0;
 }
 
 .web-editors {
   display: flex;
   flex-direction: column;
+  flex: 1 1 52%;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
   border-right: none;
   border-bottom: 1px solid var(--border);
-  min-height: 0;
   overflow: hidden;
 }
 
 .editor-tabs {
   display: flex;
+  flex-shrink: 0;
   gap: 2px;
-  padding: 0.2rem 0.2rem 0;
+  padding: 0.35rem 0.2rem 0;
   border-bottom: 1px solid var(--border);
   background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  position: relative;
+  z-index: 1;
 }
 
 .editor-tabs button {
@@ -956,9 +1336,9 @@ body.teach-collapsed:not(.learn-only) #teach {
 }
 
 .web-ta-wrap {
-  flex: 1;
+  flex: 1 1 auto;
   display: none;
-  min-height: 150px;
+  min-height: 0;
 }
 
 .web-ta-wrap.active {
@@ -967,9 +1347,9 @@ body.teach-collapsed:not(.learn-only) #teach {
 }
 
 .web-ta-wrap textarea {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 150px;
+  min-height: 0;
   margin: 0;
   padding: 0.65rem 0.7rem;
   border: none;
@@ -991,7 +1371,10 @@ body.teach-collapsed:not(.learn-only) #teach {
 .web-preview {
   display: flex;
   flex-direction: column;
+  flex: 1 1 48%;
   min-height: 0;
+  position: relative;
+  z-index: 1;
   overflow: hidden;
   background: #fafbfd;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -1043,9 +1426,9 @@ body.teach-collapsed:not(.learn-only) #teach {
 }
 
 #py-input {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 200px;
+  min-height: 0;
   margin: 0;
   padding: 0.7rem;
   border: none;
@@ -1064,9 +1447,9 @@ body.teach-collapsed:not(.learn-only) #teach {
 }
 
 #sql-input {
-  flex: 1;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 170px;
+  min-height: 0;
   margin: 0;
   padding: 0.7rem;
   border: none;
@@ -1087,10 +1470,14 @@ body.teach-collapsed:not(.learn-only) #teach {
 .toolbar {
   display: flex;
   flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
   gap: 0.32rem;
-  padding: 0.4rem 0.6rem;
+  padding: 0.45rem 0.65rem;
   border-top: 1px solid var(--border-muted);
   background: var(--bg);
+  position: relative;
+  z-index: 3;
 }
 
 button.tool {
@@ -1151,6 +1538,10 @@ button.tool.ghost {
 button.tool.ghost:hover {
   box-shadow: var(--glow-navy-soft);
   border-color: rgba(55, 85, 140, 0.5);
+}
+
+#tech-quiz {
+  min-height: 0;
 }
 
 #output,
@@ -1217,30 +1608,86 @@ table.result th {
 /* ---------- Footer, toast, learn-only, quiz ---------- */
 .footer-actions {
   flex-shrink: 0;
-  padding: 0.75rem 1.15rem;
+  padding: 0.55rem 0.85rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
   align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   background: linear-gradient(0deg, var(--bg) 0%, var(--surface) 100%);
   border-top: 1px solid var(--border-muted);
   box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.55), 0 -1px 0 var(--border-subtle);
 }
 
+.footer-actions::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.footer-actions .tool {
+  padding: 0.32rem 0.52rem;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+.footer-actions-start {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
 .footer-learn-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.32rem;
+  flex-shrink: 0;
+}
+
+.footer-practice-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.28rem;
+  flex-shrink: 0;
+}
+
+.footer-practice-actions[hidden] {
+  display: none !important;
+}
+
+.footer-work-btn-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.28rem;
+  flex-shrink: 0;
+}
+
+.footer-work-btn-group[hidden] {
+  display: none !important;
 }
 
 .footer-actions .spacer {
-  flex: 1;
+  flex: 1 0 0.5rem;
+  min-width: 0.25rem;
 }
 
 #footer-hint {
+  flex: 1 1 5rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #aab6ca;
-  max-width: 42rem;
+  font-size: 0.68rem;
   line-height: 1.45;
 }
 
@@ -1256,6 +1703,17 @@ table.result th {
 }
 
 #menu-toggle {
+  display: none;
+}
+
+#menu-toggle .lh-menu-icon {
+  margin-right: 0.15em;
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+/* Inert on large screens (mobile rules override display with !important) */
+.lh-nav-backdrop {
   display: none;
 }
 
@@ -1310,6 +1768,7 @@ body.lh-sidebar-hidden #menu-toggle {
 
 .learn-only .content {
   grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .learn-only .teach {
@@ -1389,6 +1848,7 @@ body.lh-sidebar-hidden #menu-toggle {
 }
 
 .py-loading {
+  flex-shrink: 0;
   font-size: 0.8rem;
   color: var(--muted);
   padding: 0.5rem 0.75rem;
@@ -1549,6 +2009,7 @@ body.lh-force-reduce-motion .progress-fill {
   .lh-sidebar-a11y,
   .lh-chapter-search-wrap,
   .lh-skip-link,
+  #lh-nav-backdrop,
   #menu-toggle,
   #btn-toggle-teach {
     display: none !important;
@@ -1583,6 +2044,22 @@ body.lh-force-reduce-motion .progress-fill {
     max-height: none !important;
     border: none !important;
     color: #111 !important;
+  }
+
+  #teach.teach > .lesson-shell {
+    overflow: visible !important;
+  }
+
+  .lesson-shell-head {
+    position: static !important;
+  }
+
+  .lesson-shell-body,
+  .lesson-shell-body > details.lh-reference,
+  .lesson-shell-body > .lh-full-chapter,
+  .lesson-shell-body > details.lh-reference > .lh-reference-inner {
+    overflow: visible !important;
+    max-height: none !important;
   }
 
   .lh-tech-reading,

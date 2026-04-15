@@ -3,7 +3,7 @@
 <head>
   <!-- Canonical app root: G:\Hubs\Learn-Hub — see WORKING_COPY.txt -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Practice-first courses: HTML, CSS, JavaScript, Python, SQL, Tech+, Security, and Kali labs — runs locally in your browser." />
   <meta name="theme-color" content="#030508" />
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTitleUserInline20260413" />
-  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhTeachSlateTeal20260412" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhNoLessonPicker20260414" />
+  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhTeachZUnderPractice20260414" />
 </head>
 <body>
   <a class="lh-skip-link" href="#lh-main">Skip to main content</a>
@@ -78,7 +78,10 @@
             </span>
           </div>
         </div>
-        <p class="sub"><a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> · <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a></p>
+        <p class="sub lh-sidebar-docs-top">
+          <a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> ·
+          <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a>
+        </p>
         <div class="course-pills" id="course-pills"></div>
         <div class="xp-strip">
           <div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="xp-label" id="xp-bar">
@@ -92,62 +95,69 @@
           <div class="sidebar-lessons-head"><span class="sidebar-lessons-kicker">Lesson list</span> · <span id="sidebar-track-name">—</span></div>
           <div class="sidebar-filter-wrap">
             <label class="lh-visually-hidden" for="lesson-filter">Filter lessons by title, unit, or chapter</label>
-            <input type="search" id="lesson-filter" class="lesson-filter-input" placeholder="Filter (title, ch 8, chapter 3…)" autocomplete="off" spellcheck="false" enterkeyhint="search" title="Examples: networking, ch 8, chapter 3. Press Ctrl+/ (when not in a field) to jump here." />
+            <input type="search" id="lesson-filter" class="lesson-filter-input" placeholder="Filter lessons…" autocomplete="off" spellcheck="false" enterkeyhint="search" title="Examples: networking, ch 8, chapter 3. Press Ctrl+/ (when not in a field) to jump here." />
           </div>
         </div>
         <nav class="nav-scroll" id="sidebar-lesson-nav" aria-label="Lessons in the selected track"></nav>
       </div>
-      <div class="sidebar-foot">
-        <div class="lh-sidebar-a11y" role="group" aria-labelledby="lh-a11y-legend">
-          <div class="lh-sidebar-a11y-legend" id="lh-a11y-legend">Display</div>
-          <div class="lh-a11y-inline">
-            <label class="lh-a11y-row">
-              <input type="checkbox" id="lh-a11y-contrast" />
-              <span>Higher contrast</span>
-            </label>
-            <label class="lh-a11y-row">
-              <input type="checkbox" id="lh-a11y-reduce-motion" />
-              <span>Reduce motion</span>
-            </label>
-            <label class="lh-a11y-row">
-              <input type="checkbox" id="lh-a11y-hide-sidebar" />
-              <span>Hide left sidebar</span>
-            </label>
+      <details id="lh-sidebar-advanced" class="sidebar-foot lh-sidebar-advanced" open>
+        <summary class="lh-sidebar-advanced-sum">
+          <span class="lh-drawer-sum-long">Docs, display &amp; account</span><span class="lh-drawer-sum-short">More</span>
+        </summary>
+        <div class="lh-sidebar-advanced-inner">
+          <p class="sub lh-sidebar-docs-drawer">
+            <a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> ·
+            <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a>
+          </p>
+          <div class="lh-sidebar-a11y" role="group" aria-labelledby="lh-a11y-legend">
+            <div class="lh-sidebar-a11y-legend" id="lh-a11y-legend">Display</div>
+            <div class="lh-a11y-inline">
+              <label class="lh-a11y-row">
+                <input type="checkbox" id="lh-a11y-contrast" />
+                <span>Higher contrast</span>
+              </label>
+              <label class="lh-a11y-row">
+                <input type="checkbox" id="lh-a11y-reduce-motion" />
+                <span>Reduce motion</span>
+              </label>
+              <label class="lh-a11y-row lh-a11y-hide-sidebar-wrap">
+                <input type="checkbox" id="lh-a11y-hide-sidebar" />
+                <span>Hide left sidebar</span>
+              </label>
+            </div>
           </div>
+          <button type="button" id="btn-lh-logout" class="tool ghost">Log out</button>
+          <button type="button" id="btn-reset-all">Reset all saved progress</button>
         </div>
-        <button type="button" id="btn-lh-logout" class="tool ghost">Log out</button>
-        <button type="button" id="btn-reset-all">Reset all saved progress</button>
-      </div>
+      </details>
     </aside>
+    <script>
+      (function () {
+        function lhSyncSidebarAdvanced() {
+          var d = document.getElementById("lh-sidebar-advanced");
+          if (!d || typeof window.matchMedia !== "function") return;
+          if (window.matchMedia("(max-width: 720px)").matches) d.removeAttribute("open");
+          else d.setAttribute("open", "");
+        }
+        lhSyncSidebarAdvanced();
+        window.addEventListener("resize", lhSyncSidebarAdvanced, { passive: true });
+      })();
+    </script>
+    <div id="lh-nav-backdrop" class="lh-nav-backdrop" hidden aria-hidden="true"></div>
     <div class="main" id="lh-main">
       <div class="topbar">
-        <button type="button" class="tool ghost" id="menu-toggle" aria-expanded="false" aria-controls="sidebar">☰ Menu</button>
+        <button type="button" class="tool ghost" id="menu-toggle" aria-expanded="false" aria-controls="sidebar" title="Tracks, lessons, docs, account"><span class="lh-menu-icon" aria-hidden="true">☰</span><span class="lh-menu-label"> Menu</span></button>
         <div class="topbar-mid">
           <h2 id="lesson-title">Loading…</h2>
           <div class="topbar-sub">
             <span id="lh-lesson-place" class="lh-lesson-place"></span>
           </div>
-          <select id="lesson-picker" aria-label="Jump to a lesson in this track"></select>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-        <button
-          type="button"
-          class="tool ghost btn-teach-toggle"
-          id="btn-toggle-teach"
-          style="display: none"
-          aria-pressed="false"
-        >
-          Hide This step
-        </button>
       </div>
       <div class="content" id="content-grid">
         <div class="practice-column" id="practice-column">
-          <div class="practice-column-header">
-            <span>Practice — editor &amp; Run</span>
-            <span><span class="practice-where-wide">Instructions are in <strong>This step</strong> on the <strong>right</strong> →</span><span class="practice-where-narrow"><strong>This step</strong> is <strong>below</strong> — scroll down after the editor</span></span>
-          </div>
           <div class="workspace" id="ws-web">
-          <div class="panel-head"><span>Web · HTML / CSS / JS</span><span>Ctrl+Enter run · Shift+Ctrl+Enter check</span></div>
           <div class="web-split">
             <div class="web-editors">
               <div class="editor-tabs" id="editor-tabs" role="tablist" aria-label="Web lesson editors">
@@ -158,11 +168,6 @@
               <div class="web-ta-wrap active" data-pane="html" id="pane-web-html" role="tabpanel" aria-labelledby="tab-editor-html"><textarea id="web-html" spellcheck="false" aria-label="HTML"></textarea></div>
               <div class="web-ta-wrap" data-pane="css" id="pane-web-css" role="tabpanel" aria-labelledby="tab-editor-css"><textarea id="web-css" spellcheck="false" aria-label="CSS"></textarea></div>
               <div class="web-ta-wrap" data-pane="js" id="pane-web-js" role="tabpanel" aria-labelledby="tab-editor-js"><textarea id="web-js" spellcheck="false" aria-label="JavaScript"></textarea></div>
-              <div class="toolbar">
-                <button type="button" class="tool primary" id="btn-web-run">Run</button>
-                <button type="button" class="tool success" id="btn-web-check">Check</button>
-                <button type="button" class="tool" id="btn-web-reset">Reset starter</button>
-              </div>
             </div>
             <div class="web-preview">
               <div class="panel-head"><span>Result</span><span id="web-status" aria-live="polite">—</span></div>
@@ -176,35 +181,37 @@
           </div>
         </div>
         <div class="workspace hidden" id="ws-py">
-          <div class="panel-head"><span>Python 3</span><span>First run downloads runtime (~10–20 MB)</span></div>
+          <div class="panel-head panel-head--with-hints">
+            <span class="panel-head-title">Python 3</span>
+            <div class="lh-kbd-hints lh-kbd-hints--compact" role="note" aria-label="Python editor shortcuts">
+              <span class="lh-kbd-hint"><kbd>Ctrl</kbd><span class="lh-kbd-plus">+</span><kbd>Enter</kbd> <span class="lh-kbd-verb">run</span></span>
+              <span class="lh-kbd-sep" aria-hidden="true">·</span>
+              <span class="lh-kbd-hint"><kbd>Shift</kbd><span class="lh-kbd-plus">+</span><kbd>Ctrl</kbd><span class="lh-kbd-plus">+</span><kbd>Enter</kbd> <span class="lh-kbd-verb">check</span></span>
+              <span class="lh-kbd-sep lh-kbd-sep--wide" aria-hidden="true">·</span>
+              <span class="lh-kbd-meta">First run downloads runtime (~10–20 MB)</span>
+            </div>
+          </div>
           <div id="py-load-note" class="py-loading"></div>
           <textarea id="py-input" spellcheck="false"></textarea>
-          <div class="toolbar">
-            <button type="button" class="tool primary" id="btn-py-run">Run</button>
-            <button type="button" class="tool success" id="btn-py-check">Check</button>
-            <button type="button" class="tool" id="btn-py-reset">Reset starter</button>
-          </div>
           <div class="panel-head"><span>Output</span><span id="py-status" aria-live="polite">—</span></div>
           <pre id="py-output"></pre>
         </div>
         <div class="workspace hidden" id="ws-sql">
-          <div class="panel-head"><span>Your SQL</span><span>Ctrl+Enter run · Shift+Ctrl+Enter check</span></div>
-          <textarea id="sql-input" spellcheck="false"></textarea>
-          <div class="toolbar">
-            <button type="button" class="tool primary" id="btn-sql-run">Run</button>
-            <button type="button" class="tool success" id="btn-sql-check">Check</button>
-            <button type="button" class="tool" id="btn-sql-reset-db">Reset lesson DB</button>
-            <button type="button" class="tool" id="btn-sql-clear">Clear editor</button>
+          <div class="panel-head panel-head--with-hints">
+            <span class="panel-head-title">Your SQL</span>
+            <div class="lh-kbd-hints" role="note" aria-label="SQL editor keyboard shortcuts">
+              <span class="lh-kbd-hint"><kbd>Ctrl</kbd><span class="lh-kbd-plus">+</span><kbd>Enter</kbd> <span class="lh-kbd-verb">runs</span> the query</span>
+              <span class="lh-kbd-sep" aria-hidden="true">·</span>
+              <span class="lh-kbd-hint"><kbd>Shift</kbd><span class="lh-kbd-plus">+</span><kbd>Ctrl</kbd><span class="lh-kbd-plus">+</span><kbd>Enter</kbd> <span class="lh-kbd-verb">checks</span> this step</span>
+            </div>
           </div>
+          <textarea id="sql-input" spellcheck="false"></textarea>
           <div class="panel-head"><span>Output</span><span id="sql-status" aria-live="polite">…</span></div>
           <div id="output"></div>
         </div>
         <div class="workspace hidden" id="ws-tech">
           <div class="panel-head"><span>Check-in</span><span>In-page questions · then Check</span></div>
           <div id="tech-quiz" style="flex:1;overflow:auto;padding:0.65rem;" role="group" aria-label="Multiple choice from embedded curriculum"></div>
-          <div class="toolbar">
-            <button type="button" class="tool success" id="btn-tech-check">Check answers</button>
-          </div>
           <div class="panel-head"><span>Feedback</span><span id="tech-status" aria-live="polite">—</span></div>
           <div id="tech-feedback" class="lh-tech-feedback" aria-live="polite"></div>
         </div>
@@ -222,11 +229,41 @@
         </article>
       </div>
       <div class="footer-actions">
-        <div class="footer-learn-actions" id="footer-learn-actions">
-          <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
-          <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
-            Skip lesson
-          </button>
+        <div class="footer-actions-start">
+          <div class="footer-learn-actions" id="footer-learn-actions">
+            <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
+            <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
+              Skip lesson
+            </button>
+            <button
+              type="button"
+              class="tool ghost btn-teach-toggle"
+              id="btn-toggle-teach"
+              style="display: none"
+              aria-pressed="false"
+              aria-label="Hide This step column (wider practice)"
+            >
+              Steps
+            </button>
+          </div>
+          <div id="footer-practice-actions" class="footer-practice-actions" hidden>
+            <div id="footer-btns-web" class="footer-work-btn-group" hidden>
+              <button type="button" class="tool primary" id="btn-web-run">Run</button>
+              <button type="button" class="tool success" id="btn-web-check">Check</button>
+            </div>
+            <div id="footer-btns-py" class="footer-work-btn-group" hidden>
+              <button type="button" class="tool primary" id="btn-py-run">Run</button>
+              <button type="button" class="tool success" id="btn-py-check">Check</button>
+            </div>
+            <div id="footer-btns-sql" class="footer-work-btn-group" hidden>
+              <button type="button" class="tool primary" id="btn-sql-run">Run</button>
+              <button type="button" class="tool success" id="btn-sql-check">Check</button>
+              <button type="button" class="tool" id="btn-sql-clear">Clear editor</button>
+            </div>
+            <div id="footer-btns-tech" class="footer-work-btn-group" hidden>
+              <button type="button" class="tool success" id="btn-tech-check">Check answers</button>
+            </div>
+          </div>
         </div>
         <span class="spacer"></span>
         <span style="font-size:0.7rem;color:var(--muted)" id="footer-hint"></span>
@@ -257,7 +294,7 @@
   <script src="assets/learn-hub-kali-md.js?v=kaliLabsBuild2"></script>
   <script src="assets/learn-hub-deep.js"></script>
   <script src="assets/learn-hub-playground.js"></script>
-  <script src="assets/learn-hub-app.js?v=lhUserInlineUi20260413"></script>
+  <script src="assets/learn-hub-app.js?v=lhRemoveLessonPicker20260414"></script>
 
 
 

@@ -123,9 +123,23 @@ function learnHubRunApp() {
     );
   }
 
+  function isMobileNavLayout() {
+    return typeof window.matchMedia === "function" && window.matchMedia("(max-width: 720px)").matches;
+  }
+
   function syncMenuToggleExpanded() {
     var mt = document.getElementById("menu-toggle");
     if (mt && el.sidebar) mt.setAttribute("aria-expanded", el.sidebar.classList.contains("open") ? "true" : "false");
+    var bd = document.getElementById("lh-nav-backdrop");
+    if (bd && el.sidebar) {
+      if (isMobileNavLayout() && el.sidebar.classList.contains("open")) {
+        bd.hidden = false;
+        bd.setAttribute("aria-hidden", "false");
+      } else {
+        bd.hidden = true;
+        bd.setAttribute("aria-hidden", "true");
+      }
+    }
   }
 
   const el = {
@@ -144,7 +158,6 @@ function learnHubRunApp() {
     sidebar: document.getElementById("sidebar"),
     menuToggle: document.getElementById("menu-toggle"),
     btnToggleTeach: document.getElementById("btn-toggle-teach"),
-    lessonPicker: document.getElementById("lesson-picker"),
     contentGrid: document.getElementById("content-grid"),
     wsWeb: document.getElementById("ws-web"),
     wsPy: document.getElementById("ws-py"),
@@ -1101,27 +1114,6 @@ function learnHubRunApp() {
       attachNavHandlers(el.lessonNav);
       applyLessonFilter(el.lessonFilter ? el.lessonFilter.value : "");
     }
-    if (el.lessonPicker) {
-      const list = lessons();
-      el.lessonPicker.innerHTML = "";
-      for (let i = 0; i < list.length; i++) {
-        const opt = document.createElement("option");
-        opt.value = String(i);
-        opt.textContent = i + 1 + ". " + decodeLessonTitle(String(list[i].title || "Lesson"));
-        el.lessonPicker.appendChild(opt);
-      }
-      if (list.length === 0) {
-        const opt0 = document.createElement("option");
-        opt0.value = "0";
-        opt0.textContent = "No lessons in this track";
-        el.lessonPicker.appendChild(opt0);
-      }
-      const cap = Math.max(0, list.length - 1);
-      el.lessonPicker.value = String(Math.min(Math.max(0, lessonIndex), cap));
-      el.lessonPicker.onchange = function () {
-        goLesson(+el.lessonPicker.value);
-      };
-    }
     if (el.sidebarTrackName) el.sidebarTrackName.textContent = courseById[activeCourseId] ? courseById[activeCourseId].name : "—";
     if (el.lessonNav) {
       requestAnimationFrame(function () {
@@ -1146,7 +1138,11 @@ function learnHubRunApp() {
   /** Scroll reading/main panes to top when changing lessons — do not reset sidebar lesson list scroll (avoids jump-to-top then scroll-down). */
   function scrollLessonToTop() {
     requestAnimationFrame(function () {
-      if (el.teach) el.teach.scrollTop = 0;
+      if (el.teach) {
+        var shell = el.teach.querySelector(".lesson-shell");
+        if (shell) shell.scrollTop = 0;
+        else el.teach.scrollTop = 0;
+      }
       var appRoot = document.getElementById("app-root");
       if (appRoot) appRoot.scrollTop = 0;
       window.scrollTo(0, 0);
@@ -1185,11 +1181,39 @@ function learnHubRunApp() {
     if (el.wsTech) el.wsTech.classList.toggle("hidden", which !== "tech");
   }
 
+  function syncFooterPracticeActions() {
+    var host = document.getElementById("footer-practice-actions");
+    var pc = document.getElementById("practice-column");
+    if (!host) return;
+    if (!pc || pc.classList.contains("is-hidden")) {
+      host.hidden = true;
+      return;
+    }
+    var which = null;
+    if (el.wsWeb && !el.wsWeb.classList.contains("hidden")) which = "web";
+    else if (el.wsPy && !el.wsPy.classList.contains("hidden")) which = "py";
+    else if (el.wsSql && !el.wsSql.classList.contains("hidden")) which = "sql";
+    else if (el.wsTech && !el.wsTech.classList.contains("hidden")) which = "tech";
+    if (!which) {
+      host.hidden = true;
+      return;
+    }
+    host.hidden = false;
+    ["web", "py", "sql", "tech"].forEach(function (w) {
+      var g = document.getElementById("footer-btns-" + w);
+      if (g) g.hidden = w !== which;
+    });
+  }
+
   function syncTeachCollapsedUi() {
     if (!el.btnToggleTeach) return;
     const on = document.body.classList.contains("teach-collapsed");
     el.btnToggleTeach.setAttribute("aria-pressed", on ? "true" : "false");
-    el.btnToggleTeach.textContent = on ? "Show This step" : "Hide This step";
+    el.btnToggleTeach.textContent = "Steps";
+    el.btnToggleTeach.setAttribute(
+      "aria-label",
+      on ? "Show This step column (instructions)" : "Hide This step column (wider practice)"
+    );
   }
 
   function applyTeachCollapsedPreference(isTechLearn) {
@@ -1803,6 +1827,7 @@ function learnHubRunApp() {
       const cc = courseById[activeCourseId];
       document.body.classList.toggle("lh-compact-teach", !!(cc && cc.ws !== "tech"));
       document.body.classList.remove("lh-learn-pending");
+      syncFooterPracticeActions();
       return;
     }
 
@@ -1834,6 +1859,7 @@ function learnHubRunApp() {
       if (cg0) cg0.classList.toggle("single-pane", Ls.kind === "learn");
       if (Ls.kind === "learn") markLearnLessonVisited(Ls.id);
       document.body.classList.toggle("lh-learn-pending", learnPendingFromProgress(Ls.kind === "learn", Ls));
+      syncFooterPracticeActions();
       window
         .loadLearnHubTechplusChapter(ch)
         .then(function () {
@@ -1905,7 +1931,7 @@ function learnHubRunApp() {
       escapeHtml(c.name) +
       "</span></header>" +
       '<div class="lesson-shell-body">' +
-      (isFullChapterTechLearn ? "" : fccLessonStrip(Ls, c)) +
+      (learn ? "" : fccLessonStrip(Ls, c)) +
       refBlock +
       "</div></div>";
 
@@ -1992,6 +2018,8 @@ function learnHubRunApp() {
       }
     }
 
+    syncFooterPracticeActions();
+
     const noAutocheck = learn && !Ls.check;
     const wb = document.getElementById("btn-web-check");
     const pb = document.getElementById("btn-py-check");
@@ -2029,6 +2057,7 @@ function learnHubRunApp() {
     applyLessonUI();
     scrollLessonToTop();
     if (el.sidebar) el.sidebar.classList.remove("open");
+    syncMenuToggleExpanded();
   }
 
   function switchCourse(id) {
@@ -2260,14 +2289,6 @@ function learnHubRunApp() {
       });
     }
     on("btn-web-run", "click", refreshWebPreview);
-    on("btn-web-reset", "click", () => {
-      const Ls = currentLesson();
-      const st = (Ls && Ls.starter) || {};
-      if (el.webHtml) el.webHtml.value = st.html != null ? st.html : "";
-      if (el.webCss) el.webCss.value = st.css != null ? st.css : "";
-      if (el.webJs) el.webJs.value = st.js != null ? st.js : "";
-      refreshWebPreview();
-    });
     on("btn-web-check", "click", () => completePractice());
 
     on("btn-py-run", "click", async () => {
@@ -2288,11 +2309,6 @@ function learnHubRunApp() {
         console.error("Learn Hub Python:", e);
       }
     });
-    on("btn-py-reset", "click", () => {
-      const Ls = currentLesson();
-      if (el.pyInput) el.pyInput.value = Ls && Ls.starterPy != null ? Ls.starterPy : "";
-      if (el.pyOutput) el.pyOutput.textContent = "";
-    });
     on("btn-py-check", "click", () => completePractice());
 
     on("btn-sql-run", "click", () => runSqlOnLessonDb(el.sqlInput ? el.sqlInput.value : "", false));
@@ -2301,20 +2317,6 @@ function learnHubRunApp() {
         el.sqlInput.value = "";
         el.sqlInput.focus();
       }
-    });
-    on("btn-sql-reset-db", "click", () => {
-      const Ls = currentLesson();
-      if (!Ls) return;
-      ensureSqlJs()
-        .then(function () {
-          freshLessonDb(Ls.seed || "");
-          clearSqlOut();
-          appendSql("<div class='msg ok'>Lesson database reset.</div>");
-        })
-        .catch(function (e) {
-          clearSqlOut();
-          appendSql("<div class='msg err'>" + escapeHtml(e.message || String(e)) + "</div>");
-        });
     });
     on("btn-sql-check", "click", () => completePractice());
 
@@ -2328,7 +2330,8 @@ function learnHubRunApp() {
     });
 
     on(el.menuToggle, "click", () => {
-      if (document.body.classList.contains("lh-sidebar-hidden")) {
+      var mobile = isMobileNavLayout();
+      if (!mobile && document.body.classList.contains("lh-sidebar-hidden")) {
         document.body.classList.remove("lh-sidebar-hidden");
         try {
           localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, "0");
@@ -2339,9 +2342,39 @@ function learnHubRunApp() {
         syncMenuToggleExpanded();
         return;
       }
+      if (mobile && document.body.classList.contains("lh-sidebar-hidden")) {
+        document.body.classList.remove("lh-sidebar-hidden");
+        try {
+          localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, "0");
+        } catch (_) {}
+        var heM = document.getElementById("lh-a11y-hide-sidebar");
+        if (heM) heM.checked = false;
+      }
       if (el.sidebar) el.sidebar.classList.toggle("open");
       syncMenuToggleExpanded();
     });
+
+    var navBackdrop = document.getElementById("lh-nav-backdrop");
+    if (navBackdrop) {
+      navBackdrop.addEventListener("click", function () {
+        if (el.sidebar) el.sidebar.classList.remove("open");
+        syncMenuToggleExpanded();
+      });
+    }
+
+    window.addEventListener(
+      "resize",
+      function () {
+        if (!isMobileNavLayout() && el.sidebar) el.sidebar.classList.remove("open");
+        syncMenuToggleExpanded();
+        var adv = document.getElementById("lh-sidebar-advanced");
+        if (adv && typeof window.matchMedia === "function") {
+          if (window.matchMedia("(max-width: 720px)").matches) adv.removeAttribute("open");
+          else adv.setAttribute("open", "");
+        }
+      },
+      { passive: true }
+    );
 
     on("btn-toggle-teach", "click", () => {
       document.body.classList.toggle("teach-collapsed");
@@ -2484,7 +2517,6 @@ function learnHubRunApp() {
         try {
           var nLess = lessons().length;
           if (nLess > 0) {
-            if (el.lessonPicker && el.lessonPicker.options.length === 0) renderNav();
             if (el.lessonNav && el.lessonNav.childElementCount === 0) renderNav();
           }
         } catch (_) {}
