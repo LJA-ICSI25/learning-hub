@@ -1,9 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const HUB_ROOT = path.resolve("G:/Hubs");
+const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "..");
+const HUB_ROOT = path.resolve(PROJECT_ROOT, "..");
 const GIMKIT_DIR = path.join(HUB_ROOT, "TechPlus_Lessons", "GimKit");
-const OUT_FILE = path.resolve("assets/learn-hub-gimkit-questions.js");
+const OUT_FILE = path.join(PROJECT_ROOT, "assets", "learn-hub-gimkit-questions.js");
 
 function read(p) {
   return fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");
