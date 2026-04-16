@@ -7,9 +7,8 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 ## Data Continuity and Computer Support
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
- ✓ 1.0 IT Concepts and T erminology
- ✓ 1.4 Explain the tr
-oubleshooting methodology.
+ ✓ 1.0 IT Concepts and Terminology
+ ✓ 1.4 Explain the troubleshooting methodology.
 - Identify the problem.
 - Establish a theory of probable cause (question the obvious).
 - Research knowledge base/Internet, if applicable.

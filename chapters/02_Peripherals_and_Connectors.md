@@ -7,7 +7,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 ## Peripherals and Connectors
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
- ✓ 1.0 IT Concepts and T erminology
+ ✓ 1.0 IT Concepts and Terminology
  ✓ 1.3:
  Compare and contrast common units of measure.
 - Throughput unit
@@ -17,8 +17,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 - Gigabits per second (Gbps)
 - Terabytes per second (Tbps)
  ✓ 2.0 Infrastructure
- ✓ 2.3: Compar
-e and contrast storage types.
+ ✓ 2.3: Compare and contrast storage types.
 - Local network storage
 - Network-attached storage (NAS)
  ✓ 2.4: Given a scenario, install and configure common
@@ -981,18 +980,16 @@ Changing Your Keyboard Layout in Windows 11
 1. Open the Language & Region settings app by typing language into the Windows
 search box. Click Language Settings. You will get a screen similar to the one shown in
 Figure 2.32.
-FIGURE 2.32  Language & Region S ettings
+FIGURE 2.32  Language & Region Settings
 
 2. This computer has English installed. Click the more options button (it's the three dots in a
 horizontal line) to the right of English (United States) and then click Language Options. If
 you scroll down, you will see the Keyboards section, like the one in Figure 2.33.
-3. Click Add A Keyboard, and from the list choose United StatesDvorak. That will add
+3. Click Add A Keyboard, and from the list choose United States Dvorak. That will add
 Dvorak to your list of keyboards at the bottom of Figure 2.33. Close the window to save
 your changes.
-4. In the system tray (just to the left of the clock in your taskbar, by default in the lowerright corner of your screen) you should now see an option that says ENG US. Click it.
-5. In the window that appears, choose the option that says United StatesDvorak. Now
-your k
-eyboard is set to use the Dvorak layout. Good luck!
+4. In the system tray (just to the left of the clock in your taskbar, by default in the lower-right corner of your screen) you should now see an option that says ENG US. Click it.
+5. In the window that appears, choose the option that says United States Dvorak. Now your keyboard is set to use the Dvorak layout. Good luck!
 6. To change it back, click ENG DV in the system tray and then choose ENG US. You can
 also change input options by pressing the Windows key and the spacebar.
 ### Pointing Devices

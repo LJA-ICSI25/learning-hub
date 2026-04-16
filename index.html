@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhNoLessonPicker20260414" />
-  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhTeachZUnderPractice20260414" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTechBarsHardHide20260415" />
+  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhMobileTechStudy20260415" />
 </head>
 <body>
   <a class="lh-skip-link" href="#lh-main">Skip to main content</a>
@@ -82,7 +82,19 @@
           <a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> ·
           <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a>
         </p>
-        <div class="course-pills" id="course-pills"></div>
+        <div class="lh-course-tools" id="lh-course-tools" aria-label="Track browser">
+          <div class="lh-track-mode-root" id="lh-track-mode-root">
+            <div class="lh-track-mode-switch" role="group" aria-label="Track browser mode">
+              <button type="button" class="lh-track-mode-seg lh-track-mode-seg--active" id="lh-mode-all-tracks" aria-pressed="true">
+                All tracks
+              </button>
+              <button type="button" class="lh-track-mode-seg" id="lh-mode-techplus-ws" aria-pressed="false">
+                Tech+ workspace
+              </button>
+            </div>
+          </div>
+          <div class="course-pills" id="course-pills"></div>
+        </div>
         <div class="xp-strip">
           <div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="xp-label" id="xp-bar">
             <div class="xp-fill" id="xp-fill"></div>
@@ -92,10 +104,19 @@
       </div>
       <div class="sidebar-lessons-panel" id="sidebar-lessons-panel">
         <div class="sidebar-lessons-top">
-          <div class="sidebar-lessons-head"><span class="sidebar-lessons-kicker">Lesson list</span> · <span id="sidebar-track-name">—</span></div>
+          <div class="sidebar-lessons-head"><span class="sidebar-lessons-kicker" id="sidebar-lessons-kicker">Lesson list</span> · <span id="sidebar-track-name">—</span></div>
+          <div class="lh-techplus-org-wrap" id="lh-techplus-org-toggle" hidden>
+            <div class="lh-techplus-org-seg" role="group" aria-label="Group Tech+ lessons">
+              <button type="button" class="lh-techplus-org-btn" id="lh-tp-org-chapters" aria-pressed="false">Chapters</button>
+              <button type="button" class="lh-techplus-org-btn lh-techplus-org-btn--active" id="lh-tp-org-objectives" aria-pressed="true">
+                Objectives
+              </button>
+              <button type="button" class="lh-techplus-org-btn" id="lh-tp-org-questions" aria-pressed="false">Questions</button>
+            </div>
+          </div>
           <div class="sidebar-filter-wrap">
-            <label class="lh-visually-hidden" for="lesson-filter">Filter lessons by title, unit, or chapter</label>
-            <input type="search" id="lesson-filter" class="lesson-filter-input" placeholder="Filter lessons…" autocomplete="off" spellcheck="false" enterkeyhint="search" title="Examples: networking, ch 8, chapter 3. Press Ctrl+/ (when not in a field) to jump here." />
+            <label class="lh-visually-hidden" for="lesson-filter">Filter lessons by title, objective domain, or keyword</label>
+            <input type="search" id="lesson-filter" class="lesson-filter-input" placeholder="Filter by title, domain, objective…" autocomplete="off" spellcheck="false" enterkeyhint="search" title="Examples: networking, domain 8, objective 3, ch 3. Press Ctrl+/ (when not in a field) to jump here." />
           </div>
         </div>
         <nav class="nav-scroll" id="sidebar-lesson-nav" aria-label="Lessons in the selected track"></nav>
@@ -210,8 +231,8 @@
           <div id="output"></div>
         </div>
         <div class="workspace hidden" id="ws-tech">
-          <div class="panel-head"><span>Check-in</span><span>In-page questions · then Check</span></div>
-          <div id="tech-quiz" style="flex:1;overflow:auto;padding:0.65rem;" role="group" aria-label="Multiple choice from embedded curriculum"></div>
+          <div class="panel-head"><span>Check-in</span><span>Quick practice (10–20 or all) · then Check</span></div>
+          <div id="tech-quiz" class="lh-tech-quiz-host" role="group" aria-label="Multiple choice from embedded curriculum"></div>
           <div class="panel-head"><span>Feedback</span><span id="tech-status" aria-live="polite">—</span></div>
           <div id="tech-feedback" class="lh-tech-feedback" aria-live="polite"></div>
         </div>
@@ -280,13 +301,14 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
           );
       },
       true
     );
   </script>
   <script src="assets/learn-hub-courses.js?v=lhSecQuizSpliceFix20260412"></script>
+  <script src="assets/learn-hub-gimkit-questions.js?v=lhGimkitImport20260415"></script>
   <script src="assets/learn-hub-depth.js"></script>
   <script src="assets/learn-hub-techplus.js"></script>
   <script src="assets/learn-hub-techplus-md.js?v=7c70fd6aa52a"></script>
@@ -294,7 +316,9 @@
   <script src="assets/learn-hub-kali-md.js?v=kaliLabsBuild2"></script>
   <script src="assets/learn-hub-deep.js"></script>
   <script src="assets/learn-hub-playground.js"></script>
-  <script src="assets/learn-hub-app.js?v=lhRemoveLessonPicker20260414"></script>
+  <script src="assets/learn-hub-techplus-study-patch.js?v=lhStudyPatch20260415"></script>
+  <script src="assets/learn-hub-techplus-org.js?v=lhTechplusOrgToggle20260415"></script>
+  <script src="assets/learn-hub-app.js?v=lhSpacingStateReset20260415"></script>
 
 
 

@@ -689,7 +689,7 @@ on target with the ideal user experience. So, Google went back to the drawing bo
 incorporated the Gentoo Linux kernel and package management system with Chrome.
 ChromeOS was born. Looking at the Chrome desktop in Figure 4.10, you'll see that it looks
 similar to Windows 11 and macOS, with a launcher in the lower center, a taskbar, and a
-status tray with a clock in the lowerright corner.
+status tray with a clock in the lower-right corner.
 What's particularly interesting about ChromeOS is that it stores little to nothing on the
 local computer. Everything is stored in the cloud.
 ChromeOS Versions
@@ -838,8 +838,7 @@ TABLE 4.4  iOS versions and features
 Version Year Selected features
 iPhone OS 1 2007 First fingerbased touchscreen, iT
 unes connectivity, Safari web
-browser, on- screen virtual k
-eyboard
+browser, on-screen virtual keyboard
 iPhone OS 2 2008 App Store for third-party apps, full email suppor
 t for Microsoft
 Exchange

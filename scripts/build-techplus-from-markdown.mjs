@@ -669,6 +669,87 @@ function joinHyphenOnOwnLine(s) {
   });
 }
 
+function normalizeReviewQuestionMarkdown(s) {
+  const lines = String(s || "").split("\n");
+  const out = [];
+  let inReview = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i];
+    const t = raw.trim();
+    const n = (lines[i + 1] || "").trim();
+
+    if (/^Review Questions$/i.test(t)) {
+      inReview = true;
+      out.push("Review Questions");
+      continue;
+    }
+    if (inReview && /^###\s+/.test(t)) inReview = false;
+    if (!inReview) {
+      out.push(raw);
+      continue;
+    }
+
+    if (/^\d{1,2}$/.test(t) && /^-\.\s+/.test(n)) {
+      out.push(`${t}. ${n.replace(/^-\.\s+/, "")}`);
+      i++;
+      continue;
+    }
+    if (/^[A-D]$/i.test(t) && /^-\.\s+/.test(n)) {
+      out.push(`   - ${t.toUpperCase()}. ${n.replace(/^-\.\s+/, "")}`);
+      i++;
+      continue;
+    }
+    if (/^\d{1,2}\.\s+/.test(t)) {
+      const splitChoiceAt = t.search(/\s+[A-D]\.\s+/);
+      if (splitChoiceAt > 0) {
+        const qPart = t.slice(0, splitChoiceAt).trim();
+        const cPart = t.slice(splitChoiceAt).trim();
+        if (out.length && out[out.length - 1] !== "") out.push("");
+        out.push(qPart);
+        out.push(`   - ${cPart}`);
+        continue;
+      }
+      if (out.length && out[out.length - 1] !== "") out.push("");
+      out.push(t);
+      continue;
+    }
+    if (/^[A-D]\.\s+/i.test(t)) {
+      const qSplit = t.match(/^(.*?)(\s+\d{1,2}\.\s+.+)$/);
+      if (qSplit) {
+        out.push(`   - ${qSplit[1].trim()}`);
+        out.push("");
+        out.push(qSplit[2].trim());
+        continue;
+      }
+      out.push(`   - ${t}`);
+      continue;
+    }
+    if (/^You can find the answers in Appendix\b/i.test(t)) {
+      out.push(t);
+      out.push("");
+      continue;
+    }
+    if (!t) {
+      out.push("");
+      continue;
+    }
+
+    const lastIdx = out.length - 1;
+    if (lastIdx >= 0 && /^\s*-\s+[A-D]\./.test(out[lastIdx])) {
+      out[lastIdx] = `${out[lastIdx]} ${t}`.replace(/\s+/g, " ").trim();
+      continue;
+    }
+    if (lastIdx >= 0 && /^\d{1,2}\./.test(out[lastIdx])) {
+      out[lastIdx] = `${out[lastIdx]} ${t}`.replace(/\s+/g, " ").trim();
+      continue;
+    }
+    out.push(t);
+  }
+
+  return out.join("\n");
+}
+
 function preprocessMarkdown(raw) {
   let s = raw.replace(/\r\n/g, "\n");
   s = joinHyphenOnOwnLine(s);
@@ -684,6 +765,7 @@ function preprocessMarkdown(raw) {
   s = stripPdfTableBlockLines(s);
   s = stripFigureAndScreenArtifacts(s);
   s = stripInlineTableReferences(s);
+  s = normalizeReviewQuestionMarkdown(s);
 
   const lines = s.split("\n");
   const out = [];
@@ -819,6 +901,114 @@ function nestExamObjectiveSubbullets(html) {
     }
     return `<ul class="lh-exam-objectives">${out.join("")}</ul>`;
   });
+}
+
+function normalizeReviewQuestionLines(raw) {
+  let s = String(raw || "");
+  s = s.replace(/<br\s*\/?>/gi, "\n");
+  s = s.replace(/<\/p>/gi, "\n");
+  s = s.replace(/<li[^>]*>/gi, "\n");
+  s = s.replace(/<\/li>/gi, "\n");
+  s = s.replace(/<[^>]+>/g, " ");
+  s = s
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"');
+  s = s.replace(/\s+([A-D])\.\s/g, "\n$1. ");
+  s = s.replace(/\s+(\d{1,2})\.\s/g, "\n$1. ");
+  s = s.replace(/\r/g, "");
+
+  const lines = s
+    .split("\n")
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .map((line) =>
+      line
+        .replace(/^([A-D])\s*-\.\s*/i, "$1. ")
+        .replace(/^([A-D])\s*$/i, "$1.")
+        .replace(/^(\d{1,2})\s*-\.\s*/, "$1. ")
+        .replace(/^(\d{1,2})\s*$/, "$1.")
+        .replace(/^\.\s+/, "")
+    );
+  return lines;
+}
+
+function formatReviewQuestionsHtml(blockHtml) {
+  const lines = normalizeReviewQuestionLines(blockHtml);
+  const questions = [];
+  let intro = "";
+  let cur = null;
+
+  for (const line of lines) {
+    if (!intro && /^You can find the answers in Appendix\b/i.test(line)) {
+      intro = line;
+      continue;
+    }
+    const qMatch = line.match(/^(\d{1,2})\.\s*(.+)$/);
+    if (qMatch) {
+      if (cur) questions.push(cur);
+      cur = { n: qMatch[1], q: qMatch[2], choices: [] };
+      continue;
+    }
+    const cMatch = line.match(/^([A-D])\.\s*(.+)$/i);
+    if (cMatch && cur) {
+      cur.choices.push({ key: cMatch[1].toUpperCase(), text: cMatch[2] });
+      continue;
+    }
+    if (cur) {
+      if (cur.choices.length) {
+        const last = cur.choices[cur.choices.length - 1];
+        last.text = (last.text + " " + line).replace(/\s+/g, " ").trim();
+      } else {
+        cur.q = (cur.q + " " + line).replace(/\s+/g, " ").trim();
+      }
+    }
+  }
+  if (cur) questions.push(cur);
+  if (questions.length < 1) return null;
+
+  const introHtml = intro ? `<p class="lh-review-intro">${escHtml(intro)}</p>` : "";
+  const items = questions
+    .map((q) => {
+      const choices = q.choices.length
+        ? `<ul class="lh-review-choices">${q.choices
+            .map((c) => `<li><strong>${escHtml(c.key)}.</strong> ${escHtml(c.text)}</li>`)
+            .join("")}</ul>`
+        : "";
+      return `<li><p>${escHtml(q.q)}</p>${choices}</li>`;
+    })
+    .join("");
+
+  return (
+    `<section class="lh-review-questions" aria-label="Chapter review questions">` +
+    `<h3>Review Questions</h3>` +
+    introHtml +
+    `<ol>${items}</ol>` +
+    `<section class="lh-extra-review-questions" aria-label="Additional review questions">` +
+    `<h4>Additional Review Questions</h4>` +
+    `<p class="lh-review-intro">Reserved for extra question sets you add later.</p>` +
+    `</section>` +
+    `</section>`
+  );
+}
+
+function normalizeReviewQuestionSections(html) {
+  let replaced = false;
+  const next = String(html).replace(
+    /<p>\s*Review Questions\s*<\/p>([\s\S]*?)(?=(?:<h[1-6]\b)|(?:<\/div>\s*$))/gi,
+    (_, tail) => {
+      const formatted = formatReviewQuestionsHtml(tail);
+      if (!formatted) return `<p>Review Questions</p>${tail}`;
+      replaced = true;
+      return formatted;
+    }
+  );
+  if (replaced || !/<p>\s*Review Questions\s*<\/p>/i.test(next)) return next;
+  return next.replace(
+    /(<p>\s*Review Questions\s*<\/p>)/i,
+    `$1<section class="lh-extra-review-questions" aria-label="Additional review questions"><h4>Additional Review Questions</h4><p class="lh-review-intro">Reserved for extra question sets you add later.</p></section>`
+  );
 }
 
 function postprocessChapterHtml(html) {
@@ -995,6 +1185,7 @@ function postprocessChapterHtml(html) {
   h = h.replace(/<p>\s*<\/p>\n?/g, "");
   /** Any ■/▪/PDF markers that survived marked (loose lists, wrapped <li>, tables) */
   h = h.replace(/[■▪]/gu, "");
+  h = normalizeReviewQuestionSections(h);
   h = polishTechplusHtml(h);
   return h;
 }

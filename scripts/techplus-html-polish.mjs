@@ -150,6 +150,18 @@ export function polishTechplusHtml(html) {
     ["Bluetooth Bluetooth", "Bluetooth"],
     ["W i- Fi", "Wi-Fi"],
     ["T ech+", "Tech+"],
+    // Exercise 2.3 / keyboard layout: merged words from PDF line breaks
+    ["United StatesDvorak", "United States Dvorak"],
+    ["United States- Dvorak", "United States Dvorak"],
+    ["Language & Region S ettings", "Language & Region Settings"],
+    ["Compar e ", "Compare "],
+    ["T erminology", "Terminology"],
+    ["contr ast", "contrast"],
+    ["networ king", "networking"],
+    ["Networkattac hed", "Network-attached"],
+    ["Peertopeer", "Peer-to-peer"],
+    ["pr oper", "proper"],
+    ["secur e", "secure"],
   ];
 
   for (const [from, to] of subs) {

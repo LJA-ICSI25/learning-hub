@@ -8,8 +8,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
  ✓ 3.0 Applications and Software
- ✓ 3.3 Explain the purpose and pr
-oper use of software.
+ ✓ 3.3 Explain the purpose and proper use of software.
 - Productivity software
 - Word processing
 - Spreadsheet
@@ -26,8 +25,7 @@ oper use of software.
  ✓ 3.4 Given a scenario, configure and use web browser features.
 - Private browsing
 - Browser addons/extensions
-- Add
-- Remove
+- Add/remove
 - Enable/disable
 - Caching/clearing cache
 - Popup blockers
@@ -41,9 +39,7 @@ oper use of software.
 - Accessibility
 - Appearance
  ✓ 6.0 Security
- ✓ 6.2 Explain methods to secur
-e devices and security
-best practices.
+ ✓ 6.2 Explain methods to secure devices and security best practices.
 - Securing devices (mobile/workstation)
 - Anti- malware
 - Firewall
@@ -1415,7 +1411,7 @@ The first is to click the
 Extensions icon near the upperright corner.
  It looks like a puzzle piece and is just to the
 right of the address bar. The second is to click More ➢ Settings ➢ Extensions. Either way
-you will get the Extensions screen like the one in Figure 5.32. This browser has three extensions installed. To enable or disable an extension, use the slider in the lowerright corner of
+you will get the Extensions screen like the one in Figure 5.32. This browser has three extensions installed. To enable or disable an extension, use the slider in the lower-right corner of
 the extension's information box.
  There's also a handy Remove button if you want to get rid
 of it. For more information on any extension, click Details. This will show you the version,

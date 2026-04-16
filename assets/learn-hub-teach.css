@@ -1346,4 +1346,210 @@ body.lh-compact-teach #teach .lh-reference-inner {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
+  .lh-study-flow-tip {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    padding: 0.55rem 0.65rem;
+    margin-bottom: 0.65rem;
+    word-break: break-word;
+  }
+
+  .teach.teach-full-chapter .lh-full-chapter-body.lh-tech-reading {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .lh-tech-reading.lh-notes-surface {
+    padding: clamp(0.85rem, 3vw, 1.5rem);
+    border-radius: 14px;
+  }
+
+  .lh-chapter-search-wrap {
+    padding: 0.55rem 0.65rem;
+  }
+
+  .lh-ch-search-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    align-items: stretch;
+  }
+
+  .lh-ch-search-input {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .lh-ch-search-btn {
+    min-height: 2.5rem;
+    width: 100%;
+  }
+
+  .lh-pattern-block {
+    margin: 1rem 0;
+    padding: 0.6rem 0.65rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+
+  .lh-pattern-title {
+    font-size: 0.75rem;
+  }
+
+  .lh-pseudo-pre {
+    font-size: 0.68rem;
+    padding: 0.45rem 0.5rem;
+    line-height: 1.42;
+  }
+
+  .lh-tech-quiz-toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    padding: 0.5rem 0.55rem;
+    align-items: stretch;
+  }
+
+  .lh-tech-quiz-toolbar-label {
+    grid-column: 1 / -1;
+    margin-right: 0;
+    margin-bottom: 0.05rem;
+  }
+
+  .lh-tech-quiz-toolbar .lh-tech-set-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    width: 100%;
+    font-size: 0.74rem;
+    padding: 0.28rem 0.4rem;
+  }
+
+  .lh-tech-quiz-hint {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* ----- Study flow, Tech+ reading patterns, quick practice toolbar ----- */
+
+.lh-study-flow-tip {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--notes-text, #e8edf5);
+  background: rgba(55, 85, 140, 0.12);
+  border: 1px solid rgba(55, 85, 140, 0.35);
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 721px) {
+  .teach.teach-full-chapter .lh-full-chapter-body.lh-tech-reading {
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.lh-pattern-block {
+  margin: 1.25rem 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 12, 18, 0.45);
+  font-size: 0.88rem;
+  line-height: 1.58;
+}
+
+.lh-pattern-block--pseudocode {
+  border-color: rgba(91, 140, 255, 0.35);
+}
+
+.lh-pattern-block--tiers {
+  border-color: rgba(255, 212, 59, 0.22);
+}
+
+.lh-pattern-block--real {
+  border-color: rgba(74, 222, 128, 0.25);
+}
+
+.lh-pattern-block--meta {
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+.lh-pattern-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--notes-muted, #9fb0c8);
+}
+
+.lh-pseudo-pre {
+  margin: 0.5rem 0 0;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  overflow-x: auto;
+}
+
+.lh-tier-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.lh-tech-quiz-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: 10px;
+  background: rgba(8, 12, 18, 0.55);
+  border: 1px solid var(--border-strong, rgba(55, 85, 140, 0.35));
+}
+
+.lh-tech-quiz-toolbar-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted, #9fb0c8);
+  margin-right: 0.15rem;
+}
+
+.lh-tech-quiz-toolbar .lh-tech-set-btn {
+  font-size: 0.72rem;
+  padding: 0.22rem 0.45rem;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lh-tech-set-btn--active {
+  border-color: rgba(91, 140, 255, 0.75) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 1px rgba(91, 140, 255, 0.35);
+}
+
+.lh-tech-quiz-hint {
+  font-size: 0.78rem !important;
+  margin: 0 0 0.65rem !important;
+  line-height: 1.45 !important;
+}
+
+.nav-scroll .unit-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }

@@ -8,9 +8,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
  ✓ 6.0 Security
- ✓ 6.2 Explain methods to secur
-e devices and security best
-practices.
+ ✓ 6.2 Explain methods to secure devices and security best practices.
 - Security awareness
 - Social engineering
 - Phishing

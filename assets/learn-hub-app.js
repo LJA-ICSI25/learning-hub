@@ -45,6 +45,12 @@ var COURSES;
       typeof window !== "undefined" && window.LEARN_HUB_KALI_MD && typeof window.LEARN_HUB_KALI_MD === "object"
         ? window.LEARN_HUB_KALI_MD
         : null;
+    const TechStudyPatch =
+      typeof window !== "undefined" &&
+      window.LEARN_HUB_TECHPLUS_STUDY_PATCH &&
+      typeof window.LEARN_HUB_TECHPLUS_STUDY_PATCH === "object"
+        ? window.LEARN_HUB_TECHPLUS_STUDY_PATCH
+        : null;
     const Deep = typeof window !== "undefined" && window.LEARN_HUB_DEEP && typeof window.LEARN_HUB_DEEP === "object" ? window.LEARN_HUB_DEEP : null;
     if (Array.isArray(COURSES)) {
       for (const c of COURSES) {
@@ -76,6 +82,10 @@ var COURSES;
             const addKali = KaliMd[L.id];
             if (addKali) read += addKali;
           }
+          if (TechStudyPatch) {
+            const addPatch = TechStudyPatch[L.id];
+            if (addPatch) read += addPatch;
+          }
           L.readHtml = read;
           L.narrative = "";
         }
@@ -100,6 +110,77 @@ window.addEventListener("error", function (ev) {
 });
 function learnHubRunApp() {
   "use strict";
+
+  const TECHPLUS_PILLS_ONLY_KEY = "learn-hub-techplus-pills-only-v1";
+  var techQuizSizeMode = "all";
+  var techQuizSubset = null;
+
+  function getTechplusPillsOnly() {
+    try {
+      return localStorage.getItem(TECHPLUS_PILLS_ONLY_KEY) === "1";
+    } catch (_) {
+      return false;
+    }
+  }
+  function setTechplusPillsOnly(on) {
+    try {
+      localStorage.setItem(TECHPLUS_PILLS_ONLY_KEY, on ? "1" : "0");
+    } catch (_) {}
+  }
+  function coursesForPills() {
+    if (!getTechplusPillsOnly()) return COURSES;
+    return COURSES.filter(function (c) {
+      return c.id === "tech";
+    });
+  }
+
+  function syncTechplusWorkspaceChrome() {
+    var on = getTechplusPillsOnly();
+    var isTechCourse = activeCourseId === "tech";
+    document.body.classList.toggle("lh-techplus-workspace", on);
+    var pillsHost = document.getElementById("course-pills");
+    var modeRoot = document.getElementById("lh-track-mode-root");
+    var btnAll = document.getElementById("lh-mode-all-tracks");
+    var btnTech = document.getElementById("lh-mode-techplus-ws");
+    var copy = document.getElementById("lh-track-mode-copy");
+    var live = document.getElementById("lh-track-mode-live");
+    var kicker = document.getElementById("sidebar-lessons-kicker");
+    var tools = document.getElementById("lh-course-tools");
+    if (btnAll && btnTech) {
+      btnAll.classList.toggle("lh-track-mode-seg--active", !on);
+      btnTech.classList.toggle("lh-track-mode-seg--active", on);
+      btnAll.setAttribute("aria-pressed", on ? "false" : "true");
+      btnTech.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    if (pillsHost) {
+      pillsHost.hidden = !!(on && isTechCourse);
+      /* Remove Tech+ course pill from DOM in workspace mode — mode switch is enough */
+      if (on && isTechCourse) pillsHost.innerHTML = "";
+    }
+    if (modeRoot) {
+      modeRoot.classList.toggle("lh-track-mode-root--tech", on);
+      modeRoot.hidden = !isTechCourse;
+    }
+    if (tools) tools.classList.toggle("lh-course-tools--tech", on);
+    if (copy) {
+      copy.textContent = on
+        ? "Tech+ workspace hides other subjects. Use the switch above to return to all tracks."
+        : "Use Tech+ workspace for a certification-focused layout—no HTML, Python, or SQL pills.";
+    }
+    if (live) live.textContent = on ? "Tech+ workspace" : "All tracks";
+    if (kicker) kicker.textContent = on ? (isTechQuestionsMode() ? "Question sets" : "Tech+ path") : "Lesson list";
+    if (el.lessonFilter) {
+      el.lessonFilter.placeholder = on ? "Search domains, topics, objectives…" : "Filter by title, domain, objective…";
+    }
+    var navLess = document.getElementById("sidebar-lesson-nav");
+    if (navLess) {
+      navLess.setAttribute(
+        "aria-label",
+        on ? "Tech+ lessons along the certification path" : "Lessons in the selected track"
+      );
+    }
+    updateChrome();
+  }
 
   const ACCOUNTS_KEY = "learn-hub-accounts-v1";
   const SESSION_KEY = "learn-hub-session-v1";
@@ -247,6 +328,55 @@ function learnHubRunApp() {
       return sqlInitPromise;
     });
   }
+
+  function isTechGimkitLesson(lesson) {
+    return !!(lesson && typeof lesson.id === "string" && lesson.id.indexOf("tech-gimkit-") === 0);
+  }
+
+  function firstTechGimkitLessonIndex() {
+    var list = lessons();
+    for (var i = 0; i < list.length; i++) {
+      if (isTechGimkitLesson(list[i])) return i;
+    }
+    return -1;
+  }
+
+  function isTechQuestionsMode() {
+    if (activeCourseId !== "tech") return false;
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    return !!(O && getTechplusOrgMode() === O.MODE_QUESTIONS);
+  }
+
+  function injectGimkitQuizLessons() {
+    var data = typeof window !== "undefined" ? window.LEARN_HUB_GIMKIT_QUIZZES : null;
+    if (!data || !Array.isArray(data.sets) || !data.sets.length) return;
+    var tech = COURSES.find(function (c) {
+      return c && c.id === "tech" && Array.isArray(c.lessons);
+    });
+    if (!tech) return;
+    var seen = Object.create(null);
+    tech.lessons.forEach(function (L) {
+      if (L && L.id) seen[L.id] = true;
+    });
+    var add = [];
+    for (var i = 0; i < data.sets.length; i++) {
+      var set = data.sets[i];
+      if (!set || !Array.isArray(set.questions) || !set.questions.length) continue;
+      var id = "tech-gimkit-" + String(i + 1).padStart(2, "0");
+      if (seen[id]) continue;
+      add.push({
+        unit: "GimKit question sets",
+        id: id,
+        kind: "quiz",
+        title: set.title || "GimKit questions " + (i + 1),
+        narrative: "",
+        questions: set.questions,
+      });
+    }
+    if (add.length) tech.lessons = tech.lessons.concat(add);
+  }
+
+  injectGimkitQuizLessons();
 
   const courseById = Object.fromEntries(COURSES.map((c) => [c.id, c]));
   let activeCourseId = COURSES[0].id;
@@ -456,6 +586,8 @@ function learnHubRunApp() {
     var u = plainTextFromHtml(lesson.unit || "");
     var um = u.match(/^\s*Ch\s*(\d{1,2})\s*[—\-–]/);
     if (um) return parseInt(um[1], 10);
+    var um2 = u.match(/^\s*Objective\s+domain\s*(\d{1,2})\s*[—\-–]/i);
+    if (um2) return parseInt(um2[1], 10);
     return null;
   }
 
@@ -470,6 +602,14 @@ function learnHubRunApp() {
       parts.push("book " + ch);
       parts.push("ch" + ch);
       parts.push("unit " + ch);
+      parts.push("objective " + ch);
+      parts.push("objective domain " + ch);
+      parts.push("domain " + ch);
+      if (courseId === "tech" && typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS_ORG) {
+        var T = window.LEARN_HUB_TECHPLUS_ORG;
+        if (T.OBJECTIVE_NAV_TITLE && T.OBJECTIVE_NAV_TITLE[ch]) parts.push(T.OBJECTIVE_NAV_TITLE[ch]);
+        if (T.CHAPTER_NAV_TITLE && T.CHAPTER_NAV_TITLE[ch]) parts.push(T.CHAPTER_NAV_TITLE[ch]);
+      }
     }
     return parts.join("\n").toLowerCase();
   }
@@ -493,6 +633,10 @@ function learnHubRunApp() {
     }
 
     rest = rest.replace(/\b(?:ch|chapter|book|unit)\s*(\d{1,2})\b/g, function (_, d) {
+      chapters.push(parseInt(d, 10));
+      return " ";
+    });
+    rest = rest.replace(/\b(?:obj|objectives?|domains?)\s*(\d{1,2})\b/g, function (_, d) {
       chapters.push(parseInt(d, 10));
       return " ";
     });
@@ -611,13 +755,72 @@ function learnHubRunApp() {
     } catch (e) {}
   }
 
+  /**
+   * Last-resort fixes for PDF/OCR artifacts in Tech+ HTML (also applied after rebuild so older bundles stay readable).
+   * Keep patterns high-confidence only — avoid rewriting normal prose.
+   */
+  function sanitizeTechplusReadingArtifacts(html) {
+    if (!html) return "";
+    var s = String(html);
+    s = s.replace(/United StatesDvorak/g, "United States Dvorak");
+    s = s.replace(/United States-\s*Dvorak/g, "United States Dvorak");
+    s = s.replace(/\blowerright\b/gi, "lower-right");
+    s = s.replace(/\bIfyou\b/g, "If you");
+    s = s.replace(/\bk eyboard\b/g, "keyboard");
+    s = s.replace(/Language &amp; Region S ettings/g, "Language &amp; Region Settings");
+    // Exam-objective list OCR (column breaks / merged words)
+    s = s.replace(/\bCompar e\b/g, "Compare");
+    s = s.replace(/\bT erminology\b/g, "Terminology");
+    s = s.replace(/contr ast/gi, "contrast");
+    s = s.replace(/\bnetwor king\b/g, "networking");
+    s = s.replace(/Networkattac hed/g, "Network-attached");
+    s = s.replace(/Peertopeer/g, "Peer-to-peer");
+    s = s.replace(/\bpr oper\b/g, "proper");
+    s = s.replace(/\bsecur e\b/g, "secure");
+    return s;
+  }
+
+  function buildReviewQuestionReferenceFromBank(lesson) {
+    var qs = (lesson && lesson.questions) || [];
+    if (!qs.length) return "";
+    var out =
+      '<section class="lh-review-questions" aria-label="Chapter review questions">' +
+      "<h3>Review Questions</h3>" +
+      '<p class="lh-review-intro">Use these with the check-in panel on the left. Answers are intentionally hidden here.</p>' +
+      "<ol>";
+    qs.forEach(function (q) {
+      out += "<li><p>" + escapeHtml(q.q || "") + "</p>";
+      var choices = q.choices || [];
+      if (choices.length) {
+        out += '<ul class="lh-review-choices">';
+        choices.forEach(function (c, i) {
+          var key = String.fromCharCode(65 + i);
+          out += "<li><strong>" + key + ".</strong> " + escapeHtml(c || "") + "</li>";
+        });
+        out += "</ul>";
+      }
+      out += "</li>";
+    });
+    out +=
+      "</ol>" +
+      '<section class="lh-extra-review-questions" aria-label="Additional review questions">' +
+      "<h4>Additional Review Questions</h4>" +
+      '<p class="lh-review-intro">Reserved for extra question sets you add later.</p>' +
+      "</section>" +
+      "</section>";
+    return out;
+  }
+
   function getResolvedReadHtml(Ls) {
     if (!Ls) return "";
     var base = Ls.readHtmlBase != null ? Ls.readHtmlBase : "";
     if (/^tech-sg-\d{2}-\d{2}$/.test(Ls.id)) {
+      if ((Ls.questions || []).length && /review questions/i.test(String(Ls.title || ""))) {
+        return normalizeTechplusSourceBanner(base + buildReviewQuestionReferenceFromBank(Ls), Ls);
+      }
       var md = typeof window !== "undefined" && window.LEARN_HUB_TECHPLUS_MD && window.LEARN_HUB_TECHPLUS_MD[Ls.id];
       var full = base + (md ? md : "");
-      return normalizeTechplusSourceBanner(full, Ls);
+      return sanitizeTechplusReadingArtifacts(normalizeTechplusSourceBanner(full, Ls));
     }
     return (Ls.readHtml != null ? Ls.readHtml : Ls.narrative) || "";
   }
@@ -737,14 +940,14 @@ function learnHubRunApp() {
     var n = chapterSearchState.matches.length;
     var q = chapterSearchState.query;
     if (!q) {
-      st.textContent = "Search all segments in this chapter (loads chapter text once).";
+      st.textContent = "Search all segments in this objective domain (loads text once).";
       return;
     }
     if (n === 0) {
-      st.textContent = "No matches in this chapter.";
+      st.textContent = "No matches in this domain.";
       return;
     }
-    st.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter";
+    st.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in this domain";
   }
 
   function runChapterSearchFromInput() {
@@ -784,7 +987,7 @@ function learnHubRunApp() {
               focusOccurrenceInReading(r, q, m0.occInLesson);
               updateChapterSearchControlsDisabled();
               updateChapterSearchStatusText();
-              if (el.announcer) el.announcer.textContent = "Jumped to first match in chapter.";
+              if (el.announcer) el.announcer.textContent = "Jumped to first match in this domain.";
             });
           } else {
             requestAnimationFrame(function () {
@@ -844,13 +1047,13 @@ function learnHubRunApp() {
       waitForReadingThen(function (r) {
         focusOccurrenceInReading(r, q, m.occInLesson);
         updateChapterSearchStatusText();
-        if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter.";
+        if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in this domain.";
       });
     } else {
       var r = el.teach && el.teach.querySelector(".lh-tech-reading");
       if (r) focusOccurrenceInReading(r, q, m.occInLesson);
       updateChapterSearchStatusText();
-      if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in chapter.";
+      if (el.announcer) el.announcer.textContent = "Match " + (chapterSearchState.curIdx + 1) + " of " + n + " in this domain.";
     }
   }
 
@@ -916,8 +1119,9 @@ function learnHubRunApp() {
     var Ls = currentLesson();
     if (el.lessonPlace && c && list.length && Ls) {
       var t = Ls.title ? decodeLessonTitle(String(Ls.title)) : "";
-      if (t.length > 52) t = t.slice(0, 49) + "…";
-      el.lessonPlace.textContent = c.name + " · " + (lessonIndex + 1) + "/" + list.length + (t ? " — " + t : "");
+      var line = c.name + " · " + (lessonIndex + 1) + "/" + list.length + (t ? " — " + t : "");
+      el.lessonPlace.textContent = line;
+      el.lessonPlace.setAttribute("title", line);
     }
   }
 
@@ -937,9 +1141,9 @@ function learnHubRunApp() {
     if (headings.length < 2) return;
     const nav = document.createElement("nav");
     nav.className = "lh-chapter-toc";
-    nav.setAttribute("aria-label", "On this page");
+    nav.setAttribute("aria-label", "Study map");
     const cap = document.createElement("strong");
-    cap.textContent = "On this page";
+    cap.textContent = "Study map";
     nav.appendChild(cap);
     const ul = document.createElement("ul");
     let n = 0;
@@ -1046,7 +1250,135 @@ function learnHubRunApp() {
     return "practice";
   }
 
+  function getTechplusOrgMode() {
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    if (!O) return "chapters";
+    try {
+      var v = localStorage.getItem(O.STORAGE_KEY);
+      if (v === O.MODE_CHAPTERS || v === O.MODE_OBJECTIVES || v === O.MODE_QUESTIONS) return v;
+    } catch (_) {}
+    return O.MODE_OBJECTIVES;
+  }
+
+  function setTechplusOrgMode(mode) {
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    if (!O) return;
+    var next = O.MODE_OBJECTIVES;
+    if (mode === O.MODE_CHAPTERS) next = O.MODE_CHAPTERS;
+    else if (mode === O.MODE_QUESTIONS) next = O.MODE_QUESTIONS;
+    try {
+      localStorage.setItem(O.STORAGE_KEY, next);
+    } catch (_) {}
+  }
+
+  function techplusNavGroupKey(lesson) {
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    if (O && getTechplusOrgMode() === O.MODE_QUESTIONS) {
+      var t = plainTextFromHtml((lesson && lesson.title) || "");
+      if (/^GimKit Set \d+/i.test(t)) return "gimkit-core";
+      if (/^GimKit ITF Bits/i.test(t)) return "gimkit-itf-bits";
+      if (/^GimKit Questions Set \d+/i.test(t)) return "gimkit-large";
+      return "gimkit-other";
+    }
+    var ch = chapterNumberForLesson(lesson, "tech");
+    if (ch != null) return "ch-" + ch;
+    return "misc-" + plainTextFromHtml(lesson.unit || "Lessons");
+  }
+
+  function techplusNavBlockTitleForKey(groupKey, firstLessonInBlock) {
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    var mode = getTechplusOrgMode();
+    if (O && mode === O.MODE_QUESTIONS) {
+      if (groupKey === "gimkit-core") return "Core GimKit sets";
+      if (groupKey === "gimkit-itf-bits") return "ITF Bits sets";
+      if (groupKey === "gimkit-large") return "Large mixed sets";
+      return "Other question sets";
+    }
+    if (groupKey.indexOf("misc-") === 0) {
+      return plainTextFromHtml(firstLessonInBlock.unit || "Lessons");
+    }
+    var ch = parseInt(groupKey.replace(/^ch-/, ""), 10);
+    if (!Number.isFinite(ch)) return plainTextFromHtml(firstLessonInBlock.unit || "Lessons");
+    if (!O) return "Chapter " + ch;
+    if (mode === O.MODE_OBJECTIVES && O.OBJECTIVE_NAV_TITLE[ch]) return O.OBJECTIVE_NAV_TITLE[ch];
+    if (O.CHAPTER_NAV_TITLE[ch]) return O.CHAPTER_NAV_TITLE[ch];
+    return "Chapter " + ch;
+  }
+
+  function buildTechplusLessonNavHtml() {
+    const all = lessons();
+    const O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    const mode = getTechplusOrgMode();
+    const inQuestionsMode = !!(O && mode === O.MODE_QUESTIONS);
+    const pairs = [];
+    for (let i = 0; i < all.length; i++) {
+      if (!inQuestionsMode || isTechGimkitLesson(all[i])) pairs.push({ idx: i, L: all[i] });
+    }
+    if (!pairs.length && inQuestionsMode) {
+      return '<div class="unit lh-unit-techplus"><div class="unit-title">GimKit question sets</div><p class="msg info">No GimKit question sets loaded.</p></div>';
+    }
+    const blocks = [];
+    let cur = null;
+    for (let i = 0; i < pairs.length; i++) {
+      const L = pairs[i].L;
+      const gk = techplusNavGroupKey(L);
+      if (!cur || cur.key !== gk) {
+        cur = { key: gk, start: i, first: L };
+        blocks.push(cur);
+      }
+    }
+    let html = "";
+    for (const block of blocks) {
+      const start = block.start;
+      let end = start;
+      const gk = block.key;
+      while (end + 1 < pairs.length && techplusNavGroupKey(pairs[end + 1].L) === gk) end++;
+      const title = techplusNavBlockTitleForKey(gk, block.first);
+      html += `<div class="unit lh-unit-techplus" data-tp-group="${escapeHtml(gk)}"><div class="unit-title">${escapeHtml(title)}</div>`;
+      for (let i = start; i <= end; i++) {
+        const idx = pairs[i].idx;
+        const Ls = pairs[i].L;
+        const locked = lessonLocked(idx);
+        const done = !!courseProgress(activeCourseId).done[Ls.id];
+        const tag = tagForKind(Ls.kind);
+        const displayNum = inQuestionsMode ? i - start + 1 : idx + 1;
+        html += `<button type="button" class="lesson-btn ${idx === lessonIndex ? "active" : ""} ${done ? "done" : ""} ${locked ? "locked" : ""}" data-i="${idx}" ${locked ? "disabled" : ""}>
+          <span class="idx">${displayNum}</span><span class="dot"></span>
+          <span class="lbl">${lessonTitleAsUiHtml(Ls.title)}</span>
+          <span class="tag ${Ls.kind === "challenge" ? "challenge" : ""} ${Ls.kind === "quiz" ? "quiz" : ""}">${tag}</span>
+        </button>`;
+      }
+      html += "</div>";
+    }
+    return html;
+  }
+
+  function syncTechplusOrgToggle() {
+    var wrap = document.getElementById("lh-techplus-org-toggle");
+    var kicker = document.getElementById("lh-techplus-org-kicker");
+    if (!wrap) return;
+    var isTech = activeCourseId === "tech";
+    wrap.hidden = !isTech;
+    if (kicker) kicker.textContent = "";
+    document.body.classList.toggle("lh-tech-questions-mode", isTechQuestionsMode());
+    if (!isTech) return;
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    var m = getTechplusOrgMode();
+    var bc = document.getElementById("lh-tp-org-chapters");
+    var bo = document.getElementById("lh-tp-org-objectives");
+    var bq = document.getElementById("lh-tp-org-questions");
+    if (bc && bo && bq && O) {
+      bc.classList.toggle("lh-techplus-org-btn--active", m === O.MODE_CHAPTERS);
+      bo.classList.toggle("lh-techplus-org-btn--active", m === O.MODE_OBJECTIVES);
+      bq.classList.toggle("lh-techplus-org-btn--active", m === O.MODE_QUESTIONS);
+      bc.setAttribute("aria-pressed", m === O.MODE_CHAPTERS ? "true" : "false");
+      bo.setAttribute("aria-pressed", m === O.MODE_OBJECTIVES ? "true" : "false");
+      bq.setAttribute("aria-pressed", m === O.MODE_QUESTIONS ? "true" : "false");
+    }
+  }
+
   function buildLessonNavHtml() {
+    if (activeCourseId === "tech") return buildTechplusLessonNavHtml();
     const list = lessons();
     const units = [];
     let u = null;
@@ -1122,17 +1454,22 @@ function learnHubRunApp() {
       });
     }
     syncMenuToggleExpanded();
+    syncTechplusOrgToggle();
   }
 
   function renderPills() {
     if (!el.pills) return;
-    el.pills.innerHTML = COURSES.map(
-      (c) =>
-        `<button type="button" class="course-pill${c.id === activeCourseId ? " active" : ""}" data-c="${escapeHtml(c.id)}" data-course="${escapeHtml(c.id)}">${escapeHtml(c.name)}</button>`
-    ).join("");
+    const list = coursesForPills();
+    el.pills.innerHTML = list
+      .map(
+        (c) =>
+          `<button type="button" class="course-pill${c.id === activeCourseId ? " active" : ""}" data-c="${escapeHtml(c.id)}" data-course="${escapeHtml(c.id)}">${escapeHtml(c.name)}</button>`
+      )
+      .join("");
     el.pills.querySelectorAll(".course-pill").forEach((p) => {
       p.addEventListener("click", () => switchCourse(p.getAttribute("data-course")));
     });
+    syncTechplusWorkspaceChrome();
   }
 
   /** Scroll reading/main panes to top when changing lessons — do not reset sidebar lesson list scroll (avoids jump-to-top then scroll-down). */
@@ -1162,8 +1499,13 @@ function learnHubRunApp() {
     if (el.xpBar) el.xpBar.setAttribute("aria-valuenow", String(xpPct));
     if (el.xpLabel) {
       const name = c ? c.name : "—";
-      el.xpLabel.textContent =
+      var line =
         name + " · " + xpThis + " / " + maxThis + " XP · " + doneCount + "/" + list.length + " lessons in this track";
+      if (getTechplusPillsOnly()) {
+        el.xpLabel.textContent = "Tech+ prep · " + line;
+      } else {
+        el.xpLabel.textContent = line;
+      }
     }
   }
 
@@ -1693,25 +2035,99 @@ function learnHubRunApp() {
     return "lh_" + raw.replace(/[^a-zA-Z0-9_-]+/g, "_");
   }
 
+  function shuffleInPlace(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
+    }
+    return arr;
+  }
+
   function renderTechQuiz(lesson) {
     if (!el.techQuiz) return;
-    const qs = lesson.questions || [];
-    if (!qs.length) {
+    const qsAll = lesson.questions || [];
+    techQuizSubset = null;
+    if (!qsAll.length) {
       el.techQuiz.innerHTML = "<p class='msg info'>No questions for this step.</p>";
       return;
     }
     const gPrefix = quizRadioGroupPrefix(lesson);
-    let h =
-      "<p class=\"msg info\" style=\"font-size:0.78rem;margin:0 0 0.65rem;line-height:1.45\">Local curriculum only — answers are checked in your browser. On <strong>Learn</strong> steps, re-read the chapter or topic notes in the right column if you miss a question.</p>";
-    qs.forEach((q, qi) => {
-      h += `<div class="quiz-q" data-q="${qi}"><p>${escapeHtml(q.q)}</p>`;
-      (q.choices || []).forEach((c, ci) => {
-        const id = gPrefix + "_q" + qi + "c" + ci;
-        h += `<label><input type="radio" name="${gPrefix}_quiz_${qi}" value="${ci}" id="${id}"/> ${escapeHtml(c)}</label>`;
+    const nTotal = qsAll.length;
+    var mode = techQuizSizeMode;
+    if (mode !== 10 && mode !== 15 && mode !== 20 && mode !== "all") mode = "all";
+    var orderUsed;
+    if (mode === "all") {
+      orderUsed = qsAll.map(function (_, i) {
+        return i;
+      });
+    } else if (mode === 10 || mode === 15 || mode === 20) {
+      var cap = Math.min(mode, nTotal);
+      var perm = qsAll.map(function (_, i) {
+        return i;
+      });
+      shuffleInPlace(perm);
+      orderUsed = perm.slice(0, Math.max(1, cap));
+    } else {
+      orderUsed = qsAll.map(function (_, i) {
+        return i;
+      });
+    }
+    techQuizSubset = { order: orderUsed };
+
+    function btn(modeKey, label) {
+      var active = modeKey === mode || (modeKey === "all" && mode === "all");
+      return (
+        '<button type="button" class="tool ghost lh-tech-set-btn' +
+        (active ? " lh-tech-set-btn--active" : "") +
+        '" data-qset="' +
+        escapeHtml(String(modeKey)) +
+        '">' +
+        escapeHtml(label) +
+        "</button>"
+      );
+    }
+    var h =
+      '<div class="lh-tech-quiz-toolbar" role="group" aria-label="Quick practice set size">' +
+      '<span class="lh-tech-quiz-toolbar-label">Quick practice</span>' +
+      btn("all", "All (" + nTotal + ")") +
+      btn(10, "10") +
+      btn(15, "15") +
+      btn(20, "20") +
+      "</div>";
+    h +=
+      '<p class="msg info lh-tech-quiz-hint">Local checks only. On <strong>Notes</strong> reading steps, re-read the objective section if an answer is unclear.</p>';
+    orderUsed.forEach(function (origQi, displayIdx) {
+      var q = qsAll[origQi];
+      h += '<div class="quiz-q" data-q="' + displayIdx + '" data-orig="' + origQi + '"><p>' + escapeHtml(q.q) + "</p>";
+      (q.choices || []).forEach(function (c, ci) {
+        var id = gPrefix + "_q" + displayIdx + "c" + ci;
+        h +=
+          "<label><input type=\"radio\" name=\"" +
+          gPrefix +
+          "_quiz_" +
+          displayIdx +
+          '" value="' +
+          ci +
+          '" id="' +
+          id +
+          '"/> ' +
+          escapeHtml(c) +
+          "</label>";
       });
       h += "</div>";
     });
     el.techQuiz.innerHTML = h;
+    el.techQuiz.querySelectorAll(".lh-tech-set-btn").forEach(function (btnEl) {
+      btnEl.addEventListener("click", function () {
+        var raw = btnEl.getAttribute("data-qset");
+        techQuizSizeMode = raw === "all" ? "all" : parseInt(raw, 10);
+        renderTechQuiz(currentLesson());
+        if (el.techFeedback) el.techFeedback.innerHTML = "";
+        if (el.techStatus) el.techStatus.textContent = "—";
+      });
+    });
   }
 
   function gradeTechQuiz(lesson) {
@@ -1719,14 +2135,18 @@ function learnHubRunApp() {
     const gPrefix = quizRadioGroupPrefix(lesson);
     let wrong = 0;
     if (!el.techQuiz) return { ok: false, msg: "Quiz panel is not available." };
-    for (let qi = 0; qi < qs.length; qi++) {
-      const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${qi}"]:checked`);
-      if (!sel || +sel.value !== qs[qi].correct) wrong++;
+    const order = techQuizSubset && techQuizSubset.order ? techQuizSubset.order : qs.map(function (_, i) {
+      return i;
+    });
+    for (let di = 0; di < order.length; di++) {
+      const origQi = order[di];
+      const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${di}"]:checked`);
+      if (!sel || +sel.value !== qs[origQi].correct) wrong++;
     }
     const secHint =
       activeCourseId === "security"
         ? "review the matching <strong>level lessons</strong> in the sidebar, then try again."
-        : "go back to the matching <strong>study guide lesson</strong> or <strong>Lesson reading</strong> step and study it again.";
+        : "open the matching <strong>Study</strong> or <strong>Notes</strong> step for that objective domain and skim again, then return here.";
     return {
       ok: wrong === 0,
       msg: wrong === 0 ? "All correct." : wrong + " answer(s) need work — " + secHint,
@@ -1747,7 +2167,7 @@ function learnHubRunApp() {
           "These steps are a <strong>hands-on lab script</strong> for your <strong>Kali Linux VM</strong>. Nothing in the left column runs on the VM—open a terminal on Kali and follow <strong>Notes</strong> step by step. When you are done with this lab, press <strong>Continue</strong>.";
       } else if (isFullChapterTechLesson(Ls.id)) {
         hint =
-          "This step is a <strong>study guide lesson</strong> (one section of the book) bundled inside Learn Hub. Use <strong>On this page</strong> when it appears to jump headings. When you are done reading, press <strong>Continue</strong>. If you already know this material, use <strong>Skip lesson</strong> in the footer—it marks the step complete and moves on (same progress as Continue).";
+          "This step is a <strong>Tech+ study segment</strong> (one objective-domain slice). Use the <strong>Study map</strong> to jump headings, read in short passes, then press <strong>Continue</strong>. If you already know this material, use <strong>Skip lesson</strong> in the footer—it marks the step complete and moves on (same progress as Continue).";
       } else {
         hint =
           "Your <strong>lesson reading</strong> is expanded below (topic notes, tables, and drills from the study guide). Read it completely before Continuing. Later steps use the <strong>Check-in</strong> quiz column.";
@@ -1844,14 +2264,14 @@ function learnHubRunApp() {
           '<span class="lesson-shell-sub">' +
           escapeHtml(c.name || "") +
           '</span></header><div class="lesson-shell-body">' +
-          '<p class="msg info" role="status" aria-live="polite">Loading study guide (chapter ' +
+          '<p class="msg info" role="status" aria-live="polite">Loading study guide (objective domain ' +
           ch +
           ")…</p></div></div>";
       }
       document.body.setAttribute("data-lh-track", c.id || "");
       document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
       if (el.title) el.title.textContent = (Ls.title && decodeLessonTitle(Ls.title)) || "Loading…";
-      if (el.lessonPlace) el.lessonPlace.textContent = (c.name || "") + " · loading chapter " + ch + "…";
+      if (el.lessonPlace) el.lessonPlace.textContent = (c.name || "") + " · loading domain " + ch + "…";
       document.body.classList.toggle("learn-only", Ls.kind === "learn");
       const pc0 = document.getElementById("practice-column");
       if (pc0) pc0.classList.toggle("is-hidden", Ls.kind === "learn");
@@ -1869,7 +2289,7 @@ function learnHubRunApp() {
           const msg = e && e.message ? e.message : String(e);
           if (el.teach)
             el.teach.innerHTML =
-              '<div class="lesson-shell"><div class="lesson-shell-body"><p class="msg err">Could not load this chapter’s study guide.</p><p class="msg info">' +
+              '<div class="lesson-shell"><div class="lesson-shell-body"><p class="msg err">Could not load this study guide segment.</p><p class="msg info">' +
               escapeHtml(msg) +
               "</p></div></div>";
         });
@@ -1880,6 +2300,7 @@ function learnHubRunApp() {
     document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
     if (el.title) el.title.textContent = decodeLessonTitle(Ls.title || "");
     const isTech = c.ws === "tech";
+    const isQuestionsMode = isTechQuestionsMode();
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
     const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
@@ -1891,17 +2312,20 @@ function learnHubRunApp() {
     if (read && String(read).trim()) {
       if (isFullChapterTechLearn) {
         refBlock =
+          '<div class="lh-study-flow-tip" role="region" aria-label="How to study this segment">' +
+          "<strong>Study flow.</strong> Skim the <strong>Study map</strong> first, read one heading at a time, then use <strong>Quick practice</strong> quiz banks for 10–20 questions when you switch to a quiz step. " +
+          "Search spans every segment in this objective domain.</div>" +
           '<div class="lh-full-chapter">' +
-          '<div class="lh-chapter-search-wrap" role="search" aria-label="Search in this book chapter">' +
-          '<label class="lh-ch-search-label" for="lh-ch-search-input">Search in chapter</label>' +
+          '<div class="lh-chapter-search-wrap" role="search" aria-label="Search in this objective domain">' +
+          '<label class="lh-ch-search-label" for="lh-ch-search-input">Search this domain</label>' +
           '<div class="lh-ch-search-row">' +
           '<input type="search" id="lh-ch-search-input" class="lh-ch-search-input" placeholder="Word or phrase…" autocomplete="off" spellcheck="false" />' +
-          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-prev" disabled aria-label="Previous match in chapter">Prev</button>' +
-          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-next" disabled aria-label="Next match in chapter">Next</button>' +
+          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-prev" disabled aria-label="Previous match in this domain">Prev</button>' +
+          '<button type="button" class="tool ghost lh-ch-search-btn" id="lh-ch-search-next" disabled aria-label="Next match in this domain">Next</button>' +
           "</div>" +
           '<p class="lh-ch-search-status" id="lh-ch-search-status" aria-live="polite"></p>' +
           "</div>" +
-          '<article class="lh-tech-reading lh-full-chapter-body lh-notes-surface" aria-label="Study guide reading">' +
+          '<article class="lh-tech-reading lh-full-chapter-body lh-notes-surface" aria-label="Tech+ study reading">' +
           refBody +
           "</article></div>";
       } else if (isTech) {
@@ -1922,7 +2346,7 @@ function learnHubRunApp() {
     el.teach.classList.remove("tech-prose");
     el.teach.classList.toggle("teach-full-chapter", !!isFullChapterTechLearn);
     el.teach.classList.toggle("teach-notes", !!isTechLearn);
-    const stepBadge = isFullChapterTechLearn ? "Reading" : !isTech ? "This step" : "Notes";
+    const stepBadge = isFullChapterTechLearn ? "Study" : !isTech ? "This step" : "Notes";
     el.teach.innerHTML =
       '<div class="lesson-shell">' +
       '<header class="lesson-shell-head"><span class="lesson-shell-badge">' +
@@ -1939,9 +2363,9 @@ function learnHubRunApp() {
     document.body.classList.toggle("quiz-tech", isTech);
 
     const pc = document.getElementById("practice-column");
-    if (pc) pc.classList.toggle("is-hidden", !!isTechLearn);
+    if (pc) pc.classList.toggle("is-hidden", !!(isTechLearn && !isQuestionsMode));
     const cg = document.getElementById("content-grid");
-    if (cg) cg.classList.toggle("single-pane", !!isTechLearn);
+    if (cg) cg.classList.toggle("single-pane", !!(isTechLearn || isQuestionsMode));
 
     applyTeachCollapsedPreference(!!isTechLearn);
 
@@ -2012,6 +2436,7 @@ function learnHubRunApp() {
           });
       }
       if (w === "tech" && Ls.kind === "quiz") {
+        techQuizSizeMode = "all";
         renderTechQuiz(Ls);
         el.techFeedback.innerHTML = "";
         el.techStatus.textContent = "—";
@@ -2065,6 +2490,9 @@ function learnHubRunApp() {
     courseProgress(activeCourseId).idx = lessonIndex;
     activeCourseId = id;
     progress.activeCourseId = id;
+    if (id !== "tech" && getTechplusPillsOnly()) {
+      setTechplusPillsOnly(false);
+    }
     if (el.lessonFilter) el.lessonFilter.value = "";
     let nx = Number(courseProgress(id).idx);
     if (!Number.isFinite(nx) || nx < 0) nx = 0;
@@ -2407,6 +2835,65 @@ function learnHubRunApp() {
       }
       el.lessonFilter.addEventListener("input", runFilter);
       el.lessonFilter.addEventListener("search", runFilter);
+    }
+
+    function applyTrackBrowserMode(techWorkspace) {
+      if (!!getTechplusPillsOnly() === !!techWorkspace) {
+        syncTechplusWorkspaceChrome();
+        return;
+      }
+      setTechplusPillsOnly(techWorkspace);
+      var vis = coursesForPills();
+      if (vis.length && !vis.some(function (x) { return x.id === activeCourseId; })) {
+        switchCourse("tech");
+      } else {
+        renderPills();
+        renderNav();
+        applyLessonUI();
+      }
+    }
+    var btnAllTracks = document.getElementById("lh-mode-all-tracks");
+    var btnTechWs = document.getElementById("lh-mode-techplus-ws");
+    if (btnAllTracks) {
+      btnAllTracks.addEventListener("click", function () {
+        applyTrackBrowserMode(false);
+      });
+    }
+    if (btnTechWs) {
+      btnTechWs.addEventListener("click", function () {
+        applyTrackBrowserMode(true);
+      });
+    }
+    syncTechplusWorkspaceChrome();
+
+    var tpOrgCh = document.getElementById("lh-tp-org-chapters");
+    var tpOrgOb = document.getElementById("lh-tp-org-objectives");
+    var tpOrgQs = document.getElementById("lh-tp-org-questions");
+    if (tpOrgCh) {
+      tpOrgCh.addEventListener("click", function () {
+        var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+        if (!O) return;
+        setTechplusOrgMode(O.MODE_CHAPTERS);
+        renderNav();
+      });
+    }
+    if (tpOrgOb) {
+      tpOrgOb.addEventListener("click", function () {
+        var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+        if (!O) return;
+        setTechplusOrgMode(O.MODE_OBJECTIVES);
+        renderNav();
+      });
+    }
+    if (tpOrgQs) {
+      tpOrgQs.addEventListener("click", function () {
+        var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+        if (!O) return;
+        setTechplusOrgMode(O.MODE_QUESTIONS);
+        var gi = firstTechGimkitLessonIndex();
+        if (activeCourseId === "tech" && gi >= 0 && !isTechGimkitLesson(currentLesson())) goLesson(gi);
+        else renderNav();
+      });
     }
 
     function bindRunCheck(ta, runFn, checkFn) {

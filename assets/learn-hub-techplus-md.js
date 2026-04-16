@@ -2,18 +2,18 @@
 window.LEARN_HUB_TECHPLUS_MD = window.LEARN_HUB_TECHPLUS_MD || {};
 window.__LH_TECHPLUS_CH_DONE__ = window.__LH_TECHPLUS_CH_DONE__ || {};
 window.__LH_TECHPLUS_CH_HASH = {
-  "1": "5465b0d6d03d",
-  "2": "6c21f32a42a2",
-  "3": "1a064d66dab4",
-  "4": "a1775cd14920",
-  "5": "43f43e56042f",
-  "6": "cbd26c520fe4",
-  "7": "07ef7bb5eb66",
-  "8": "22c35f20d6ed",
-  "9": "a2493a7966f5",
-  "10": "003bcbe44048",
-  "11": "91764a527741",
-  "12": "f4a4b3e76048"
+  "1": "cbcf45bea305",
+  "2": "f799b202c831",
+  "3": "3d0bed4464df",
+  "4": "7af8731c1078",
+  "5": "ab36d6a4b97d",
+  "6": "29cfbe5e6549",
+  "7": "a9b130a7a5d1",
+  "8": "98d7fd8e0849",
+  "9": "7767585b7b77",
+  "10": "0acdcf5e7267",
+  "11": "ca77e4528ac4",
+  "12": "3fac9e96e4d9"
 };
 window.loadLearnHubTechplusChapter = function (ch) {
   var n = Math.max(1, Math.min(12, parseInt(ch, 10) || 1));

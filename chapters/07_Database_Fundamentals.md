@@ -27,7 +27,7 @@ database.
 - Cloud vs. local
 - Online vs. offline
 
- ✓ 5.3 Compare and contr ast various database
+ ✓ 5.3 Compare and contrast various database
 structures.
 - Structured vs. semistructured vs. non- structured
 - Relational databases

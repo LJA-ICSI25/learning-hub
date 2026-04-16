@@ -7,9 +7,8 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 ## Software Development
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
- ✓ 1.0 IT Concepts and T erminology
- ✓ 1.2 Identify notational syst
-ems.
+ ✓ 1.0 IT Concepts and Terminology
+ ✓ 1.2 Identify notational systems.
 - Binary
 - Hexadecimal
 - Decimal

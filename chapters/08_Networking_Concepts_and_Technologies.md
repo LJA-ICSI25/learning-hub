@@ -7,9 +7,8 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 ## Chapter 8 Networking Concepts and Technologies
 
 **THE FOLLOWING COMPTIA TECH+ FC0-U71 EXAM OBJECTIVES ARE COVERED IN THIS CHAPTER:**
- ✓ 1.0 IT Concepts and T erminology
- ✓ 1.3 Compar
-e and contrast common units of measure.
+ ✓ 1.0 IT Concepts and Terminology
+ ✓ 1.3 Compare and contrast common units of measure.
 - Throughput unit
 - Bits per second (bps)
 - Kilobits per second (Kbps)
@@ -17,13 +16,12 @@ e and contrast common units of measure.
 - Gigabits per second (Gbps)
 - Terabytes per second (Tbps)
  ✓ 2.0 Infrastructure
- ✓ 2.3 Compare and contr
-ast storage types.
+ ✓ 2.3 Compare and contrast storage types.
 - Local network storage
-- Networkattac hed storage (NAS)
+- Network-attached storage (NAS)
 - File server
 - Cloud storage service
- ✓ 2.7 Compare and contr ast common internet service types.
+ ✓ 2.7 Compare and contrast common internet service types.
 - Fiber optic
 - Cable
 - Digital subscriber line (DSL)
@@ -32,7 +30,7 @@ ast storage types.
 - Satellite
 - Cellular
 
- ✓ 2.8 Identify basic networ king concepts.
+ ✓ 2.8 Identify basic networking concepts.
 - Basics of network communication
 - Network identifiers
 - IP address
@@ -50,13 +48,11 @@ ast storage types.
 - Firewall
 - Networking models
 - Client/server
-- Peertopeer
+- Peer-to-peer
 - Local area network (LAN)
 - Wide area network (WAN)
- ✓ 2.9 Explain the basic capabilities of a small wireless
-netw
-ork.
-- 802.1 1n/ac/ax
+ ✓ 2.9 Explain the basic capabilities of a small wireless network.
+- 802.11n/ac/ax
 - Speed considerations
 - Interference and attenuation factors
 - Older vs. newer standards
@@ -65,9 +61,7 @@ ork.
 - 5GHz
 - 6GHz
  ✓ 6.0 Security
- ✓ 6.5 Given a scenar
-io, configure security settings for a small
-wireless network.
+ ✓ 6.5 Given a scenario, configure security settings for a small wireless network.
 - Changing the service set identifier (SSID)
 - Changing the default password
 - Encrypted vs. unencrypted
@@ -1788,9 +1782,8 @@ D. Cellular
 Which networking model is most appropriate?
 A. LAN
 B. WAN
-C
-. Peertopeer
-D. Clientserver
+C. Peer-to-peer
+D. Client/server
 4
 . You have a scenario where you need to disable the guest network on your wireless router
 .
