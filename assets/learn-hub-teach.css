@@ -1409,10 +1409,10 @@ body.lh-compact-teach #teach .lh-reference-inner {
 
   .lh-tech-quiz-toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.35rem;
-    padding: 0.5rem 0.55rem;
-    align-items: stretch;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.28rem;
+    padding: 0.36rem 0.45rem;
+    align-items: center;
   }
 
   .lh-tech-quiz-toolbar-label {
@@ -1425,10 +1425,10 @@ body.lh-compact-teach #teach .lh-reference-inner {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.5rem;
+    min-height: 1.9rem;
     width: 100%;
-    font-size: 0.74rem;
-    padding: 0.28rem 0.4rem;
+    font-size: 0.68rem;
+    padding: 0.14rem 0.22rem;
   }
 
   .lh-tech-quiz-hint {
