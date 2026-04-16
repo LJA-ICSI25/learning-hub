@@ -258,6 +258,7 @@ function learnHubRunApp() {
     sqlStatus: document.getElementById("sql-status"),
     output: document.getElementById("output"),
     techQuiz: document.getElementById("tech-quiz"),
+    techFeedbackHead: document.getElementById("tech-feedback-head"),
     techFeedback: document.getElementById("tech-feedback"),
     techStatus: document.getElementById("tech-status"),
     lessonFilter: document.getElementById("lesson-filter"),
@@ -2126,8 +2127,15 @@ function learnHubRunApp() {
         renderTechQuiz(currentLesson());
         if (el.techFeedback) el.techFeedback.innerHTML = "";
         if (el.techStatus) el.techStatus.textContent = "—";
+        setTechFeedbackVisible(false);
       });
     });
+  }
+
+  function setTechFeedbackVisible(show) {
+    var on = !!show;
+    if (el.techFeedbackHead) el.techFeedbackHead.hidden = !on;
+    if (el.techFeedback) el.techFeedback.hidden = !on;
   }
 
   function gradeTechQuiz(lesson) {
@@ -2440,6 +2448,7 @@ function learnHubRunApp() {
         renderTechQuiz(Ls);
         el.techFeedback.innerHTML = "";
         el.techStatus.textContent = "—";
+        setTechFeedbackVisible(false);
       }
     }
 
@@ -2538,6 +2547,7 @@ function learnHubRunApp() {
           ? "<div class='msg ok'>" + escapeHtml(g.msg) + "</div>"
           : "<div class='msg err'>" + g.msg + "</div>";
       if (el.techStatus) el.techStatus.textContent = g.ok ? "Passed" : "Try again";
+      setTechFeedbackVisible(true);
       if (el.announcer) el.announcer.textContent = g.ok ? "Quiz check passed." : "Quiz check: " + (g.msg || "Try again");
       if (!g.ok) return;
       awardIfNew(Ls.id);
