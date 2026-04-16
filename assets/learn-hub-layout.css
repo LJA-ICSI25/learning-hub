@@ -427,22 +427,18 @@ body.lh-techplus-workspace .main .topbar {
 .lh-techplus-org-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
-  margin: 0.28rem 0 0.25rem;
-  padding: 0.3rem 0.4rem;
+  gap: 0.2rem 0.35rem;
+  margin: 0.12rem 0 0.08rem;
+  padding: 0.18rem 0.28rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-muted);
   background: rgba(8, 12, 20, 0.35);
 }
 
 .lh-techplus-org-kicker {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+  display: none !important;
 }
 
 .lh-techplus-org-seg {
@@ -1237,6 +1233,18 @@ body.teach-collapsed:not(.learn-only) #teach {
     padding: 0.42rem 0.55rem;
     padding-top: calc(0.42rem + env(safe-area-inset-top));
     gap: 0.45rem 0.55rem;
+    position: relative;
+    z-index: 20;
+  }
+
+  /* Prevent "invisible but clickable" top controls on some mobile render states */
+  #menu-toggle,
+  #btn-toggle-teach,
+  .topbar-mid,
+  .progress-track {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
 
   .topbar h2 {
@@ -1351,9 +1359,9 @@ body.teach-collapsed:not(.learn-only) #teach {
   }
 
   .lh-track-mode-seg {
-    min-height: 2.6rem;
-    font-size: 0.58rem;
-    padding: 0.35rem 0.28rem;
+    min-height: 2.05rem;
+    font-size: 0.54rem;
+    padding: 0.22rem 0.22rem;
   }
 
   .lh-track-mode-copy {
