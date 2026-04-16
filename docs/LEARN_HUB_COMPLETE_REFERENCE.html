@@ -104,7 +104,7 @@
 
 <section class="chunk" id="purpose">
 <h2>What this project is</h2>
-<p>Learn Hub is a <strong>client-only</strong> learning application: one <code>index.html</code> loads several large JavaScript bundles that define hundreds of lessons across <strong>eight</strong> tracks (HTML, CSS, JavaScript, Python, SQL, <strong>Security</strong> (workplace / Security+ prep), <strong>Labs</strong> (Kali VM hands-on curriculum), and CompTIA <strong>Tech+</strong>). There is no backend; progress and preferences live in <code>localStorage</code>. Practice tracks embed live editors (HTML/CSS/JS in a sandboxed iframe, Python via Pyodide, SQL via sql.js). <strong>Tech+</strong> adds long-form study-guide content from Markdown, split into lazy-loaded chapter chunks. <strong>Security</strong> and <strong>Labs</strong> ship similar long-form HTML from Markdown-derived bundles (<code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>) merged at boot.</p>
+<p>Learn Hub is a <strong>client-only</strong> learning application: one <code>index.html</code> loads several large JavaScript bundles that define hundreds of lessons across <strong>eight</strong> tracks (HTML, CSS, JavaScript, Python, SQL, <strong>Security</strong> (workplace / Security+ prep), <strong>Labs</strong> (Kali VM hands-on curriculum), and CompTIA <strong>Tech+</strong>). There is no backend; progress and preferences live in <code>localStorage</code>. Practice tracks embed live editors (HTML/CSS/JS in a sandboxed iframe, Python via Pyodide, SQL via sql.js). <strong>Tech+</strong> adds long-form study-guide content from Markdown, split into lazy-loaded chapter chunks, plus imported <strong>GimKit</strong> question-set bundles for Tech+ Questions mode. <strong>Security</strong> and <strong>Labs</strong> ship similar long-form HTML from Markdown-derived bundles (<code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>) merged at boot.</p>
 </section>
 
 <section class="chunk" id="architecture">
@@ -131,6 +131,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
   <li><code>learn-hub-courses.js</code> → <code>window.LEARN_HUB_COURSES</code></li>
   <li><code>learn-hub-depth.js</code> → <code>window.LEARN_HUB_DEPTH</code> (reserved; often empty)</li>
   <li><code>learn-hub-techplus.js</code> → <code>window.LEARN_HUB_TECHPLUS</code></li>
+  <li><code>learn-hub-gimkit-questions.js</code> → <code>window.LEARN_HUB_GIMKIT_QUIZZES</code> (generated question sets for Tech+ Questions mode)</li>
   <li><code>learn-hub-techplus-md.js</code> → loader, hashes, <code>loadLearnHubTechplusChapter(n)</code></li>
   <li><code>learn-hub-security-md.js</code> → <code>window.LEARN_HUB_SECURITY_MD</code> (Security track HTML segments)</li>
   <li><code>learn-hub-kali-md.js</code> → <code>window.LEARN_HUB_KALI_MD</code> (Labs / Kali curriculum segments)</li>
@@ -192,7 +193,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <ul>
   <li><strong>Head:</strong> charset, viewport, no-cache meta, fonts, <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, <code>learn-hub-teach.css</code> (same <code>?v=…</code> query on each)</li>
   <li><strong><code>#lh-announcer</code></strong> — <code>aria-live</code> for SR announcements.</li>
-  <li><strong><code>#sidebar</code></strong> — <code>#course-pills</code>, <code>#xp-bar</code>/<code>#xp-fill</code>/<code>#xp-label</code>, <code>#lesson-filter</code>, <code>#sidebar-track-name</code>, <code>#sidebar-lesson-nav</code>, a11y toggles, <code>#btn-reset-all</code>.</li>
+  <li><strong><code>#sidebar</code></strong> — <code>#course-pills</code>, <code>#xp-bar</code>/<code>#xp-fill</code>/<code>#xp-label</code>, <code>#lesson-filter</code>, <code>#sidebar-track-name</code>, <code>#sidebar-lesson-nav</code>, a11y toggles, <code>#btn-reset-all</code>. Tech+ includes a Chapters/Objectives/Questions segment switch; Questions mode hides teach/notes and keeps quiz-only flow.</li>
   <li><strong><code>#lh-main</code></strong> — <code>#menu-toggle</code>, <code>#lesson-title</code>, <code>#lh-lesson-place</code>, <code>#lesson-picker</code>, <code>#progress-fill</code>, <code>#btn-toggle-teach</code>.</li>
   <li><strong><code>#content-grid</code></strong> — <code>#practice-column</code> with <code>#ws-web</code>, <code>#ws-py</code>, <code>#ws-sql</code>, <code>#ws-tech</code> (quiz UI).</li>
   <li><strong><code>#teach</code></strong> — <code>#teach-boot-placeholder</code> until JS runs.</li>
@@ -258,6 +259,7 @@ Data: LEARN_HUB_COURSES + merged HTML per lesson. URL: ?course=&amp;lesson=</cod
 <section class="chunk" id="quiz-tech">
 <h2>Tech+ quiz, keyboard, iframe, SQL &amp; Python</h2>
 <h3>Tech+ quiz</h3>
+<p>Feedback visibility is now submit-driven: the Feedback panel remains hidden until <strong>Check answers</strong> is pressed.</p>
 <p><code>questions[]</code>: <code>{ q, choices[], correct }</code> — <code>correct</code> is zero-based index. Radios <code>quiz_{qi}</code>. Failure feedback may include raw <code>&lt;strong&gt;</code>.</p>
 <h3 id="keyboard">Keyboard</h3>
 <p>Ctrl+Enter: Run (web preview / SQL). Shift+Ctrl+Enter: Check. Python Run via Ctrl+Enter triggers Run button. Tab / Shift+Tab: two-space indent in editors.</p>
