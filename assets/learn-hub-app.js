@@ -45,6 +45,10 @@ var COURSES;
       typeof window !== "undefined" && window.LEARN_HUB_KALI_MD && typeof window.LEARN_HUB_KALI_MD === "object"
         ? window.LEARN_HUB_KALI_MD
         : null;
+    const PentestMd =
+      typeof window !== "undefined" && window.LEARN_HUB_PENTEST_MD && typeof window.LEARN_HUB_PENTEST_MD === "object"
+        ? window.LEARN_HUB_PENTEST_MD
+        : null;
     const TechStudyPatch =
       typeof window !== "undefined" &&
       window.LEARN_HUB_TECHPLUS_STUDY_PATCH &&
@@ -82,6 +86,10 @@ var COURSES;
             const addKali = KaliMd[L.id];
             if (addKali) read += addKali;
           }
+          if (PentestMd) {
+            const addPentest = PentestMd[L.id];
+            if (addPentest) read += addPentest;
+          }
           if (TechStudyPatch) {
             const addPatch = TechStudyPatch[L.id];
             if (addPatch) read += addPatch;
@@ -92,7 +100,7 @@ var COURSES;
       }
     }
   } catch (mergeErr) {
-    console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali reading failed for some lessons.", mergeErr);
+    console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali / PenTest+ reading failed for some lessons.", mergeErr);
   }
 })();
 if (!Array.isArray(COURSES) || COURSES.length === 0) {
@@ -2170,6 +2178,9 @@ function learnHubRunApp() {
       if (c.id === "security") {
         hint =
           "Open <strong>Notes</strong> for the workplace curriculum reading (from <code>docs/SECURITY_CONCEPTS_WORKPLACE_CURRICULUM.md</code>). After each level you will see <strong>Quiz</strong> steps in the sidebar — same layout as Tech+ check-ins: answer in the left column, then <strong>Check answers</strong>.";
+      } else if (c.id === "pentest") {
+        hint =
+          "Open <strong>Notes</strong> for PenTest+ lesson content. This track is read-first and broken into short section lessons without objective/review header blocks.";
       } else if (c.id === "labs") {
         hint =
           "These steps are a <strong>hands-on lab script</strong> for your <strong>Kali Linux VM</strong>. Nothing in the left column runs on the VM—open a terminal on Kali and follow <strong>Notes</strong> step by step. When you are done with this lab, press <strong>Continue</strong>.";
