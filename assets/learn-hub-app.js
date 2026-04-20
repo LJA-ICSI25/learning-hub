@@ -373,16 +373,27 @@ function learnHubRunApp() {
       if (!set || !Array.isArray(set.questions) || !set.questions.length) continue;
       var id = "tech-gimkit-" + String(i + 1).padStart(2, "0");
       if (seen[id]) continue;
+      var title = set.title || "GimKit questions " + (i + 1);
       add.push({
-        unit: "GimKit question sets",
-        id: id,
-        kind: "quiz",
-        title: set.title || "GimKit questions " + (i + 1),
-        narrative: "",
-        questions: set.questions,
+        _order: i,
+        lesson: {
+          unit: "GimKit question sets",
+          id: id,
+          kind: "quiz",
+          title: title,
+          narrative: "",
+          questions: set.questions,
+        },
       });
     }
-    if (add.length) tech.lessons = tech.lessons.concat(add);
+    /* Keep stable tech-gimkit-NN ids (from set index) but list voucher tests first in the sidebar / lesson order. */
+    add.sort(function (a, b) {
+      var av = /^Tech\+ Voucher Test/i.test(String((a.lesson && a.lesson.title) || "")) ? 0 : 1;
+      var bv = /^Tech\+ Voucher Test/i.test(String((b.lesson && b.lesson.title) || "")) ? 0 : 1;
+      if (av !== bv) return av - bv;
+      return a._order - b._order;
+    });
+    if (add.length) tech.lessons = tech.lessons.concat(add.map(function (x) { return x.lesson; }));
   }
 
   injectGimkitQuizLessons();
@@ -1284,6 +1295,7 @@ function learnHubRunApp() {
     var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
     if (O && getTechplusOrgMode() === O.MODE_QUESTIONS) {
       var t = plainTextFromHtml((lesson && lesson.title) || "");
+      if (/^Tech\+ Voucher Test/i.test(t)) return "voucher-tests";
       if (/^GimKit Set \d+/i.test(t)) return "gimkit-core";
       if (/^GimKit ITF Bits/i.test(t)) return "gimkit-itf-bits";
       if (/^GimKit Questions Set \d+/i.test(t)) return "gimkit-large";
@@ -1298,6 +1310,7 @@ function learnHubRunApp() {
     var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
     var mode = getTechplusOrgMode();
     if (O && mode === O.MODE_QUESTIONS) {
+      if (groupKey === "voucher-tests") return "Tech+ voucher tests";
       if (groupKey === "gimkit-core") return "Core GimKit sets";
       if (groupKey === "gimkit-itf-bits") return "ITF Bits sets";
       if (groupKey === "gimkit-large") return "Large mixed sets";
