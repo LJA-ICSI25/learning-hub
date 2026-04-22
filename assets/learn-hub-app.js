@@ -2163,6 +2163,7 @@ function learnHubRunApp() {
     const qs = lesson.questions || [];
     const gPrefix = quizRadioGroupPrefix(lesson);
     let wrong = 0;
+    const marks = [];
     if (!el.techQuiz) return { ok: false, msg: "Quiz panel is not available." };
     const order = techQuizSubset && techQuizSubset.order ? techQuizSubset.order : qs.map(function (_, i) {
       return i;
@@ -2170,8 +2171,31 @@ function learnHubRunApp() {
     for (let di = 0; di < order.length; di++) {
       const origQi = order[di];
       const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${di}"]:checked`);
-      if (!sel || +sel.value !== qs[origQi].correct) wrong++;
+      const selected = sel ? +sel.value : null;
+      const isCorrect = selected != null && selected === qs[origQi].correct;
+      if (!isCorrect) wrong++;
+      marks.push({
+        displayIndex: di,
+        isCorrect: isCorrect,
+        isAnswered: selected != null,
+      });
     }
+    marks.forEach(function (m) {
+      const card = el.techQuiz.querySelector('.quiz-q[data-q="' + m.displayIndex + '"]');
+      if (!card) return;
+      card.classList.remove("quiz-q--correct", "quiz-q--incorrect", "quiz-q--unanswered");
+      if (m.isCorrect) card.classList.add("quiz-q--correct");
+      else if (!m.isAnswered) card.classList.add("quiz-q--unanswered");
+      else card.classList.add("quiz-q--incorrect");
+      let status = card.querySelector(".quiz-q-status");
+      if (!status) {
+        status = document.createElement("p");
+        status.className = "quiz-q-status";
+        status.setAttribute("aria-live", "polite");
+        card.appendChild(status);
+      }
+      status.textContent = m.isCorrect ? "Correct" : !m.isAnswered ? "Needs review (no answer selected)" : "Needs review";
+    });
     const secHint =
       activeCourseId === "security"
         ? "review the matching <strong>level lessons</strong> in the sidebar, then try again."
@@ -2575,11 +2599,7 @@ function learnHubRunApp() {
       if (el.announcer) el.announcer.textContent = g.ok ? "Quiz check passed." : "Quiz check: " + (g.msg || "Try again");
       if (!g.ok) return;
       awardIfNew(Ls.id);
-      if (lessonIndex + 1 < lessons().length) goLesson(lessonIndex + 1);
-      else {
-        toast("Track complete!");
-        scrollLessonToTop();
-      }
+      toast("Passed. Review highlights, then choose your next lesson.");
       renderNav();
       updateChrome();
       return;
