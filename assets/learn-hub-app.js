@@ -122,6 +122,8 @@ function learnHubRunApp() {
   const TECHPLUS_PILLS_ONLY_KEY = "learn-hub-techplus-pills-only-v1";
   var techQuizSizeMode = "all";
   var techQuizSubset = null;
+  var techQuizForcedOrder = null;
+  var techQuizForcedLabel = "";
 
   function getTechplusPillsOnly() {
     try {
@@ -350,6 +352,15 @@ function learnHubRunApp() {
     return -1;
   }
 
+  function firstTechStudyLessonIndex() {
+    var list = lessons();
+    for (var i = 0; i < list.length; i++) {
+      var L = list[i];
+      if (!isTechGimkitLesson(L) && L && L.kind === "learn") return i;
+    }
+    return 0;
+  }
+
   function isTechQuestionsMode() {
     if (activeCourseId !== "tech") return false;
     var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
@@ -401,6 +412,7 @@ function learnHubRunApp() {
   const courseById = Object.fromEntries(COURSES.map((c) => [c.id, c]));
   let activeCourseId = COURSES[0].id;
   let lessonIndex = 0;
+  let techQuestionNavVariant = "";
 
   let progress = {
     activeCourseId: COURSES[0].id,
@@ -1227,6 +1239,7 @@ function learnHubRunApp() {
     if (progress.activeCourseId && courseById[progress.activeCourseId]) activeCourseId = progress.activeCourseId;
     else activeCourseId = COURSES[0].id;
     progress.activeCourseId = activeCourseId;
+    ensureVoucher01Progress();
     const cp = courseProgress(activeCourseId);
     let saved = Number(cp.idx);
     if (!Number.isFinite(saved) || saved < 0) saved = 0;
@@ -1311,6 +1324,7 @@ function learnHubRunApp() {
     var mode = getTechplusOrgMode();
     if (O && mode === O.MODE_QUESTIONS) {
       if (groupKey === "voucher-tests") return "Tech+ voucher tests";
+      if (groupKey === "study-plans") return "Study plans";
       if (groupKey === "gimkit-core") return "Core GimKit sets";
       if (groupKey === "gimkit-itf-bits") return "ITF Bits sets";
       if (groupKey === "gimkit-large") return "Large mixed sets";
@@ -1334,7 +1348,23 @@ function learnHubRunApp() {
     const inQuestionsMode = !!(O && mode === O.MODE_QUESTIONS);
     const pairs = [];
     for (let i = 0; i < all.length; i++) {
-      if (!inQuestionsMode || isTechGimkitLesson(all[i])) pairs.push({ idx: i, L: all[i] });
+      if (!inQuestionsMode) {
+        pairs.push({ idx: i, L: all[i], groupKey: null, labelOverride: "", variant: "" });
+        continue;
+      }
+      if (!isTechGimkitLesson(all[i])) continue;
+      const lesson = all[i];
+      const isVoucher = /^Tech\+ Voucher Test/i.test(String((lesson && lesson.title) || ""));
+      pairs.push({ idx: i, L: lesson, groupKey: null, labelOverride: "", variant: "" });
+      if (isVoucher) {
+        pairs.push({
+          idx: i,
+          L: lesson,
+          groupKey: "study-plans",
+          labelOverride: "Custom Study Plan - " + plainTextFromHtml(lesson.title || "Voucher"),
+          variant: "study-plan",
+        });
+      }
     }
     if (!pairs.length && inQuestionsMode) {
       return '<div class="unit lh-unit-techplus"><div class="unit-title">GimKit question sets</div><p class="msg info">No GimKit question sets loaded.</p></div>';
@@ -1342,8 +1372,9 @@ function learnHubRunApp() {
     const blocks = [];
     let cur = null;
     for (let i = 0; i < pairs.length; i++) {
-      const L = pairs[i].L;
-      const gk = techplusNavGroupKey(L);
+      const pair = pairs[i];
+      const L = pair.L;
+      const gk = pair.groupKey || techplusNavGroupKey(L);
       if (!cur || cur.key !== gk) {
         cur = { key: gk, start: i, first: L };
         blocks.push(cur);
@@ -1354,19 +1385,28 @@ function learnHubRunApp() {
       const start = block.start;
       let end = start;
       const gk = block.key;
-      while (end + 1 < pairs.length && techplusNavGroupKey(pairs[end + 1].L) === gk) end++;
+      while (end + 1 < pairs.length && (pairs[end + 1].groupKey || techplusNavGroupKey(pairs[end + 1].L)) === gk) end++;
       const title = techplusNavBlockTitleForKey(gk, block.first);
-      html += `<div class="unit lh-unit-techplus" data-tp-group="${escapeHtml(gk)}"><div class="unit-title">${escapeHtml(title)}</div>`;
+      var isVoucherGroup = gk === "voucher-tests";
+      var isStudyGroup = gk === "study-plans";
+      html += `<div class="unit lh-unit-techplus ${isVoucherGroup ? "lh-unit-voucher-tests" : ""} ${isStudyGroup ? "lh-unit-study-plans" : ""}" data-tp-group="${escapeHtml(gk)}"><div class="unit-title">${escapeHtml(title)}</div>`;
       for (let i = start; i <= end; i++) {
-        const idx = pairs[i].idx;
-        const Ls = pairs[i].L;
+        const pair = pairs[i];
+        const idx = pair.idx;
+        const Ls = pair.L;
         const locked = lessonLocked(idx);
         const done = !!courseProgress(activeCourseId).done[Ls.id];
         const tag = tagForKind(Ls.kind);
+        const isVoucherLesson = /^Tech\+ Voucher Test/i.test(String((Ls && Ls.title) || ""));
+        const isStudyPlanRow = pair.variant === "study-plan";
+        const rowLabel = pair.labelOverride || Ls.title;
+        const activeRowVariant = inQuestionsMode ? techQuestionNavVariant || "" : "";
+        const rowVariant = inQuestionsMode ? pair.variant || "" : "";
+        const isActive = idx === lessonIndex && rowVariant === activeRowVariant;
         const displayNum = inQuestionsMode ? i - start + 1 : idx + 1;
-        html += `<button type="button" class="lesson-btn ${idx === lessonIndex ? "active" : ""} ${done ? "done" : ""} ${locked ? "locked" : ""}" data-i="${idx}" ${locked ? "disabled" : ""}>
+        html += `<button type="button" class="lesson-btn ${isActive ? "active" : ""} ${done ? "done" : ""} ${locked ? "locked" : ""} ${isVoucherLesson ? "lh-voucher-lesson-btn" : ""} ${isStudyPlanRow ? "lh-study-plan-lesson-btn" : ""}" data-i="${idx}" data-variant="${escapeHtml(pair.variant || "")}" ${locked ? "disabled" : ""}>
           <span class="idx">${displayNum}</span><span class="dot"></span>
-          <span class="lbl">${lessonTitleAsUiHtml(Ls.title)}</span>
+          <span class="lbl">${lessonTitleAsUiHtml(rowLabel)}${isStudyPlanRow ? ' <span class="lh-voucher-sidebar-badge">STUDY PLAN</span>' : ""}</span>
           <span class="tag ${Ls.kind === "challenge" ? "challenge" : ""} ${Ls.kind === "quiz" ? "quiz" : ""}">${tag}</span>
         </button>`;
       }
@@ -1436,7 +1476,7 @@ function learnHubRunApp() {
   function attachNavHandlers(root) {
     root.querySelectorAll(".lesson-btn:not(.locked)").forEach((b) => {
       b.addEventListener("click", function () {
-        goLesson(+b.getAttribute("data-i"));
+        goLesson(+b.getAttribute("data-i"), { variant: b.getAttribute("data-variant") || "" });
         if (el.sidebar) el.sidebar.classList.remove("open");
       });
     });
@@ -1549,6 +1589,11 @@ function learnHubRunApp() {
     var host = document.getElementById("footer-practice-actions");
     var pc = document.getElementById("practice-column");
     if (!host) return;
+    var Lcur = currentLesson();
+    if (isVoucherStudyPlanView(Lcur)) {
+      host.hidden = true;
+      return;
+    }
     if (!pc || pc.classList.contains("is-hidden")) {
       host.hidden = true;
       return;
@@ -2067,8 +2112,750 @@ function learnHubRunApp() {
     return arr;
   }
 
+  function isTechVoucher01Lesson(lesson) {
+    return !!(lesson && /^Tech\+ Voucher Test 01\b/i.test(String(lesson.title || "")));
+  }
+
+  function isVoucherStudyPlanView(lesson) {
+    return !!(isTechVoucher01Lesson(lesson) && techQuestionNavVariant === "study-plan");
+  }
+
+  function voucher01Plan() {
+    var P = typeof window !== "undefined" ? window.LEARN_HUB_VOUCHER01_PLAN : null;
+    return P && typeof P === "object" ? P : null;
+  }
+
+  function voucher01ObjectiveLineHtml(origQi) {
+    var P = voucher01Plan();
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    if (!P || !Array.isArray(P.domains) || origQi < 0 || origQi >= P.domains.length) return "";
+    var d = P.domains[origQi];
+    var title =
+      O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[d] ? O.OBJECTIVE_NAV_TITLE[d] : "Objective domain " + d;
+    return (
+      '<p class="lh-voucher-q-obj"><span class="lh-voucher-q-obj-k">Maps to</span> · ' + escapeHtml(title) + "</p>"
+    );
+  }
+
+  function arraysEqualSorted(a, b) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+    var as = a.slice().sort(function (x, y) {
+      return x - y;
+    });
+    var bs = b.slice().sort(function (x, y) {
+      return x - y;
+    });
+    for (var i = 0; i < as.length; i++) if (as[i] !== bs[i]) return false;
+    return true;
+  }
+
+  function ensureVoucher01Progress() {
+    if (!progress || typeof progress !== "object") return;
+    if (!progress.voucher01 || typeof progress.voucher01 !== "object" || Array.isArray(progress.voucher01)) {
+      progress.voucher01 = { version: 1, attempts: [], wrongQi: {}, domainTally: {} };
+      return;
+    }
+    if (!Array.isArray(progress.voucher01.attempts)) progress.voucher01.attempts = [];
+    if (!progress.voucher01.wrongQi || typeof progress.voucher01.wrongQi !== "object" || Array.isArray(progress.voucher01.wrongQi))
+      progress.voucher01.wrongQi = {};
+    if (
+      !progress.voucher01.domainTally ||
+      typeof progress.voucher01.domainTally !== "object" ||
+      Array.isArray(progress.voucher01.domainTally)
+    )
+      progress.voucher01.domainTally = {};
+  }
+
+  function computeWeakDomains(limit) {
+    ensureVoucher01Progress();
+    var tally = progress.voucher01.domainTally || {};
+    return Object.keys(tally)
+      .map(function (k) {
+        return { d: +k, n: tally[k] };
+      })
+      .filter(function (x) {
+        return x.d >= 1 && x.d <= 12 && Number(x.n) > 0;
+      })
+      .sort(function (a, b) {
+        return b.n - a.n || a.d - b.d;
+      })
+      .slice(0, Math.max(1, limit || 2));
+  }
+
+  function buildWeakDomainDrillOrder(lesson, topDomainCount, questionCount) {
+    var P = voucher01Plan();
+    if (!lesson || !Array.isArray(lesson.questions) || !P || !Array.isArray(P.domains)) return [];
+    var weak = computeWeakDomains(topDomainCount || 2);
+    if (!weak.length) return [];
+    var weakSet = Object.create(null);
+    weak.forEach(function (w) {
+      weakSet[w.d] = true;
+    });
+    var pool = [];
+    for (var i = 0; i < lesson.questions.length; i++) {
+      var d = P.domains[i];
+      if (weakSet[d]) pool.push(i);
+    }
+    if (!pool.length) return [];
+    shuffleInPlace(pool);
+    var cap = Math.min(Math.max(1, questionCount || 15), pool.length);
+    return pool.slice(0, cap);
+  }
+
+  function summarizeChoiceList(choices, idxList) {
+    var arr = Array.isArray(idxList) ? idxList : [];
+    if (!arr.length) return "No answer selected";
+    return arr
+      .map(function (i) {
+        var n = Number(i);
+        var text = choices && choices[n] != null ? String(choices[n]) : "Choice " + (n + 1);
+        return String.fromCharCode(65 + n) + ". " + text;
+      })
+      .join("; ");
+  }
+
+  function inferQuestionFocus(qText) {
+    var q = String(qText || "").toLowerCase();
+    if (/first|immediately|next step/.test(q)) return "process order";
+    if (/best|most likely|most appropriate/.test(q)) return "best-fit concept";
+    if (/secure|security|protect|encrypt|access/.test(q)) return "security control";
+    if (/database|table|field|record|key/.test(q)) return "database fundamentals";
+    if (/network|dns|ip|gateway|wifi|vpn/.test(q)) return "networking behavior";
+    if (/cloud|saas|paas|iaas/.test(q)) return "cloud model identification";
+    return "core concept match";
+  }
+
+  function detectQuestionPattern(qText, isMulti) {
+    var q = String(qText || "").toLowerCase();
+    if (isMulti || /select (two|three|all)|all that apply/.test(q)) {
+      return {
+        label: "Multi-select",
+        strategy: "Treat each choice as true/false independently, then select only fully correct statements.",
+      };
+    }
+    if (/first|immediately|next step|after/.test(q)) {
+      return {
+        label: "Process order",
+        strategy: "Find sequence clues, then eliminate answers that are valid but occur later.",
+      };
+    }
+    if (/best|most likely|most appropriate|most effective/.test(q)) {
+      return {
+        label: "Best-fit scenario",
+        strategy: "Choose the option that matches the exact constraints, not just a generally good choice.",
+      };
+    }
+    if (/which of the following is|what is|best definition|describes/.test(q)) {
+      return {
+        label: "Definition / concept",
+        strategy: "Map each option to its exact term definition and pick the one with full precision.",
+      };
+    }
+    if (/troubleshoot|unable|fails|error|issue|problem/.test(q)) {
+      return {
+        label: "Troubleshooting",
+        strategy: "Start with highest-probability/least-invasive checks, and follow the expected troubleshooting order.",
+      };
+    }
+    return {
+      label: "Concept application",
+      strategy: "Anchor on the ask verb first, then match one core concept before checking distractors.",
+    };
+  }
+
+  function keywordOverlapScore(a, b) {
+    var A = String(a || "").toLowerCase().match(/[a-z0-9]{3,}/g) || [];
+    var B = String(b || "").toLowerCase().match(/[a-z0-9]{3,}/g) || [];
+    if (!A.length || !B.length) return 0;
+    var setB = Object.create(null);
+    B.forEach(function (w) {
+      setB[w] = true;
+    });
+    var hit = 0;
+    A.forEach(function (w) {
+      if (setB[w]) hit++;
+    });
+    return hit / Math.max(A.length, 1);
+  }
+
+  function diagnoseMissType(qText, pickedText, correctText, wasUnanswered, isMulti) {
+    if (wasUnanswered) return "No attempt recorded (blank submission).";
+    var q = String(qText || "").toLowerCase();
+    if (isMulti) return "Partial selection error (included wrong choices or missed required ones).";
+    if (/first|immediately|next step|after/.test(q)) return "Sequence-order confusion (picked a step that usually happens later/earlier).";
+    if (/best|most likely|most appropriate|most effective/.test(q)) return "Best-fit tradeoff miss (plausible choice, but not the strongest match).";
+    var overlap = keywordOverlapScore(pickedText, correctText);
+    if (overlap > 0.42) return "Near-miss on similar choices (concepts are close; precision wording decided it).";
+    if (/security|protect|encrypt|access/.test(q)) return "Security-control mismatch (selected a related control at the wrong scope/layer).";
+    return "Concept mismatch (selected an option from the same area, but different function).";
+  }
+
+  function domainExplainHints(domain) {
+    var P = voucher01Plan();
+    if (!P || !P.explainByDomain) return null;
+    return P.explainByDomain[domain] || null;
+  }
+
+  function buildWhyContrast(qText, pickedText, correctText, wasUnanswered, domain, isMulti) {
+    var focus = inferQuestionFocus(qText);
+    var pattern = detectQuestionPattern(qText, !!isMulti);
+    var hints = domainExplainHints(domain);
+    var whyCorrect = hints && hints.correctRule
+      ? hints.correctRule
+      : "Correct because it is the strongest match for " + focus + " in this question.";
+    if (hints && hints.anchor) {
+      whyCorrect += " Focus area: " + hints.anchor + ".";
+    }
+    if (wasUnanswered) {
+      return {
+        whyCorrect: whyCorrect,
+        whyPicked: "Your answer was blank, so no concept could be validated for this prompt.",
+        remember: (hints && hints.memory) || "Answer every item, even if unsure, then learn from the contrast.",
+        patternLabel: pattern.label,
+        strategy: pattern.strategy,
+        missType: diagnoseMissType(qText, pickedText, correctText, true, !!isMulti),
+      };
+    }
+    var q = String(qText || "").toLowerCase();
+    var picked = String(pickedText || "").toLowerCase();
+    var whyPicked =
+      (hints && hints.trapRule) ||
+      "Your choice is related, but it does not match the asked requirement as directly as the correct option.";
+    if (/first|immediately|next step/.test(q) && /(implement|verify|document|plan)/.test(picked)) {
+      whyPicked = "Your choice is usually a later step in the flow, not the first action requested.";
+    } else if (/best|most likely|most appropriate/.test(q)) {
+      whyPicked = "Your choice can be plausible, but another option is a tighter best-fit for the exact wording.";
+    } else if (/security|protect|encrypt|access/.test(q)) {
+      whyPicked = "Your choice touches security, but it does not provide the specific protection the prompt asks for.";
+    }
+    var remember =
+      (hints && hints.memory) ||
+      "Focus on the exact ask words first (best, first, most likely), then match only one concept.";
+    if (/security|protect|encrypt|access/.test(q)) {
+      remember = "Match the control type to the risk: prevention, detection, recovery, or access enforcement.";
+    } else if (/database|table|field|record|key/.test(q)) {
+      remember = "Identify what the question asks for: structure (table/field), identity (primary key), or relationship (foreign key).";
+    } else if (/network|dns|ip|gateway|wifi|vpn/.test(q)) {
+      remember = "Pick the networking component by function: naming, addressing, routing, transport, or secure tunnel.";
+    } else if (/cloud|saas|paas|iaas/.test(q)) {
+      remember = "For cloud questions, map by ownership: app only (SaaS), runtime/platform (PaaS), or infrastructure control (IaaS).";
+    }
+    return {
+      whyCorrect: whyCorrect,
+      whyPicked: whyPicked,
+      remember: remember,
+      patternLabel: pattern.label,
+      strategy: pattern.strategy,
+      missType: diagnoseMissType(qText, pickedText, correctText, false, !!isMulti),
+    };
+  }
+
+  function recordVoucher01Attempt(lesson, gradeMeta) {
+    if (!currentUsername || !lesson || !gradeMeta) return;
+    if (!voucher01Plan() || !isTechVoucher01Lesson(lesson)) return;
+    ensureVoucher01Progress();
+    var wrong = gradeMeta.wrongOrigQi && Array.isArray(gradeMeta.wrongOrigQi) ? gradeMeta.wrongOrigQi : [];
+    progress.voucher01.attempts.push({
+      at: new Date().toISOString(),
+      lessonId: lesson.id,
+      wrong: wrong.slice(),
+      wrongDetails: Array.isArray(gradeMeta.wrongDetails) ? gradeMeta.wrongDetails : [],
+      domainStats:
+        gradeMeta.domainStats && typeof gradeMeta.domainStats === "object" && !Array.isArray(gradeMeta.domainStats)
+          ? gradeMeta.domainStats
+          : {},
+      ok: !!gradeMeta.ok,
+    });
+    if (progress.voucher01.attempts.length > 40) progress.voucher01.attempts.shift();
+    var P = voucher01Plan();
+    wrong.forEach(function (qi) {
+      var k = String(qi);
+      progress.voucher01.wrongQi[k] = (progress.voucher01.wrongQi[k] || 0) + 1;
+      var dom = P && P.domains ? P.domains[qi] : null;
+      if (dom != null && dom >= 1 && dom <= 12) {
+        var dk = String(dom);
+        progress.voucher01.domainTally[dk] = (progress.voucher01.domainTally[dk] || 0) + 1;
+      }
+    });
+    saveProgress();
+  }
+
+  function openTechLessonById(lessonId) {
+    var tech = courseById["tech"];
+    if (!tech || !lessonId) return;
+    saveProgress();
+    activeCourseId = "tech";
+    progress.activeCourseId = "tech";
+    var list = tech.lessons || [];
+    var j = list.findIndex(function (x) {
+      return x && x.id === lessonId;
+    });
+    if (j < 0) {
+      toast("That lesson is not in this curriculum copy.");
+      return;
+    }
+    lessonIndex = j;
+    saveProgress();
+    renderPills();
+    renderNav();
+    applyLessonUI();
+    scrollLessonToTop();
+    if (el.sidebar) el.sidebar.classList.remove("open");
+    syncMenuToggleExpanded();
+  }
+
+  function voucher01QuickCramHtml() {
+    var P = voucher01Plan();
+    if (!P) return "";
+    var core = Array.isArray(P.cramCore) ? P.cramCore : [];
+    if (!core.length) return "";
+    var out = '<section class="lh-voucher01-cram" aria-label="Quick cram key points">';
+    out += '<h4 class="lh-voucher01-cram-title">Quick cram key points</h4><ul class="lh-voucher01-cram-list">';
+    core.forEach(function (line) {
+      out += "<li>" + escapeHtml(line) + "</li>";
+    });
+    out += "</ul></section>";
+    return out;
+  }
+
+  function voucher01TimedCramHtml() {
+    var P = voucher01Plan();
+    var timed = P && P.cramTimed && typeof P.cramTimed === "object" ? P.cramTimed : null;
+    if (!timed) return "";
+    var order = ["preexam", "m10", "m20", "h1"];
+    var existing = order.filter(function (k) {
+      return timed[k] && Array.isArray(timed[k].points) && timed[k].points.length;
+    });
+    if (!existing.length) return "";
+    var active = existing[0];
+    var out = '<section class="lh-voucher01-timed" aria-label="Timed cram plans">';
+    out += '<div class="lh-voucher01-timed-head">Timed cram plans</div><div class="lh-voucher01-timed-tabs" role="tablist">';
+    existing.forEach(function (k) {
+      var row = timed[k];
+      out +=
+        '<button type="button" class="tool ghost lh-voucher01-timed-tab' +
+        (k === active ? " lh-voucher01-timed-tab--active" : "") +
+        '" data-cram-key="' +
+        escapeHtml(k) +
+        '" aria-pressed="' +
+        (k === active ? "true" : "false") +
+        '">' +
+        escapeHtml(row.label || k) +
+        "</button>";
+    });
+    out += "</div>";
+    existing.forEach(function (k) {
+      var row = timed[k];
+      out +=
+        '<div class="lh-voucher01-timed-pane' +
+        (k === active ? " is-active" : "") +
+        '" data-cram-pane="' +
+        escapeHtml(k) +
+        '"><ul class="lh-voucher01-timed-list">';
+      row.points.forEach(function (line) {
+        out += "<li>" + escapeHtml(line) + "</li>";
+      });
+      out += "</ul></div>";
+    });
+    out += "</section>";
+    return out;
+  }
+
+  function voucher01DomainCramHtml(domain) {
+    var P = voucher01Plan();
+    if (!P || !P.cramByDomain) return "";
+    var lines = P.cramByDomain[domain];
+    if (!Array.isArray(lines) || !lines.length) return "";
+    var out = '<ul class="lh-voucher01-domain-cram">';
+    lines.forEach(function (line) {
+      out += "<li>" + escapeHtml(line) + "</li>";
+    });
+    out += "</ul>";
+    return out;
+  }
+
+  function voucher01DomainProgressHtml() {
+    ensureVoucher01Progress();
+    var attempts = Array.isArray(progress.voucher01.attempts) ? progress.voucher01.attempts : [];
+    if (!attempts.length) return "";
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    var recent = attempts.slice(Math.max(0, attempts.length - 3));
+    var agg = Object.create(null);
+    recent.forEach(function (a) {
+      var ds = a && a.domainStats && typeof a.domainStats === "object" ? a.domainStats : null;
+      if (!ds) return;
+      Object.keys(ds).forEach(function (k) {
+        var row = ds[k];
+        if (!row || !Number.isFinite(row.total)) return;
+        if (!agg[k]) agg[k] = { total: 0, correct: 0, wrong: 0 };
+        agg[k].total += Number(row.total) || 0;
+        agg[k].correct += Number(row.correct) || 0;
+        agg[k].wrong += Number(row.wrong) || 0;
+      });
+    });
+    var rows = Object.keys(agg)
+      .map(function (k) {
+        var d = +k;
+        var a = agg[k];
+        var pct = a.total > 0 ? Math.round((a.correct / a.total) * 100) : 0;
+        return { d: d, total: a.total, correct: a.correct, pct: pct };
+      })
+      .filter(function (r) {
+        return r.total > 0;
+      })
+      .sort(function (a, b) {
+        return a.pct - b.pct || b.total - a.total;
+      })
+      .slice(0, 8);
+    if (!rows.length) return "";
+    var out = '<section class="lh-voucher01-domain-progress" aria-label="Domain mastery trend">';
+    out += '<h4 class="lh-voucher01-domain-progress-title">Domain mastery trend (last 3 attempts)</h4>';
+    rows.forEach(function (r) {
+      var title =
+        O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[r.d] ? O.OBJECTIVE_NAV_TITLE[r.d] : "Domain " + r.d;
+      out +=
+        '<div class="lh-voucher01-domain-row"><div class="lh-voucher01-domain-row-top"><span class="lh-voucher01-domain-name">' +
+        escapeHtml(title) +
+        '</span><span class="lh-voucher01-domain-stat">' +
+        r.pct +
+        "% (" +
+        r.correct +
+        "/" +
+        r.total +
+        ')</span></div><div class="lh-voucher01-domain-bar"><span style="width:' +
+        Math.max(4, r.pct) +
+        '%"></span></div></div>';
+    });
+    out += "</section>";
+    return out;
+  }
+
+  function buildVoucher01SnapshotText() {
+    ensureVoucher01Progress();
+    var attempts = Array.isArray(progress.voucher01.attempts) ? progress.voucher01.attempts : [];
+    var weak = computeWeakDomains(5);
+    var lines = [];
+    lines.push("Voucher 01 study snapshot");
+    lines.push("User: " + (currentUsername || "unknown"));
+    lines.push("Generated: " + new Date().toLocaleString());
+    lines.push("Attempts recorded: " + attempts.length);
+    if (weak.length) {
+      lines.push("");
+      lines.push("Top weak domains:");
+      weak.forEach(function (w) {
+        lines.push("- Domain " + w.d + " (miss count: " + w.n + ")");
+      });
+    }
+    var latest = attempts.length ? attempts[attempts.length - 1] : null;
+    if (latest) {
+      lines.push("");
+      lines.push("Latest attempt:");
+      lines.push("- Time: " + (latest.at ? new Date(latest.at).toLocaleString() : "unknown"));
+      lines.push("- Result: " + (latest.ok ? "pass" : "needs review"));
+      lines.push("- Missed: " + ((latest.wrong && latest.wrong.length) || 0));
+      if (latest.domainStats && typeof latest.domainStats === "object") {
+        var rows = Object.keys(latest.domainStats)
+          .map(function (k) {
+            var r = latest.domainStats[k];
+            var pct = r && r.total ? Math.round((r.correct / r.total) * 100) : 0;
+            return { d: k, pct: pct, total: r.total || 0 };
+          })
+          .filter(function (r) {
+            return r.total > 0;
+          })
+          .sort(function (a, b) {
+            return a.pct - b.pct;
+          })
+          .slice(0, 3);
+        if (rows.length) {
+          lines.push("- Weakest in latest attempt:");
+          rows.forEach(function (r) {
+            lines.push("  • Domain " + r.d + ": " + r.pct + "% (" + r.total + " q)");
+          });
+        }
+      }
+    }
+    lines.push("");
+    lines.push("Suggested next step: run Weak-domain drill (15 questions) and re-check.");
+    return lines.join("\n");
+  }
+
+  function voucher01AttemptHistoryHtml() {
+    var P = voucher01Plan();
+    if (!P) return "";
+    ensureVoucher01Progress();
+    var attempts = Array.isArray(progress.voucher01.attempts) ? progress.voucher01.attempts : [];
+    if (!attempts.length) return "";
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    var Lcur = currentLesson();
+    var qs = Lcur && Array.isArray(Lcur.questions) ? Lcur.questions : [];
+    var out = '<section class="lh-voucher01-attempts" aria-label="Attempt history">';
+    out +=
+      '<div class="lh-voucher01-attempts-head"><h4 class="lh-voucher01-attempts-title">Attempt history (this account)</h4>' +
+      '<button type="button" class="tool ghost lh-voucher01-clear-attempts">Clear history</button></div>';
+    for (var i = attempts.length - 1; i >= 0; i--) {
+      var a = attempts[i] || {};
+      var wrong = Array.isArray(a.wrong) ? a.wrong : [];
+      var wrongDetails = Array.isArray(a.wrongDetails) ? a.wrongDetails : [];
+      var dt = "";
+      try {
+        dt = a.at ? new Date(a.at).toLocaleString() : "";
+      } catch (_) {}
+      var label = "Attempt " + (i + 1);
+      var sub = wrong.length ? wrong.length + " missed" : "all correct";
+      out +=
+        '<details class="lh-voucher01-attempt-item"' +
+        (i === attempts.length - 1 ? " open" : "") +
+        "><summary>" +
+        '<span class="lh-voucher01-attempt-name">' +
+        escapeHtml(label) +
+        "</span>" +
+        '<span class="lh-voucher01-attempt-sub">' +
+        escapeHtml(sub + (dt ? " · " + dt : "")) +
+        "</span>" +
+        "</summary>";
+      if (!wrong.length) {
+        out += '<p class="lh-voucher01-attempt-ok">Passed with no misses on this attempt.</p></details>';
+        continue;
+      }
+      out += '<ul class="lh-voucher01-attempt-list">';
+      wrong.forEach(function (qi) {
+        var detail = wrongDetails.find(function (d) {
+          return d && Number(d.origQi) === Number(qi);
+        });
+        var q = qs[qi];
+        var qText = q && q.q ? q.q : "Question " + (Number(qi) + 1);
+        if (qText.length > 140) qText = qText.slice(0, 137) + "...";
+        var d = P.domains && P.domains[qi] != null ? P.domains[qi] : null;
+        var dTitle =
+          d != null && O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[d]
+            ? O.OBJECTIVE_NAV_TITLE[d]
+            : d != null
+              ? "Objective domain " + d
+              : "Objective domain unknown";
+        var pickedText = detail
+          ? summarizeChoiceList(detail.choices || [], detail.selectedIndices || [])
+          : "Not available";
+        var correctText = detail
+          ? summarizeChoiceList(detail.choices || [], detail.correctIndices || [])
+          : "Not available";
+        var why = detail
+          ? buildWhyContrast(
+              qText,
+              pickedText,
+              correctText,
+              !detail.selectedIndices || !detail.selectedIndices.length,
+              d,
+              (detail.correctIndices || []).length > 1
+            )
+          : { whyCorrect: "", whyPicked: "" };
+        out +=
+          '<li class="lh-voucher01-review-card">' +
+          '<div class="lh-voucher01-review-q"><span class="lh-voucher01-review-qn">Q' +
+          (Number(qi) + 1) +
+          "</span> " +
+          escapeHtml(qText) +
+          "</div>" +
+          '<div class="lh-voucher01-attempt-domain">' +
+          escapeHtml(dTitle) +
+          "</div>" +
+          (why.patternLabel
+            ? '<div class="lh-voucher01-review-pattern"><span class="lh-voucher01-pattern-chip">' +
+              escapeHtml(why.patternLabel) +
+              "</span><span>" +
+              escapeHtml(why.strategy || "") +
+              "</span></div>"
+            : "") +
+          (why.missType
+            ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Likely miss type</span><span>' +
+              escapeHtml(why.missType) +
+              "</span></div>"
+            : "") +
+          (detail && detail.confidence
+            ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Your confidence</span><span>' +
+              escapeHtml(detail.confidence === "med" ? "medium" : detail.confidence) +
+              "</span></div>"
+            : "") +
+          '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Your answer</span><span>' +
+          escapeHtml(pickedText) +
+          "</span></div>" +
+          '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Correct answer</span><span>' +
+          escapeHtml(correctText) +
+          "</span></div>" +
+          (why.whyCorrect
+            ? '<div class="lh-voucher01-attempt-why"><span class="lh-voucher01-k">Why this is correct</span><span>' + escapeHtml(why.whyCorrect) + "</span></div>"
+            : "") +
+          (why.whyPicked
+            ? '<div class="lh-voucher01-attempt-why"><span class="lh-voucher01-k">Why your pick missed</span><span>' + escapeHtml(why.whyPicked) + "</span></div>"
+            : "") +
+          (why.remember
+            ? '<div class="lh-voucher01-attempt-tip"><span class="lh-voucher01-k">Remember next time</span><span>' + escapeHtml(why.remember) + "</span></div>"
+            : "") +
+          "</li>";
+      });
+      out += "</ul></details>";
+    }
+    out += "</section>";
+    return out;
+  }
+
+  function voucher01PlanHtmlSummary() {
+    var P = voucher01Plan();
+    if (!P || !currentUsername) return "";
+    ensureVoucher01Progress();
+    var tally = progress.voucher01.domainTally || {};
+    var pairs = Object.keys(tally).map(function (k) {
+      return { d: +k, n: tally[k] };
+    });
+    pairs.sort(function (a, b) {
+      return b.n - a.n || a.d - b.d;
+    });
+    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
+    var out = "";
+    out +=
+      '<section class="lh-voucher01-actions" aria-label="Study actions">' +
+      '<button type="button" class="tool ghost lh-voucher01-drill-weak">Drill weakest 2 domains (15)</button>' +
+      '<button type="button" class="tool ghost lh-voucher01-export-snapshot">Copy study snapshot</button>' +
+      "</section>";
+    if (!pairs.length) {
+      out +=
+        "<p class=\"lh-voucher01-plan-lead\">Each question shows which <strong>objective domain</strong> it maps to. After <strong>Check answers</strong>, missed items add to your profile tally and this list suggests study segments. Nothing is locked—optional guidance only.</p>";
+      out += voucher01TimedCramHtml();
+      out += voucher01QuickCramHtml();
+      out += voucher01DomainProgressHtml();
+      out += voucher01AttemptHistoryHtml();
+      return out;
+    }
+    out += voucher01TimedCramHtml();
+    out += voucher01QuickCramHtml();
+    out += voucher01DomainProgressHtml();
+    out +=
+      "<p class=\"lh-voucher01-plan-lead\">Domains tied to questions you have missed (most often first). Review the notes for these domains, then return here.</p><ul class=\"lh-voucher01-plan-domains\">";
+    pairs.slice(0, 8).forEach(function (row) {
+      var title =
+        O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[row.d] ? O.OBJECTIVE_NAV_TITLE[row.d] : "Domain " + row.d;
+      out +=
+        "<li><strong>" +
+        escapeHtml(title) +
+        '</strong> <span class="lh-voucher01-plan-meta">(misses counted: ' +
+        row.n +
+        ')</span>' +
+        voucher01DomainCramHtml(row.d) +
+        "</li>";
+    });
+    out += "</ul>";
+    out += "<p class=\"lh-voucher01-plan-extra\">Use the Questions section when you want mixed question practice.</p>";
+    out += voucher01AttemptHistoryHtml();
+    return out;
+  }
+
+  function bindVoucher01PlanClicks(scope) {
+    if (!scope) return;
+    scope.querySelectorAll(".lh-voucher01-open-lesson").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-lesson-id");
+        if (id) openTechLessonById(id);
+      });
+    });
+    scope.querySelectorAll(".lh-voucher01-timed-tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var key = btn.getAttribute("data-cram-key") || "";
+        scope.querySelectorAll(".lh-voucher01-timed-tab").forEach(function (tb) {
+          var on = tb === btn;
+          tb.classList.toggle("lh-voucher01-timed-tab--active", on);
+          tb.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        scope.querySelectorAll(".lh-voucher01-timed-pane").forEach(function (pane) {
+          pane.classList.toggle("is-active", pane.getAttribute("data-cram-pane") === key);
+        });
+      });
+    });
+    scope.querySelectorAll(".lh-voucher01-clear-attempts").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!confirm("Clear Voucher 01 attempt history for this account only?")) return;
+        ensureVoucher01Progress();
+        progress.voucher01.attempts = [];
+        progress.voucher01.wrongQi = {};
+        progress.voucher01.domainTally = {};
+        saveProgress();
+        renderVoucher01StudyPlanMount();
+        if (el.techFeedback) el.techFeedback.innerHTML = "<div class='msg info'>Voucher attempt history cleared.</div>";
+        if (el.techStatus) el.techStatus.textContent = "History cleared";
+        setTechFeedbackVisible(true);
+      });
+    });
+    scope.querySelectorAll(".lh-voucher01-drill-weak").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var lesson = currentLesson();
+        var order = buildWeakDomainDrillOrder(lesson, 2, 15);
+        if (!order.length) {
+          if (el.techFeedback) el.techFeedback.innerHTML = "<div class='msg info'>No weak-domain history yet. Take one full attempt first.</div>";
+          if (el.techStatus) el.techStatus.textContent = "Need history";
+          setTechFeedbackVisible(true);
+          return;
+        }
+        techQuizForcedOrder = order.slice();
+        techQuizForcedLabel = "Weak-domain drill (15)";
+        techQuestionNavVariant = "";
+        goLesson(lessonIndex, { variant: "" });
+      });
+    });
+    scope.querySelectorAll(".lh-voucher01-export-snapshot").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        var text = buildVoucher01SnapshotText();
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            ta.remove();
+          }
+          if (el.techFeedback) el.techFeedback.innerHTML = "<div class='msg ok'>Study snapshot copied to clipboard.</div>";
+          if (el.techStatus) el.techStatus.textContent = "Snapshot copied";
+          setTechFeedbackVisible(true);
+        } catch (_) {
+          if (el.techFeedback) el.techFeedback.innerHTML = "<div class='msg err'>Could not copy snapshot. Clipboard permissions may be blocked.</div>";
+          if (el.techStatus) el.techStatus.textContent = "Copy failed";
+          setTechFeedbackVisible(true);
+        }
+      });
+    });
+  }
+
+  function renderVoucher01StudyPlanMount() {
+    if (!el.techQuiz || !isTechVoucher01Lesson(currentLesson()) || !voucher01Plan()) return;
+    if (techQuestionNavVariant !== "study-plan") return;
+    var old = document.getElementById("lh-voucher01-plan-root");
+    if (old) old.remove();
+    var root = document.createElement("div");
+    root.id = "lh-voucher01-plan-root";
+    root.innerHTML =
+      "<details class=\"lh-voucher01-details\" open><summary><span class=\"lh-voucher01-sum-main\">Custom study plan</span> <span class=\"lh-voucher01-sum-hint\">(optional · per account)</span></summary><div class=\"lh-voucher01-details-body\">" +
+      voucher01PlanHtmlSummary() +
+      "</div></details>";
+    el.techQuiz.appendChild(root);
+    bindVoucher01PlanClicks(root);
+  }
+
   function renderTechQuiz(lesson) {
     if (!el.techQuiz) return;
+    if (isVoucherStudyPlanView(lesson)) {
+      el.techQuiz.innerHTML =
+        "<div class='msg info'>Study plan mode is active. Use this panel for timed cram, custom recommendations, and attempt history.</div>";
+      if (el.techFeedback) el.techFeedback.innerHTML = "";
+      if (el.techStatus) el.techStatus.textContent = "Study plan";
+      setTechFeedbackVisible(false);
+      techQuizSubset = null;
+      renderVoucher01StudyPlanMount();
+      return;
+    }
     const qsAll = lesson.questions || [];
     techQuizSubset = null;
     if (!qsAll.length) {
@@ -2080,18 +2867,28 @@ function learnHubRunApp() {
     var mode = techQuizSizeMode;
     if (mode !== 10 && mode !== 15 && mode !== 20 && mode !== "all") mode = "all";
     var orderUsed;
-    if (mode === "all") {
+    var useForced = isTechVoucher01Lesson(lesson) && Array.isArray(techQuizForcedOrder) && techQuizForcedOrder.length;
+    if (useForced) {
+      orderUsed = techQuizForcedOrder.filter(function (i) {
+        return Number.isFinite(i) && i >= 0 && i < nTotal;
+      });
+      if (!orderUsed.length) {
+        techQuizForcedOrder = null;
+        techQuizForcedLabel = "";
+      }
+    }
+    if (!orderUsed && mode === "all") {
       orderUsed = qsAll.map(function (_, i) {
         return i;
       });
-    } else if (mode === 10 || mode === 15 || mode === 20) {
+    } else if (!orderUsed && (mode === 10 || mode === 15 || mode === 20)) {
       var cap = Math.min(mode, nTotal);
       var perm = qsAll.map(function (_, i) {
         return i;
       });
       shuffleInPlace(perm);
       orderUsed = perm.slice(0, Math.max(1, cap));
-    } else {
+    } else if (!orderUsed) {
       orderUsed = qsAll.map(function (_, i) {
         return i;
       });
@@ -2118,31 +2915,82 @@ function learnHubRunApp() {
       btn(15, "15") +
       btn(20, "20") +
       "</div>";
+    if (useForced && techQuizForcedLabel) {
+      h +=
+        '<p class="msg info lh-tech-quiz-hint"><strong>' +
+        escapeHtml(techQuizForcedLabel) +
+        '</strong> active · ' +
+        orderUsed.length +
+        ' question(s). <button type="button" class="tool ghost lh-tech-clear-forced">Clear drill</button></p>';
+    }
     h +=
       '<p class="msg info lh-tech-quiz-hint">Local checks only. On <strong>Notes</strong> reading steps, re-read the objective section if an answer is unclear.</p>';
+    var showVoucherObj = isTechVoucher01Lesson(lesson) && !!voucher01Plan();
     orderUsed.forEach(function (origQi, displayIdx) {
       var q = qsAll[origQi];
+      var corr = q && q.correct;
+      var multi = Array.isArray(corr) && corr.length > 1;
       h += '<div class="quiz-q" data-q="' + displayIdx + '" data-orig="' + origQi + '"><p>' + escapeHtml(q.q) + "</p>";
+      if (showVoucherObj) h += voucher01ObjectiveLineHtml(origQi);
+      if (multi) {
+        h += '<p class="lh-quiz-select-hint">Select all that apply.</p>';
+      }
+      h +=
+        '<div class="lh-quiz-confidence" role="group" aria-label="Confidence for this answer">' +
+        '<span class="lh-quiz-confidence-label">Confidence</span>' +
+        '<label><input type="radio" name="' +
+        gPrefix +
+        "_conf_" +
+        displayIdx +
+        '" value="low"/> Low</label>' +
+        '<label><input type="radio" name="' +
+        gPrefix +
+        "_conf_" +
+        displayIdx +
+        '" value="med"/> Medium</label>' +
+        '<label><input type="radio" name="' +
+        gPrefix +
+        "_conf_" +
+        displayIdx +
+        '" value="high"/> High</label>' +
+        "</div>";
       (q.choices || []).forEach(function (c, ci) {
         var id = gPrefix + "_q" + displayIdx + "c" + ci;
-        h +=
-          "<label><input type=\"radio\" name=\"" +
-          gPrefix +
-          "_quiz_" +
-          displayIdx +
-          '" value="' +
-          ci +
-          '" id="' +
-          id +
-          '"/> ' +
-          escapeHtml(c) +
-          "</label>";
+        if (multi) {
+          h +=
+            "<label><input type=\"checkbox\" class=\"lh-quiz-cb\" name=\"" +
+            gPrefix +
+            "_quiz_" +
+            displayIdx +
+            "_m\" value=\"" +
+            ci +
+            '" id="' +
+            id +
+            '"/> ' +
+            escapeHtml(c) +
+            "</label>";
+        } else {
+          h +=
+            "<label><input type=\"radio\" name=\"" +
+            gPrefix +
+            "_quiz_" +
+            displayIdx +
+            '" value="' +
+            ci +
+            '" id="' +
+            id +
+            '"/> ' +
+            escapeHtml(c) +
+            "</label>";
+        }
       });
       h += "</div>";
     });
     el.techQuiz.innerHTML = h;
     el.techQuiz.querySelectorAll(".lh-tech-set-btn").forEach(function (btnEl) {
       btnEl.addEventListener("click", function () {
+        techQuizForcedOrder = null;
+        techQuizForcedLabel = "";
         var raw = btnEl.getAttribute("data-qset");
         techQuizSizeMode = raw === "all" ? "all" : parseInt(raw, 10);
         renderTechQuiz(currentLesson());
@@ -2151,6 +2999,14 @@ function learnHubRunApp() {
         setTechFeedbackVisible(false);
       });
     });
+    el.techQuiz.querySelectorAll(".lh-tech-clear-forced").forEach(function (btnEl) {
+      btnEl.addEventListener("click", function () {
+        techQuizForcedOrder = null;
+        techQuizForcedLabel = "";
+        renderTechQuiz(currentLesson());
+      });
+    });
+    renderVoucher01StudyPlanMount();
   }
 
   function setTechFeedbackVisible(show) {
@@ -2162,22 +3018,70 @@ function learnHubRunApp() {
   function gradeTechQuiz(lesson) {
     const qs = lesson.questions || [];
     const gPrefix = quizRadioGroupPrefix(lesson);
+    var P = isTechVoucher01Lesson(lesson) ? voucher01Plan() : null;
     let wrong = 0;
     const marks = [];
-    if (!el.techQuiz) return { ok: false, msg: "Quiz panel is not available." };
+    const wrongOrigQi = [];
+    const wrongDetails = [];
+    const domainStats = {};
+    if (!el.techQuiz) return { ok: false, msg: "Quiz panel is not available.", wrongOrigQi: wrongOrigQi };
     const order = techQuizSubset && techQuizSubset.order ? techQuizSubset.order : qs.map(function (_, i) {
       return i;
     });
     for (let di = 0; di < order.length; di++) {
       const origQi = order[di];
-      const sel = el.techQuiz.querySelector(`input[name="${gPrefix}_quiz_${di}"]:checked`);
-      const selected = sel ? +sel.value : null;
-      const isCorrect = selected != null && selected === qs[origQi].correct;
-      if (!isCorrect) wrong++;
+      const qRow = qs[origQi];
+      const corr = qRow && qRow.correct;
+      const multi = Array.isArray(corr) && corr.length > 1;
+      let isCorrect = false;
+      let isAnswered = false;
+      let selectedIndices = [];
+      var confSel = el.techQuiz.querySelector('input[name="' + gPrefix + "_conf_" + di + '"]:checked');
+      var confidence = confSel ? String(confSel.value || "") : "";
+      if (multi) {
+        const boxes = el.techQuiz.querySelectorAll('input[name="' + gPrefix + "_quiz_" + di + '_m"]:checked');
+        const picked = [].map.call(boxes, function (b) {
+          return +b.value;
+        });
+        isAnswered = picked.length > 0;
+        selectedIndices = picked.slice();
+        isCorrect = arraysEqualSorted(picked, corr);
+      } else {
+        const sel = el.techQuiz.querySelector('input[name="' + gPrefix + "_quiz_" + di + '"]:checked');
+        const selected = sel ? +sel.value : null;
+        isAnswered = selected != null;
+        selectedIndices = selected != null ? [selected] : [];
+        isCorrect = selected != null && selected === corr;
+      }
+      if (P && Array.isArray(P.domains)) {
+        var dom = P.domains[origQi];
+        if (dom != null && dom >= 1 && dom <= 12) {
+          var dk = String(dom);
+          if (!domainStats[dk]) domainStats[dk] = { total: 0, correct: 0, wrong: 0, low: 0, med: 0, high: 0 };
+          domainStats[dk].total += 1;
+          if (isCorrect) domainStats[dk].correct += 1;
+          else domainStats[dk].wrong += 1;
+          if (confidence === "low") domainStats[dk].low += 1;
+          else if (confidence === "med") domainStats[dk].med += 1;
+          else if (confidence === "high") domainStats[dk].high += 1;
+        }
+      }
+      if (!isCorrect) {
+        wrong++;
+        wrongOrigQi.push(origQi);
+        wrongDetails.push({
+          origQi: origQi,
+          questionText: qRow && qRow.q ? String(qRow.q) : "",
+          choices: qRow && Array.isArray(qRow.choices) ? qRow.choices.slice() : [],
+          selectedIndices: selectedIndices.slice(),
+          correctIndices: multi ? corr.slice() : [corr],
+          confidence: confidence || "none",
+        });
+      }
       marks.push({
         displayIndex: di,
         isCorrect: isCorrect,
-        isAnswered: selected != null,
+        isAnswered: isAnswered,
       });
     }
     marks.forEach(function (m) {
@@ -2200,9 +3104,18 @@ function learnHubRunApp() {
       activeCourseId === "security"
         ? "review the matching <strong>level lessons</strong> in the sidebar, then try again."
         : "open the matching <strong>Study</strong> or <strong>Notes</strong> step for that objective domain and skim again, then return here.";
+    var msgExtra = "";
+    if (isTechVoucher01Lesson(lesson) && voucher01Plan() && wrongOrigQi.length)
+      msgExtra = " Expand <strong>Custom study plan</strong> below for suggested segments.";
     return {
       ok: wrong === 0,
-      msg: wrong === 0 ? "All correct." : wrong + " answer(s) need work — " + secHint,
+      msg:
+        wrong === 0
+          ? "All correct."
+          : wrong + " answer(s) need work — " + secHint + (msgExtra ? msgExtra : ""),
+      wrongOrigQi: wrongOrigQi,
+      wrongDetails: wrongDetails,
+      domainStats: domainStats,
     };
   }
 
@@ -2356,7 +3269,7 @@ function learnHubRunApp() {
     document.body.classList.toggle("lh-compact-teach", c.ws !== "tech");
     if (el.title) el.title.textContent = decodeLessonTitle(Ls.title || "");
     const isTech = c.ws === "tech";
-    const isQuestionsMode = isTechQuestionsMode();
+    const isQuestionsMode = isTechQuestionsMode() && isTechGimkitLesson(Ls);
     const learn = Ls.kind === "learn";
     const isTechLearn = isTech && learn;
     const isFullChapterTechLearn = isTechLearn && isFullChapterTechLesson(Ls.id);
@@ -2397,6 +3310,13 @@ function learnHubRunApp() {
           refBody +
           "</div></details>";
       }
+    }
+    if (!refBlock) {
+      refBlock =
+        '<div class="msg info">' +
+        "This lesson has no readable notes loaded in this view yet. " +
+        "Try switching to another lesson and back, or use Questions mode for quiz sets." +
+        "</div>";
     }
     if (!el.teach) return;
     el.teach.classList.remove("tech-prose");
@@ -2446,6 +3366,8 @@ function learnHubRunApp() {
               : "Experiment in the editor, then Continue."
         : learn && isTech
           ? footerLearnTech
+          : isVoucherStudyPlanView(Ls)
+            ? "Study plan mode only: review timed cram, domain recommendations, and attempt history."
           : isTech && Ls.kind === "quiz"
             ? "Select the best answer for each question, then Check."
             : strict
@@ -2523,7 +3445,8 @@ function learnHubRunApp() {
     }
   }
 
-  function goLesson(i) {
+  function goLesson(i, opts) {
+    var opt = opts && typeof opts === "object" ? opts : {};
     const n = Math.floor(Number(i));
     const len = lessons().length;
     if (!Number.isFinite(n) || len === 0) return;
@@ -2532,6 +3455,11 @@ function learnHubRunApp() {
     if (lessonLocked(nn)) {
       const first = lessons().findIndex(function (_, j) { return !lessonLocked(j); });
       nn = first >= 0 ? first : 0;
+    }
+    if (activeCourseId === "tech" && isTechQuestionsMode()) {
+      techQuestionNavVariant = opt.variant || "";
+    } else {
+      techQuestionNavVariant = "";
     }
     lessonIndex = nn;
     saveProgress();
@@ -2546,6 +3474,7 @@ function learnHubRunApp() {
     if (!courseById[id]) return;
     courseProgress(activeCourseId).idx = lessonIndex;
     activeCourseId = id;
+    techQuestionNavVariant = "";
     progress.activeCourseId = id;
     if (id !== "tech" && getTechplusPillsOnly()) {
       setTechplusPillsOnly(false);
@@ -2585,10 +3514,12 @@ function learnHubRunApp() {
   async function completePractice() {
     const Ls = currentLesson();
     if (!Ls || Ls.kind === "learn") return;
+    if (isVoucherStudyPlanView(Ls)) return;
     const c = courseById[activeCourseId];
     if (!c) return;
     if (c.ws === "tech" && Ls.kind === "quiz") {
       const g = gradeTechQuiz(Ls);
+      if (isTechVoucher01Lesson(Ls) && voucher01Plan()) recordVoucher01Attempt(Ls, g);
       /* Error copy includes <strong> for emphasis — do not escape (message is app-authored only). */
       if (el.techFeedback)
         el.techFeedback.innerHTML = g.ok
@@ -2597,6 +3528,7 @@ function learnHubRunApp() {
       if (el.techStatus) el.techStatus.textContent = g.ok ? "Passed" : "Try again";
       setTechFeedbackVisible(true);
       if (el.announcer) el.announcer.textContent = g.ok ? "Quiz check passed." : "Quiz check: " + (g.msg || "Try again");
+      if (isTechVoucher01Lesson(Ls)) renderVoucher01StudyPlanMount();
       if (!g.ok) return;
       awardIfNew(Ls.id);
       toast("Passed. Review highlights, then choose your next lesson.");
@@ -2928,7 +3860,9 @@ function learnHubRunApp() {
         var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
         if (!O) return;
         setTechplusOrgMode(O.MODE_CHAPTERS);
-        renderNav();
+        techQuestionNavVariant = "";
+        var target = firstTechStudyLessonIndex();
+        goLesson(target, { variant: "" });
       });
     }
     if (tpOrgOb) {
@@ -2936,7 +3870,9 @@ function learnHubRunApp() {
         var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
         if (!O) return;
         setTechplusOrgMode(O.MODE_OBJECTIVES);
-        renderNav();
+        techQuestionNavVariant = "";
+        var target = firstTechStudyLessonIndex();
+        goLesson(target, { variant: "" });
       });
     }
     if (tpOrgQs) {
@@ -2945,7 +3881,8 @@ function learnHubRunApp() {
         if (!O) return;
         setTechplusOrgMode(O.MODE_QUESTIONS);
         var gi = firstTechGimkitLessonIndex();
-        if (activeCourseId === "tech" && gi >= 0 && !isTechGimkitLesson(currentLesson())) goLesson(gi);
+        techQuestionNavVariant = "";
+        if (activeCourseId === "tech" && gi >= 0) goLesson(gi, { variant: "" });
         else renderNav();
       });
     }

@@ -2178,6 +2178,57 @@ body.lh-tech-questions-mode .unit.lh-unit-techplus .unit-title {
   color: #9fb3ce;
 }
 
+body.lh-tech-questions-mode .unit.lh-unit-techplus.lh-unit-voucher-tests .unit-title {
+  color: #ffd38a;
+  text-shadow: 0 0 10px rgba(255, 181, 92, 0.35);
+}
+
+body.lh-tech-questions-mode .unit.lh-unit-techplus.lh-unit-study-plans .unit-title {
+  color: #9ce8ff;
+  text-shadow: 0 0 10px rgba(76, 193, 255, 0.3);
+}
+
+.lesson-btn.lh-voucher-lesson-btn {
+  background: linear-gradient(90deg, rgba(56, 32, 6, 0.7) 0%, rgba(28, 20, 8, 0.35) 65%, transparent 100%);
+  border-left-color: rgba(255, 180, 70, 0.6);
+}
+
+.lesson-btn.lh-voucher-lesson-btn:hover {
+  background: linear-gradient(90deg, rgba(76, 43, 8, 0.75) 0%, rgba(38, 24, 10, 0.42) 65%, rgba(20, 14, 8, 0.1) 100%);
+}
+
+.lesson-btn.lh-study-plan-lesson-btn {
+  background: linear-gradient(90deg, rgba(8, 42, 58, 0.55) 0%, rgba(8, 24, 36, 0.25) 65%, transparent 100%);
+  border-left-color: rgba(98, 208, 255, 0.58);
+}
+
+.lesson-btn.lh-study-plan-lesson-btn:hover {
+  background: linear-gradient(90deg, rgba(12, 58, 80, 0.58) 0%, rgba(8, 30, 48, 0.3) 65%, rgba(4, 20, 30, 0.08) 100%);
+}
+
+.lesson-btn.lh-voucher-lesson-btn.active {
+  border-left-color: #ffb74f;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 160, 0.08),
+    inset 12px 0 28px -16px rgba(255, 166, 56, 0.45),
+    0 0 0 1px rgba(255, 173, 77, 0.28),
+    0 0 20px rgba(255, 163, 66, 0.2);
+}
+
+.lh-voucher-sidebar-badge {
+  display: inline-block;
+  margin-left: 0.45rem;
+  padding: 0.08rem 0.34rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 184, 92, 0.55);
+  background: rgba(92, 52, 14, 0.5);
+  color: #ffdca7;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  vertical-align: middle;
+}
+
 .quiz-q {
   margin-bottom: 0.85rem;
   padding: 0.7rem 0.75rem;
@@ -2752,4 +2803,425 @@ body.lh-force-reduce-motion .progress-fill {
   padding: 0.55rem 1rem;
   border-radius: var(--radius-xs, 6px);
   font-weight: 600;
+}
+
+/* Tech+ Voucher Test 01 — objective lines + optional study plan */
+.lh-voucher-q-obj {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.lh-voucher-q-obj-k {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lh-quiz-select-hint {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+#lh-voucher01-plan-root {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.lh-voucher01-details {
+  border: 1px solid rgba(255, 177, 75, 0.55);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(165deg, rgba(44, 30, 10, 0.5) 0%, rgba(12, 14, 20, 0.88) 62%);
+  padding: 0.35rem 0.55rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 212, 145, 0.12),
+    0 0 0 1px rgba(255, 165, 65, 0.12),
+    0 0 22px rgba(255, 162, 72, 0.14);
+}
+
+.lh-voucher01-details > summary {
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffe0b5;
+  list-style-position: outside;
+}
+
+.lh-voucher01-sum-main {
+  color: #ffd48f;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lh-voucher01-sum-hint {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.lh-voucher01-details-body {
+  margin-top: 0.5rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(42, 53, 69, 0.45);
+}
+
+.lh-voucher01-plan-lead {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.lh-voucher01-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.55rem;
+}
+
+.lh-voucher01-actions .tool {
+  font-size: 0.72rem;
+  padding: 0.26rem 0.44rem;
+}
+
+.lh-voucher01-cram {
+  margin: 0 0 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(42, 53, 69, 0.55);
+  border-radius: var(--radius-sm);
+  background: rgba(7, 12, 18, 0.55);
+}
+
+.lh-voucher01-timed {
+  margin: 0 0 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(42, 53, 69, 0.55);
+  border-radius: var(--radius-sm);
+  background: rgba(7, 12, 18, 0.55);
+}
+
+.lh-voucher01-timed-head {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lh-voucher01-timed-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.lh-voucher01-timed-tab {
+  font-size: 0.72rem;
+  padding: 0.26rem 0.42rem;
+}
+
+.lh-voucher01-timed-tab--active {
+  border-color: rgba(88, 168, 198, 0.55) !important;
+  color: #d9f5ff !important;
+}
+
+.lh-voucher01-timed-pane {
+  display: none;
+}
+
+.lh-voucher01-timed-pane.is-active {
+  display: block;
+}
+
+.lh-voucher01-timed-list {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.74rem;
+  line-height: 1.42;
+  color: var(--muted);
+}
+
+.lh-voucher01-cram-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: var(--text);
+}
+
+.lh-voucher01-cram-list,
+.lh-voucher01-domain-cram {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.lh-voucher01-domain-cram {
+  margin-top: 0.35rem;
+}
+
+.lh-voucher01-plan-domains {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.lh-voucher01-plan-domains li {
+  margin-bottom: 0.55rem;
+}
+
+.lh-voucher01-plan-meta {
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.lh-voucher01-plan-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+}
+
+.lh-voucher01-plan-links .tool {
+  font-size: 0.72rem;
+  padding: 0.28rem 0.45rem;
+}
+
+.lh-voucher01-plan-extra {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.lh-voucher01-domain-progress {
+  margin: 0.6rem 0;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid rgba(86, 138, 205, 0.28);
+  border-radius: 8px;
+  background: rgba(11, 20, 34, 0.45);
+}
+
+.lh-voucher01-domain-progress-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.76rem;
+  color: #cfe4ff;
+}
+
+.lh-voucher01-domain-row {
+  margin-bottom: 0.36rem;
+}
+
+.lh-voucher01-domain-row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.69rem;
+}
+
+.lh-voucher01-domain-name {
+  color: #dceaff;
+}
+
+.lh-voucher01-domain-stat {
+  color: var(--muted);
+}
+
+.lh-voucher01-domain-bar {
+  margin-top: 0.12rem;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(10, 16, 26, 0.85);
+  border: 1px solid rgba(74, 101, 140, 0.35);
+  overflow: hidden;
+}
+
+.lh-voucher01-domain-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2b7ab0 0%, #52b4df 100%);
+}
+
+.lh-voucher01-attempts {
+  margin-top: 0.65rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 175, 78, 0.3);
+}
+
+.lh-voucher01-attempts-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  color: #ffd39a;
+}
+
+.lh-voucher01-attempts-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+
+.lh-voucher01-attempts-head .lh-voucher01-attempts-title {
+  margin: 0;
+}
+
+.lh-voucher01-clear-attempts {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.42rem;
+  border-color: rgba(255, 175, 78, 0.45);
+  color: #ffd5aa;
+}
+
+.lh-voucher01-attempt-item {
+  border: 1px solid rgba(255, 172, 72, 0.35);
+  border-radius: 8px;
+  padding: 0.28rem 0.48rem;
+  margin-bottom: 0.4rem;
+  background: rgba(28, 20, 10, 0.35);
+}
+
+.lh-voucher01-attempt-item > summary {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.lh-voucher01-attempt-name {
+  font-weight: 700;
+  font-size: 0.74rem;
+  color: #ffe0bc;
+}
+
+.lh-voucher01-attempt-sub {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.lh-voucher01-attempt-list {
+  margin: 0.4rem 0 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.lh-voucher01-attempt-list li {
+  margin-bottom: 0.5rem;
+}
+
+.lh-voucher01-attempt-domain {
+  color: #f0c98b;
+  font-size: 0.68rem;
+  margin-top: 0.2rem;
+}
+
+.lh-voucher01-attempt-compare,
+.lh-voucher01-attempt-why {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+  margin-top: 0.24rem;
+  display: grid;
+  gap: 0.12rem;
+}
+
+.lh-voucher01-attempt-why {
+  color: #d2e6f7;
+}
+
+.lh-voucher01-review-card {
+  border: 1px solid rgba(124, 157, 206, 0.2);
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+  background: rgba(10, 16, 28, 0.55);
+}
+
+.lh-voucher01-review-q {
+  color: #e6eefc;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.lh-voucher01-review-qn {
+  display: inline-block;
+  min-width: 1.7rem;
+  color: #a7c7ff;
+  font-weight: 700;
+}
+
+.lh-voucher01-k {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9cb0d4;
+  font-weight: 700;
+}
+
+.lh-voucher01-attempt-tip {
+  margin-top: 0.28rem;
+  padding: 0.3rem 0.38rem;
+  border-left: 3px solid rgba(126, 197, 255, 0.45);
+  background: rgba(20, 38, 62, 0.35);
+  font-size: 0.72rem;
+  color: #d8ebff;
+  display: grid;
+  gap: 0.14rem;
+}
+
+.lh-voucher01-review-pattern,
+.lh-voucher01-review-miss {
+  margin-top: 0.24rem;
+  display: grid;
+  gap: 0.12rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: #dbe7fb;
+}
+
+.lh-voucher01-pattern-chip {
+  display: inline-block;
+  width: fit-content;
+  padding: 0.08rem 0.38rem;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 170, 255, 0.45);
+  background: rgba(24, 44, 78, 0.45);
+  color: #cfe5ff;
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.lh-voucher01-attempt-ok {
+  margin: 0.35rem 0 0.1rem;
+  font-size: 0.72rem;
+  color: #b9e6ca;
+}
+
+.lh-quiz-confidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  margin: 0.2rem 0 0.35rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.lh-quiz-confidence-label {
+  color: #b8c9e6;
+  font-weight: 600;
+  margin-right: 0.1rem;
+}
+
+.lh-quiz-confidence label {
+  margin: 0;
 }
