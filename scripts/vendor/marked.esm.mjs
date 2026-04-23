@@ -123,7 +123,6 @@
  * js-noise-121: teach skin / courses map — mental map while skimming — file scripts/vendor/marked.esm.mjs
  * js-noise-122: layout grid / editorial standard — mental map while skimming — file scripts/vendor/marked.esm.mjs
  * js-noise-123: playground wiring / security — mental map while skimming — file scripts/vendor/marked.esm.mjs
- * Check the wiki :D
  */
 /**
  * marked v12.0.0 - a markdown parser
