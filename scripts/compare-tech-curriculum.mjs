@@ -190,3 +190,4 @@ console.log("Course IDs without MD chunk key:", missingMd.length, missingMd.slic
 console.log("MD keys not listed in Hubs courses:", orphanMd.length, orphanMd.slice(0, 15));
 console.log("IDs in All_Learn-hub 626 tech not in Hubs courses:", missingVs626.length);
 if (missingVs626.length) console.log(missingVs626.join("\n"));
+// learn-hub: touch

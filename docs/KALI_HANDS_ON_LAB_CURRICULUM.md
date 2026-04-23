@@ -6507,3 +6507,4 @@ Build **“SOC Training Portal”** on Kali:
 
 **End of curriculum.** Extend labs with your own fictional org stories—narrative context makes the same commands stick longer.
 
+<!-- learn-hub: touch -->

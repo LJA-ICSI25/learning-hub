@@ -209,3 +209,5 @@ Use these unless the exam objective wording requires another form:
 5. Spot-check the lesson in the browser (hard refresh; `index.html` updates `?v=` on build).
 
 See `TECHPLUS_CHAPTER_REVIEW_CHECKLIST.md` for a repeatable review pass.
+
+<!-- learn-hub: touch -->

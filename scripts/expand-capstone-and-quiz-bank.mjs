@@ -623,3 +623,4 @@ console.log(
   "Lesson counts:",
   courses.map((c) => c.id + ":" + c.lessons.length).join(" ")
 );
+// learn-hub: touch

@@ -1808,3 +1808,5 @@ C
 . Reboot the computer.
 D. Disable the touchpad.
 E. Stop typing.
+
+<!-- learn-hub: touch -->

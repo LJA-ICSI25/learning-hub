@@ -277,3 +277,4 @@ const quiz = spawnSync(process.execPath, [path.join(__dirname, "build-security-q
 });
 if (quiz.status !== 0) throw new Error("build-security-quizzes.mjs failed");
 console.log("Wrote", lessons.length, "security lessons →", path.relative(root, outMdPath), "+ courses (with quizzes re-spliced)");
+// learn-hub: touch

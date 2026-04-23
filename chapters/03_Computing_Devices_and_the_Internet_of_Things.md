@@ -1801,3 +1801,5 @@ B
 . iApps
 C. iPlay
 D. Google Play
+
+<!-- learn-hub: touch -->

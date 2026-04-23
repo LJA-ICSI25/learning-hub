@@ -1605,3 +1605,5 @@ A. They should be updated to the newest versions.
 B. They are dangerous and should be deleted.
 C. They will be detected and removed by antivirus software.
 D. They only function in Microsoft Edge or Internet Explorer.
+
+<!-- learn-hub: touch -->

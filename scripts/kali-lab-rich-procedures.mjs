@@ -639,3 +639,4 @@ export const HTML_LAB_FOCUS = [
     `4. In devtools Accessibility tree, inspect how \`lang\` is exposed.\n` +
     `- **Checkpoint:** One sentence on \`hreflang\` for multi-domain SEO (research, no implementation required).\n`,
 ];
+// learn-hub: touch

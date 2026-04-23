@@ -253,3 +253,4 @@ const json = JSON.stringify(map, null, 0);
 const fileBody = `${banner}window.LEARN_HUB_TECHPLUS = ${json};\n`;
 fs.writeFileSync(outPath, fileBody, "utf8");
 console.log("Wrote", outPath, "keys:", Object.keys(map).join(", "), "chars:", fileBody.length);
+// learn-hub: touch

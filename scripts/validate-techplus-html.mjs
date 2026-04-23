@@ -196,3 +196,4 @@ if (isMain) {
 
   console.log("OK:", Object.keys(o).length, "Tech+ segments — no raw document tags outside <pre>, no obvious <li>/</p> corruption.");
 }
+// learn-hub: touch

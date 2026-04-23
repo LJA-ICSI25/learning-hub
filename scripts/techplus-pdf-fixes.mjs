@@ -450,3 +450,4 @@ export function promoteTechplusChapterIntroBanner(md) {
 export function stripOrphanChapterNumberAfterObjectives(md) {
   return md.replace(/\nChapter\s*\n\s*\d{1,2}\s*\n+/g, "\n\n");
 }
+// learn-hub: touch

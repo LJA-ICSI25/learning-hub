@@ -288,3 +288,4 @@ fs.writeFileSync(
 );
 
 console.log("Wrote learn-hub-courses.js (narratives cleared), learn-hub-deep.js keys:", Object.keys(DEEP).length, "playground:", Object.keys(PLAY).length);
+// learn-hub: touch

@@ -193,3 +193,4 @@ if (bad) {
   process.exit(1);
 }
 console.log("OK: banner <strong> matches courses.js title for every tech-sg segment.");
+// learn-hub: touch

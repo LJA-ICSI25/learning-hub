@@ -223,3 +223,4 @@ out += `| **Total (listed files)** | **${sumLines.toLocaleString("en-US")}** | *
 out += "\n";
 out += `*Recorded with \`scripts/print-learn-hub-manifest.mjs\` on ${today} (UTC date).*\n`;
 process.stdout.write(out);
+// learn-hub: touch

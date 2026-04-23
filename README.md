@@ -444,3 +444,5 @@ Paste the command output **over the table below** (from the header row through t
 ## License / data
 
 Curriculum JSON and generated bundles are **local educational content** for personal/self-hosted use. External links (MDN, Python docs, SQLite, CompTIA) point to third-party sites under their own terms.
+
+<!-- learn-hub: touch -->

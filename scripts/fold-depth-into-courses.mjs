@@ -210,3 +210,4 @@ for (const c of COURSES) {
   }
 }
 console.log("Wrote learn-hub-courses.js; depth cleared. Lessons with folded addenda:", withAdd, "/", totalLessons);
+// learn-hub: touch

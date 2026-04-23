@@ -1169,3 +1169,5 @@ A. EDIT
 B. MODIFY
 C. ALTER
 D. UPDATE
+
+<!-- learn-hub: touch -->

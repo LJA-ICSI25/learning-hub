@@ -1808,3 +1808,5 @@ A. NIC
 B. Modem
 C. PCIe
 D. Sound card
+
+<!-- learn-hub: touch -->

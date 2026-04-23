@@ -217,3 +217,4 @@ scripts/techplus-chapter-io.mjs
 scripts/emit-kali-slow-curriculum.mjs
 scripts/build-kali-from-markdown.mjs
 scripts/kali-lab-rich-procedures.mjs
+# learn-hub: touch

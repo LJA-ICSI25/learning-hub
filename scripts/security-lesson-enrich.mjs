@@ -887,3 +887,4 @@ ${scenarioBlock(title, category, id)}
 <p class="msg info"><strong>Lab ethics:</strong> Treat every command as if it were under a written Rules of Engagement. No probing of systems you do not own or lack authorization to test.</p>
 </section>`;
 }
+// learn-hub: touch

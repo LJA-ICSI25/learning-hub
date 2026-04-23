@@ -1620,3 +1620,5 @@ Weight ethics and evidence highest; fail submissions that violate scope rules.
 ---
 
 *Document version: 1.2 — Part 3 (lessons 21–25), Q31–40 banks, capstone Q81–100, appendices F–K. Learn-Hub: split on `### Lx-yy` and `<!-- id: lh-sec-* -->`.*
+
+<!-- learn-hub: touch -->

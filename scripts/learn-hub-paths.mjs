@@ -140,3 +140,4 @@ export function assetsDir(root = getLearnHubRoot()) {
 export function chaptersDir(root = getLearnHubRoot()) {
   return path.join(root, "chapters");
 }
+// learn-hub: touch

@@ -245,3 +245,4 @@ export function readMergedChapterMaps(learnHubRoot) {
   const bag = ctx.window.LEARN_HUB_TECHPLUS_MD;
   return bag && typeof bag === "object" ? bag : merged;
 }
+// learn-hub: touch

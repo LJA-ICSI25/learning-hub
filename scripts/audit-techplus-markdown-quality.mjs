@@ -173,3 +173,4 @@ if (criticalCount === 0) {
   console.error(`\nFAILED: ${criticalCount} critical issue(s). Fix chapters or run normalize-techplus-markdown.mjs where appropriate.`);
   process.exit(1);
 }
+// learn-hub: touch

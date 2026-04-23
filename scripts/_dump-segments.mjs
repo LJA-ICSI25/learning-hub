@@ -134,3 +134,4 @@ for (const id of ["tech-sg-02-05", "tech-sg-04-09", "tech-sg-06-05", "tech-sg-06
   console.log("\n========", id, "len", s.length, "========");
   console.log(s.slice(Math.max(0, i), i + 3500));
 }
+// learn-hub: touch
