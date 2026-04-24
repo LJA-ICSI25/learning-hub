@@ -49,6 +49,10 @@ var COURSES;
       typeof window !== "undefined" && window.LEARN_HUB_PENTEST_MD && typeof window.LEARN_HUB_PENTEST_MD === "object"
         ? window.LEARN_HUB_PENTEST_MD
         : null;
+    const NetworkMd =
+      typeof window !== "undefined" && window.LEARN_HUB_NETWORK_MD && typeof window.LEARN_HUB_NETWORK_MD === "object"
+        ? window.LEARN_HUB_NETWORK_MD
+        : null;
     const TechStudyPatch =
       typeof window !== "undefined" &&
       window.LEARN_HUB_TECHPLUS_STUDY_PATCH &&
@@ -90,6 +94,10 @@ var COURSES;
             const addPentest = PentestMd[L.id];
             if (addPentest) read += addPentest;
           }
+          if (NetworkMd) {
+            const addNetwork = NetworkMd[L.id];
+            if (addNetwork) read += addNetwork;
+          }
           if (TechStudyPatch) {
             const addPatch = TechStudyPatch[L.id];
             if (addPatch) read += addPatch;
@@ -100,7 +108,7 @@ var COURSES;
       }
     }
   } catch (mergeErr) {
-    console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali / PenTest+ reading failed for some lessons.", mergeErr);
+    console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali / PenTest+ / Network+ reading failed for some lessons.", mergeErr);
   }
 })();
 if (!Array.isArray(COURSES) || COURSES.length === 0) {
@@ -149,6 +157,7 @@ function learnHubRunApp() {
     var isTechCourse = activeCourseId === "tech";
     document.body.classList.toggle("lh-techplus-workspace", on);
     var pillsHost = document.getElementById("course-pills");
+    var trackPicker = document.getElementById("lh-track-picker");
     var modeRoot = document.getElementById("lh-track-mode-root");
     var btnAll = document.getElementById("lh-mode-all-tracks");
     var btnTech = document.getElementById("lh-mode-techplus-ws");
@@ -162,8 +171,8 @@ function learnHubRunApp() {
       btnAll.setAttribute("aria-pressed", on ? "false" : "true");
       btnTech.setAttribute("aria-pressed", on ? "true" : "false");
     }
+    if (trackPicker) trackPicker.hidden = !!(on && isTechCourse);
     if (pillsHost) {
-      pillsHost.hidden = !!(on && isTechCourse);
       /* Remove Tech+ course pill from DOM in workspace mode — mode switch is enough */
       if (on && isTechCourse) pillsHost.innerHTML = "";
     }
@@ -190,6 +199,7 @@ function learnHubRunApp() {
       );
     }
     updateChrome();
+    syncTrackPickerToggleUi();
   }
 
   const ACCOUNTS_KEY = "learn-hub-accounts-v1";
@@ -1567,6 +1577,19 @@ function learnHubRunApp() {
     syncTechplusOrgToggle();
   }
 
+  function syncTrackPickerToggleUi() {
+    var root = document.getElementById("lh-track-picker");
+    var btn = document.getElementById("lh-track-picker-toggle");
+    var lab = document.getElementById("lh-track-picker-toggle-label");
+    if (!root || !btn || !lab) return;
+    var c = courseById[activeCourseId];
+    var nm = c && c.name ? String(c.name) : "Tracks";
+    lab.textContent = nm;
+    var open = root.classList.contains("lh-track-picker--open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.setAttribute("aria-label", (open ? "Hide track topics. Current: " : "Show track topics. Current: ") + nm);
+  }
+
   function renderPills() {
     if (!el.pills) return;
     const list = coursesForPills();
@@ -1580,6 +1603,17 @@ function learnHubRunApp() {
       p.addEventListener("click", () => switchCourse(p.getAttribute("data-course")));
     });
     syncTechplusWorkspaceChrome();
+    var tp = document.getElementById("lh-track-picker");
+    if (tp) {
+      if (!tp.getAttribute("data-lh-track-visibility-seeded")) {
+        tp.setAttribute("data-lh-track-visibility-seeded", "1");
+        if (isMobileNavLayout()) tp.classList.remove("lh-track-picker--open");
+        else tp.classList.add("lh-track-picker--open");
+      } else if (isMobileNavLayout()) {
+        tp.classList.remove("lh-track-picker--open");
+      }
+    }
+    syncTrackPickerToggleUi();
   }
 
   /** Scroll reading/main panes to top when changing lessons — do not reset sidebar lesson list scroll (avoids jump-to-top then scroll-down). */
@@ -3211,7 +3245,9 @@ function learnHubRunApp() {
     const secHint =
       activeCourseId === "security"
         ? "review the matching <strong>level lessons</strong> in the sidebar, then try again."
-        : "open the matching <strong>Study</strong> or <strong>Notes</strong> step for that objective domain and skim again, then return here.";
+        : activeCourseId === "networkplus"
+          ? "open the matching <strong>Notes</strong> step in the sidebar for that Network+ topic and skim again, then return here."
+          : "open the matching <strong>Study</strong> or <strong>Notes</strong> step for that objective domain and skim again, then return here.";
     var msgExtra = "";
     if (isTechVoucher01Lesson(lesson) && voucher01Plan() && wrongOrigQi.length)
       msgExtra = " Expand <strong>Custom study plan</strong> below for suggested segments.";
@@ -3259,6 +3295,9 @@ function learnHubRunApp() {
       } else if (c.id === "pentest") {
         hint =
           "Open <strong>Notes</strong> for PenTest+ lesson content. This track is read-first and broken into short section lessons without objective/review header blocks.";
+      } else if (c.id === "networkplus") {
+        hint =
+          "Open <strong>Notes</strong> for Network+ lesson content. This track is read-first; expand the reading below, then press <strong>Continue</strong> when you are ready for the next topic.";
       } else if (c.id === "labs") {
         hint =
           "These steps are a <strong>hands-on lab script</strong> for your <strong>Kali Linux VM</strong>. Nothing in the left column runs on the VM—open a terminal on Kali and follow <strong>Notes</strong> step by step. When you are done with this lab, press <strong>Continue</strong>.";
@@ -3992,6 +4031,27 @@ function learnHubRunApp() {
       });
     }
     syncTechplusWorkspaceChrome();
+
+    var trackPickToggle = document.getElementById("lh-track-picker-toggle");
+    var trackPickRoot = document.getElementById("lh-track-picker");
+    if (trackPickToggle && trackPickRoot) {
+      trackPickToggle.addEventListener("click", function () {
+        trackPickRoot.classList.toggle("lh-track-picker--open");
+        syncTrackPickerToggleUi();
+      });
+    }
+    if (typeof window.matchMedia === "function") {
+      var mqTrack = window.matchMedia("(max-width: 720px)");
+      function onTrackMq() {
+        var r = document.getElementById("lh-track-picker");
+        if (!r) return;
+        if (!mqTrack.matches) r.classList.add("lh-track-picker--open");
+        else r.classList.remove("lh-track-picker--open");
+        syncTrackPickerToggleUi();
+      }
+      if (mqTrack.addEventListener) mqTrack.addEventListener("change", onTrackMq);
+      else if (mqTrack.addListener) mqTrack.addListener(onTrackMq);
+    }
 
     var tpOrgCh = document.getElementById("lh-tp-org-chapters");
     var tpOrgOb = document.getElementById("lh-tp-org-objectives");
