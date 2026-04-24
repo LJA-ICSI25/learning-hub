@@ -587,6 +587,16 @@ function learnHubRunApp() {
       .replace(/"/g, "&quot;");
   }
 
+  /** Safe one-line text for ARIA attributes (no raw quotes / control chars). */
+  function safeAriaFragment(s, maxLen) {
+    var t = String(s == null ? "" : s)
+      .replace(/[\r\n\u0000\u007f]/g, " ")
+      .replace(/"/g, "'")
+      .trim();
+    if (maxLen && t.length > maxLen) t = t.slice(0, maxLen) + "…";
+    return t;
+  }
+
   /** Decode entities like &#39; in curriculum titles so the UI shows apostrophes, not raw entities. */
   function decodeLessonTitle(s) {
     if (s == null || s === "") return "";
@@ -1582,12 +1592,23 @@ function learnHubRunApp() {
     var btn = document.getElementById("lh-track-picker-toggle");
     var lab = document.getElementById("lh-track-picker-toggle-label");
     if (!root || !btn || !lab) return;
+    if (root.hidden) {
+      btn.disabled = true;
+      btn.setAttribute("aria-hidden", "true");
+      btn.removeAttribute("aria-expanded");
+      btn.removeAttribute("aria-controls");
+      return;
+    }
+    btn.disabled = false;
+    btn.removeAttribute("aria-hidden");
+    btn.setAttribute("aria-controls", "course-pills");
     var c = courseById[activeCourseId];
     var nm = c && c.name ? String(c.name) : "Tracks";
     lab.textContent = nm;
     var open = root.classList.contains("lh-track-picker--open");
+    var nmA = safeAriaFragment(nm, 48);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
-    btn.setAttribute("aria-label", (open ? "Hide track topics. Current: " : "Show track topics. Current: ") + nm);
+    btn.setAttribute("aria-label", (open ? "Hide track topics. Current: " : "Show track topics. Current: ") + nmA);
   }
 
   function renderPills() {
@@ -1605,7 +1626,10 @@ function learnHubRunApp() {
     syncTechplusWorkspaceChrome();
     var tp = document.getElementById("lh-track-picker");
     if (tp) {
-      if (!tp.getAttribute("data-lh-track-visibility-seeded")) {
+      var wsHidePicker = getTechplusPillsOnly() && activeCourseId === "tech";
+      if (wsHidePicker) {
+        tp.classList.remove("lh-track-picker--open");
+      } else if (!tp.getAttribute("data-lh-track-visibility-seeded")) {
         tp.setAttribute("data-lh-track-visibility-seeded", "1");
         if (isMobileNavLayout()) tp.classList.remove("lh-track-picker--open");
         else tp.classList.add("lh-track-picker--open");

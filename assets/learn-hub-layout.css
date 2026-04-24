@@ -521,6 +521,17 @@ body.lh-techplus-workspace .lh-techplus-org-wrap {
   box-shadow: 0 0 0 2px rgba(28, 176, 246, 0.18), var(--shadow-sm);
 }
 
+.lh-track-picker-toggle:focus-visible {
+  outline: 2px solid rgba(28, 176, 246, 0.75);
+  outline-offset: 2px;
+}
+
+.lh-track-picker-toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .lh-track-picker-toggle-label {
   min-width: 0;
   overflow: hidden;
@@ -535,6 +546,12 @@ body.lh-techplus-workspace .lh-techplus-org-wrap {
   line-height: 1;
   opacity: 0.75;
   transition: transform 0.2s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lh-track-picker-toggle-chev {
+    transition: none;
+  }
 }
 
 .lh-track-picker--open .lh-track-picker-toggle-chev {
