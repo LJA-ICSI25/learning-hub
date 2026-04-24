@@ -579,6 +579,18 @@ function learnHubRunApp() {
     return lessons()[lessonIndex];
   }
 
+  /** Keep lessonIndex within the active course (stale storage / shrunk curriculum / URL handoff). */
+  function clampLessonIndexForActiveCourse() {
+    var list = lessons();
+    if (!list.length) {
+      lessonIndex = 0;
+    } else {
+      if (!Number.isFinite(lessonIndex) || lessonIndex < 0) lessonIndex = 0;
+      else if (lessonIndex >= list.length) lessonIndex = list.length - 1;
+    }
+    courseProgress(activeCourseId).idx = lessonIndex;
+  }
+
   function escapeHtml(s) {
     return String(s)
       .replace(/&/g, "&amp;")
@@ -824,6 +836,12 @@ function learnHubRunApp() {
       if (Number.isFinite(n) && n >= 0 && n < list.length) j = n;
     }
     if (j >= 0) lessonIndex = j;
+    else {
+      var nxUrl = Number(courseProgress(activeCourseId).idx);
+      if (!Number.isFinite(nxUrl) || nxUrl < 0) lessonIndex = 0;
+      else lessonIndex = Math.floor(nxUrl);
+    }
+    clampLessonIndexForActiveCourse();
   }
 
   function syncUrlFromLesson() {
@@ -1210,6 +1228,9 @@ function learnHubRunApp() {
       var line = c.name + " · " + (lessonIndex + 1) + "/" + list.length + (t ? " — " + t : "");
       el.lessonPlace.textContent = line;
       el.lessonPlace.setAttribute("title", line);
+    } else if (el.lessonPlace) {
+      el.lessonPlace.textContent = "";
+      el.lessonPlace.removeAttribute("title");
     }
   }
 
@@ -1292,6 +1313,9 @@ function learnHubRunApp() {
       if (!row.learnOutcome || typeof row.learnOutcome !== "object" || Array.isArray(row.learnOutcome)) row.learnOutcome = {};
       if (typeof row.idx !== "number" || !Number.isFinite(row.idx) || row.idx < 0) row.idx = 0;
     });
+    Object.keys(progress.courses).forEach(function (cid) {
+      if (!courseById[cid]) delete progress.courses[cid];
+    });
     if (progress.activeCourseId && courseById[progress.activeCourseId]) activeCourseId = progress.activeCourseId;
     else activeCourseId = COURSES[0].id;
     progress.activeCourseId = activeCourseId;
@@ -1300,6 +1324,7 @@ function learnHubRunApp() {
     let saved = Number(cp.idx);
     if (!Number.isFinite(saved) || saved < 0) saved = 0;
     lessonIndex = Math.floor(saved);
+    clampLessonIndexForActiveCourse();
   }
 
   function saveProgress() {
