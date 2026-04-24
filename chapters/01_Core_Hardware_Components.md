@@ -668,7 +668,7 @@ of measure,” you need to be familiar with megahertz (MHz) and gigahertz
 
 ### Processor Cache
 I already mentioned cache when discussing motherboards, but most processors also include
-their own builtin cache. Cache is a quick form of memory that greatly speeds up the
+their own built-in cache. Cache is a quick form of memory that greatly speeds up the
 performance of your computer
 .
 You'll see three different cache designations. Level 1 cache (L1 cache) is the smallest and
@@ -950,7 +950,7 @@ required), which make floppy disks obsolete.
 
 When evaluating hard drives, there are really two factors that determine their performance:
 size and speed.
-Size is fairly self- evident. Hard drives with larger capacity store more data.
+Size is fairly self-evident. Hard drives with larger capacity store more data.
  There isn't
 anything too tricky about it. You can easily find hard drives with capacities from several
 hundred gigabytes up to 20 terabytes or more. Table 1.2 has some conversions that will
@@ -1457,7 +1457,7 @@ be important for getting on the Internet but are now nearly extinct.
 Finally, I talked about power supplies and system cooling. Computers are electronics, so
 of course they need power. Power supplies take AC power from wall outlets and convert it
 into DC power that the computer components need. The use of all this electricity generates
-heat, and too much heat can cause your components to fail. Most systems have builtin heat mitigation systems such as fans and heat sinks. CPUs generate the most heat and therefore
+heat, and too much heat can cause your components to fail. Most systems have built-in heat mitigation systems such as fans and heat sinks. CPUs generate the most heat and therefore
 have the most pressing need to be adequately cooled.
 Exam Essentials
 Explain the basics of computing and processing. At a fundamental level, most users want

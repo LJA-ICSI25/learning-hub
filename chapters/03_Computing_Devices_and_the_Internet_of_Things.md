@@ -180,7 +180,7 @@ they were also outrageously expensive. It's no wonder few people purchased them.
 suitcasesized cousins to what you see today.
 
 The purpose of a laptop, for the most part, is to do everything a desktop computer can,
-but to be portable. They contain a builtin keyboard, pointing device,
+but to be portable. They contain a built-in keyboard, pointing device,
  and flatscreen display
 in a clamshell design. They are also often called notebook computers because they resemble
 large notebooks. Most portable computers in use today are laptop computers.
@@ -321,20 +321,20 @@ that they're so close together. People with bigger hands or those who are used t
 full- sized keyboards might find laptop keyboards a bit constricting.
 Pointing Devices
 Building a full- sized mouse into a laptop case just isn't feasible.  The real estate is too
-valuable to waste on an accessory. Fortunately, laptops will often have one or more builtin
+valuable to waste on an accessory. Fortunately, laptops will often have one or more built-in
 devices to help you point to your heart's content.
  A few of these were covered in Chapter 2,
 but let's take a look at common laptop pointing devices here.
 Trackball Many early laptops used trackballs as pointing devices.
 A trackball is essentially
-the same as a mouse turned upside down. The on- screen pointer moves in the same direction
+the same as a mouse turned upside down. The on-screen pointer moves in the same direction
 and at the same speed that you move the trackball with your thumb or fingers.
 They are
 cheap to produce but not very durable, so they're not as commonly used today.
 Touchpad A touc
 hpad is a device that has a pad of touchsensitive material.
 The user
-draws with their finger on the touchpad, and the on- screen pointer follows the finger
+draws with their finger on the touchpad, and the on-screen pointer follows the finger
 motions. Included with the touchpad are two buttons for left or right-clicking (although
 with some touchpads, you can perform the functions of the left-click by tapping the touchpad.
  Macs will have one button).
@@ -344,11 +344,11 @@ feature known as the Touchpoint, generically known as a point stick. The point s
 pointing device that uses a small rubbertipped stick, usually right in the middle of the G,
 
 H, and B keys on the keyboard. When you push the point stick in a particular direction, the
-on- screen pointer goes in the same direction.
-The harder you push, the faster the on- screen
+on-screen pointer goes in the same direction.
+The harder you push, the faster the on-screen
 FIGURE 3.6  Audio adjustment keys F7 (quieter), F8 (louder), and F9 (microphone mute)
 
-pointer moves. The point stick allows fingertip control of the on- screen pointer,  without the
+pointer moves. The point stick allows fingertip control of the on-screen pointer,  without the
 reliability problems associated with trackballs. One occasional problem with point sticks
 is that they do not return to center, causing the pointer to drift when not in use. Figure 3.7
 shows a point stick and a touchpad on a laptop.
@@ -541,7 +541,7 @@ they also detect movements such as tilting or shaking the device that many apps 
 advantage of.
 
 One of the nice features of the gyroscope is that it can change the screen orientation from
-portrait to landscape depending on how you hold your device. This can be particularly helpful when using the on- screen keyboard to type. If you look at Figure 3.9,
+portrait to landscape depending on how you hold your device. This can be particularly helpful when using the on-screen keyboard to type. If you look at Figure 3.9,
  you'll see that it
 shows a new email in the Gmail app in portrait mode.
 By keeping the screen facing you and rotating the device 90 degrees to the left or right,
@@ -903,7 +903,7 @@ applications to be in grayscales or pure black and white. While e-readers might 
 fancy as tablets, there are two clear advantages of E Ink displays:
 FIGURE 3.33  iTunes sync
 
-FIGURE 3.35  Google Drive bac kup options
+FIGURE 3.35  Google Drive backup options
 FIGURE 3.34  Accounts And Bac kup on Android
 
 - Lower energy use than other LCD displays, which greatly prolongs battery life; many
@@ -917,7 +917,7 @@ the Kobo Clara, Onyx Boox, and Barnes & Noble Nook. Specifications differ by man
  to 10″ touch screen, 8 GB to
 64 GB storage, Wi-Fi connectivity (and maybe cellular as well), and weigh 6 oz to 8 oz.
  Some
-relatively common features are a builtin web browser,
+relatively common features are a built-in web browser,
  a backlight for reading in dimlight settings,
  and a microSD memory card reader. Most e-readers have a filesystem that allows users
 to store their titles in folders.
@@ -1122,7 +1122,7 @@ numbers that include decimals. Floats are covered more in-depth in Chapter 6, �
 Development. ”) Essentially, video game displays are composed of an array of polygons.
 Higher resolutions use more, smaller polygons in the same amount of space. A video card
 that's more powerful can move around more polygons faster than a lesspowerful version.
-You can see in Table 3.3 that the Switch has a lot less power, but remember, it's a handheld device with a builtin display similar to a large smartphone.
+You can see in Table 3.3 that the Switch has a lot less power, but remember, it's a handheld device with a built-in display similar to a large smartphone.
 The other two, as you can
 tell from their specifications, are as powerful as desktop computers.
 Understanding the Internet of Things
@@ -1207,9 +1207,9 @@ use for a home automation device, odds are that one exists. Here are some IoT ap
 in use today:
 Home Entertainment Systems Home entertainment is definitely the largest segment of IoT
 devices on the market today.
- Most new high- definition televisions are smart TVs with builtin wireless networking and the ability to connect to streaming services such as Netflix, Hulu,
+ Most new high- definition televisions are smart TVs with built-in wireless networking and the ability to connect to streaming services such as Netflix, Hulu,
 
-YouTube, or FuboTV. Other audio and video equipment will often have builtin networking
+YouTube, or FuboTV. Other audio and video equipment will often have built-in networking
 and remotecontrol capabilities as well.
 Not all smart TVs are really that smart,
  and large televisions are definitely not portable. For people who want to take their entertainment with them, there are streaming
@@ -1491,7 +1491,7 @@ Understand the role of servers and workstations. Servers exist to provide servic
 devices on a network.
 Workstations are systems that workers use to accomplish daily tasks.
 Understand the unique methods that you can use to interact with mobile devices. Examples include tapping,
- swiping, and pinching, as well as interacting through the use of builtin
+ swiping, and pinching, as well as interacting through the use of built-in
 kinetic sensors.
 Understand the differences between tablets and e-readers. Tablets are often larger and
 have multicolor displays.

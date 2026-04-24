@@ -230,7 +230,7 @@ It's unlikely that the Tech+ exam will quiz you in much detail about how IPS, OL
 QLED work, but knowing the basics is still useful. For the real world, understand that different technologies exist, and each has pros and cons that may better suit a user's needs.
 Smart TVs
 A smart TV is very much so like a monitor. The biggest differences are that smart TVs
-are usually larger and they have builtin Internet connectivity as well as preinstalled apps.
+are usually larger and they have built-in Internet connectivity as well as preinstalled apps.
 Because of their larger size,
  they often won't produce as crisp of an image as a monitor will.
 I will talk about this more in the “Adjusting and Configuring Displays” section later in this
@@ -430,8 +430,8 @@ Now that we've talked about the different types of display devices and how you c
 them up to your computer, let's shift gears a bit and talk about how to keep monitors
 behaving properly once they're connected. First, we'll start with the adjustments on the monitor itself.
 When you change the monitor resolution (via the display driver properties in Control
-Panel in Windows, for example), the on- screen image may shift in one direction or become
-slightly larger or smaller than it was before. Most monitors have on- screen controls that can
+Panel in Windows, for example), the on-screen image may shift in one direction or become
+slightly larger or smaller than it was before. Most monitors have on-screen controls that can
 be used to adjust the image size, image position,
  contrast, brightness, and other factors. Inexpensive or old monitors may have just a couple of buttons for monitor adjustment; nearly
 all newer monitors will have a complete digital menu system of controls that pop up when
@@ -486,7 +486,7 @@ or back of the monitor's case.
 2. Experiment with the buttons to see whether you can determine what they do. Or, look
 up the buttons in the monitor's documentation or on the manufacturer's website.
 
-On a laptop's builtin monitor, adjustment controls are usually not on the monitor itself but
+On a laptop's built-in monitor, adjustment controls are usually not on the monitor itself but
 built into the keyboard. Several of the keys on your keyboard, most often the Function (Fn)
 keys near the top of the keyboard, will have extra symbols, sometimes in a contrasting
 color. In Figure 2.10, you can see several of these on a laptop's F3–F8 keys.
@@ -644,7 +644,7 @@ Looking at Figure 2.21, you can see that this is a self-  enclosed unit that can
 four hard drives. Some hold more; some hold less.
  Nicer NAS systems will allow you to hotswap hard drives, meaning that if one fails,
  you can remove it and replace it without shutting
-the NAS down. Additionally, most NAS systems will have builtin fault tolerance as well,
+the NAS down. Additionally, most NAS systems will have built-in fault tolerance as well,
 meaning that if one drive fails,
  your data will still be protected.
 In Tech+ exam objective 2.3, “Compare and contrast storage types,”
@@ -971,7 +971,7 @@ TY. It's designed to place more commonly used letters in better
 spots, increasing your typing speed. After all, we don't need to worry about mechanical
 keys sticking together on our typewriters any longer! Personally, I think it would take a
 lot of frustrating time to get used to it, but a former boss of mine used it and swore by
-its efficiency. It could also be fun to change it on an unsuspecting co- worker,
+its efficiency. It could also be fun to change it on an unsuspecting co-worker,
  not that I
 would recommend that. Exercise 2.3 shows you how to change your keyboard layout in
 Windows 10.
@@ -995,7 +995,7 @@ also change input options by pressing the Windows key and the spacebar.
 ### Pointing Devices
 Pointing devices are so named because they allow you to move your cursor around the screen
 and point at what you want; they're a convenient handheld tool that lets you easily navigate
-on- screen. Pointing devices have been in use since the beginning of humankind,
+on-screen. Pointing devices have been in use since the beginning of humankind,
  if you include
 the index finger. They've pretty much been available for computers as long as computers have
 FIGURE 2.33  Language & Region options
@@ -1238,7 +1238,7 @@ Other T echnologies Often Bundled with Printers
 A lot of the printers you see on the market today combine printing with additional features, such as scanning, copying, and faxing. Such printers are called multifunctional
 printers or allinone
 printers. Adding features changes the printer from being solely
-an output device to being an input device as well. Printers with a builtin scanner usually incorporate them as a flatbed scanner on top of the printer; they generally don't
+an output device to being an input device as well. Printers with a built-in scanner usually incorporate them as a flatbed scanner on top of the printer; they generally don't
 
 cost much more than a single-  function printer and can be handy to have around. In
 
@@ -1626,7 +1626,7 @@ B
 C
 . You will need to complete webbased configuration steps for the peripheral to work.
 D. You will need to configure IP- based options for the peripheral to work.
-10. You want to install a device in your office that allows for extra storage and has builtin fault
+10. You want to install a device in your office that allows for extra storage and has built-in fault
 tolerance.
 Which device do you need?
 A. NAS

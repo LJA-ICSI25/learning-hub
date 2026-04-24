@@ -63,11 +63,11 @@ functional system. Built into this definition is the word tolerance, which in th
 to how much risk you are willing to accept. For example, if you don't care about the data
 
 on a laptop, and you can stand to be without the system for a few days if it dies, then you
-don't really need to worry about developing a faulttolerant solution. On the other hand,
+don't really need to worry about developing a fault-tolerant solution. On the other hand,
  if
-the data is the key to running your business and you can't survive without it, then a faulttolerant plan is required.
+the data is the key to running your business and you can't survive without it, then a fault-tolerant plan is required.
 Faulttolerant systems help protect against single points of failure.
-There are different variants of faulttolerant plans that can be implemented, from full- time, alwayson solutions to
+There are different variants of fault-tolerant plans that can be implemented, from full-time, always-on solutions to
 offline backups that might take a day or two to restore. I'll explore some of those concepts
 after discussing contingency planning.
 Contingency Plans
@@ -116,7 +116,7 @@ that the same data is written to two hard drives, databases, or servers at the s
 On a larger scale, some organizations have entire networks replicated (called hot sites)
 in case of failure. If not having any fault tolerance plan is at one end of the risk aversion
 spectrum, replication is at the other. It leaves no room for any failures to impact data or
-systems. The downside to replication is that it's the most expensive of the faulttolerant
+systems. The downside to replication is that it's the most expensive of the fault-tolerant
 options.
 One step down from replication is redundancy. With redundancy, there are devices or
 data in place to help keep things running normally for a short period of time, until the
@@ -217,7 +217,7 @@ years to keep the UPS dependable.
 UPSs all have a limit as to how many devices they can handle at once.
 These power limitations should be strictly observed. Overloading a UPS
 can cause a short, which could potentially result in fire.
-FIGURE 12.2  Front and bac k of a UPS
+FIGURE 12.2  Front and back of a UPS
 
 Data Backups
 Simply put, your data is probably the most important thing you have. Hardware can be
@@ -408,7 +408,7 @@ Internet and cloudbased backups are very popular options for home users and corp
 care of the backups and security. Before using one of these services, be sure you understand
 how often they perform backups and what security measures they have in place.
 Finally, if you do make backups to physical media (and not the cloud), consider where
-to store the backup drives or discs. If you store them on- site, they are convenient to get to if
+to store the backup drives or discs. If you store them on-site, they are convenient to get to if
 
 you need them. The downside is that if something happens to the building (such as a fire or
 natural disaster), then the backup could be ruined as well. Consider storing at least some of
@@ -451,7 +451,7 @@ Click Set Up Backup.
 files. In Figure 12.6 there are two choices, and a Save On A Network button. Notice that
 because I have a removable device selected, there is a warning message saying I can't
 create a system image. (Windows doesn't allow system images to be saved to removable media.) Select a location and click Next.
-FIGURE 12.6  Select a bac kup location
+FIGURE 12.6  Select a backup location
 EXERCISE 12.1  (continued)
 FIGURE 12.5  Backup And Restore
 
@@ -470,7 +470,7 @@ choose daily, weekly, or monthly. Then you can choose the day and time. Click OK
 10. The Backup And Restore setup window will close and take you back to the Backup And
 Restore control panel, where you can see the progress of the backup you are creating.
 Save this backup because you will use it in Exercise 12.2.
-FIGURE 12.7  Sc hedule options
+FIGURE 12.7  Schedule options
 
 Different backup programs will have slightly different steps, but overall the process is
 the same: Choose what you want to back up, decide where to back it up to, and set up a
@@ -555,7 +555,7 @@ location.
 12. Close Backup And Restore.
 
 Computer support isn't typically thought of as one of the sexy jobs in IT, but it's definitely one of the most critical and visible jobs. Users don't care how elegant your network
-design is, how bulletproof your security model is, or how user- friendly your website is if
+design is, how bulletproof your security model is, or how user-friendly your website is if
 their computer won't boot up.
  And when it won't boot up, their best friend is the computer
 support person.
@@ -586,7 +586,7 @@ always be vigilant about making data backups.
 Second, establish priorities—  one user being unable to print to the printer of their choice
 isn't as important as a floor full of accountants unable to run payroll.
  Prioritize every job
-and escalate it (or de- escalate it) as needed.
+and escalate it (or de-escalate it) as needed.
 Third, but perhaps most important,
  document everything—  not just that there was a
 problem but also the solution you found, the actions you tried,
@@ -682,7 +682,7 @@ they don't know anything about why it's not working.
 When you're looking for clues as to the nature of a problem, no one can give you more
 information than the person who was there when it happened. They can tell you what led
 up to the problem, what software was running, and the exact nature of the problem (“It
-happened when I tried to print”), and they can help you re- create the problem, if possible.
+happened when I tried to print”), and they can help you re-create the problem, if possible.
 Use questioning techniques that are neutral in nature. Instead of saying,
 “What were you
 doing when it broke?, ” be more compassionate and say, “What was going on when the
@@ -1041,7 +1041,7 @@ which of these may be faulty without an error message to guide you. If you have 
 display adapter or memory module, you can try swapping it out, but it may be easier to take
 the computer to a repair shop at this point.
 If you're determined to troubleshoot on your own, a device called a POST card may
-be useful. POST stands for “poweron self- test,”
+be useful. POST stands for “power-on self-test,”
  and it's a diagnostic routine built into the
 BIOS. Some desktop computers will beep once after a successful POST, where all critical components are checked. If you hear no beeps, or a series of beeps, you might have a
 hardware problem. A POST card is a circuit board you insert into an open slot in the motherboard or into a USB port, which can help you diagnose the issue. The card displays a twodigit numeric code on its LED to tell you where the system is in the booting process.
@@ -1085,7 +1085,7 @@ Assuming Windows has all the critical files it needs to load, it reads informati
 Registry as it boots up. The Registry informs it of the settings to use, what device drivers to
 load, and what programs should start up automatically in the background. If any of the files
 called for during this process are unavailable, an error message appears or the boot process
-simply hangs, usually after the Windows logo has briefly appeared on- screen.
+simply hangs, usually after the Windows logo has briefly appeared on-screen.
 You may be able to boot the PC using Safe Mode,
  which bypasses all noncritical startup
 options; if the problem is with one of the noncritical files, that problem will be temporarily
@@ -1095,7 +1095,7 @@ able to use System Restore to return the system configuration to its earlier sta
 whatever action caused the problem to occur.
 
 When Windows won't start normally, you can often boot into Safe Mode for access to
-your Windows Desktop. Safe Mode is a low- functionality mode that bypasses all optional
+your Windows Desktop. Safe Mode is a low-functionality mode that bypasses all optional
 components, both hardware and software,
  loading only the minimum required to display
 
@@ -1114,7 +1114,7 @@ key and click Power ➢  Restart to open Advanced Startup and skip to step 5.
 2. In the left pane, click System.
 3. Click Recovery. You will see a screen similar to the one in Figure 12.10.
 4. In the Advanced Startup area, click Restart Now.
-FIGURE 12.10  Reco very options
+FIGURE 12.10  Recovery options
 
 The next screen you are presented with will be titled Choose An Option.
 5. On the Choose An Option screen, click Troubleshoot.
@@ -1161,7 +1161,7 @@ Using System Restore in Windows 11
 1. Open the System Properties by typing restore point in the Windows search box and
 clicking Create A Restore Point.
 2. The System Protection tab, shown in Figure 12.1 1, will appear.
-FIGURE 12.11  System P rotection tab in System Properties
+FIGURE 12.11  System Protection tab in System Properties
 
 3. Click the Create button. A System Protection dialog box opens.
 4. Type T est 1 in the text box.
@@ -1218,7 +1218,7 @@ window opens.
 3. Click the link to open Task Manager. It will take you to the Startup apps section, as
 shown in Figure 12.14.
 4. To prevent any of the apps from loading at startup, right-click the app and choose Disable.
-FIGURE 12.14  Task Manager Star tup apps
+FIGURE 12.14  Task Manager Startup apps
 
 You might want to go through the list of items on your Startup tab to
 see what's loading when you boot. There may be applications starting

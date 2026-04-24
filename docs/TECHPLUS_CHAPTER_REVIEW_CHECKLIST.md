@@ -8,6 +8,7 @@ Use this for each `chapters/*.md` file before sign-off. Check boxes as you go.
 - [ ] `npm run build:techplus`
 - [ ] `npm run verify:techplus`
 - [ ] `npm run audit:techplus-md` — **CRITICAL** findings must be zero. **WARN** (“Possible hyphenated word break”) is common in long chapters until each passage is hand-checked; grep the file for the pattern or fix opportunistically when editing nearby text.
+- [ ] If study-plan or voucher messaging changed: verify copy in `assets/learn-hub-app.js`, `assets/learn-hub-voucher01-plan.js`, and `assets/learn-hub-tech-weighted-cram.js` still agrees (especially the "practice / unofficial" wording for 100–900 estimate).
 
 ## PDF / OCR defects
 
@@ -22,6 +23,7 @@ Use this for each `chapters/*.md` file before sign-off. Check boxes as you go.
 - [ ] Hyphenation matches `TECHPLUS_EDITORIAL_STANDARD.md` where applicable
 - [ ] `UTF-8` / `UTF-16` / `ASCII` — no internal spaces
 - [ ] OpenSSL (or other) commands are syntactically valid if shown as examples
+- [ ] No OCR split compounds remain in edited sections (`first-party`, `left-hand`, `OS-native`, `on-site`, `in-depth`, etc.)
 
 ## Pedagogy
 

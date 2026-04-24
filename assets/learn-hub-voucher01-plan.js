@@ -203,4 +203,36 @@ window.LEARN_HUB_VOUCHER01_PLAN = {
     if (!Number.isFinite(d) || d < 1 || d > 12) d = 1;
     return ["tech-sg-" + String(d).padStart(2, "0") + "-01"];
   },
+
+  /**
+   * Official-style exam emphasis buckets (sum = 1.0). Used to derive per-domain weights and
+   * a practice 100–900 scaled score on the voucher set (linear on weighted correct fraction).
+   */
+  examBucketPercents: {
+    techConcepts: 0.13,
+    infrastructure: 0.24,
+    applications: 0.18,
+    softwareDev: 0.13,
+    data: 0.13,
+    security: 0.19,
+  },
+
+  /**
+   * Each FC0-U71 objective domain 1–12: how its content splits across buckets (each row sums to 1).
+   * Drives how much each domain “counts” toward the weighted score after normalization across domains.
+   */
+  examDomainBucketShares: {
+    1: { techConcepts: 0.45, infrastructure: 0.55 },
+    2: { infrastructure: 1 },
+    3: { infrastructure: 1 },
+    4: { applications: 1 },
+    5: { applications: 0.5, infrastructure: 0.5 },
+    6: { softwareDev: 1 },
+    7: { data: 1 },
+    8: { infrastructure: 0.5, security: 0.5 },
+    9: { applications: 1 },
+    10: { data: 0.5, security: 0.5 },
+    11: { security: 1 },
+    12: { data: 1 },
+  },
 };

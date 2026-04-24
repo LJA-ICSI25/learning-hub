@@ -1,5 +1,7 @@
 # Security Concepts — Workplace Readiness Curriculum (Kali VM Track)
 
+> Maintenance note (2026-04): Documentation and bundled lesson text received an OCR/spacing normalization pass for readability consistency. When editing new sections, follow `docs/TECHPLUS_EDITORIAL_STANDARD.md` conventions for hyphenation and split-word cleanup.
+
 **Audience:** Learners moving from zero to job-ready security literacy (SOC analyst, IT security support, junior GRC, appsec-aware developer, cloud security associate).  
 **Lab environment:** One Kali Linux virtual machine (VMware/VirtualBox/Hyper-V) on an **isolated host-only or NAT lab network**. **Never** probe or attack systems you do not own or lack **written authorization** to test.  
 **Ethics:** Treat every exercise as if it were under a formal Rules of Engagement (RoE). Document scope, stop conditions, and evidence handling.

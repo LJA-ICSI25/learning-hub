@@ -2,6 +2,12 @@
 
 This document defines how `chapters/*.md` should read and how terminology is handled. It applies to the CompTIA Tech+ (FC0-U71) track built into Learn-Hub.
 
+## Current scope (2026-04)
+
+- Applies to source chapter Markdown and generated Tech+ lesson bundles consumed by Questions mode and Study-plan rows.
+- Includes consistency for weighted-score language shown to learners (practice estimate wording must stay explicit and non-official).
+- OCR cleanup policy now explicitly includes split compounds from PDF imports (`first-party`, `left-hand`, `OS-native`, `on-site`, etc.).
+
 ## Voice and tone
 
 - Use **clear, neutral, instructional English**. Prefer active voice for procedures (“Select…”, “Open…”) and passive where the actor is unimportant (“Data is encrypted…”).
@@ -30,6 +36,10 @@ Use these unless the exam objective wording requires another form:
 | line-of-sight | lineof - s ight |
 | binary-to-decimal | binaryto - de cimal |
 | user-friendly | user- split across lines |
+| first-party / third-party | firstparty, fir st- party |
+| left-hand / right-hand | lef t- hand, righ t- hand |
+| OS-native | OS- na tive |
+| built-in | builtin (when adjective form is intended) |
 
 ## Numbers and units
 

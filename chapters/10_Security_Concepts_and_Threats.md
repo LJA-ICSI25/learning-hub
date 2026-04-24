@@ -231,7 +231,7 @@ Conﬁdentiality
 FIGURE 10.1  The CIA triad
 
 Each type of threat poses different problems and therefore requires its own mitigation
-techniques. I will talk some about mitigation here, but the more in- depth conversation on
+techniques. I will talk some about mitigation here, but the more in-depth conversation on
 preventing and dealing with threats will occur in Chapter 11.
 The primary goal in this section is to raise awareness so that you have an idea of what to look out for.
 
@@ -269,13 +269,13 @@ range of the network.
 
 Eavesdropping
 Many office environments today are open, meaning that it's practically impossible to not hear
-others' conversations. Eavesdropping is often a low- tech attack method in which the attacker
+others' conversations. Eavesdropping is often a low-tech attack method in which the attacker
 simply listens to a conversation to glean key information.
- Perhaps a co- worker is reading off
+ Perhaps a co-worker is reading off
 a credit card number or verifying their date of birth over the phone.
  Of course, this threat is
 more acute in public places such as coffee shops and airport waiting areas. Anyone within earshot has access to that information and could potentially use it with malicious intent.
-Eavesdropping can also involve more high- tech methods, such as video cameras and
+Eavesdropping can also involve more high-tech methods, such as video cameras and
 microphones to listen in on conversations.
 Wiretapping
 Back in the days before wireless communications were everywhere, wiretapping was a literal
@@ -292,10 +292,10 @@ Hackers are more sophisticated today than they were 10 years ago, but then again
 network administrators. Because most of today's system admins have secured their networks
 well enough to make it pretty tough for an outsider to gain access, hackers have decided to
 try an easier route to gain information: they just ask the network's users for it.
-These are relatively low- tech attacks and are more akin to con jobs, so it's relatively
+These are relatively low-tech attacks and are more akin to con jobs, so it's relatively
 astounding how often they're successful. If someone randomly called you up and said, “Give
 me your bank account number,” there's no way you would provide it. At least I hope not!
-But if that same someone calls you up and pretends to be a co- worker in
+But if that same someone calls you up and pretends to be a co-worker in
 a remote office with
 your company, who really needs help and has a plausible story, then things might be different. These types of attacks are called social engineering.
 Social engineering is a process in which an attacker attempts to acquire information
@@ -385,7 +385,7 @@ a spear, and the likelihood that they would click the link is higher. Generating
 requires much more work on the part of the attacker, and it often involves using information
 from contact lists, friend lists from social media sites, and so on.
 
-Whaling is nothing more than phishing, or spear phishing, for so- called “big”  users, thus
+Whaling is nothing more than phishing, or spear phishing, for so-called “big”  users, thus
 the reference to the ocean's largest creatures. Instead of sending out a To Whom It May Concern message to thousands of users, the whaler identifies one person from whom they can
 gain all of the data they want—  usually a manager or business owner—  and targets the phishing campaign at them.
 The only preventive measure in dealing with social engineering attacks is to educate your
@@ -403,7 +403,7 @@ lookers, and if the data on the screen is highly confidential, you may find a sc
 useful. A screen filter (also called a privacy screen) directs the light from the display at a
 restricted angle so that anyone who isn't viewing it straight on won't be able to read it
 clearly. An example made by StarTech.com is shown in Figure 10.2. Many modern laptops
-have a Function key that can toggle a builtin digital privacy screen on or off as well.
+have a Function key that can toggle a built-in digital privacy screen on or off as well.
 FIGURE 10.2  Laptop privacy screen
 Source: StarTech.com
 
@@ -461,8 +461,8 @@ Remember that integrity is part of Tech+ exam objective 6.1. As with the
 confidentiality section, the types of threats below aren't specifically called
 out in the objectives but give you good examples of what data integrity
 means. And who knows, they might show up on the exam anyway!
-On- path Attack
-In an on- path attack (formerly known as a maninthemiddle attack), someone secretly
+On-path Attack
+In an on- path attack (formerly known as a man-in-the-middle attack), someone secretly
 places something (such as a piece of software or a rogue router) between a server and the
 client, and neither party is aware of it.
  The on- path software intercepts data and then sends
@@ -590,12 +590,12 @@ If you aren't in a secured area (and even if you are), it may be appropriate to 
 and other devices that physically attach the hardware to a desk or other fixed object in
 order to prevent it from “walking away.” There are various types of locks, cages, and racks
 designed to make it difficult for someone to remove a computer from its location.
-Most laptops have a K- slot, which is short for Kensington security slot.
+Most laptops have a K-slot, which is short for Kensington security slot.
  Kensington is
 a company that makes a type of lock that fits into that slot. The lock is then attached to a
 security cable, and the other end of is bolted to the wall or furniture. The locks are secured
 with either a key or a combination. Figure 10.3 shows an example of a security cable
-attached to a K- slot on a laptop.
+attached to a K-slot on a laptop.
 FIGURE 10.3  A laptop security cable
 
 Services are available, such as Absolute Home & Office, that can track
@@ -606,7 +606,7 @@ computers, including Dell, Lenovo, HP, Toshiba, and others. The tracking
 ability comes free with the computer, but you must pay to install and use
 the service. You can learn more about this software at https://
 homeoffice.absolute.com. In addition, many smartphones and tablets
-have builtin “
+have built-in “
 kill switches” that permanently disable the device in the
 event that it is stolen.
 
@@ -737,7 +737,7 @@ client software and use the most current version.
 Cookies and Consent
 In Chapter 5, you were introduced to cookies, which are small files downloaded from
 websites onto your personal device for tracking purposes. There are actually two kinds of
-cookies used: firstparty cookies and third-party cookies.
+cookies used: first-party cookies and third-party cookies.
 A fir
 st- party
 cookie is one that holds your information for a single website. These are
@@ -763,7 +763,7 @@ download any third-party cookies to your device.
 The website must get cookie consent, that is,
 permission from the end user to download the cookie. Firstparty cookies may be exempt if the
 cookie is determined to be critical to the website's functionality, such as if it remembers your
-username. Noncritical firstparty cookies cannot be automatically downloaded either,
+username. Noncritical first-party cookies cannot be automatically downloaded either,
  though.
 Instead, most websites will prompt you with their cookie policy and ask for your consent to
 download them, as shown in Figure 10.4. (Figure 10.4 also has a chatbot on the right side—
@@ -826,7 +826,7 @@ virus's code executes along with the application's code. The virus hides itself 
 file, so it's not obvious that it's there. A virus's code can cause all manner of mischief, from
 annoying but harmless things such as displaying a message to really destructive things such
 as deleting all files of a certain type or causing your OS to stop working. Most viruses also
-have a self- replicating component that causes them to spread from one executable file to
+have a self-replicating component that causes them to spread from one executable file to
 another.
  This usually happens via RAM. When the infected file executes, the virus code is
 copied into RAM, and from there it can attach itself to other executable files.
@@ -903,8 +903,8 @@ again. Until the carrier is identified and cleaned, the virus continues to haras
 network and spread.
 Viruses are detected and removed using antivirus software, which I covered in Chapter 5.
 
-A worm is different from a virus in that it can reproduce itself, it's self- contained, and it doesn't
-need a host application to be transported. Many of the so- called viruses that have made the
+A worm is different from a virus in that it can reproduce itself, it's self-contained, and it doesn't
+need a host application to be transported. Many of the so-called viruses that have made the
 news were actually worms.
  However, it's possible for a worm to contain or deliver a virus to a
 target system. If a worm carries additional malware, that malware is called a payload.
@@ -952,7 +952,7 @@ Spyware is software that (usually secretly) records your computer usage. Keylogg
 form of spyware; so are programs that track the websites you visit and what ads you click
 and then send that information back to their owners. Spyware makers get revenue from collecting consumer marketing data, either specifically about you or about all users in general.
 Most spyware is illegal, works surreptitiously, and can be difficult to remove.
-Spyware isn't self- replicating, and it relies on low- level social engineering to spread.
+Spyware isn't self-replicating, and it relies on low- level social engineering to spread.
 The
 most common way to get infected with spyware is to install a free application from a website. Be very careful what sites you use to download executable files! Another way to get
 spyware is to run an ActiveX or Java component on a website you visit. A website may seem
@@ -1246,7 +1246,7 @@ Accounting is listed as a sub- ob jective in Tech+ exam objective 6.1. Be
 able to explain the concepts of accounting logs, location tracking, and
 web browser history.
 The most common method of tracking user actions is through the use of logs. Nearly all
-operating systems have builtin logs that track various actions. For example,
+operating systems have built-in logs that track various actions. For example,
  Windowsbased
 systems contain W
 indows Logs, which are part of Event Viewer. To open Event Viewer, type
@@ -1490,7 +1490,7 @@ A
 B. Denial of service
 C. Social engineering
 D. Replay attack
-11. What is it called when a co- worker sitting next to you always seems to look your way when
+11. What is it called when a co-worker sitting next to you always seems to look your way when
 you try to enter your user ID and password to log onto the network?
 A. Phishing
 B. Social engineering
@@ -1546,7 +1546,7 @@ D. Nonrepudiation
 18. Which of the following threats can directly impact data integrity on a network?
 (Choose two.)
 A. Snooping
-B. On- path
+B. On-path
 C
 . Impersonation
 D. Denial of service

@@ -41,7 +41,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
  ✓ 6.0 Security
  ✓ 6.2 Explain methods to secure devices and security best practices.
 - Securing devices (mobile/workstation)
-- Anti- malware
+- Anti-malware
 - Firewall
 - Patching/updating
 - Device use best practices
@@ -502,7 +502,7 @@ is when you install new hardware, such as a printer.
 
 Most of the time when you connect your new hardware device and turn it on, your OS
 will recognize it and begin the driver installation process for you. Sometimes your OS will
-have a builtin driver that it can use. If not,
+have a built-in driver that it can use. If not,
  it will ask you to provide one.
 If you have to do it manually, installing a driver is often just like installing an application.
 Either it will come on a flash drive or optical disc, or, more likely, you will download it from
@@ -1224,7 +1224,7 @@ can be uncompressed later and the original files retrieved.
 FIGURE 5.23  Windows Defender Firewall
 
 The gold standard in compression software for many years has been WinZip. It's a great
-program, but it's not free. Fortunately, Windows 11 has a free builtin compression utility.
+program, but it's not free. Fortunately, Windows 11 has a free built-in compression utility.
 
 If you want to use others, popular ones include WinRAR, 7- Zip, gzip,
  and Express Zip.
@@ -1605,7 +1605,7 @@ ay.
 Add but
 ton next to “ Allowed to send popups and use redirects. ” Notice in this example
 that the www.ups.com site has been added.
-Why might you want to allow a site to send popups? Some websites have builtin
+Why might you want to allow a site to send popups? Some websites have built-in
 functionality, such as a security box or notification window, that requires the use of
 popups. Let's say you visit a site that requires a popup. When you clic
 k a link that activates the popup, you'll get a message in the browser saying that it block

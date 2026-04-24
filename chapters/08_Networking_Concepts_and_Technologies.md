@@ -726,7 +726,7 @@ Bluetooth is not designed to be a WLAN but rather a wireless personal area netwo
 (WPAN). In other words, it's not the right technology to use if you want to set up a wireless
 network for your office. It is, however, a great technology to use if you have wireless devices
 with which you want your computer to be able to communicate. Examples include smartphones, mice, keyboards, headsets, speakers, and printers.
-Every laptop comes with builtin W
+Every laptop comes with built-in W
 i- Fi capabilities, and most come Bluetooth-enabled.
 
 Desktops don't always have it built in, though. To use Bluetooth devices, you might need to
@@ -767,7 +767,7 @@ pointed at each other to work. If you point your remote away from the television
 does it work?
 You can find more information on the IrDA standard at the organization's
 website: www.irda.org.
-Some laptops and mobile devices have a builtin infrared port, which is a small,  dark
+Some laptops and mobile devices have a built-in infrared port, which is a small,  dark
 square of plastic, usually black or dark red. For easy access, infrared ports are located on the
 front or side of devices that have them. Figure 8.5 shows an example of an infrared port on
 a laptop.
@@ -893,7 +893,7 @@ FIGURE 8.8  A wireless router
 
 solution with software on it. Hostbased firewalls protect only one computer and are almost
 always software solutions.
-Windows comes with a builtin software firewall called W
+Windows comes with a built-in software firewall called W
 indows
 Firewall, also known as Microsoft Defender Firewall.
 Networkbased firew
@@ -1658,7 +1658,7 @@ g. Update the firmware on the router or set it to update automatically.
 5. Using your laptop, verify that the guest network works and that you are able to get on
 the Internet using it.
 
-This chapter provided an in- depth discussion of networking concepts. You started off by
+This chapter provided an in-depth discussion of networking concepts. You started off by
 learning about the connection types and features of each. For example, external connections to the Internet are almost always broadband today, and the most popular choices are
 fiberoptic, DSL,
  and cable Internet. For internal networking, you have two primary choices:
@@ -1706,7 +1706,7 @@ Know which IP configuration options are required. To communicate on a network,
 host needs an IP address and a subnet mask. If you want to get on the Internet, you also
 need a default gateway (such as a wireless router).
 Understand what DHCP and DNS do for you. DHCP automatically assigns TCP/IP configuration information to clients.
- DNS resolves user- friendly hostnames such as www.google
+ DNS resolves user-friendly hostnames such as www.google
 .com to an IP address.
 
 Understand three types of network identifiers. IP addresses are logical addresses and can

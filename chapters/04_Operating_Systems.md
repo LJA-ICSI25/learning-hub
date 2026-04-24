@@ -820,7 +820,7 @@ launch, Apple thrust itself into a very competitive mobile market, with a produc
 many ways was considered inferior to the established players. Apple got one thing very right,
 though, and that was the user experience. The iPhone was the first popular phone to have a
 touchscreen that you could use with your fingers and not a stylus, and it used pinchtozoom
-and intuitive finger swipes to navigate the screen. It had only a few builtin apps (and no
+and intuitive finger swipes to navigate the screen. It had only a few built-in apps (and no
 way to develop new ones) such as the Safari web browser and Maps, but it played music,
 
 videos, and movies, which you could get from the alreadyestablished iTunes store.
@@ -1354,7 +1354,7 @@ that only authorized users can read it).
 As part of Tech+ exam objective 3.1, you may be expected to identify file
 system characteristics such as compression, encryption, and file types,
 extensions, and naming restrictions.
-Security Most file systems have builtin security,  which is referred to as its set of
+Security Most file systems have built-in security,  which is referred to as its set of
 permissions. This allows an administrator or the creator of the file to permit some users to
 see the file and others to make changes to the file and yet prohibit others from accessing
 it altogether.
@@ -1935,7 +1935,7 @@ attribute
 B. Calculations inside the file
 C. Name of the file
 D. File size
-20. You want to keep a co- worker,
+20. You want to keep a co-worker,
  Jerry, from accessing a file. What should you use to do this?
 A. Permissions
 B. Readonly

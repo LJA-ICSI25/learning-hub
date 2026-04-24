@@ -2146,6 +2146,13 @@ body.lh-tech-questions-mode #teach {
   display: none !important;
 }
 
+/* Questions mode hides #teach so quizzes use the wide column — restore it for Tech read-only lessons (e.g. weighted cram) listed under Study plans. */
+body.lh-tech-questions-mode.lh-tech-questions-reading #teach.teach {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 0;
+}
+
 body.lh-tech-questions-mode .xp-strip,
 body.lh-tech-questions-mode #lh-track-mode-root {
   display: none !important;
@@ -2872,6 +2879,89 @@ body.lh-force-reduce-motion .progress-fill {
   font-size: 0.78rem;
   line-height: 1.45;
   color: var(--muted);
+}
+
+.lh-voucher-q-pts {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.lh-tech-exam-scale-hint {
+  font-size: 0.72rem !important;
+  line-height: 1.45 !important;
+}
+
+.lh-exam-scale-note {
+  display: inline;
+  font-size: 0.88em;
+}
+
+.lh-voucher01-help {
+  margin: 0 0 0.55rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid rgba(74, 124, 180, 0.38);
+  border-radius: var(--radius-sm);
+  background: rgba(10, 22, 40, 0.5);
+  font-size: 0.78rem;
+  line-height: 1.48;
+  color: var(--text);
+}
+
+.lh-voucher01-help-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.lh-voucher01-help-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.lh-voucher01-help-list li {
+  margin-bottom: 0.35rem;
+}
+
+.lh-voucher01-help-list li:last-child {
+  margin-bottom: 0;
+}
+
+.lh-voucher01-cram-teaser {
+  margin: 0 0 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(42, 53, 69, 0.55);
+  border-radius: var(--radius-sm);
+  background: rgba(7, 12, 18, 0.55);
+}
+
+.lh-voucher01-attempts-note {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.lh-weighted-cram h2 {
+  margin: 1.1rem 0 0.45rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(42, 53, 69, 0.65);
+  padding-bottom: 0.2rem;
+}
+
+.lh-weighted-cram h2:first-of-type {
+  margin-top: 0.35rem;
+}
+
+.lh-weighted-cram .lh-weighted-cram-lead,
+.lh-weighted-cram .lh-weighted-cram-foot {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .lh-voucher01-actions {

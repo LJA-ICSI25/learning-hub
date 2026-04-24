@@ -49,7 +49,7 @@ the dependence upon cables),
 early 2000s and whose limits are still being stretched today by hardware engineers.
 Part of the intriguing aspect of tech trends is how new technology moves concepts from
 the theoretical drawing board to the palms of our hands. One of my favorite examples
-comes from a comic strip about a high- tech detective named Dick T
+comes from a comic strip about a high-tech detective named Dick T
 racy that debuted in the
 United States in 1931. Dick Tracy had a wristwatch that enabled twoway communication
 between himself and the police headquarters—  technology that was decades ahead of its time.
@@ -268,7 +268,7 @@ than expected.
 Easily scalable Hard to move from one pro
 vider to another.
 Can access data from anywhere Requires Internet.
-Data protected from on- site disaster Lack of total control.
+Data protected from on-site disaster Lack of total control.
 S
 ecurity and privacy Security and privacy.
 
@@ -403,7 +403,7 @@ is elasticity. In most cases, clients can get more resources instantly (or at le
 and that is called rapid elasticity. For the client, this is a great feature because they can scale
 up without needing to purchase, install, and configure new hardware. Elasticity can also
 work backward; if fewer resources are required, the client may be able to scale down and
-pay less without needing to sell hardware. You will hear some subscriptions with builtin
+pay less without needing to sell hardware. You will hear some subscriptions with built-in
 elasticity referred to as pa
 y- as- y
 ou- grow

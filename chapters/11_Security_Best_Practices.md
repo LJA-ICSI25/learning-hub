@@ -15,7 +15,7 @@ Source: CompTIA Tech+ (FC0-U71) Study Guide PDF — chapter content, lab, and re
 - Malicious or compromised content
 - Securing devices (mobile/workstation)
 - Authentication
-- Anti- malware
+- Anti-malware
 - Firewall
 - Patching/updating
 - Physical device security
@@ -133,7 +133,7 @@ Included in that list is patching and updating devices.
 Whenever an operating system update or patch comes out, install it on your device. The
 same advice holds true for major software applications. There's no sense in leaving any
 doors open for a potential hacker.
-Most OSs have a builtin update mechanism.
+Most OSs have a built-in update mechanism.
 As discussed in Chapter 5, “Software Applications,” Windows comes with Windows Update, as shown in Figure 11.1. You can get to
 it several ways in Windows 11, such as by typing Windows update in the Windows search
 bar and pressing Enter, or by clicking Start Settings (the icon that looks like a gear) ➢  Windows Update.
@@ -153,7 +153,7 @@ Face ID & Passcode, also shown in Figure 11.4.
 FIGURE 11.1  Windows Update
 FIGURE 11.2  An iOS update is available.
 
-FIGURE 11.3  Android softw are update
+FIGURE 11.3  Android software update
 (a) (b)
 FIGURE 11.4  Android (a) and iOS (b) security settings
 
@@ -233,7 +233,7 @@ is that it can't be used, but that's the tradeoff for using this type of securit
 You learned about authentication in Chapter 10, so this again will be a quick review.
 Authentication, of course, helps keep computers and resources safe as it requires the user to
 validate their identity. The three types of authentication to remember are:
-- Single- Factor Authentication: A username and one factor, such as a password, are
+- Single-Factor Authentication: A username and one factor, such as a password, are
 required. Examples of a factor include something you know
 , something you are,
 something you have, or somewhere you are.
@@ -276,7 +276,7 @@ types of antimalware used to harden devices.
 Antivirus Software
 Antivirus software attempts to identify virus infections by scanning all of the files on your
 hard disk (or a subset of files that are most likely to contain viruses). Popular antivirus programs include Norton 360 (formerly Norton Antivirus) and McAfee Total Protection.
-The website www.av- c omparatives.org  provides an independent,
+The website www.av-comparatives.org  provides an independent,
 comprehensive comparison and review of current antivirus applications.
 Take the time to look through this site and draw your own conclusions
 about what may be the best antivirus application for you.
@@ -338,7 +338,7 @@ to perpetrate fraud,
 trick people into visiting phishing websites or sites where a virus or other malware will be
 downloaded.
 Many email applications include filters and other tools to manage spam. Microsoft Outlook has its own junkmail filter,
- for example. However, these builtin filters often fail to
+ for example. However, these built-in filters often fail to
 catch a lot of the spam because their algorithms for differentiating between spam and legitimate mail aren't sophisticated.
 Some antivirus applications include an anti-spam component, and you can also buy addon anti-spam programs or get them for free. For example,
  SpamBayes, available for free at
@@ -369,7 +369,7 @@ applications. Many malware infections bog down a system or cripple it.
 - CPU and memory usage may be high even though you aren't doing anything that would
 cause them to act in this manner. This can happen if the malware is hijacking your
 system for its own computing purposes.
-- A warning or message box may appear on- screen and refuse to go away.  For example,
+- A warning or message box may appear on-screen and refuse to go away.  For example,
 there may be a message that your system is infected with a virus and demanding that
 you enter a credit card to “buy” software that will fix the problem.
 - Your friends may let you know that they have been receiving strange emails from you
@@ -530,7 +530,7 @@ have it run automatically. Unfortunately, this can also introduce a security ris
 It is never a good idea to put any media in a workstation if you do not know where it
 came from or what it is. The reason is that the media (Flash drive, DVD, CD) could contain
 malware. Compounding matters, that malware could be referenced in the AUTORUN.INF file
-FIGURE 11.13  Bluetooth Support S ervice properties
+FIGURE 11.13  Bluetooth Support Service properties
 
 on the media, causing it to be summoned simply by inserting the media in the machine and
 requiring no other action. AUTORUN.INF can be used to start an executable, access a website,
@@ -566,7 +566,7 @@ out there. And as you learned in Chapter 10, it's pretty easy for attackers to a
 bad intent.
 So, while most people are fairly aware of the potential dangers of browsing the Internet,
 it's still important to educate others and be vigilant yourself as you look for information and
-entertainment. Chapter 5 had an in- depth discussion on web browser safety.
+entertainment. Chapter 5 had an in-depth discussion on web browser safety.
  Here's a quick
 reminder of the key points:
 Keep your browser up-to-date. Older browsers have greater potential for security exploits.
@@ -630,7 +630,7 @@ FIGURE 11.16  Edge settings
 
 Before getting into specific things you should recognize, here are two basic safe web
 browsing tips:
-Do not visit questionable sites. This one might seem self- evident, right? Part of the problem
+Do not visit questionable sites. This one might seem self-evident, right? Part of the problem
 might be identifying a questionable site,
  much like you can't always identify a “bad person”
 simply based on their looks. Some sites are pretty obvious, though. Sites that claim to offer
@@ -711,12 +711,12 @@ And Services.
 5. Scroll down to the Security section, shown in Figure 1 1.17.
 6. Slide the toggle off for Microsoft Defender SmartScreen.
 7. Close Settings.
-Google Chrome also has builtin phishing protection, enabled by default.  It's configured
+Google Chrome also has built-in phishing protection, enabled by default.  It's configured
 by going to Settings ➢  Privacy And Security and then in the Privacy And Security section,
 clicking the Security link. It looks like the screen in Figure 11.18. Notice that on the Privacy
 And Security page you can also configure Chrome to always use secure HTTPS connections,
 which is a good option to enable as well.
-FIGURE 11.17  SmartS creen filter
+FIGURE 11.17  SmartScreen filter
 
 The Risks of Using Public Workstations
 Every so often, you might find yourself in a situation where you want or need to use a
@@ -731,7 +731,7 @@ major issue because they transmit all communications without encryption.
 You don't want
 your credit card information announced to a crowd with a bullhorn. So, what can you do to
 protect yourself? Here are a few suggestions:
-FIGURE 11.18  Chrome Pri vacy And Security settings
+FIGURE 11.18  Chrome Privacy And Security settings
 
 - If it's on an unsecured wireless network, don't use it except for basic web news surfing
 or entertainment. Don't enter in any personally identifiable information or usernames
@@ -796,7 +796,7 @@ aware of it and have proper training. In fact, it's highly recommended that you 
 employees sign an agreement (remember nonrepudiation from Chapter 10?) saying that they
 have read and understand the policy and that the signed document be kept in their human
 resources file. Many companies also require that employees review the policy annually and
-re- sign the affidavit as well.
+re-sign the affidavit as well.
 In Tech+ exam objective 6.2, there are a few different subobjectives covering users and security. Be sure to understand how security awareness
 plays a role in securing devices, specifically social engineering, phishing,
 and malicious or compromised content. Also be able to explain privacy
@@ -959,7 +959,7 @@ If you can't remember all the passwords in your head, one possible solution is t
 them using a password manager. Password managers store passwords in a passwordprotected file on the device's hard drive.
  Yes, someone could steal that file and possibly even
 unencrypt it, but the chances of that happening are slim compared to the chances of a server
-being hacked where your password for a certain site is stored. Windows has a builtin password manager called
+being hacked where your password for a certain site is stored. Windows has a built-in password manager called
 Windows Credential Manager, and macOS uses Keychain Access. Some
 of the highestrated third-party password managers are Bitwarden and 1Password.
 Another possible solution is to reuse the same password for sites that don't store any
@@ -1087,7 +1087,7 @@ EXERCISE 11.4  (continued)
 this PC that you want to use for the exercise.
 7. Click Check Names. The username appears preceded by the computer name, as shown
 in Figure 1 1.20.
-FIGURE 11.20  Select User s Or Groups dialog box
+FIGURE 11.20  Select Users Or Groups dialog box
 FIGURE 11.19  Folder permissions
 
 8. Click OK. Now that user appears on the Group Or User Names list in the Private Properties dialog box.
@@ -1107,7 +1107,7 @@ FIGURE 11.21  User permissions
 EXERCISE 11.4  (continued)
 19. In the Advanced Attributes dialog box, select the Encrypt Contents To Secure Data check
 box, as shown in Figure 1 1.22.
-FIGURE 11.22  Advanced At tributes dialog box
+FIGURE 11.22  Advanced Attributes dialog box
 You must have a version of Windows that supports encryption to encrypt
 a folder's contents as detailed in step 19. If not, the check box will be
 grayed out.

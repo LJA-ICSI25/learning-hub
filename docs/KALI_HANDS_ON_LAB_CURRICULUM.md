@@ -3,6 +3,8 @@
 
 # Kali Linux Hands-On Lab Curriculum
 
+> Maintenance note (2026-04): This source and generated lesson bundles were rechecked for OCR split-word and spacing artifacts. Keep command examples exact and preserve the slow, verification-first pacing language when revising labs.
+
 **Audience:** Learners who want **deep**, practical experience across web fundamentals, scripting, databases, and certification-aligned security topics.
 
 **Pedagogy (read once):** This path is intentionally **slow**. Each sidebar lesson is **one lab** (or one setup chapter). Do **not** rush. For each lab: read the **Background** and **Commands explained** sections *before* typing anything. Expect **45–120+ minutes** per lab depending on depth—some may spill across two sessions. Keep a **lab notebook** (what you ran, what happened, what confused you, what you verified).

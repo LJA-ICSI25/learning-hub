@@ -131,8 +131,8 @@ of data points increases.
  Flat files are meant to be single- user instances, even if several users
 may be able to access them at one time.
 
-Database servers such as Microsoft SQL Server and Oracle are extremely scalable, allowing access to hundreds or tens of thousands of users at a time. Enterprise versions of database software also allow databases to stretch between on- site servers and the cloud, with the
-most recent data being available on- site.
+Database servers such as Microsoft SQL Server and Oracle are extremely scalable, allowing access to hundreds or tens of thousands of users at a time. Enterprise versions of database software also allow databases to stretch between on-site servers and the cloud, with the
+most recent data being available on-site.
 Microsoft SQL Server allows for a maximum of 32,767 concurrent
 connections.
 Speed Similar to scalability,  databases are much faster than flat files at processing and
@@ -157,7 +157,7 @@ Data Persistence Users expect their data to be stored indefinitely,
 by data persistence. Spreadsheets and databases both write data to hard drives, so by definition, both possess this trait. However, imagine a situation where you are entering data
 and the computer loses power. If you were editing a spreadsheet, all changes since the last
 file save are gone. With a database, all changes are essentially saved after each cell of data is
-edited. Furthermore, databases log changes in separate log files. If something happens to corrupt the data, the log files can be used to re- create the missing or corrupted data.
+edited. Furthermore, databases log changes in separate log files. If something happens to corrupt the data, the log files can be used to re-create the missing or corrupted data.
 Therefore,
 databases have much better data persistence than do spreadsheets.
 Data Availability Flat files are meant to be stored on a local computer.
@@ -755,7 +755,7 @@ using numerous conditions as well as joins or unions can easily span multiple pa
 One limitation of queries is that they return raw, unformatted data in columns and rows
 like a spreadsheet—  they aren't very pretty
 . For nicely formatted results, reports are used.
-A report is essentially a query that's been formatted to make them look like a finished product. Access has a builtin report generator,
+A report is essentially a query that's been formatted to make them look like a finished product. Access has a built-in report generator,
  but a lot of DBMSs don't. For those, you need to
 use a third-party reporting tool such as Crystal Reports.
 Reporting doesn't just make pretty reports and forms— it can also produce different
