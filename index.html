@@ -5,7 +5,7 @@
   <!-- hehe -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Practice-first courses: HTML, CSS, JavaScript, Python, SQL, Tech+, PenTest+, Security, and Kali labs — runs locally in your browser." />
+  <meta name="description" content="Practice-first courses: HTML, CSS, JavaScript, Python, SQL, Tech+, PenTest+, Network+, Security, and Kali labs — runs locally in your browser." />
   <meta name="theme-color" content="#030508" />
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhDrillConfidence20260422" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhCoursePillsScrollbar20260424" />
   <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhQuickPracticeCompact20260415" />
 </head>
 <body>
@@ -94,7 +94,20 @@
               </button>
             </div>
           </div>
-          <div class="course-pills" id="course-pills"></div>
+          <div class="lh-track-picker" id="lh-track-picker">
+            <button
+              type="button"
+              class="lh-track-picker-toggle"
+              id="lh-track-picker-toggle"
+              aria-expanded="false"
+              aria-controls="course-pills"
+              title="Show or hide all track topics"
+            >
+              <span class="lh-track-picker-toggle-label" id="lh-track-picker-toggle-label">Tracks</span>
+              <span class="lh-track-picker-toggle-chev" aria-hidden="true">▾</span>
+            </button>
+            <div class="course-pills" id="course-pills"></div>
+          </div>
         </div>
         <div class="xp-strip">
           <div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="xp-label" id="xp-bar">
@@ -245,7 +258,7 @@
           <div id="teach-boot-placeholder">
             <h2>Welcome</h2>
             <p><strong>Practice</strong> is the left column (or the block above on small screens). <strong>This step</strong> on the right explains what to do — open <strong>Reference</strong> inside that panel when you need the full notes.</p>
-            <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1. <strong>Tech+</strong> and <strong>Security</strong> are read-first tracks; <strong>Labs</strong> is a Kali VM checklist (commands run on your VM, not in the browser).</p>
+            <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1. <strong>Tech+</strong>, <strong>PenTest+</strong>, <strong>Network+</strong>, and <strong>Security</strong> are read-first tracks; <strong>Labs</strong> is a Kali VM checklist (commands run on your VM, not in the browser).</p>
             <p class="msg info">If this never disappears, check that every <code>assets/learn-hub-*.js</code> file loaded (Network tab). Use a local server if previews fail.</p>
           </div>
         </article>
@@ -302,7 +315,7 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-network-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
           );
       },
       true
@@ -315,6 +328,7 @@
   <script src="assets/learn-hub-techplus.js"></script>
   <script src="assets/learn-hub-techplus-md.js?v=7c70fd6aa52a"></script>
   <script src="assets/learn-hub-pentest-md.js?v=pentestTrackMobile20260416"></script>
+  <script src="assets/learn-hub-network-md.js?v=networkplusTrack20260424"></script>
   <script src="assets/learn-hub-security-md.js?v=lhSecEnrichSecurityPlus20260412b"></script>
   <script src="assets/learn-hub-kali-md.js?v=kaliLabsBuild2"></script>
   <script src="assets/learn-hub-deep.js"></script>
@@ -322,7 +336,7 @@
   <script src="assets/learn-hub-techplus-study-patch.js?v=lhStudyPatch20260415"></script>
   <script src="assets/learn-hub-techplus-org.js?v=lhTechplusOrgToggle20260415"></script>
   <script src="assets/learn-hub-tech-weighted-cram.js?v=lhExamScaleFootnote20260423"></script>
-  <script src="assets/learn-hub-app.js?v=lhAuthAltRoute20260423"></script>
+  <script src="assets/learn-hub-app.js?v=lhTrackTopicsToggleAll20260424"></script>
 
 
 
