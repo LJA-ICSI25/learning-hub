@@ -396,9 +396,10 @@ function learnHubRunApp() {
     for (var i = 0; i < data.sets.length; i++) {
       var set = data.sets[i];
       if (!set || !Array.isArray(set.questions) || !set.questions.length) continue;
+      var title = set.title || "GimKit questions " + (i + 1);
+      if (/^GimKit ITF Bits/i.test(String(title))) continue;
       var id = "tech-gimkit-" + String(i + 1).padStart(2, "0");
       if (seen[id]) continue;
-      var title = set.title || "GimKit questions " + (i + 1);
       add.push({
         _order: i,
         lesson: {
@@ -1392,7 +1393,6 @@ function learnHubRunApp() {
       var t = plainTextFromHtml((lesson && lesson.title) || "");
       if (/^Tech\+ Voucher Test/i.test(t)) return "voucher-tests";
       if (/^GimKit Set \d+/i.test(t)) return "gimkit-core";
-      if (/^GimKit ITF Bits/i.test(t)) return "gimkit-itf-bits";
       if (/^GimKit Questions Set \d+/i.test(t)) return "gimkit-large";
       return "gimkit-other";
     }
@@ -1408,7 +1408,6 @@ function learnHubRunApp() {
       if (groupKey === "voucher-tests") return "Tech+ voucher tests";
       if (groupKey === "study-plans") return "Study plans";
       if (groupKey === "gimkit-core") return "Core GimKit sets";
-      if (groupKey === "gimkit-itf-bits") return "ITF Bits sets";
       if (groupKey === "gimkit-large") return "Large mixed sets";
       return "Other question sets";
     }
@@ -2306,31 +2305,6 @@ function learnHubRunApp() {
     return w;
   }
 
-  function voucher01ObjectiveLineHtml(origQi, examWN, sumRunW) {
-    var P = voucher01Plan();
-    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
-    if (!P || !Array.isArray(P.domains) || origQi < 0 || origQi >= P.domains.length) return "";
-    var d = P.domains[origQi];
-    var title =
-      O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[d] ? O.OBJECTIVE_NAV_TITLE[d] : "Objective domain " + d;
-    var pts =
-      examWN && sumRunW > 0 && d >= 1 && d <= 12 && examWN[d] > 0
-        ? Math.max(1, Math.round((800 * examWN[d]) / sumRunW))
-        : 0;
-    var ptsHtml =
-      pts > 0
-        ? ' <span class="lh-voucher-q-pts">Practice scale: up to <strong>' +
-          pts +
-          "</strong> / 800 weighted points this run</span>"
-        : "";
-    return (
-      '<p class="lh-voucher-q-obj"><span class="lh-voucher-q-obj-k">Maps to</span> · ' +
-      escapeHtml(title) +
-      ptsHtml +
-      "</p>"
-    );
-  }
-
   function arraysEqualSorted(a, b) {
     if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
     var as = a.slice().sort(function (x, y) {
@@ -2549,11 +2523,15 @@ function learnHubRunApp() {
     if (!voucher01Plan() || !isTechVoucher01Lesson(lesson)) return;
     ensureVoucher01Progress();
     var wrong = gradeMeta.wrongOrigQi && Array.isArray(gradeMeta.wrongOrigQi) ? gradeMeta.wrongOrigQi : [];
+    var runO = Array.isArray(gradeMeta.runOrder) ? gradeMeta.runOrder : [];
+    var ansD = Array.isArray(gradeMeta.answerDetails) ? gradeMeta.answerDetails : [];
     progress.voucher01.attempts.push({
       at: new Date().toISOString(),
       lessonId: lesson.id,
       wrong: wrong.slice(),
       wrongDetails: Array.isArray(gradeMeta.wrongDetails) ? gradeMeta.wrongDetails : [],
+      runOrder: runO.slice(),
+      answerDetails: ansD.slice(),
       domainStats:
         gradeMeta.domainStats && typeof gradeMeta.domainStats === "object" && !Array.isArray(gradeMeta.domainStats)
           ? gradeMeta.domainStats
@@ -2612,9 +2590,8 @@ function learnHubRunApp() {
       '<aside class="lh-voucher01-help" aria-label="How study tracking works">' +
       '<h4 class="lh-voucher01-help-title">How topic tracking works</h4>' +
       "<ul class=\"lh-voucher01-help-list\">" +
-      "<li><strong>Miss counts</strong> below add up every wrong answer on this voucher quiz (each question maps to one <strong>objective domain</strong>). This is your personal history—not the exam blueprint.</li>" +
+      "<li><strong>Miss counts</strong> add up every wrong answer on this voucher quiz (each question maps to one <strong>objective domain</strong>). They feed <strong>Practice 15 from top weak topics</strong> and show up in <strong>Attempt history</strong> / <strong>Copy study snapshot</strong>. This is your personal history—not the exam blueprint.</li>" +
       "<li><strong>Practice 15 from top weak topics</strong> looks at those totals, picks the two domains with the <em>highest</em> miss counts, then gives you up to fifteen random questions that belong only to those domains.</li>" +
-      "<li><strong>Accuracy by topic</strong> (when it appears) blends your last few runs and sorts by lowest percent correct for the questions you actually answered—useful for spotting a rough patch on one area.</li>" +
       "</ul></aside>"
     );
   }
@@ -2627,75 +2604,6 @@ function learnHubRunApp() {
       '<button type="button" class="tool ghost lh-voucher01-open-lesson" data-lesson-id="tech-study-weighted-cram">Open weighted topic cram lesson</button>' +
       "</section>"
     );
-  }
-
-  function voucher01DomainCramHtml(domain) {
-    var P = voucher01Plan();
-    if (!P || !P.cramByDomain) return "";
-    var lines = P.cramByDomain[domain];
-    if (!Array.isArray(lines) || !lines.length) return "";
-    var out = '<ul class="lh-voucher01-domain-cram">';
-    lines.forEach(function (line) {
-      out += "<li>" + escapeHtml(line) + "</li>";
-    });
-    out += "</ul>";
-    return out;
-  }
-
-  function voucher01DomainProgressHtml() {
-    ensureVoucher01Progress();
-    var attempts = Array.isArray(progress.voucher01.attempts) ? progress.voucher01.attempts : [];
-    if (!attempts.length) return "";
-    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
-    var recent = attempts.slice(Math.max(0, attempts.length - 3));
-    var agg = Object.create(null);
-    recent.forEach(function (a) {
-      var ds = a && a.domainStats && typeof a.domainStats === "object" ? a.domainStats : null;
-      if (!ds) return;
-      Object.keys(ds).forEach(function (k) {
-        var row = ds[k];
-        if (!row || !Number.isFinite(row.total)) return;
-        if (!agg[k]) agg[k] = { total: 0, correct: 0, wrong: 0 };
-        agg[k].total += Number(row.total) || 0;
-        agg[k].correct += Number(row.correct) || 0;
-        agg[k].wrong += Number(row.wrong) || 0;
-      });
-    });
-    var rows = Object.keys(agg)
-      .map(function (k) {
-        var d = +k;
-        var a = agg[k];
-        var pct = a.total > 0 ? Math.round((a.correct / a.total) * 100) : 0;
-        return { d: d, total: a.total, correct: a.correct, pct: pct };
-      })
-      .filter(function (r) {
-        return r.total > 0;
-      })
-      .sort(function (a, b) {
-        return a.pct - b.pct || b.total - a.total;
-      })
-      .slice(0, 8);
-    if (!rows.length) return "";
-    var out = '<section class="lh-voucher01-domain-progress" aria-label="Recent accuracy by topic">';
-    out += '<h4 class="lh-voucher01-domain-progress-title">Accuracy by topic (last 3 quiz runs)</h4>';
-    rows.forEach(function (r) {
-      var title =
-        O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[r.d] ? O.OBJECTIVE_NAV_TITLE[r.d] : "Domain " + r.d;
-      out +=
-        '<div class="lh-voucher01-domain-row"><div class="lh-voucher01-domain-row-top"><span class="lh-voucher01-domain-name">' +
-        escapeHtml(title) +
-        '</span><span class="lh-voucher01-domain-stat">' +
-        r.pct +
-        "% (" +
-        r.correct +
-        "/" +
-        r.total +
-        ')</span></div><div class="lh-voucher01-domain-bar"><span style="width:' +
-        Math.max(4, r.pct) +
-        '%"></span></div></div>';
-    });
-    out += "</section>";
-    return out;
   }
 
   function buildVoucher01SnapshotText() {
@@ -2751,6 +2659,97 @@ function learnHubRunApp() {
     return lines.join("\n");
   }
 
+  /** Renders one row in attempt history: full detail for misses, compact for correct (no “correct answer” text). */
+  function voucher01AttemptReviewItemHtml(P, O, qs, qi, detail) {
+    var q = qs[qi];
+    var qText = q && q.q ? q.q : "Question " + (Number(qi) + 1);
+    if (qText.length > 140) qText = qText.slice(0, 137) + "...";
+    var dom = P.domains && P.domains[qi] != null ? P.domains[qi] : null;
+    var dTitle =
+      dom != null && O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[dom]
+        ? O.OBJECTIVE_NAV_TITLE[dom]
+        : dom != null
+          ? "Objective domain " + dom
+          : "Objective domain unknown";
+    var pickedText = detail
+      ? summarizeChoiceList(detail.choices || [], detail.selectedIndices || [])
+      : "Not available";
+    if (detail && detail.isCorrect) {
+      return (
+        '<li class="lh-voucher01-review-card lh-voucher01-review-card--correct">' +
+        '<div class="lh-voucher01-review-q"><span class="lh-voucher01-review-qn">Q' +
+        (Number(qi) + 1) +
+        "</span> " +
+        escapeHtml(qText) +
+        "</div>" +
+        '<div class="lh-voucher01-attempt-domain">' +
+        escapeHtml(dTitle) +
+        "</div>" +
+        '<p class="lh-voucher01-review-outcome"><span class="lh-voucher01-outcome-ok">Correct</span></p>' +
+        (detail.confidence && detail.confidence !== "none"
+          ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Your confidence</span><span>' +
+            escapeHtml(detail.confidence === "med" ? "medium" : detail.confidence) +
+            "</span></div>"
+          : "") +
+        '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Your answer</span><span>' +
+        escapeHtml(pickedText) +
+        "</span></div>" +
+        "</li>"
+      );
+    }
+    var correctText = detail
+      ? summarizeChoiceList(detail.choices || [], detail.correctIndices || [])
+      : "Not available";
+    var why = detail
+      ? buildWhyContrast(
+          qText,
+          pickedText,
+          correctText,
+          !detail.selectedIndices || !detail.selectedIndices.length,
+          dom,
+          detail.correctIndices && detail.correctIndices.length > 1
+        )
+      : { whyPicked: "" };
+    return (
+      '<li class="lh-voucher01-review-card">' +
+      '<div class="lh-voucher01-review-q"><span class="lh-voucher01-review-qn">Q' +
+      (Number(qi) + 1) +
+      "</span> " +
+      escapeHtml(qText) +
+      "</div>" +
+      '<div class="lh-voucher01-attempt-domain">' +
+      escapeHtml(dTitle) +
+      "</div>" +
+      (why.patternLabel
+        ? '<div class="lh-voucher01-review-pattern"><span class="lh-voucher01-pattern-chip">' +
+          escapeHtml(why.patternLabel) +
+          "</span><span>" +
+          escapeHtml(why.strategy || "") +
+          "</span></div>"
+        : "") +
+      (why.missType
+        ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Likely miss type</span><span>' +
+          escapeHtml(why.missType) +
+          "</span></div>"
+        : "") +
+      (detail && detail.confidence && detail.confidence !== "none"
+        ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Your confidence</span><span>' +
+          escapeHtml(detail.confidence === "med" ? "medium" : detail.confidence) +
+          "</span></div>"
+        : "") +
+      '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Your answer</span><span>' +
+      escapeHtml(pickedText) +
+      "</span></div>" +
+      (why.whyPicked
+        ? '<div class="lh-voucher01-attempt-why"><span class="lh-voucher01-k">Why your pick missed</span><span>' + escapeHtml(why.whyPicked) + "</span></div>"
+        : "") +
+      (why.remember
+        ? '<div class="lh-voucher01-attempt-tip"><span class="lh-voucher01-k">Remember next time</span><span>' + escapeHtml(why.remember) + "</span></div>"
+        : "") +
+      "</li>"
+    );
+  }
+
   function voucher01AttemptHistoryHtml() {
     var P = voucher01Plan();
     if (!P) return "";
@@ -2759,21 +2758,39 @@ function learnHubRunApp() {
     if (!attempts.length) return "";
     var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
     var Lcur = currentLesson();
-    var qs = Lcur && Array.isArray(Lcur.questions) ? Lcur.questions : [];
+    var techCourse = courseById["tech"];
     var out = '<section class="lh-voucher01-attempts" aria-label="Attempt history">';
     out +=
       '<div class="lh-voucher01-attempts-head"><h4 class="lh-voucher01-attempts-title">Attempt history (this account)</h4></div>' +
-      '<p class="lh-voucher01-attempts-note">To wipe this log <em>and</em> topic miss counts, use <strong>Reset study tracking</strong> above.</p>';
+      '<p class="lh-voucher01-attempts-note">To wipe this log <em>and</em> topic miss counts, use <strong>Reset study tracking</strong> above. Each run lists <strong>misses first</strong>, then <strong>correct</strong> answers (newer attempts; older ones may only list misses).</p>';
     for (var i = attempts.length - 1; i >= 0; i--) {
       var a = attempts[i] || {};
       var wrong = Array.isArray(a.wrong) ? a.wrong : [];
       var wrongDetails = Array.isArray(a.wrongDetails) ? a.wrongDetails : [];
+      var runOrder = Array.isArray(a.runOrder) ? a.runOrder : [];
+      var answerDetails = Array.isArray(a.answerDetails) ? a.answerDetails : [];
+      var useFull = runOrder.length > 0 && answerDetails.length > 0 && runOrder.length === answerDetails.length;
+      var lessonA = Lcur;
+      if (a.lessonId && techCourse && Array.isArray(techCourse.lessons)) {
+        var foundL = techCourse.lessons.find(function (L) {
+          return L && L.id === a.lessonId;
+        });
+        if (foundL) lessonA = foundL;
+      }
+      var qs = lessonA && Array.isArray(lessonA.questions) ? lessonA.questions : [];
       var dt = "";
       try {
         dt = a.at ? new Date(a.at).toLocaleString() : "";
       } catch (_) {}
       var label = "Attempt " + (i + 1);
-      var sub = wrong.length ? wrong.length + " missed" : "all correct";
+      var nCorrect = 0;
+      if (useFull) {
+        for (var nc = 0; nc < answerDetails.length; nc++) {
+          if (answerDetails[nc] && answerDetails[nc].isCorrect) nCorrect++;
+        }
+      }
+      var nMissed = useFull ? runOrder.length - nCorrect : wrong.length;
+      var sub = useFull ? nMissed + " missed · " + nCorrect + " correct" : wrong.length ? wrong.length + " missed" : "all correct";
       if (a.scaled900 != null && Number.isFinite(a.scaled900)) {
         sub += " · scaled ~" + Math.round(a.scaled900) + "/900";
       }
@@ -2788,9 +2805,26 @@ function learnHubRunApp() {
         escapeHtml(sub + (dt ? " · " + dt : "")) +
         "</span>" +
         "</summary>";
+      if (useFull) {
+        out += '<p class="lh-voucher01-attempt-order-hint">Misses and blanks first, then questions you got right.</p><ul class="lh-voucher01-attempt-list">';
+        var runIdxBad = [];
+        var runIdxGood = [];
+        for (var rj = 0; rj < runOrder.length; rj++) {
+          if (answerDetails[rj] && answerDetails[rj].isCorrect) runIdxGood.push(rj);
+          else runIdxBad.push(rj);
+        }
+        var runSequence = runIdxBad.concat(runIdxGood);
+        runSequence.forEach(function (idx) {
+          var qi = runOrder[idx];
+          var dRow = answerDetails[idx];
+          out += voucher01AttemptReviewItemHtml(P, O, qs, qi, dRow);
+        });
+        out += "</ul></details>";
+        continue;
+      }
       if (!wrong.length) {
-        var scOk = a.scaled900 != null && Number.isFinite(a.scaled900) ? " Scaled estimate ~" + Math.round(a.scaled900) + "/900." : "";
-        out += '<p class="lh-voucher01-attempt-ok">Passed with no misses on this attempt.' + escapeHtml(scOk) + "</p></details>";
+        var scOk2 = a.scaled900 != null && Number.isFinite(a.scaled900) ? " Scaled estimate ~" + Math.round(a.scaled900) + "/900." : "";
+        out += '<p class="lh-voucher01-attempt-ok">Passed with no misses on this attempt.' + escapeHtml(scOk2) + "</p></details>";
         continue;
       }
       out += '<ul class="lh-voucher01-attempt-list">';
@@ -2798,75 +2832,7 @@ function learnHubRunApp() {
         var detail = wrongDetails.find(function (d) {
           return d && Number(d.origQi) === Number(qi);
         });
-        var q = qs[qi];
-        var qText = q && q.q ? q.q : "Question " + (Number(qi) + 1);
-        if (qText.length > 140) qText = qText.slice(0, 137) + "...";
-        var d = P.domains && P.domains[qi] != null ? P.domains[qi] : null;
-        var dTitle =
-          d != null && O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[d]
-            ? O.OBJECTIVE_NAV_TITLE[d]
-            : d != null
-              ? "Objective domain " + d
-              : "Objective domain unknown";
-        var pickedText = detail
-          ? summarizeChoiceList(detail.choices || [], detail.selectedIndices || [])
-          : "Not available";
-        var correctText = detail
-          ? summarizeChoiceList(detail.choices || [], detail.correctIndices || [])
-          : "Not available";
-        var why = detail
-          ? buildWhyContrast(
-              qText,
-              pickedText,
-              correctText,
-              !detail.selectedIndices || !detail.selectedIndices.length,
-              d,
-              (detail.correctIndices || []).length > 1
-            )
-          : { whyCorrect: "", whyPicked: "" };
-        out +=
-          '<li class="lh-voucher01-review-card">' +
-          '<div class="lh-voucher01-review-q"><span class="lh-voucher01-review-qn">Q' +
-          (Number(qi) + 1) +
-          "</span> " +
-          escapeHtml(qText) +
-          "</div>" +
-          '<div class="lh-voucher01-attempt-domain">' +
-          escapeHtml(dTitle) +
-          "</div>" +
-          (why.patternLabel
-            ? '<div class="lh-voucher01-review-pattern"><span class="lh-voucher01-pattern-chip">' +
-              escapeHtml(why.patternLabel) +
-              "</span><span>" +
-              escapeHtml(why.strategy || "") +
-              "</span></div>"
-            : "") +
-          (why.missType
-            ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Likely miss type</span><span>' +
-              escapeHtml(why.missType) +
-              "</span></div>"
-            : "") +
-          (detail && detail.confidence
-            ? '<div class="lh-voucher01-review-miss"><span class="lh-voucher01-k">Your confidence</span><span>' +
-              escapeHtml(detail.confidence === "med" ? "medium" : detail.confidence) +
-              "</span></div>"
-            : "") +
-          '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Your answer</span><span>' +
-          escapeHtml(pickedText) +
-          "</span></div>" +
-          '<div class="lh-voucher01-attempt-compare"><span class="lh-voucher01-k">Correct answer</span><span>' +
-          escapeHtml(correctText) +
-          "</span></div>" +
-          (why.whyCorrect
-            ? '<div class="lh-voucher01-attempt-why"><span class="lh-voucher01-k">Why this is correct</span><span>' + escapeHtml(why.whyCorrect) + "</span></div>"
-            : "") +
-          (why.whyPicked
-            ? '<div class="lh-voucher01-attempt-why"><span class="lh-voucher01-k">Why your pick missed</span><span>' + escapeHtml(why.whyPicked) + "</span></div>"
-            : "") +
-          (why.remember
-            ? '<div class="lh-voucher01-attempt-tip"><span class="lh-voucher01-k">Remember next time</span><span>' + escapeHtml(why.remember) + "</span></div>"
-            : "") +
-          "</li>";
+        out += voucher01AttemptReviewItemHtml(P, O, qs, qi, detail);
       });
       out += "</ul></details>";
     }
@@ -2878,14 +2844,6 @@ function learnHubRunApp() {
     var P = voucher01Plan();
     if (!P || !currentUsername) return "";
     ensureVoucher01Progress();
-    var tally = progress.voucher01.domainTally || {};
-    var pairs = Object.keys(tally).map(function (k) {
-      return { d: +k, n: tally[k] };
-    });
-    pairs.sort(function (a, b) {
-      return b.n - a.n || a.d - b.d;
-    });
-    var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
     var out = "";
     out += voucher01StatsExplainerHtml();
     out +=
@@ -2895,30 +2853,8 @@ function learnHubRunApp() {
       '<button type="button" class="tool ghost lh-voucher01-export-snapshot">Copy study snapshot</button>' +
       "</section>";
     out += voucher01StudyPlanCramTeaserHtml();
-    if (!pairs.length) {
-      out +=
-        "<p class=\"lh-voucher01-plan-lead\">Each question lists its <strong>objective domain</strong>. After <strong>Check answers</strong>, wrong picks increment the miss tally for that domain. Optional guidance only—nothing is locked.</p>";
-      out += voucher01DomainProgressHtml();
-      out += voucher01AttemptHistoryHtml();
-      return out;
-    }
-    out += voucher01DomainProgressHtml();
     out +=
-      "<p class=\"lh-voucher01-plan-lead\"><strong>Topics below</strong> are sorted by how many voucher questions you have missed in that domain (highest first). Use chapter notes or the weighted cram lesson, then quiz again.</p><ul class=\"lh-voucher01-plan-domains\">";
-    pairs.slice(0, 8).forEach(function (row) {
-      var title =
-        O && O.OBJECTIVE_NAV_TITLE && O.OBJECTIVE_NAV_TITLE[row.d] ? O.OBJECTIVE_NAV_TITLE[row.d] : "Domain " + row.d;
-      out +=
-        "<li><strong>" +
-        escapeHtml(title) +
-        '</strong> <span class="lh-voucher01-plan-meta">(total misses: ' +
-        row.n +
-        ')</span>' +
-        voucher01DomainCramHtml(row.d) +
-        "</li>";
-    });
-    out += "</ul>";
-    out += "<p class=\"lh-voucher01-plan-extra\">For mixed banks, stay in <strong>Questions</strong> view and pick other GimKit sets.</p>";
+      '<p class="lh-voucher01-plan-lead">After <strong>Check answers</strong>, wrong picks increment the miss tally for that objective domain. Optional guidance only—nothing is locked.</p>';
     out += voucher01AttemptHistoryHtml();
     return out;
   }
@@ -3007,9 +2943,14 @@ function learnHubRunApp() {
     var root = document.createElement("div");
     root.id = "lh-voucher01-plan-root";
     root.innerHTML =
-      "<details class=\"lh-voucher01-details\" open><summary><span class=\"lh-voucher01-sum-main\">Custom study plan</span> <span class=\"lh-voucher01-sum-hint\">(optional · per account)</span></summary><div class=\"lh-voucher01-details-body\">" +
+      '<section class="lh-voucher01-details lh-voucher01-details--static" aria-labelledby="lh-voucher01-plan-heading">' +
+      '<h3 class="lh-voucher01-details-heading" id="lh-voucher01-plan-heading">' +
+      '<span class="lh-voucher01-sum-main">Custom study plan</span> ' +
+      '<span class="lh-voucher01-sum-hint">(optional · per account)</span>' +
+      "</h3>" +
+      '<div class="lh-voucher01-details-body">' +
       voucher01PlanHtmlSummary() +
-      "</div></details>";
+      "</div></section>";
     el.techQuiz.appendChild(root);
     bindVoucher01PlanClicks(root);
   }
@@ -3093,29 +3034,11 @@ function learnHubRunApp() {
         orderUsed.length +
         ' question(s). <button type="button" class="tool ghost lh-tech-clear-forced">Clear drill</button></p>';
     }
-    h +=
-      '<p class="msg info lh-tech-quiz-hint">Local checks only. On <strong>Notes</strong> reading steps, re-read the objective section if an answer is unclear.</p>';
-    var showVoucherObj = isTechVoucher01Lesson(lesson) && !!voucher01Plan();
-    var PvToolbar = voucher01Plan();
-    var examWNToolbar = showVoucherObj ? getVoucher01ExamDomainWeightsNormalized() : null;
-    var sumRunW = 0;
-    if (examWNToolbar && PvToolbar && Array.isArray(PvToolbar.domains)) {
-      var Pdom = PvToolbar.domains;
-      orderUsed.forEach(function (oq) {
-        var xd = Pdom[oq];
-        if (xd != null && xd >= 1 && xd <= 12 && examWNToolbar[xd] > 0) sumRunW += examWNToolbar[xd];
-      });
-    }
-    if (showVoucherObj && examWNToolbar && sumRunW > 0) {
-      h +=
-        '<p class="msg info lh-tech-quiz-hint lh-tech-exam-scale-hint">Voucher <strong>Check answers</strong> also computes a practice <strong>100–900</strong> style score: each item’s share of the 800 weighted points matches its objective domain, using exam emphasis (tech fundamentals 13%, infrastructure 24%, applications 18%, software development 13%, data 13%, security 19%). Official CompTIA scaling is unpublished—this is a transparent study estimate.</p>';
-    }
     orderUsed.forEach(function (origQi, displayIdx) {
       var q = qsAll[origQi];
       var corr = q && q.correct;
       var multi = Array.isArray(corr) && corr.length > 1;
       h += '<div class="quiz-q" data-q="' + displayIdx + '" data-orig="' + origQi + '"><p>' + escapeHtml(q.q) + "</p>";
-      if (showVoucherObj) h += voucher01ObjectiveLineHtml(origQi, examWNToolbar, sumRunW);
       if (multi) {
         h += '<p class="lh-quiz-select-hint">Select all that apply.</p>';
       }
@@ -3215,6 +3138,7 @@ function learnHubRunApp() {
     const order = techQuizSubset && techQuizSubset.order ? techQuizSubset.order : qs.map(function (_, i) {
       return i;
     });
+    const answerDetailsAll = [];
     for (let di = 0; di < order.length; di++) {
       const origQi = order[di];
       const qRow = qs[origQi];
@@ -3269,6 +3193,15 @@ function learnHubRunApp() {
           confidence: confidence || "none",
         });
       }
+      answerDetailsAll.push({
+        origQi: origQi,
+        isCorrect: isCorrect,
+        isAnswered: isAnswered,
+        choices: qRow && Array.isArray(qRow.choices) ? qRow.choices.slice() : [],
+        selectedIndices: selectedIndices.slice(),
+        correctIndices: multi ? corr.slice() : [corr],
+        confidence: confidence || "none",
+      });
       marks.push({
         displayIndex: di,
         isCorrect: isCorrect,
@@ -3326,6 +3259,8 @@ function learnHubRunApp() {
           : wrong + " answer(s) need work — " + secHint + (msgExtra ? msgExtra : "") + scaledRich,
       wrongOrigQi: wrongOrigQi,
       wrongDetails: wrongDetails,
+      runOrder: order.slice(),
+      answerDetails: answerDetailsAll,
       domainStats: domainStats,
       scaled900Estimate: scaled900Estimate,
       examWeightedPct: examWeightedPct,

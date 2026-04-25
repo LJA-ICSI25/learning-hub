@@ -2956,6 +2956,18 @@ body.lh-force-reduce-motion .progress-fill {
   list-style-position: outside;
 }
 
+/* Always-expanded study plan panel (no collapse) */
+.lh-voucher01-details--static .lh-voucher01-details-heading {
+  margin: 0 0 0.15rem;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffe0b5;
+  line-height: 1.35;
+  cursor: default;
+  user-select: text;
+}
+
 .lh-voucher01-sum-main {
   color: #ffd48f;
   text-transform: uppercase;
@@ -3201,6 +3213,13 @@ body.lh-force-reduce-motion .progress-fill {
   color: #cfe4ff;
 }
 
+.lh-voucher01-domain-progress-lead {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 .lh-voucher01-domain-row {
   margin-bottom: 0.36rem;
 }
@@ -3327,11 +3346,38 @@ body.lh-force-reduce-motion .progress-fill {
   color: #d2e6f7;
 }
 
+.lh-voucher01-attempt-order-hint {
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.lh-voucher01-review-outcome {
+  margin: 0.28rem 0 0.1rem;
+}
+
+.lh-voucher01-outcome-ok {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #b8f5a0;
+  background: rgba(30, 62, 32, 0.45);
+  border: 1px solid rgba(88, 204, 2, 0.35);
+}
+
 .lh-voucher01-review-card {
   border: 1px solid rgba(124, 157, 206, 0.2);
   border-radius: 8px;
   padding: 0.45rem 0.5rem;
   background: rgba(10, 16, 28, 0.55);
+}
+
+.lh-voucher01-review-card--correct {
+  border-color: rgba(70, 140, 80, 0.45);
+  background: rgba(12, 32, 18, 0.4);
 }
 
 .lh-voucher01-review-q {
