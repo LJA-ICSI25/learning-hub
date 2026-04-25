@@ -1,10 +1,16 @@
 {
   "name": "learn-hub",
+  "version": "1.0.0",
+  "description": "Offline desktop learning hub for study content and labs.",
+  "author": "Logan_Allenstein",
   "private": true,
+  "main": "main.js",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis",
     "normalize:techplus": "node scripts/normalize-techplus-markdown.mjs",
     "build:techplus": "node scripts/build-techplus-from-markdown.mjs",
     "build:security": "node scripts/build-security-from-markdown.mjs",
@@ -21,6 +27,46 @@
     "patch:techplus-headings": "node scripts/patch-techplus-h3-boundaries.mjs"
   },
   "devDependencies": {
-    "marked": "^17.0.6"
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "marked": "^17.0.6",
+    "png-to-ico": "^3.0.1",
+    "sharp": "^0.34.5"
+  },
+  "build": {
+    "appId": "com.logan.learnhub",
+    "productName": "Learn Hub",
+    "artifactName": "${productName} Setup ${version}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "assets/**/*",
+      "docs/**/*",
+      "scripts/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "shortcutName": "Learn Hub",
+      "uninstallDisplayName": "Learn Hub"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "LJA-ICSI25",
+        "repo": "learning-hub"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
   }
 }
