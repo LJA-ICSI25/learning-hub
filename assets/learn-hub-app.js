@@ -3797,7 +3797,8 @@ function learnHubRunApp() {
       try {
         var c = localStorage.getItem(A11Y_CONTRAST_KEY) === "1";
         var m = localStorage.getItem(A11Y_MOTION_KEY) === "1";
-        var h = localStorage.getItem(A11Y_SIDEBAR_HIDDEN_KEY) === "1";
+        var hStored = localStorage.getItem(A11Y_SIDEBAR_HIDDEN_KEY);
+        var h = hStored == null ? true : hStored === "1";
         document.body.classList.toggle("lh-high-contrast", c);
         document.body.classList.toggle("lh-force-reduce-motion", m);
         document.body.classList.toggle("lh-sidebar-hidden", h);
@@ -3909,18 +3910,19 @@ function learnHubRunApp() {
 
     on(el.menuToggle, "click", () => {
       var mobile = isMobileNavLayout();
-      if (!mobile && document.body.classList.contains("lh-sidebar-hidden")) {
-        document.body.classList.remove("lh-sidebar-hidden");
-        try {
-          localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, "0");
-        } catch (_) {}
-        var he = document.getElementById("lh-a11y-hide-sidebar");
-        if (he) he.checked = false;
+      if (!mobile) {
+        var hideDesktop = !document.body.classList.contains("lh-sidebar-hidden");
+        document.body.classList.toggle("lh-sidebar-hidden", hideDesktop);
         if (el.sidebar) el.sidebar.classList.remove("open");
+        try {
+          localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, hideDesktop ? "1" : "0");
+        } catch (_) {}
+        var heDesk = document.getElementById("lh-a11y-hide-sidebar");
+        if (heDesk) heDesk.checked = hideDesktop;
         syncMenuToggleExpanded();
         return;
       }
-      if (mobile && document.body.classList.contains("lh-sidebar-hidden")) {
+      if (document.body.classList.contains("lh-sidebar-hidden")) {
         document.body.classList.remove("lh-sidebar-hidden");
         try {
           localStorage.setItem(A11Y_SIDEBAR_HIDDEN_KEY, "0");
@@ -3943,8 +3945,11 @@ function learnHubRunApp() {
     window.addEventListener(
       "resize",
       function () {
-        if (!isMobileNavLayout() && el.sidebar) el.sidebar.classList.remove("open");
+        var mobile = isMobileNavLayout();
+        if (!mobile && el.sidebar) el.sidebar.classList.remove("open");
         syncMenuToggleExpanded();
+        var heResize = document.getElementById("lh-a11y-hide-sidebar");
+        if (heResize) heResize.checked = document.body.classList.contains("lh-sidebar-hidden");
         var adv = document.getElementById("lh-sidebar-advanced");
         if (adv && typeof window.matchMedia === "function") {
           if (window.matchMedia("(max-width: 720px)").matches) adv.removeAttribute("open");

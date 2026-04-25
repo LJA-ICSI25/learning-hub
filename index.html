@@ -9,15 +9,17 @@
   <meta name="theme-color" content="#030508" />
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
+  <link rel="icon" type="image/svg+xml" href="assets/lh-favicon.svg?v=lhFavicon20260425" />
+  <link rel="shortcut icon" href="assets/lh-favicon.svg?v=lhFavicon20260425" />
   <title>Learn Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhVoucherAttemptFullHistory20260424" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTrackPickerSizingTinyStep20260425" />
   <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhQuickPracticeCompact20260415" />
 </head>
-<body>
+<body class="lh-sidebar-hidden">
   <a class="lh-skip-link" href="#lh-main">Skip to main content</a>
   <div id="lh-announcer" class="lh-sr-announcer" aria-live="polite" aria-atomic="true"></div>
   <div
@@ -38,7 +40,7 @@
       </div>
       <h2 id="lh-auth-title" class="lh-auth-title">Sign in</h2>
       <p class="lh-auth-lead">
-        Create an account or sign in. Progress and XP stay in this browser for each username — nothing is sent to a server.
+        Create an account or sign in. Progress and XP stay in this browser for each username — nothing is sent to a server. <br><br>For best experience, view on a desktop computer.
       </p>
       <p id="lh-auth-msg" class="lh-auth-msg" role="status" aria-live="polite"></p>
       <div class="lh-auth-tabs" role="tablist" aria-label="Account">
@@ -72,16 +74,9 @@
       <div class="sidebar-head">
         <div class="lh-title-row">
           <h1 class="lh-brand-title">Learn Hub</h1>
-          <div class="lh-user-inline" id="lh-user-line" role="status" aria-live="polite" hidden>
-            <span class="lh-user-chip">
-              <span class="lh-user-chip-dot" aria-hidden="true"></span>
-              <span class="lh-user-chip-name" id="lh-user-label"></span>
-            </span>
-          </div>
         </div>
         <p class="sub lh-sidebar-docs-top">
-          <a href="README.md">README</a> · <a href="WORKING_COPY.txt">Working copy</a> ·
-          <a href="docs/LEARN_HUB_COMPLETE_REFERENCE.html">Complete reference</a>
+          This site is a work in progress. Please report any issues to the <a href="https://github.com/LJA-ICSI25/learning-hub/issues">GitHub repository</a>.
         </p>
         <div class="lh-course-tools" id="lh-course-tools" aria-label="Track browser">
           <div class="lh-track-mode-root" id="lh-track-mode-root">
@@ -155,10 +150,6 @@
                 <input type="checkbox" id="lh-a11y-reduce-motion" />
                 <span>Reduce motion</span>
               </label>
-              <label class="lh-a11y-row lh-a11y-hide-sidebar-wrap">
-                <input type="checkbox" id="lh-a11y-hide-sidebar" />
-                <span>Hide left sidebar</span>
-              </label>
             </div>
           </div>
           <button type="button" id="btn-lh-logout" class="tool ghost">Log out</button>
@@ -186,6 +177,14 @@
           <h2 id="lesson-title">Loading…</h2>
           <div class="topbar-sub">
             <span id="lh-lesson-place" class="lh-lesson-place"></span>
+          </div>
+        </div>
+        <div class="topbar-account">
+          <div class="lh-user-inline" id="lh-user-line" role="status" aria-live="polite" hidden>
+            <span class="lh-user-chip">
+              <span class="lh-user-chip-dot" aria-hidden="true"></span>
+              <span class="lh-user-chip-name" id="lh-user-label"></span>
+            </span>
           </div>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
@@ -270,16 +269,6 @@
             <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
               Skip lesson
             </button>
-            <button
-              type="button"
-              class="tool ghost btn-teach-toggle"
-              id="btn-toggle-teach"
-              style="display: none"
-              aria-pressed="false"
-              aria-label="Hide This step column (wider practice)"
-            >
-              Steps
-            </button>
           </div>
           <div id="footer-practice-actions" class="footer-practice-actions" hidden>
             <div id="footer-btns-web" class="footer-work-btn-group" hidden>
@@ -336,7 +325,7 @@
   <script src="assets/learn-hub-techplus-study-patch.js?v=lhStudyPatch20260415"></script>
   <script src="assets/learn-hub-techplus-org.js?v=lhTechplusOrgToggle20260415"></script>
   <script src="assets/learn-hub-tech-weighted-cram.js?v=lhExamScaleFootnote20260423"></script>
-  <script src="assets/learn-hub-app.js?v=lhVoucherAttemptFullHistory20260424"></script>
+  <script src="assets/learn-hub-app.js?v=lhSidebarTopbarRefresh20260425"></script>
 
 
 
