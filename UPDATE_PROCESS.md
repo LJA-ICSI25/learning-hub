@@ -1,6 +1,26 @@
-# Learn Hub Desktop Update Process (v1.0.1)
+# Learn Hub Desktop + Website Update Process (v1.0.1)
 
 Use this every release. Keep this order so updates stay reliable.
+
+Current targets in this folder:
+
+- **Website/content version**: `1.0.1-web`
+- **Desktop EXE version**: `1.0.1`
+
+---
+
+## Version model (important)
+
+You maintain two versions:
+
+1. **Website/content version** (manual marker in docs/changelog)
+   - Tracks updates to `index.html`, `assets/*`, and curriculum content.
+   - Suggested format: `1.0.1-web`, `1.0.2-web`, etc.
+2. **Desktop EXE version** (`package.json` -> `version`)
+   - Tracks installer/app updates and auto-update comparison.
+   - Format: semver (`1.0.1`, `1.0.2`, etc).
+
+When shipping a new installer, EXE version must increase.
 
 ---
 
@@ -42,6 +62,8 @@ Update `package.json`:
 - `1.0.2` -> `1.0.3`
 
 No version bump = no auto-update prompt.
+
+Also update docs with the new website/content version marker if content changed.
 
 ---
 

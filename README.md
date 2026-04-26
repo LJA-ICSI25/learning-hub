@@ -1,5 +1,23 @@
 # Learn Hub
 
+## Versioning (Website vs EXE)
+
+Learn Hub now tracks two versions:
+
+- **Website/content version**: curriculum + UI/content bundle version for `index.html` and `assets/*`.
+- **Desktop EXE version**: installer/app version from `package.json` (`version`) used by electron-updater.
+
+### Current versions (this folder)
+
+- **Website/content version**: `1.0.1-web`
+- **Desktop EXE version**: `1.0.1`
+
+### Update rule
+
+- If you change only website content/UI/docs: bump **website/content version** marker.
+- If you publish a new installer/update: bump **EXE version** in `package.json` and release assets.
+- If both change in one release, bump both.
+
 ## Current file paths (for GitHub / uploads)
 
 | Role | Path |
