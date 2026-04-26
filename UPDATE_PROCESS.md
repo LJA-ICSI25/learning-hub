@@ -1,119 +1,114 @@
-# Learn Hub Desktop Update Process (Exact Steps)
+# Learn Hub Desktop Update Process (v1.0.1)
 
-Use this checklist every time you release an updated desktop app.
-
----
-
-## 0) One-time setup check (do once, then skip)
-
-1. Open `package.json`.
-2. Confirm `build.publish.owner` and `build.publish.repo` are set to your real GitHub values (not placeholders).
-3. Confirm `build.appId` stays the same (`com.logan.learnhub`).
-
-Do not change `appId` between releases.
+Use this every release. Keep this order so updates stay reliable.
 
 ---
 
-## 1) Make your app changes
+## 0) One-time invariants
 
-1. Edit your app files (`index.html`, `assets/*`, etc.).
-2. Save all files.
-3. Quick test locally:
+Confirm these are unchanged in `package.json`:
+
+- `build.appId = com.logan.learnhub`
+- `build.publish.owner = LJA-ICSI25`
+- `build.publish.repo = learning-hub`
+
+If `appId` changes, installs and upgrades can break.
+
+---
+
+## 1) Ship changes safely
+
+1. Make app updates (`index.html`, `assets/*`, `main.js`, docs).
+2. Run a local check:
 
 ```powershell
 npm start
 ```
 
-4. Close the app after testing.
+3. Verify:
+   - App loads without startup errors.
+   - First-run card appears for a new profile.
+   - Version chip is visible in the sidebar.
+   - At least one lesson can run + check.
+4. Close the app.
 
 ---
 
-## 2) Bump version in `package.json`
+## 2) Bump version before build
 
-1. Open `package.json`.
-2. Change `"version"` to the next version.
+Update `package.json`:
 
-Example:
-- `1.0.0` -> `1.0.1`
 - `1.0.1` -> `1.0.2`
+- `1.0.2` -> `1.0.3`
 
-You must increase the version every release or auto-update will not trigger.
+No version bump = no auto-update prompt.
 
 ---
 
-## 3) Build the Windows installer
+## 3) Build installer artifacts
 
-From the `EXE Testing` folder, run:
+Primary build:
 
 ```powershell
 npm run dist
 ```
 
-If Windows file-lock errors happen on `dist`, run:
+Fallback (if `dist` has file lock issues):
 
 ```powershell
-npx electron-builder --win nsis --config.directories.output=dist-branded
+npm run dist:clean
 ```
 
-Expected output installer:
-- `dist/Learn Hub Setup <version>.exe`
-or
-- `dist-branded/Learn Hub Setup <version>.exe`
+Expected artifacts:
+
+- `Learn Hub Setup <version>.exe`
+- `latest.yml`
+- `Learn Hub Setup <version>.exe.blockmap`
 
 ---
 
-## 4) Create a GitHub Release
+## 4) Publish GitHub release
 
-1. Push your updated source code to GitHub (including updated `package.json` version).
-2. On GitHub, open your repository.
-3. Go to **Releases** -> **Draft a new release**.
-4. Set **Tag version** to `v<version>` (example: `v1.0.1`).
-5. Set release title (example: `Learn Hub v1.0.1`).
-6. Upload release assets from your build output folder:
-   - `Learn Hub Setup <version>.exe`
-   - `latest.yml` (required for electron-updater)
-   - `Learn Hub Setup <version>.exe.blockmap`
-7. Publish the release.
-
-`latest.yml` and `.blockmap` are required for auto-update metadata.
+1. Push source updates first (including version bump).
+2. Create a release with tag `v<version>` (example: `v1.0.2`).
+3. Release title format: `Learn Hub v<version>`.
+4. Upload all 3 artifacts:
+   - `.exe`
+   - `latest.yml`
+   - `.blockmap`
+5. Publish.
 
 ---
 
-## 5) Verify auto-update works
+## 5) Verify in installed app
 
-1. Install/open your current app version.
-2. Ensure internet is available.
-3. Launch the app.
-4. Wait for update prompt:
-   - Click **Download**
-   - After download, click **Restart now**
-5. Confirm app relaunches on the new version.
+1. Open the currently installed version.
+2. Confirm internet is on.
+3. Wait for the update dialog.
+4. Click `Download`, then `Restart now`.
+5. Verify new version appears in-app (sidebar version chip).
 
 ---
 
-## 6) Repeat for every future update
+## 6) Rollback plan (if release is bad)
 
-Always do this order:
+If new update is broken:
 
-1. Make code/content changes
-2. Bump version
-3. Build installer
-4. Publish GitHub Release with `.exe` + `latest.yml` + `.blockmap`
-5. Verify update prompt in installed app
+1. Unlist/delete broken GitHub release assets (or delete the release).
+2. Publish a fixed patch release with higher version (recommended).
+3. Never reuse the same version number.
 
 ---
 
-## Troubleshooting
+## Troubleshooting quick table
 
-- **No update prompt appears**
-  - Check that GitHub owner/repo in `package.json` is correct.
-  - Confirm release tag/version is newer than installed version.
-  - Confirm `latest.yml` was uploaded to the release.
-
-- **Installer does not replace old version**
-  - Confirm `appId` did not change.
-  - Install using the new setup `.exe`.
-
-- **Build fails because files are in use**
-  - Close all running `Learn Hub.exe` windows/processes.
-  - Re-run the build command.
+- **No update prompt**
+  - Version not higher than installed app.
+  - Missing `latest.yml` on release.
+  - Wrong `owner/repo` in `package.json`.
+- **Build fails / files in use**
+  - Close all `Learn Hub.exe` processes.
+  - Use `npm run dist:clean`.
+- **Installer works but update does not**
+  - Confirm `.blockmap` uploaded.
+  - Confirm release tag matches version (`vX.Y.Z`).

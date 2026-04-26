@@ -110,6 +110,215 @@ var COURSES;
   } catch (mergeErr) {
     console.warn("Learn Hub: merging DEEP / TECHPLUS / Security / Kali / PenTest+ / Network+ reading failed for some lessons.", mergeErr);
   }
+  try {
+    if (Array.isArray(COURSES) && !COURSES.some(function (c) { return c && c.id === "exams"; })) {
+      COURSES.push({
+        id: "exams",
+        name: "Exams",
+        ws: "tech",
+        lessons: [
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-guide",
+            kind: "learn",
+            title: "Tech+ certification roadmap, tactics, and weekly study plan",
+            narrative:
+              "<h2>Tech+ exam success blueprint (detailed)</h2>" +
+              "<p>This track is meant to be your complete prep workflow, not just random quizzes. Follow in order: <strong>guide -> drill -> review -> retest</strong>. If you only do questions without remediation, score gains usually plateau fast.</p>" +
+              "<h3>What to master first (high-value topics)</h3>" +
+              "<ul>" +
+              "<li><strong>Networking fundamentals:</strong> OSI/TCP-IP mapping, subnet boundaries, default gateway behavior, DNS/DHCP workflows, and wireless security differences.</li>" +
+              "<li><strong>Security operations:</strong> authentication factors, least privilege, patch workflows, secure baselines, endpoint hardening, and incident response sequence.</li>" +
+              "<li><strong>Troubleshooting logic:</strong> gather evidence, isolate variables, test one change at a time, verify service restoration, and document root cause + prevention.</li>" +
+              "<li><strong>Cloud/virtualization basics:</strong> VM/container differences, shared responsibility, IAM controls, and logging/monitoring expectations.</li>" +
+              "<li><strong>Scripting/data literacy:</strong> read simple script flow, spot dangerous commands, parse logs/CSV outputs, and validate expected versus observed behavior.</li>" +
+              "</ul>" +
+              "<h3>How to answer hard scenario questions</h3>" +
+              "<ol>" +
+              "<li><strong>Classify the question type first:</strong> diagnosis, prevention, recovery, policy, or architecture.</li>" +
+              "<li><strong>Find the constraint words:</strong> first, best, most likely, least disruptive, immediate, long-term.</li>" +
+              "<li><strong>Eliminate unsafe distractors:</strong> choices that are too broad, irreversible, or skip evidence collection.</li>" +
+              "<li><strong>Pick the action with process discipline:</strong> preserve evidence, contain risk, validate impact, then remediate.</li>" +
+              "<li><strong>For tie-breakers:</strong> choose the option with better risk reduction and lower operational blast radius.</li>" +
+              "</ol>" +
+              "<h3>High-yield study tactics (use all of them)</h3>" +
+              "<ol>" +
+              "<li><strong>Active recall first:</strong> close notes and explain a topic from memory before reviewing.</li>" +
+              "<li><strong>Error log:</strong> keep a mistake journal with: question pattern, why you missed, and the corrected rule.</li>" +
+              "<li><strong>Interleaving:</strong> mix domains in every session to simulate real exam switching cost.</li>" +
+              "<li><strong>Timed sprints:</strong> run 10-20 hard questions in 15-25 minutes, then deeply review misses.</li>" +
+              "<li><strong>Two-pass answering:</strong> first pass for certainty, second pass for scenario-heavy items.</li>" +
+              "<li><strong>Teach-back:</strong> explain one difficult concept out loud in 90 seconds without notes.</li>" +
+              "</ol>" +
+              "<h3>6-week study plan (repeat if needed)</h3>" +
+              "<p><strong>Week 1:</strong> Build baseline. Read all domain summaries, run one hard set, create your weak-topic list.</p>" +
+              "<p><strong>Week 2:</strong> Networking + security core. Daily: 45 min content + 20 min questions + 15 min review log.</p>" +
+              "<p><strong>Week 3:</strong> Troubleshooting and operations depth. Focus on sequence/order and best-next-step scenarios.</p>" +
+              "<p><strong>Week 4:</strong> Cloud, scripting, and mixed-domain drills. Increase timed sessions and reduce note dependence.</p>" +
+              "<p><strong>Week 5:</strong> Full mixed review. Alternate hard quiz sets and remediation blocks from your error log.</p>" +
+              "<p><strong>Week 6:</strong> Exam readiness week. Light new content, heavy timed practice, sleep schedule, and confidence calibration.</p>" +
+              "<h3>Remediation loop after every quiz</h3>" +
+              "<ul>" +
+              "<li>Tag each miss as: <strong>concept gap</strong>, <strong>sequence error</strong>, or <strong>risk-judgment error</strong>.</li>" +
+              "<li>Write one correction rule per miss (1 sentence max).</li>" +
+              "<li>Re-answer the same miss without choices open.</li>" +
+              "<li>Create a 10-question custom retry from your top two weak domains.</li>" +
+              "<li>Re-test that domain within 48 hours for retention.</li>" +
+              "</ul>" +
+              "<h3>Exam-day execution plan</h3>" +
+              "<ol>" +
+              "<li>First pass: answer high-confidence items quickly; mark uncertain ones.</li>" +
+              "<li>Second pass: solve marked scenario items using constraint words and elimination.</li>" +
+              "<li>Never leave blanks: pick the best process-safe answer if uncertain.</li>" +
+              "<li>Reserve final minutes for flagged items with changed context after other questions.</li>" +
+              "<li>Avoid last-minute panic switching unless you found explicit evidence in the stem.</li>" +
+              "</ol>" +
+              "<h3>Daily session template (90 minutes)</h3>" +
+              "<ul>" +
+              "<li>15 min: rapid recap from memory</li>" +
+              "<li>35 min: focused review of one weak objective</li>" +
+              "<li>25 min: hard question set (timed)</li>" +
+              "<li>15 min: post-mortem and notes update</li>" +
+              "</ul>" +
+              "<h3>Pass-readiness checklist</h3>" +
+              "<ul>" +
+              "<li>You can explain each missed question without looking at options.</li>" +
+              "<li>You consistently score high on mixed hard sets, not just topic-isolated sets.</li>" +
+              "<li>You avoid rushing and still finish within time using a two-pass approach.</li>" +
+              "<li>You can justify why distractors are wrong, not just why the correct one is right.</li>" +
+              "</ul>"
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-coaching",
+            kind: "learn",
+            title: "Advanced coaching: weak-topic repair and score acceleration",
+            narrative:
+              "<h2>From 'studying a lot' to 'studying with purpose'</h2>" +
+              "<p>Most learners stall because they repeat familiar content. This coaching lesson shows how to convert weak areas into predictable points.</p>" +
+              "<h3>Weak-topic repair protocol</h3>" +
+              "<ol>" +
+              "<li>Pick one weak domain only (do not mix domains during repair).</li>" +
+              "<li>Rebuild fundamentals: vocabulary, architecture, and sequence.</li>" +
+              "<li>Do 12 hard questions in that domain with a timer.</li>" +
+              "<li>Review every miss until you can explain why all wrong options are wrong.</li>" +
+              "<li>Repeat next day with a new set; target fewer than 2 misses.</li>" +
+              "</ol>" +
+              "<h3>Common fail patterns to watch</h3>" +
+              "<ul>" +
+              "<li><strong>Premature action bias:</strong> jumping to fix before scope/evidence is validated.</li>" +
+              "<li><strong>Tool fixation:</strong> choosing advanced tools when a basic control solves faster.</li>" +
+              "<li><strong>Policy blindness:</strong> picking technically correct but non-compliant actions.</li>" +
+              "<li><strong>Sequence drift:</strong> mixing containment, eradication, and recovery order.</li>" +
+              "<li><strong>Scope errors:</strong> selecting global changes for local incidents.</li>" +
+              "</ul>" +
+              "<h3>Confidence calibration</h3>" +
+              "<p>If your confidence is high but accuracy is low, slow down and enforce elimination steps. If confidence is low but accuracy is high, improve pacing and reduce second-guessing.</p>" +
+              "<h3>Target benchmark before scheduling exam</h3>" +
+              "<p>Across mixed hard sets, aim for consistent performance and stable decision quality for at least 7-10 days. Your goal is reliability, not one lucky score.</p>"
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-quiz-1",
+            kind: "quiz",
+            title: "Hard set 1: architecture, networking, and security decisions",
+            questions: [
+              { q: "A branch office intermittently loses cloud app access only when many users join video meetings. Ping to local gateway is stable, but DNS lookups to external domains time out. Which is the MOST likely bottleneck?", choices: ["Misconfigured VLAN trunk native VLAN", "WAN link saturation causing upstream DNS query drops", "Expired DHCP lease duration on clients", "Incorrect local hosts file entries"], correct: 1 },
+              { q: "An analyst must reduce ransomware blast radius in a flat network with legacy apps. Which change gives the best immediate risk reduction with lowest app rewrite impact?", choices: ["Replace all endpoints with immutable desktops", "Apply network segmentation with deny-by-default east-west ACLs", "Enable full-disk encryption everywhere first", "Increase password minimum length from 10 to 14"], correct: 1 },
+              { q: "A user reports 'slow internet.' Baseline shows normal throughput but high page load latency for new domains. Existing sessions remain fast. Where should troubleshooting start?", choices: ["CPU throttle policy on endpoint", "DNS resolver performance and cache behavior", "TLS cipher mismatch on browser", "Switching loop on access layer"], correct: 1 },
+              { q: "You need to enforce least privilege for a help-desk team that occasionally resets passwords and unlocks accounts. Which control model is best?", choices: ["Shared domain admin account rotated weekly", "Role-based access with scoped delegated admin rights", "Local admin rights on all endpoints for support speed", "Break-glass account used for all tickets"], correct: 1 },
+              { q: "A web service in a VM is reachable internally but not externally after a migration. Host firewall and app config are unchanged. What is the BEST next validation step?", choices: ["Reinstall the application runtime", "Validate virtual network/security group ingress rules", "Disable endpoint protection on the VM", "Change service port to 443 immediately"], correct: 1 },
+              { q: "A SOC runbook says: detect, contain, eradicate, recover, lessons learned. During incident triage, what should happen BEFORE eradication?", choices: ["Wipe all affected systems to guarantee removal", "Preserve evidence and confirm containment scope", "Restore from backup to reduce downtime", "Publicly disclose breach details"], correct: 1 },
+              { q: "A company adopts MFA but phishing-based session theft still occurs. Which control most directly addresses this gap?", choices: ["Longer password expiry intervals", "Phishing-resistant authentication (FIDO2/WebAuthn)", "Disable conditional access policies", "Increase lockout threshold"], correct: 1 },
+              { q: "A server hardening standard breaks an old line-of-business app due to disabled legacy protocol usage. What is the BEST risk-managed response?", choices: ["Permanently exempt the server from hardening baseline", "Re-enable legacy protocol globally for compatibility", "Apply compensating controls and isolate the exception", "Move application data to unmanaged file shares"], correct: 2 },
+              { q: "An engineer wants to speed diagnosis by changing three suspected variables at once. Why is this a poor troubleshooting practice?", choices: ["It violates change window policy only", "It can hide causality and prevent reliable root-cause identification", "It increases MTTR only if logs are disabled", "It is acceptable if rollback is documented"], correct: 1 },
+              { q: "A SaaS outage occurs. Which responsibility typically remains with the customer under shared responsibility?", choices: ["Physical host patching", "Hypervisor security controls", "Identity and access configuration", "Datacenter perimeter guards"], correct: 2 },
+              { q: "A team stores API keys in a public repo history by mistake. Which action should happen first?", choices: ["Add .gitignore entries for secrets", "Rotate/revoke exposed keys and audit usage", "Rename repository and force push", "Delete local clone copies"], correct: 1 },
+              { q: "Users can resolve internal names but not external names. DNS server recursion was disabled during hardening. What is the most likely symptom outcome?", choices: ["Internal zone transfer failure only", "External FQDN lookups fail while authoritative internal lookups still work", "All DNS records fail equally", "Only reverse lookups fail"], correct: 1 }
+            ]
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-quiz-2",
+            kind: "quiz",
+            title: "Hard set 2: incident response, operations, and scenario triage",
+            questions: [
+              { q: "A SIEM alert shows impossible travel sign-ins for an executive account. Which action is BEST first?", choices: ["Disable all VPN services globally", "Immediately force password reset and revoke active tokens", "Wait for user confirmation before action", "Delete the account to eliminate risk"], correct: 1 },
+              { q: "During malware containment, a host is isolated from network. Which additional step best preserves forensic value?", choices: ["Run aggressive cleanup utility immediately", "Capture volatile evidence before remediation where feasible", "Restore system from image first", "Power off abruptly to stop attacker"], correct: 1 },
+              { q: "A patch caused critical app failures in production. Which governance control would have most likely prevented this impact?", choices: ["Eliminating emergency changes", "Testing and staged rollout with rollback criteria", "Weekly password rotation", "Reducing log retention"], correct: 1 },
+              { q: "A user receives a certificate warning for an internal portal after renewal. Site is reachable. What is the most probable root cause?", choices: ["Incorrect subnet mask on client NIC", "Certificate chain/intermediate trust issue", "DHCP scope exhaustion", "Disk fragmentation on web server"], correct: 1 },
+              { q: "A cloud storage bucket with customer files was accidentally public for 2 hours. Which metric is most useful for impact analysis?", choices: ["Total bucket object count only", "Access logs showing external reads during exposure window", "Storage tier cost trend", "Number of IAM users in account"], correct: 1 },
+              { q: "A Linux admin uses a script from chat without review and breaks permissions recursively. Which policy control would reduce this risk most?", choices: ["Mandatory command review/change control for privileged scripts", "Require larger terminal font", "Disable shell history", "Rotate root password daily"], correct: 0 },
+              { q: "A phishing simulation shows high click rate in one business unit. Which is the best remediation approach?", choices: ["Company-wide punishment policy", "Targeted role-based training plus measured retesting", "Disable email links entirely", "Exclude that unit from external mail"], correct: 1 },
+              { q: "You must choose between faster mean response time and better audit quality during incident handling. Which is best long-term?", choices: ["Favor speed always; documentation can be skipped", "Balance with minimum evidence/documentation standards in runbooks", "Favor documentation only; ignore containment speed", "Outsource all incidents immediately"], correct: 1 },
+              { q: "A workstation repeatedly fails updates due to low disk space. What is the most defensible operational decision?", choices: ["Disable updates for that device permanently", "Free space, validate health, then reattempt updates under policy", "Ignore because endpoint still functions", "Factory reset without backup"], correct: 1 },
+              { q: "After containing an attack, stakeholders ask to reconnect systems immediately. Which criterion should gate recovery?", choices: ["Executive pressure only", "Verified eradication + monitored clean-state readiness", "Elapsed downtime exceeds SLA", "Completion of user communication template"], correct: 1 },
+              { q: "A log source time is 9 minutes behind NTP standard. Why is this high impact for investigations?", choices: ["It only affects dashboard colors", "Timeline correlation across systems becomes unreliable", "It increases packet loss on WAN", "It prevents hashing evidence"], correct: 1 },
+              { q: "Which backup strategy best protects against silent data corruption discovered weeks later?", choices: ["Single nightly full backup overwritten daily", "Versioned backups with retention and periodic restore tests", "Snapshots only with no retention policy", "Manual USB copy every quarter"], correct: 1 }
+            ]
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-quiz-3",
+            kind: "quiz",
+            title: "Hard set 3: mixed exam-level judgement and best-next-step questions",
+            questions: [
+              { q: "A remote office reports SaaS slowness. Synthetic monitoring from HQ is normal. Local branch users show packet loss to ISP edge during business hours only. What is best next?", choices: ["Rebuild all office PCs", "Escalate to ISP with captured evidence and circuit utilization data", "Change SaaS provider immediately", "Disable QoS policy enterprise-wide"], correct: 1 },
+              { q: "A new admin account was created outside change window and removed within minutes. No ticket exists. What should happen first?", choices: ["Ignore if account no longer exists", "Initiate security investigation and preserve audit logs", "Reset all user passwords immediately", "Rotate endpoint wallpaper reminders"], correct: 1 },
+              { q: "Your team can either deploy EDR to 95% endpoints now or 100% in two months. Which choice generally reduces risk faster?", choices: ["Wait for perfect 100% rollout", "Deploy 95% immediately, track and close remainder rapidly", "Cancel deployment and focus on antivirus only", "Deploy to servers only"], correct: 1 },
+              { q: "A manager asks for one KPI proving security is improving. Which is strongest by itself?", choices: ["Number of blocked emails", "Mean time to detect and contain validated incidents", "Count of monthly policy memos sent", "Total endpoints purchased"], correct: 1 },
+              { q: "An attacker gains user credentials but fails to move laterally due to segmentation and just-in-time admin. This primarily demonstrates:", choices: ["High availability architecture", "Defense in depth with privilege containment", "Cost optimization policy", "Data lifecycle management"], correct: 1 },
+              { q: "A patch advisory says exploit is active in the wild, but patch breaks one revenue app in testing. What is best immediate strategy?", choices: ["Delay patch indefinitely", "Implement temporary mitigations and accelerated fix path", "Patch production anyway with no rollback plan", "Disable logging to improve app performance"], correct: 1 },
+              { q: "A help desk agent asks for domain admin to troubleshoot printer mappings. Best response?", choices: ["Grant for 24 hours", "Use scoped rights or run-as with approved elevation workflow", "Share admin credentials verbally", "Disable printer security policies"], correct: 1 },
+              { q: "Which evidence most strongly supports DNS tunneling suspicion?", choices: ["High volume of long, random subdomain queries to one external domain", "Frequent ARP broadcasts on LAN", "Multiple failed local logins", "Sudden printer spooler restarts"], correct: 0 },
+              { q: "A cloud VM image template contains embedded credentials used by many deployments. First containment action?", choices: ["Delete all VM instances immediately", "Revoke credentials and replace image with clean secret-injection design", "Rotate hostnames only", "Increase VM CPU"], correct: 1 },
+              { q: "In a post-incident review, what output most improves future performance?", choices: ["Blame-focused personnel report", "Actionable lessons learned with owners, due dates, and control updates", "General summary email only", "Unstructured meeting notes"], correct: 1 },
+              { q: "A user claims MFA prompt appeared without login attempt. What should analyst infer first?", choices: ["MFA system malfunction only", "Possible credential compromise or MFA fatigue attempt", "Normal behavior during password expiry", "VPN client bug unrelated to auth"], correct: 1 },
+              { q: "When two answer choices are both technically correct, Tech+ scenario questions usually reward the option that:", choices: ["Is most complex technically", "Best matches risk, process, and business-safe sequencing", "Uses newest vendor product", "Changes the most systems at once"], correct: 1 }
+            ]
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-quiz-4",
+            kind: "quiz",
+            title: "Hard set 4: performance-style troubleshooting and control selection",
+            questions: [
+              { q: "You inherit a failing web app deployment. Symptoms: intermittent 502s, CPU normal, memory spikes during peak, logs show upstream timeouts. Which FIRST action best isolates root cause?", choices: ["Scale all tiers horizontally immediately", "Capture request path timing and pinpoint failing dependency hop", "Restart every service and clear caches", "Disable TLS inspection on perimeter firewall"], correct: 1 },
+              { q: "A backup restore succeeds, but application data is inconsistent across microservices. What control was MOST likely missing?", choices: ["MFA on backup console", "Application-consistent snapshot or transactional quiescing", "AES-256 encryption at rest", "Offsite retention policy"], correct: 1 },
+              { q: "A privileged account performed mass file access at 2:00 AM. Owner claims no activity. Which sequence is best?", choices: ["Disable SIEM ingestion to reduce noise", "Contain account, preserve logs, validate source IP/device, then rotate credentials", "Delete account and all logs", "Wait for weekly audit meeting"], correct: 1 },
+              { q: "A vulnerability scanner reports critical findings on a server that cannot be patched for 30 days. Which option is most defensible?", choices: ["Accept risk with no controls", "Isolate host, restrict access, add monitoring, and document temporary exception", "Ignore because scanner can false-positive", "Expose service only to internet to reduce internal risk"], correct: 1 },
+              { q: "Help desk tickets spike after a DNS cutover. Internal systems resolve, internet sites fail for some clients only. What is the best likely cause?", choices: ["Expired public SSL certificate", "Mixed resolver settings and stale client DNS configuration", "Router firmware corruption", "NTP drift on domain controllers"], correct: 1 },
+              { q: "A leader wants one universal security baseline across servers and workstations. What is the strongest objection?", choices: ["It costs too much initially", "Different asset roles require role-specific hardening controls", "Users dislike configuration changes", "Baselines should only be vendor defaults"], correct: 1 },
+              { q: "During incident containment, legal asks for defensible chain of custody. What is mandatory?", choices: ["Informal notes in team chat", "Documented evidence handling with timestamps, owners, and integrity checks", "Screenshots only", "Immediate deletion of suspicious files"], correct: 1 },
+              { q: "A cloud IAM policy grants wildcard actions to speed development. What is the best corrective strategy?", choices: ["Keep wildcard and monitor logs", "Replace with least-privilege scoped roles plus periodic entitlement review", "Move workload on-premises", "Share one admin role among developers"], correct: 1 },
+              { q: "After a phishing campaign, what metric best predicts real risk reduction?", choices: ["Number of users who completed training video", "Reduction in click-through and credential submission on follow-up simulations", "Number of warning banners added", "Total emails blocked by spam filter"], correct: 1 },
+              { q: "Which is the most likely side effect of skipping post-incident lessons learned?", choices: ["Lower cloud costs", "Repeated incidents from unchanged process/control gaps", "Faster patching velocity", "Improved user satisfaction"], correct: 1 }
+            ]
+          },
+          {
+            unit: "Tech+ Certification",
+            id: "exams-techplus-quiz-5",
+            kind: "quiz",
+            title: "Hard set 5: full-mix capstone drill (exam pressure)",
+            questions: [
+              { q: "An endpoint detections dashboard shows high malware alerts on one subnet after a software rollout. What should be done first to avoid false escalation?", choices: ["Disconnect entire subnet", "Validate detection fidelity against known-good telemetry and rollout package signatures", "Notify customers of breach", "Reimage all endpoints"], correct: 1 },
+              { q: "A user can authenticate to SSO but cannot access one SaaS app. Group membership appears correct. Best next check?", choices: ["Reset user laptop", "Evaluate app-specific authorization mapping/claims in identity provider", "Rotate user password weekly", "Disable conditional access globally"], correct: 1 },
+              { q: "A penetration test finds default credentials on network appliances. Which long-term control is strongest?", choices: ["Quarterly password reminder emails", "Automated configuration compliance checks with enforced credential policy", "Manual checklist once per year", "Move devices to a different rack"], correct: 1 },
+              { q: "A branch loses VPN every evening at same time. Logs show tunnel renegotiation failures and time skew. Which root cause is most plausible?", choices: ["DNS cache poisoning", "Clock synchronization failure affecting certificate validation", "ARP table overflow", "Duplicate NAT rule only"], correct: 1 },
+              { q: "During triage, two systems show same IOC but different business criticality. Which response principle is best?", choices: ["Treat both equally regardless impact", "Prioritize containment by business impact and blast-radius risk", "Always prioritize newest systems", "Delay action pending full forensics"], correct: 1 },
+              { q: "What is the strongest reason to test restores, not just backups?", choices: ["It improves compression ratios", "Backup success does not guarantee recoverable and usable data", "It reduces phishing risk", "It avoids access control audits"], correct: 1 },
+              { q: "A team proposes disabling logs to improve performance on a critical API. Which response is best?", choices: ["Approve if response time improves", "Retain essential security/audit logs and optimize architecture instead", "Disable logs during business hours only", "Log only failed requests"], correct: 1 },
+              { q: "A suspicious PowerShell command was run by an admin account. What is the best immediate containment action?", choices: ["Delete all PowerShell scripts organization-wide", "Suspend/limit account privileges and begin scoped investigation", "Disable Windows updates", "Ignore because command completed"], correct: 1 },
+              { q: "Which approach most improves answer quality on scenario-heavy multiple choice items?", choices: ["Choose longest answer by default", "Map each option to incident lifecycle/process step and eliminate mismatches", "Prefer tools you personally use", "Skip all policy-based options"], correct: 1 },
+              { q: "You are down to two plausible answers. One is technically powerful but disruptive; the other is controlled and reversible. Which is usually correct?", choices: ["Disruptive option", "Controlled and reversible option aligned with process", "Either is equally correct", "Neither; leave unanswered"], correct: 1 }
+            ]
+          }
+        ]
+      });
+    }
+  } catch (examsErr) {
+    console.warn("Learn Hub: could not append Exams track.", examsErr);
+  }
 })();
 if (!Array.isArray(COURSES) || COURSES.length === 0) {
   COURSES = [{ id: "setup", name: "Setup", ws: "tech", lessons: [{ unit: "Help", id: "setup-1", kind: "learn", title: "Curriculum did not load", narrative: "<p>Open DevTools (F12) → Console. Hard-refresh this file (Ctrl+F5).</p>" }] }];
@@ -215,6 +424,7 @@ function learnHubRunApp() {
   const A11Y_CONTRAST_KEY = "learn-hub-a11y-contrast-v1";
   const A11Y_MOTION_KEY = "learn-hub-a11y-reduce-motion-v1";
   const A11Y_SIDEBAR_HIDDEN_KEY = "learn-hub-a11y-hide-sidebar-v1";
+  const ONBOARDING_SEEN_KEY = "learn-hub-onboarding-seen-v1";
   const INDENT = "  ";
 
   function prefersReducedNavMotion() {
@@ -285,7 +495,17 @@ function learnHubRunApp() {
     lessonPlace: document.getElementById("lh-lesson-place"),
     announcer: document.getElementById("lh-announcer"),
     userLabel: document.getElementById("lh-user-label"),
+    onboardingCard: document.getElementById("lh-onboarding-card"),
+    onboardingDismiss: document.getElementById("lh-onboarding-dismiss"),
+    versionChip: document.getElementById("lh-version-chip"),
   };
+
+  window.addEventListener("learn-hub-version", function (ev) {
+    var v = ev && ev.detail ? String(ev.detail) : "";
+    if (!v || !el.versionChip) return;
+    el.versionChip.textContent = "v" + v;
+    el.versionChip.setAttribute("aria-label", "App version " + v);
+  });
 
   let SQL = null;
   let lessonDb = null;
@@ -1283,6 +1503,23 @@ function learnHubRunApp() {
     t.textContent = msg;
     document.body.appendChild(t);
     setTimeout(() => t.remove(), 2200);
+  }
+
+  function syncOnboardingCard() {
+    if (!el.onboardingCard) return;
+    var seen = false;
+    try {
+      seen = localStorage.getItem(ONBOARDING_SEEN_KEY) === "1";
+    } catch (_) {}
+    el.onboardingCard.hidden = seen;
+    if (el.onboardingDismiss) {
+      el.onboardingDismiss.onclick = function () {
+        el.onboardingCard.hidden = true;
+        try {
+          localStorage.setItem(ONBOARDING_SEEN_KEY, "1");
+        } catch (_) {}
+      };
+    }
   }
 
   function loadProgress() {
@@ -4190,6 +4427,7 @@ function learnHubRunApp() {
         } catch (_) {}
       });
       syncUserLabel();
+      syncOnboardingCard();
     } catch (bootErr) {
       console.error("Learn Hub boot:", bootErr);
       if (el.title) el.title.textContent = "Startup error";

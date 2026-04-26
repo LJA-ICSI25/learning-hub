@@ -74,9 +74,13 @@
       <div class="sidebar-head">
         <div class="lh-title-row">
           <h1 class="lh-brand-title">Learn Hub</h1>
+          <span id="lh-version-chip" class="lh-version-chip" aria-label="App version">v1.0.1</span>
         </div>
         <p class="sub lh-sidebar-docs-top">
           This site is a work in progress. Please report any issues to the <a href="https://github.com/LJA-ICSI25/learning-hub/issues">GitHub repository</a>.
+        </p>
+        <p class="sub lh-sidebar-docs-top lh-release-note">
+          Release notes and rollback steps are in <a href="UPDATE_PROCESS.md">UPDATE_PROCESS.md</a>.
         </p>
         <div class="lh-course-tools" id="lh-course-tools" aria-label="Track browser">
           <div class="lh-track-mode-root" id="lh-track-mode-root">
@@ -256,6 +260,11 @@
           </noscript>
           <div id="teach-boot-placeholder">
             <h2>Welcome</h2>
+            <div id="lh-onboarding-card" class="lh-onboarding-card" hidden>
+              <h3>First-run quick start</h3>
+              <p>1) Choose a track. 2) Open lesson 1. 3) Run one check. 4) Continue to lock progress.</p>
+              <button type="button" id="lh-onboarding-dismiss" class="tool">Got it</button>
+            </div>
             <p><strong>Practice</strong> is the left column (or the block above on small screens). <strong>This step</strong> on the right explains what to do — open <strong>Reference</strong> inside that panel when you need the full notes.</p>
             <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1. <strong>Tech+</strong>, <strong>PenTest+</strong>, <strong>Network+</strong>, and <strong>Security</strong> are read-first tracks; <strong>Labs</strong> is a Kali VM checklist (commands run on your VM, not in the browser).</p>
             <p class="msg info">If this never disappears, check that every <code>assets/learn-hub-*.js</code> file loaded (Network tab). Use a local server if previews fail.</p>

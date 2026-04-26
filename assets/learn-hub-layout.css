@@ -48,10 +48,10 @@ body {
   text-rendering: optimizeLegibility;
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 80% 48% at 50% -12%, rgba(55, 92, 150, 0.16), transparent 55%),
-    radial-gradient(ellipse 90% 55% at 100% 0%, rgba(30, 52, 90, 0.22), transparent 50%),
-    radial-gradient(ellipse 72% 48% at 0% 100%, rgba(18, 32, 55, 0.16), transparent 46%),
-    radial-gradient(ellipse 50% 38% at 88% 72%, rgba(25, 48, 88, 0.12), transparent 50%);
+    radial-gradient(ellipse 82% 50% at 48% -12%, rgba(86, 131, 218, 0.23), transparent 54%),
+    radial-gradient(ellipse 88% 52% at 100% 0%, rgba(87, 56, 151, 0.18), transparent 50%),
+    radial-gradient(ellipse 72% 48% at 0% 100%, rgba(44, 91, 166, 0.2), transparent 47%),
+    radial-gradient(ellipse 52% 40% at 86% 74%, rgba(68, 152, 206, 0.14), transparent 50%);
   background-attachment: fixed;
 }
 
@@ -84,9 +84,9 @@ a:hover {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 68% 40% at 16% 20%, rgba(42, 72, 118, 0.2), transparent 58%),
-    radial-gradient(ellipse 58% 42% at 90% 76%, rgba(28, 48, 82, 0.18), transparent 54%),
-    radial-gradient(ellipse 45% 30% at 50% 50%, rgba(20, 35, 62, 0.06), transparent 70%);
+    radial-gradient(ellipse 68% 40% at 16% 20%, rgba(72, 130, 205, 0.22), transparent 58%),
+    radial-gradient(ellipse 58% 42% at 90% 76%, rgba(112, 84, 196, 0.2), transparent 54%),
+    radial-gradient(ellipse 45% 30% at 50% 50%, rgba(52, 92, 164, 0.12), transparent 70%);
   opacity: 1;
 }
 
@@ -230,6 +230,27 @@ a:hover {
   font-size: 0.78rem;
   color: var(--muted);
   line-height: 1.45;
+}
+
+.lh-release-note {
+  margin-top: 0.25rem !important;
+  font-size: 0.72rem !important;
+  opacity: 0.95;
+}
+
+.lh-version-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(180deg, var(--secondary-mid) 0%, var(--secondary) 100%);
+  color: #d9ecff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .lh-sidebar-docs-drawer.sub {
@@ -2253,6 +2274,32 @@ body.lh-sidebar-hidden #menu-toggle {
 
 #teach-boot-placeholder .msg.info {
   margin-top: 1rem;
+}
+
+.lh-onboarding-card {
+  margin: 0 0 0.9rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(160deg, rgba(29, 48, 87, 0.55) 0%, rgba(10, 20, 34, 0.72) 100%);
+  box-shadow: var(--shadow-sm), var(--glow-navy-soft);
+}
+
+.lh-onboarding-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.92rem;
+  color: #e6f1ff;
+}
+
+.lh-onboarding-card p {
+  margin: 0 0 0.6rem !important;
+  font-size: 0.82rem !important;
+  line-height: 1.5;
+}
+
+.lh-onboarding-card .tool {
+  font-size: 0.72rem;
+  padding: 0.3rem 0.55rem;
 }
 
 .quiz-tech.learn-only .workspace {

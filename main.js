@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog } = require("electron");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
+let updateCheckStarted = false;
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -16,17 +17,36 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, "index.html"));
+  win.webContents.on("did-finish-load", () => {
+    const appVersion = app.getVersion();
+    win.webContents
+      .executeJavaScript(
+        `window.dispatchEvent(new CustomEvent("learn-hub-version", { detail: ${JSON.stringify(appVersion)} }));`,
+        true
+      )
+      .catch(() => {});
+  });
 }
 
 function setupAutoUpdates() {
-  if (!app.isPackaged) {
+  if (!app.isPackaged || updateCheckStarted) {
     return;
   }
+  updateCheckStarted = true;
 
   autoUpdater.autoDownload = false;
 
   autoUpdater.on("error", (error) => {
     console.error("Auto-update error:", error == null ? "" : error.message);
+    dialog
+      .showMessageBox({
+        type: "warning",
+        title: "Update check failed",
+        message: "Learn Hub could not check for updates right now.",
+        detail:
+          "The app will keep working normally. Verify your internet connection and release metadata (latest.yml, .blockmap) on GitHub.",
+      })
+      .catch(() => {});
   });
 
   autoUpdater.on("update-available", async (info) => {
