@@ -9,8 +9,8 @@ Learn Hub now tracks two versions:
 
 ### Current versions (this folder)
 
-- **Website/content version**: `1.0.1-web`
-- **Desktop EXE version**: `1.0.1`
+- **Website/content version**: `1.0.3-web`
+- **Desktop EXE version**: `1.0.3`
 
 ### Update rule
 
