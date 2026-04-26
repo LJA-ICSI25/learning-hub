@@ -2,6 +2,9 @@ const { app, BrowserWindow, dialog } = require("electron");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
 let updateCheckStarted = false;
+let updateRetryCount = 0;
+const MAX_UPDATE_RETRIES = 3;
+const UPDATE_RETRY_DELAY_MS = 5 * 60 * 1000;
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -9,6 +12,7 @@ function createWindow() {
     height: 900,
     minWidth: 1024,
     minHeight: 700,
+    icon: path.join(__dirname, "build", "icon.png"),
     autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,
@@ -37,19 +41,18 @@ function setupAutoUpdates() {
   autoUpdater.autoDownload = false;
 
   autoUpdater.on("error", (error) => {
-    console.error("Auto-update error:", error == null ? "" : error.message);
-    dialog
-      .showMessageBox({
-        type: "warning",
-        title: "Update check failed",
-        message: "Learn Hub could not check for updates right now.",
-        detail:
-          "The app will keep working normally. Verify your internet connection and release metadata (latest.yml, .blockmap) on GitHub.",
-      })
-      .catch(() => {});
+    const message = error == null ? "" : error.message;
+    console.error("Auto-update error:", message);
+    if (updateRetryCount < MAX_UPDATE_RETRIES) {
+      updateRetryCount += 1;
+      setTimeout(() => {
+        autoUpdater.checkForUpdates().catch(() => {});
+      }, UPDATE_RETRY_DELAY_MS);
+    }
   });
 
   autoUpdater.on("update-available", async (info) => {
+    updateRetryCount = 0;
     const result = await dialog.showMessageBox({
       type: "info",
       buttons: ["Download", "Later"],
@@ -66,6 +69,7 @@ function setupAutoUpdates() {
   });
 
   autoUpdater.on("update-downloaded", async () => {
+    updateRetryCount = 0;
     const result = await dialog.showMessageBox({
       type: "info",
       buttons: ["Restart now", "Later"],

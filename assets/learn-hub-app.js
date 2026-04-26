@@ -1992,8 +1992,8 @@ function learnHubRunApp() {
     );
   }
 
-  function applyTeachCollapsedPreference(isTechLearn) {
-    if (isTechLearn) {
+  function applyTeachCollapsedPreference(isTechLearn, forceEnabled) {
+    if (isTechLearn && !forceEnabled) {
       document.body.classList.remove("teach-collapsed");
       if (el.btnToggleTeach) el.btnToggleTeach.style.display = "none";
       return;
@@ -3735,7 +3735,8 @@ function learnHubRunApp() {
     const cg = document.getElementById("content-grid");
     if (cg) cg.classList.toggle("single-pane", !!(isTechLearn || isQuestionsMode));
 
-    applyTeachCollapsedPreference(!!isTechLearn);
+    const keepTeachToggleForQuizFlow = Ls.kind === "quiz" || !!isQuestionsMode;
+    applyTeachCollapsedPreference(!!isTechLearn, keepTeachToggleForQuizFlow);
 
     const strict = Ls.kind === "challenge" || (Ls.check && Ls.check.strict);
     var footerLearnTech = "";

@@ -79,9 +79,6 @@
         <p class="sub lh-sidebar-docs-top">
           This site is a work in progress. Please report any issues to the <a href="https://github.com/LJA-ICSI25/learning-hub/issues">GitHub repository</a>.
         </p>
-        <p class="sub lh-sidebar-docs-top lh-release-note">
-          Release notes and rollback steps are in <a href="UPDATE_PROCESS.md">UPDATE_PROCESS.md</a>.
-        </p>
         <div class="lh-course-tools" id="lh-course-tools" aria-label="Track browser">
           <div class="lh-track-mode-root" id="lh-track-mode-root">
             <div class="lh-track-mode-switch" role="group" aria-label="Track browser mode">
@@ -274,6 +271,15 @@
       <div class="footer-actions">
         <div class="footer-actions-start">
           <div class="footer-learn-actions" id="footer-learn-actions">
+            <button
+              type="button"
+              class="tool ghost"
+              id="btn-toggle-teach"
+              aria-pressed="false"
+              title="Hide or show steps/notes panel"
+            >
+              Steps
+            </button>
             <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
             <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
               Skip lesson

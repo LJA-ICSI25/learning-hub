@@ -1156,6 +1156,7 @@ body.lh-learn-pending .lesson-btn.done.active .lbl {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 0.45rem;
   margin-left: auto;
   min-width: 0;
 }
