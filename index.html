@@ -5,7 +5,7 @@
   <!-- hehe -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="Practice-first courses: HTML, CSS, JavaScript, Python, SQL, Tech+, PenTest+, Network+, Security, and Kali labs — runs locally in your browser." />
+  <meta name="description" content="Practice-first courses: HTML, CSS, JavaScript, Python, SQL, Tech+, PenTest+, Network+, Security+, and Kali labs — runs locally in your browser." />
   <meta name="theme-color" content="#030508" />
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -15,9 +15,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhLearnPendingHc20260412" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTrackPickerSizingTinyStep20260425" />
-  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhQuickPracticeCompact20260415" />
+  <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhTokensBlueMatch20260430" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTrackPickerOverlay20260430" />
+  <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhFullChapterFillWidth20260430" />
 </head>
 <body class="lh-sidebar-hidden">
   <a class="lh-skip-link" href="#lh-main">Skip to main content</a>
@@ -40,7 +40,7 @@
       </div>
       <h2 id="lh-auth-title" class="lh-auth-title">Sign in</h2>
       <p class="lh-auth-lead">
-        Create an account or sign in. Progress and XP stay in this browser for each username — nothing is sent to a server. <br><br>For best experience, view on a desktop computer.
+        Create an account or sign in. Progress and XP stay in this browser for each username.<br>For best experience, view on a desktop computer.<br><br>For Tech+ Study, use the login: <br>Username = Study <br>Password = Study.
       </p>
       <p id="lh-auth-msg" class="lh-auth-msg" role="status" aria-live="polite"></p>
       <div class="lh-auth-tabs" role="tablist" aria-label="Account">
@@ -74,7 +74,6 @@
       <div class="sidebar-head">
         <div class="lh-title-row">
           <h1 class="lh-brand-title">Learn Hub</h1>
-          <span id="lh-version-chip" class="lh-version-chip" aria-label="App version">v1.0.3</span>
         </div>
         <p class="sub lh-sidebar-docs-top">
           This site is a work in progress. Please report any issues to the <a href="https://github.com/LJA-ICSI25/learning-hub/issues">GitHub repository</a>.
@@ -97,7 +96,7 @@
               id="lh-track-picker-toggle"
               aria-expanded="false"
               aria-controls="course-pills"
-              title="Show or hide all track topics"
+              title="Open or close the track menu"
             >
               <span class="lh-track-picker-toggle-label" id="lh-track-picker-toggle-label">Tracks</span>
               <span class="lh-track-picker-toggle-chev" aria-hidden="true">▾</span>
@@ -257,13 +256,8 @@
           </noscript>
           <div id="teach-boot-placeholder">
             <h2>Welcome</h2>
-            <div id="lh-onboarding-card" class="lh-onboarding-card" hidden>
-              <h3>First-run quick start</h3>
-              <p>1) Choose a track. 2) Open lesson 1. 3) Run one check. 4) Continue to lock progress.</p>
-              <button type="button" id="lh-onboarding-dismiss" class="tool">Got it</button>
-            </div>
             <p><strong>Practice</strong> is the left column (or the block above on small screens). <strong>This step</strong> on the right explains what to do — open <strong>Reference</strong> inside that panel when you need the full notes.</p>
-            <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1. <strong>Tech+</strong>, <strong>PenTest+</strong>, <strong>Network+</strong>, and <strong>Security</strong> are read-first tracks; <strong>Labs</strong> is a Kali VM checklist (commands run on your VM, not in the browser).</p>
+            <p>No experience? Pick a track and start at lesson 1. Use the <strong>Practice</strong> column for code, <strong>This step</strong> on the right for instructions (below the editor on phones). <strong>HTML, CSS, JavaScript, Python,</strong> and <strong>SQL</strong> each open with a short “how this layout works” note in lesson 1. <strong>Tech+</strong>, <strong>PenTest+</strong>, <strong>Network+</strong>, and <strong>Security+</strong> are read-first tracks; <strong>Labs</strong> is a Kali VM checklist (commands run on your VM, not in the browser).</p>
             <p class="msg info">If this never disappears, check that every <code>assets/learn-hub-*.js</code> file loaded (Network tab). Use a local server if previews fail.</p>
           </div>
         </article>
@@ -271,15 +265,6 @@
       <div class="footer-actions">
         <div class="footer-actions-start">
           <div class="footer-learn-actions" id="footer-learn-actions">
-            <button
-              type="button"
-              class="tool ghost"
-              id="btn-toggle-teach"
-              aria-pressed="false"
-              title="Hide or show steps/notes panel"
-            >
-              Steps
-            </button>
             <button type="button" class="tool primary" id="btn-continue" style="display:none">Continue</button>
             <button type="button" class="tool ghost" id="btn-skip-chapter" style="display:none" title="Mark this reading done and go to the next lesson">
               Skip lesson
@@ -319,15 +304,16 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-network-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-voucher02-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-network-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
           );
       },
       true
     );
   </script>
   <script src="assets/learn-hub-courses.js?v=lhSecQuizSpliceFix20260412"></script>
-  <script src="assets/learn-hub-gimkit-questions.js?v=lhGimkitImport20260416b"></script>
+  <script src="assets/learn-hub-gimkit-questions.js?v=lhVoucher02Gimkit20260430"></script>
   <script src="assets/learn-hub-voucher01-plan.js?v=lhExamBucketWeights20260423"></script>
+  <script src="assets/learn-hub-voucher02-plan.js?v=lhVoucher02Plan20260430"></script>
   <script src="assets/learn-hub-depth.js"></script>
   <script src="assets/learn-hub-techplus.js"></script>
   <script src="assets/learn-hub-techplus-md.js?v=7c70fd6aa52a"></script>
@@ -340,7 +326,7 @@
   <script src="assets/learn-hub-techplus-study-patch.js?v=lhStudyPatch20260415"></script>
   <script src="assets/learn-hub-techplus-org.js?v=lhTechplusOrgToggle20260415"></script>
   <script src="assets/learn-hub-tech-weighted-cram.js?v=lhExamScaleFootnote20260423"></script>
-  <script src="assets/learn-hub-app.js?v=lhSidebarTopbarRefresh20260425"></script>
+  <script src="assets/learn-hub-app.js?v=lhTrackPickerOverlay20260430"></script>
 
 
 

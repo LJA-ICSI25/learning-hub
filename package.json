@@ -1,6 +1,6 @@
 {
   "name": "learn-hub",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Offline desktop learning hub for study content and labs.",
   "author": "Logan_Allenstein",
   "private": true,
@@ -44,6 +44,8 @@
     },
     "files": [
       "index.html",
+      "study-secret.html",
+      "study-space/**/*",
       "assets/**/*",
       "docs/**/*",
       "scripts/**/*",
