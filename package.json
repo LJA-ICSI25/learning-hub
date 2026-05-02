@@ -1,6 +1,6 @@
 {
   "name": "learn-hub",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Offline desktop learning hub for study content and labs.",
   "author": "Logan_Allenstein",
   "private": true,
@@ -10,9 +10,12 @@
   },
   "scripts": {
     "start": "electron .",
+    "icons": "node scripts/generate-build-icons.mjs",
     "dist": "electron-builder --win nsis",
-    "dist:clean": "electron-builder --win nsis --config.directories.output=dist-branded",
-    "release:verify": "npm run dist && echo Release artifacts generated in dist/",
+    "dist:clean": "electron-builder --win nsis",
+    "upload:list": "node scripts/github-upload-paths.mjs",
+    "upload:exe": "node scripts/list-exe-artifacts.mjs",
+    "release:verify": "npm run dist && echo Release artifacts generated in exe-build/",
     "normalize:techplus": "node scripts/normalize-techplus-markdown.mjs",
     "build:techplus": "node scripts/build-techplus-from-markdown.mjs",
     "build:security": "node scripts/build-security-from-markdown.mjs",
@@ -40,11 +43,12 @@
     "productName": "Learn Hub",
     "artifactName": "${productName} Setup ${version}.${ext}",
     "directories": {
-      "output": "dist"
+      "output": "exe-build"
     },
     "files": [
       "index.html",
       "study-secret.html",
+      "build/**/*",
       "study-space/**/*",
       "assets/**/*",
       "docs/**/*",

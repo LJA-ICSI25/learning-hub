@@ -1545,3 +1545,104 @@ body.lh-compact-teach #teach .lh-reference-inner {
   font-weight: 600;
   letter-spacing: 0.02em;
 }
+
+/* Tech+ flashcard deck (Questions mode) */
+.lh-tech-flash-root {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+.lh-tech-flash-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.35rem;
+}
+.lh-tech-flash-phase {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted, #9fb0c8);
+}
+.lh-tech-flash-progress {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted, #9fb0c8);
+}
+.lh-tech-flash-cardbox {
+  perspective: 900px;
+  margin-bottom: 0.5rem;
+}
+.lh-tech-flash-card {
+  display: block;
+  width: 100%;
+  min-height: 9rem;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  border-radius: 12px;
+  border: 1px solid rgba(120, 160, 220, 0.35);
+  background: linear-gradient(145deg, rgba(18, 28, 48, 0.95), rgba(10, 16, 28, 0.98));
+  color: var(--fg, #e8eef8);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.18s ease;
+  font: inherit;
+}
+.lh-tech-flash-card:hover {
+  border-color: rgba(120, 180, 255, 0.55);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+.lh-tech-flash-card:focus-visible {
+  outline: 2px solid rgba(91, 140, 255, 0.85);
+  outline-offset: 2px;
+}
+.lh-tech-flash-card--open {
+  border-color: rgba(91, 140, 255, 0.65);
+}
+/* Only one face visible: term OR definition (avoids both showing if [hidden] is unreliable). */
+.lh-tech-flash-card:not(.lh-tech-flash-card--open) .lh-tech-flash-back {
+  display: none !important;
+}
+.lh-tech-flash-card.lh-tech-flash-card--open .lh-tech-flash-front {
+  display: none !important;
+}
+.lh-tech-flash-side {
+  display: block;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.lh-tech-flash-front {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.lh-tech-flash-back {
+  margin-top: 0;
+  color: var(--muted, #b8c8e0);
+  font-weight: 400;
+}
+.lh-tech-flash-flip-hint {
+  font-size: 0.78rem;
+  color: var(--muted, #9fb0c8);
+  margin: 0.5rem 0 0;
+}
+.lh-tech-flash-flip-hint kbd {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+}
+.lh-tech-flash-knew {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+  margin-bottom: 0.75rem;
+}
+.lh-tech-flash-knew-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+.lh-tech-flash-summary {
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Tech+ Practice Exam — Learn Hub</title>
+  <link rel="stylesheet" href="exam.css" />
+</head>
+<body>
+  <div id="tp-bank-error" class="tp-wrap tp-msg tp-msg-err tp-hidden" role="alert"></div>
+
+  <div class="tp-wrap">
+    <div id="tp-top" class="tp-top tp-hidden">
+      <div class="tp-brand">
+        Tech+ practice
+        <a href="../index.html">Back to Learn Hub</a>
+      </div>
+      <div id="tp-timer" class="tp-timer" aria-live="polite">60:00</div>
+      <div id="tp-progress" class="tp-progress"></div>
+    </div>
+
+    <section id="tp-screen-welcome" class="tp-card">
+      <h1>Tech+ timed practice</h1>
+      <p class="tp-lead">
+        <strong>WARNING</strong>: These questions will be harder and may not make sense. Just work your way through the best you can. Use context skills to find the right answer.<br><br>
+        Each attempt draws <strong>75 random</strong> questions from two full banks (FC0-U71 markdown set and extended practice set).
+        You have <strong>1 hour</strong>. You can move between questions until you submit. After submit, answers are locked, you see your score and review, then <strong>save your result</strong> (plain-text download) before starting another random exam.<br>
+        These questions were generated using AI, some of them might not make sense. Please just try your best. Some questions will require paper or other math. Feel free to use any outside resources.<br>
+        If you have any questions, let me know ASAP. You can email me at <a href="mailto:ljaicsi25@gmail.com">ljaicsi25@gmail.com</a> or DM on discord at @cyberkeco. 
+      </p>
+      <div class="tp-actions">
+        <button type="button" id="tp-begin" class="tp-btn tp-btn-primary">Begin exam</button>
+      </div>
+    </section>
+
+    <section id="tp-screen-exam" class="tp-hidden">
+      <div class="tp-card">
+        <p id="tp-stem" class="tp-q-stem"></p>
+        <fieldset style="border: none; margin: 0; padding: 0">
+          <legend class="tp-sr">Select one answer</legend>
+          <div id="tp-choices" class="tp-choices"></div>
+        </fieldset>
+        <div class="tp-nav-row">
+          <button type="button" id="tp-prev" class="tp-btn">Previous</button>
+          <button type="button" id="tp-next" class="tp-btn">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="tp-screen-results" class="tp-hidden">
+      <div class="tp-card">
+        <h1>Results</h1>
+        <div id="tp-result-summary"></div>
+        <p id="tp-save-hint" class="tp-msg tp-hidden" role="status"></p>
+        <div class="tp-actions">
+          <button type="button" id="tp-btn-save" class="tp-btn tp-btn-primary" disabled>Save result (download .txt)</button>
+          <button type="button" id="tp-btn-new" class="tp-btn" disabled>New exam (75 new questions)</button>
+        </div>
+      </div>
+      <div class="tp-card">
+        <h2 style="font-size: 1.15rem; margin-top: 0">Review</h2>
+        <div id="tp-review-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <footer id="tp-footer" class="tp-footer-bar tp-hidden">
+    <button type="button" id="tp-footer-submit" class="tp-btn tp-btn-primary">Submit exam</button>
+  </footer>
+
+  <script src="questions-bank.js"></script>
+  <script src="exam-app.js"></script>
+</body>
+</html>

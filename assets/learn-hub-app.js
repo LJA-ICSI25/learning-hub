@@ -373,6 +373,15 @@ function learnHubRunApp() {
     return !!(lesson && typeof lesson.id === "string" && lesson.id.indexOf("tech-gimkit-") === 0);
   }
 
+  function isTechFlashcardLesson(lesson) {
+    return !!(lesson && lesson.lhFlashcardDeck);
+  }
+
+  function getTechFlashcardDeck() {
+    var d = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_FLASHCARDS : null;
+    return Array.isArray(d) ? d : [];
+  }
+
   function isTechStudyPlanSidebarLesson(lesson) {
     return !!(lesson && lesson.id === "tech-study-weighted-cram");
   }
@@ -380,7 +389,10 @@ function learnHubRunApp() {
   function firstTechGimkitLessonIndex() {
     var list = lessons();
     for (var i = 0; i < list.length; i++) {
-      if (isTechGimkitLesson(list[i])) return i;
+      if (isTechGimkitLesson(list[i]) && !isTechFlashcardLesson(list[i])) return i;
+    }
+    for (var j = 0; j < list.length; j++) {
+      if (isTechGimkitLesson(list[j])) return j;
     }
     return -1;
   }
@@ -1410,6 +1422,7 @@ function learnHubRunApp() {
     var O = typeof window !== "undefined" ? window.LEARN_HUB_TECHPLUS_ORG : null;
     if (O && getTechplusOrgMode() === O.MODE_QUESTIONS) {
       if (lesson && lesson.id === "tech-study-weighted-cram") return "study-plans";
+      if (lesson && lesson.lhFlashcardDeck) return "tech-flashcards";
       var t = plainTextFromHtml((lesson && lesson.title) || "");
       if (/^Tech\+ Voucher Test/i.test(t)) return "voucher-tests";
       if (/^GimKit Set \d+/i.test(t)) return "gimkit-core";
@@ -1427,6 +1440,7 @@ function learnHubRunApp() {
     if (O && mode === O.MODE_QUESTIONS) {
       if (groupKey === "voucher-tests") return "Tech+ voucher exams";
       if (groupKey === "study-plans") return "Study plans";
+      if (groupKey === "tech-flashcards") return "Tech+ flashcards";
       if (groupKey === "gimkit-core") return "Core GimKit sets";
       if (groupKey === "gimkit-large") return "Large mixed sets";
       return "Other question sets";
@@ -1811,6 +1825,10 @@ function learnHubRunApp() {
     if (!host) return;
     var Lcur = currentLesson();
     if (isVoucherStudyPlanView(Lcur)) {
+      host.hidden = true;
+      return;
+    }
+    if (isTechFlashcardLesson(Lcur)) {
       host.hidden = true;
       return;
     }
@@ -3098,8 +3116,236 @@ function learnHubRunApp() {
     bindVoucher01PlanClicks(root);
   }
 
+  var techFlashcardAwardGuard = false;
+
+  function renderTechFlashcards(lesson) {
+    if (!el.techQuiz) return;
+    techQuizSubset = null;
+    techFlashcardAwardGuard = false;
+    var deck = getTechFlashcardDeck();
+    if (!deck.length) {
+      el.techQuiz.innerHTML =
+        "<p class='msg info'>No flashcards loaded. Ensure <code>assets/learn-hub-techplus-flashcards-data.js</code> is included before <code>learn-hub-app.js</code>.</p>";
+      if (el.techFeedback) el.techFeedback.innerHTML = "";
+      if (el.techStatus) el.techStatus.textContent = "—";
+      setTechFeedbackVisible(false);
+      return;
+    }
+
+    function cardTerm(idx) {
+      var c = deck[idx];
+      return (c && c.term) || String(idx);
+    }
+    function cardAnswer(idx) {
+      var c = deck[idx];
+      return (c && c.answer) || "";
+    }
+
+    var state = {
+      phase: 1,
+      queue: deck.map(function (_, i) {
+        return i;
+      }),
+      pos: 0,
+      pass1No: [],
+      pass2No: [],
+      flipped: false,
+      sessionDone: false,
+    };
+    shuffleInPlace(state.queue);
+
+    el.techQuiz.innerHTML =
+      '<div class="lh-tech-flash-root" id="lh-tech-flash-root">' +
+      '<div class="lh-tech-flash-top">' +
+      '<p class="lh-tech-flash-phase" id="lh-tf-phase" aria-live="polite"></p>' +
+      '<button type="button" class="tool ghost lh-tech-flash-reset" id="lh-tf-reset">Reset flashcards</button>' +
+      "</div>" +
+      '<p class="lh-tech-flash-progress" id="lh-tf-prog"></p>' +
+      '<div class="lh-tech-flash-cardbox">' +
+      '<button type="button" class="lh-tech-flash-card" id="lh-tf-card" aria-expanded="false">' +
+      '<span class="lh-tech-flash-side lh-tech-flash-front" id="lh-tf-front"></span>' +
+      '<span class="lh-tech-flash-side lh-tech-flash-back" id="lh-tf-back" hidden></span>' +
+      "</button>" +
+      "</div>" +
+      '<div class="lh-tech-flash-knew" id="lh-tf-knew" hidden role="group" aria-label="Did you know this term">' +
+      '<span class="lh-tech-flash-knew-label">Did you know this?</span>' +
+      '<button type="button" class="tool success" id="lh-tf-yes">Yes</button>' +
+      '<button type="button" class="tool" id="lh-tf-no">No</button>' +
+      "</div>" +
+      '<p class="lh-tech-flash-flip-hint" id="lh-tf-flip-hint">Optional: flip the card (click, tap, or Space) to see the definition before you answer.</p>' +
+      '<div class="lh-tech-flash-summary msg info" id="lh-tf-summary" hidden></div>' +
+      "</div>";
+
+    var elPhase = el.techQuiz.querySelector("#lh-tf-phase");
+    var elProg = el.techQuiz.querySelector("#lh-tf-prog");
+    var elCard = el.techQuiz.querySelector("#lh-tf-card");
+    var elFront = el.techQuiz.querySelector("#lh-tf-front");
+    var elBack = el.techQuiz.querySelector("#lh-tf-back");
+    var elFlipHint = el.techQuiz.querySelector("#lh-tf-flip-hint");
+    var elKnew = el.techQuiz.querySelector("#lh-tf-knew");
+    var elYes = el.techQuiz.querySelector("#lh-tf-yes");
+    var elNo = el.techQuiz.querySelector("#lh-tf-no");
+    var elSum = el.techQuiz.querySelector("#lh-tf-summary");
+    var btnReset = el.techQuiz.querySelector("#lh-tf-reset");
+
+    function syncFlipVisual() {
+      elCard.setAttribute("aria-expanded", state.flipped ? "true" : "false");
+      elCard.classList.toggle("lh-tech-flash-card--open", state.flipped);
+      elFront.hidden = state.flipped;
+      elBack.hidden = !state.flipped;
+      elFlipHint.hidden = state.sessionDone;
+      if (!state.sessionDone) {
+        elFlipHint.textContent = state.flipped
+          ? "Flip again (click, tap, or Space) to hide the definition and show only the term."
+          : "Optional: flip the card (click, tap, or Space) to see the definition before you answer.";
+      }
+      elKnew.hidden = state.sessionDone;
+    }
+
+    function showDoneSummary() {
+      state.sessionDone = true;
+      elCard.hidden = true;
+      elFlipHint.hidden = true;
+      elKnew.hidden = true;
+      var lines = "<strong>Session complete.</strong> ";
+      if (state.pass1No.length === 0) {
+        lines += "You marked <strong>Yes</strong> for every card on the first pass — no review round was needed.";
+      } else if (state.pass2No.length === 0) {
+        lines += "On the review pass, you marked <strong>Yes</strong> for every card you had missed earlier.";
+      } else {
+        lines +=
+          "After both passes, these still need work: <strong>" +
+          state.pass2No
+            .filter(function (v, i, a) {
+              return a.indexOf(v) === i;
+            })
+            .map(cardTerm)
+            .join(", ") +
+          "</strong>. Use <strong>Reset flashcards</strong> to run the deck again.";
+      }
+      elSum.innerHTML = lines;
+      elSum.hidden = false;
+      elPhase.textContent = "Complete";
+      elProg.textContent = deck.length + " cards · finished";
+      if (!techFlashcardAwardGuard) {
+        techFlashcardAwardGuard = true;
+        awardIfNew(lesson.id);
+        renderNav();
+        updateChrome();
+      }
+      if (el.announcer) el.announcer.textContent = "Flashcard session complete.";
+    }
+
+    function endPhase1() {
+      var seen = Object.create(null);
+      var misses = [];
+      for (var mi = 0; mi < state.pass1No.length; mi++) {
+        var ix = state.pass1No[mi];
+        if (!seen[ix]) {
+          seen[ix] = 1;
+          misses.push(ix);
+        }
+      }
+      if (!misses.length) {
+        showDoneSummary();
+        return;
+      }
+      state.phase = 2;
+      state.queue = misses.slice();
+      shuffleInPlace(state.queue);
+      state.pos = 0;
+      elPhase.textContent = "Review pass · only cards you marked “No” earlier";
+      paintCard();
+    }
+
+    function advancePhase1() {
+      state.pos += 1;
+      if (state.pos >= state.queue.length) {
+        endPhase1();
+        return;
+      }
+      paintCard();
+    }
+
+    function advancePhase2() {
+      state.pos += 1;
+      if (state.pos >= state.queue.length) {
+        showDoneSummary();
+        return;
+      }
+      paintCard();
+    }
+
+    function paintCard() {
+      if (state.sessionDone) return;
+      if (!state.queue.length) {
+        showDoneSummary();
+        return;
+      }
+      var ci = state.queue[state.pos];
+      state.flipped = false;
+      elCard.hidden = false;
+      elSum.hidden = true;
+      elFront.textContent = cardTerm(ci);
+      elBack.textContent = cardAnswer(ci);
+      elPhase.textContent = state.phase === 1 ? "First pass" : "Review pass";
+      elProg.textContent =
+        state.phase === 1
+          ? "Card " + (state.pos + 1) + " of " + state.queue.length + " · " + deck.length + " in deck"
+          : "Review " + (state.pos + 1) + " of " + state.queue.length;
+      syncFlipVisual();
+    }
+
+    function onFlip() {
+      if (state.sessionDone) return;
+      state.flipped = !state.flipped;
+      syncFlipVisual();
+    }
+
+    elCard.addEventListener("click", function () {
+      onFlip();
+    });
+    elCard.addEventListener("keydown", function (ev) {
+      if (ev.key === " " || ev.key === "Enter") {
+        ev.preventDefault();
+        onFlip();
+      }
+    });
+
+    elYes.addEventListener("click", function () {
+      if (state.sessionDone) return;
+      if (state.phase === 1) advancePhase1();
+      else advancePhase2();
+    });
+
+    elNo.addEventListener("click", function () {
+      if (state.sessionDone) return;
+      var ci = state.queue[state.pos];
+      if (state.phase === 1) {
+        state.pass1No.push(ci);
+        advancePhase1();
+      } else {
+        state.pass2No.push(ci);
+        advancePhase2();
+      }
+    });
+
+    btnReset.addEventListener("click", function () {
+      renderTechFlashcards(lesson);
+    });
+
+    if (el.techFeedback) el.techFeedback.innerHTML = "";
+    if (el.techStatus) el.techStatus.textContent = "Flashcards";
+    setTechFeedbackVisible(false);
+    paintCard();
+  }
+
   function renderTechQuiz(lesson) {
     if (!el.techQuiz) return;
+    if (isTechFlashcardLesson(lesson)) {
+      renderTechFlashcards(lesson);
+      return;
+    }
     if (isVoucherStudyPlanView(lesson)) {
       el.techQuiz.innerHTML =
         "<div class='msg info'>Study plan mode is active. Use this panel for topic tracking, the weighted cram lesson link, weak-topic practice, and attempt history.</div>";
@@ -3669,7 +3915,9 @@ function learnHubRunApp() {
           : isVoucherStudyPlanView(Ls)
             ? "Study plan mode: topic tracking, weighted cram link, weak-topic practice, and attempt history."
           : isTech && Ls.kind === "quiz"
-            ? "Select the best answer for each question, then Check."
+            ? isTechFlashcardLesson(Ls)
+              ? "Answer Yes or No on each term (flip is optional to peek at the definition). Complete the review pass for any misses. Reset flashcards only clears this deck’s session."
+              : "Select the best answer for each question, then Check."
             : strict
               ? "Solo check: the grader will not teach the solution."
               : "Run freely, then Check when you are ready.";
@@ -3715,9 +3963,10 @@ function learnHubRunApp() {
       }
       if (w === "tech" && Ls.kind === "quiz") {
         techQuizSizeMode = "all";
-        renderTechQuiz(Ls);
+        if (isTechFlashcardLesson(Ls)) renderTechFlashcards(Ls);
+        else renderTechQuiz(Ls);
         el.techFeedback.innerHTML = "";
-        el.techStatus.textContent = "—";
+        el.techStatus.textContent = isTechFlashcardLesson(Ls) ? "Flashcards" : "—";
         setTechFeedbackVisible(false);
       }
     }
@@ -3816,6 +4065,7 @@ function learnHubRunApp() {
     const Ls = currentLesson();
     if (!Ls || Ls.kind === "learn") return;
     if (isVoucherStudyPlanView(Ls)) return;
+    if (isTechFlashcardLesson(Ls)) return;
     const c = courseById[activeCourseId];
     if (!c) return;
     if (c.ws === "tech" && Ls.kind === "quiz") {
@@ -4416,6 +4666,11 @@ function learnHubRunApp() {
     /* Secret study space: username Study / password Study (username normalized to lowercase). */
     if (u === "study" && String(password) === "Study") {
       window.location.replace("study-space/index.html");
+      return false;
+    }
+    /* Tech+ exam space: username TechPlusExam / password TechPlusExam (username normalized to lowercase). */
+    if (u === "techplusexam" && String(password) === "TechPlusExam") {
+      window.location.replace("tech-plus-exam/index.html");
       return false;
     }
     var accounts = readAccounts();
