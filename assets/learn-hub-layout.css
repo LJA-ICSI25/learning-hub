@@ -2758,9 +2758,11 @@ body.lh-force-reduce-motion .progress-fill {
   inset: 0;
   z-index: 20000;
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.25rem;
+  padding: clamp(0.75rem, 3vh, 1.5rem) 1.25rem;
+  overflow-x: hidden;
+  overflow-y: auto;
   background:
     radial-gradient(ellipse 80% 60% at 50% -20%, rgba(62, 118, 138, 0.22), transparent 55%),
     rgba(3, 5, 12, 0.88);
@@ -2776,6 +2778,7 @@ body.lh-force-reduce-motion .progress-fill {
   position: relative;
   width: min(100%, 24.5rem);
   max-height: min(92vh, 640px);
+  margin: auto 0;
   overflow: auto;
   padding: 1.5rem 1.5rem 1.35rem;
   border-radius: var(--radius-md, 14px);
