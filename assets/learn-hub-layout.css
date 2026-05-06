@@ -2760,7 +2760,10 @@ body.lh-force-reduce-motion .progress-fill {
   display: none;
   align-items: flex-start;
   justify-content: center;
-  padding: clamp(0.75rem, 3vh, 1.5rem) 1.25rem;
+  padding-top: calc(clamp(0.75rem, 3vh, 1.5rem) + env(safe-area-inset-top, 0px));
+  padding-right: calc(1.25rem + env(safe-area-inset-right, 0px));
+  padding-bottom: calc(clamp(0.75rem, 3vh, 1.5rem) + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(1.25rem + env(safe-area-inset-left, 0px));
   overflow-x: hidden;
   overflow-y: auto;
   background:
@@ -2776,11 +2779,11 @@ body.lh-force-reduce-motion .progress-fill {
 
 .lh-auth-card {
   position: relative;
-  width: min(100%, 24.5rem);
-  max-height: min(92vh, 640px);
+  width: min(100%, 44rem);
+  max-width: 100%;
   margin: auto 0;
-  overflow: auto;
-  padding: 1.5rem 1.5rem 1.35rem;
+  overflow: visible;
+  padding: 1.35rem clamp(1rem, 3vw, 1.55rem) 1.5rem;
   border-radius: var(--radius-md, 14px);
   border: 1px solid rgba(82, 132, 146, 0.42);
   background: linear-gradient(165deg, rgba(20, 32, 42, 0.98) 0%, rgba(10, 16, 24, 0.99) 100%);
@@ -2788,6 +2791,46 @@ body.lh-force-reduce-motion .progress-fill {
     var(--glow-navy-soft),
     0 24px 56px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Info (left / top) vs. forms (right / bottom): two columns ≥640px; stacked on narrow viewports */
+.lh-auth-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.15rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.lh-auth-col {
+  min-width: 0;
+}
+
+.lh-auth-col--info {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(82, 132, 146, 0.22);
+}
+
+.lh-auth-col--form .lh-auth-msg {
+  margin-top: 0;
+}
+
+@media (min-width: 640px) {
+  .lh-auth-shell {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 1.85rem);
+  }
+
+  .lh-auth-col--info {
+    padding-bottom: 0;
+    border-bottom: none;
+    padding-right: clamp(0.75rem, 2vw, 1.25rem);
+    border-right: 1px solid rgba(82, 132, 146, 0.22);
+  }
+
+  .lh-auth-col--form {
+    padding-left: clamp(0.75rem, 2vw, 1.25rem);
+  }
 }
 
 .lh-auth-card::before {
@@ -2803,11 +2846,11 @@ body.lh-force-reduce-motion .progress-fill {
   pointer-events: none;
 }
 
-.lh-auth-brand {
+.lh-auth-col--info .lh-auth-brand {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .lh-auth-brand-mark {
@@ -2851,8 +2894,8 @@ body.lh-force-reduce-motion .progress-fill {
   color: var(--muted);
 }
 
-.lh-auth-title {
-  margin: 0 0 0.45rem;
+.lh-auth-col--info .lh-auth-title {
+  margin: 0 0 0.4rem;
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -2860,7 +2903,7 @@ body.lh-force-reduce-motion .progress-fill {
 }
 
 .lh-auth-lead {
-  margin: 0 0 0.85rem;
+  margin: 0;
   font-size: 0.8125rem;
   color: var(--muted);
   line-height: 1.55;
@@ -2868,7 +2911,7 @@ body.lh-force-reduce-motion .progress-fill {
 
 .lh-auth-msg {
   min-height: 1.35rem;
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.65rem;
   font-size: 0.8rem;
   line-height: 1.4;
 }

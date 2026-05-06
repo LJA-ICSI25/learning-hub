@@ -1469,7 +1469,7 @@ function learnHubRunApp() {
       }
       if (!isTechGimkitLesson(all[i]) && !isTechStudyPlanSidebarLesson(all[i])) continue;
       const lesson = all[i];
-      const isVoucher = /^Tech\+ Voucher Test 0[12]\b/i.test(String((lesson && lesson.title) || ""));
+      const isVoucher = /^Tech\+ Voucher Test 0[123]\b/i.test(String((lesson && lesson.title) || ""));
       const isCramLesson = !!(lesson && lesson.id === "tech-study-weighted-cram");
       if (isVoucher) {
         pairs.push({ idx: i, L: lesson, groupKey: null, labelOverride: "", variant: "" });
@@ -2360,10 +2360,16 @@ function learnHubRunApp() {
     return P2 && typeof P2 === "object" ? P2 : null;
   }
 
-  /** Progress key for voucher study tracking: voucher01 | voucher02 */
+  function voucher03Plan() {
+    var P3 = typeof window !== "undefined" ? window.LEARN_HUB_VOUCHER03_PLAN : null;
+    return P3 && typeof P3 === "object" ? P3 : null;
+  }
+
+  /** Progress key for voucher study tracking: voucher01 | voucher02 | voucher03 */
   function voucherProgressSlot(lesson) {
     if (!lesson) return null;
     var t = String(lesson.title || "");
+    if (/^Tech\+ Voucher Test 03\b/i.test(t)) return "voucher03";
     if (/^Tech\+ Voucher Test 02\b/i.test(t)) return "voucher02";
     if (/^Tech\+ Voucher Test 01\b/i.test(t)) return "voucher01";
     return null;
@@ -2371,6 +2377,7 @@ function learnHubRunApp() {
 
   function voucherPlanForLesson(lesson) {
     var s = voucherProgressSlot(lesson);
+    if (s === "voucher03") return voucher03Plan();
     if (s === "voucher02") return voucher02Plan();
     if (s === "voucher01") return voucher01Plan();
     return null;
@@ -2473,11 +2480,25 @@ function learnHubRunApp() {
       )
         progress.voucher02.domainTally = {};
     }
+    if (!progress.voucher03 || typeof progress.voucher03 !== "object" || Array.isArray(progress.voucher03)) {
+      progress.voucher03 = { version: 1, attempts: [], wrongQi: {}, domainTally: {} };
+    } else {
+      if (!Array.isArray(progress.voucher03.attempts)) progress.voucher03.attempts = [];
+      if (!progress.voucher03.wrongQi || typeof progress.voucher03.wrongQi !== "object" || Array.isArray(progress.voucher03.wrongQi))
+        progress.voucher03.wrongQi = {};
+      if (
+        !progress.voucher03.domainTally ||
+        typeof progress.voucher03.domainTally !== "object" ||
+        Array.isArray(progress.voucher03.domainTally)
+      )
+        progress.voucher03.domainTally = {};
+    }
   }
 
   function computeWeakDomains(slot, limit) {
     ensureVoucher01Progress();
-    var key = slot === "voucher02" ? "voucher02" : "voucher01";
+    var key =
+      slot === "voucher03" ? "voucher03" : slot === "voucher02" ? "voucher02" : "voucher01";
     var tally = (progress[key] && progress[key].domainTally) || {};
     return Object.keys(tally)
       .map(function (k) {
@@ -2758,7 +2779,13 @@ function learnHubRunApp() {
     var attempts = Array.isArray(progress[slot].attempts) ? progress[slot].attempts : [];
     var weak = computeWeakDomains(slot, 5);
     var lines = [];
-    lines.push(slot === "voucher02" ? "Voucher 02 study snapshot" : "Voucher 01 study snapshot");
+    lines.push(
+      slot === "voucher03"
+        ? "Voucher 03 study snapshot"
+        : slot === "voucher02"
+          ? "Voucher 02 study snapshot"
+          : "Voucher 01 study snapshot"
+    );
     lines.push("User: " + (currentUsername || "unknown"));
     lines.push("Generated: " + new Date().toLocaleString());
     lines.push("Attempts recorded: " + attempts.length);
@@ -3023,7 +3050,8 @@ function learnHubRunApp() {
       btn.addEventListener("click", function () {
         var Lr = currentLesson();
         var rs = voucherProgressSlot(Lr) || "voucher01";
-        var rlabel = rs === "voucher02" ? "Voucher 02" : "Voucher 01";
+        var rlabel =
+          rs === "voucher03" ? "Voucher 03" : rs === "voucher02" ? "Voucher 02" : "Voucher 01";
         if (
           !confirm(
             "Reset all " +
