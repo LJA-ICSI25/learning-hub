@@ -737,6 +737,143 @@ main {
   text-align: center;
 }
 
+/* ─── VOCAB LAB ─── */
+.vocab-mode-switch {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.vocab-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.vocab-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+.vocab-learn-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card2);
+  padding: 20px;
+}
+
+.vocab-term {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.vocab-def {
+  color: var(--text2);
+  line-height: 1.6;
+  display: none;
+}
+
+.vocab-def.show { display: block; }
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.match-col h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.match-list {
+  display: grid;
+  gap: 8px;
+}
+
+.match-item {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.match-item:hover {
+  border-color: rgba(59,188,255,0.35);
+  color: var(--text);
+}
+
+.match-item.selected {
+  border-color: var(--accent);
+  background: rgba(59,188,255,0.08);
+  color: var(--text);
+}
+
+.match-item.correct {
+  border-color: var(--accent4);
+  background: rgba(16,185,129,0.12);
+  color: var(--text);
+}
+
+.match-item.wrong {
+  border-color: var(--accent5);
+  background: rgba(239,68,68,0.12);
+  color: var(--text);
+}
+
+.fib-row {
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.fib-row p {
+  margin-bottom: 8px;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+.fib-input {
+  width: 100%;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.fib-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.fib-feedback {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+.vocab-hidden { display: none; }
+
 /* ─── PROGRESS BAR ─── */
 .progress-bar-wrap {
   background: var(--bg);
@@ -1017,6 +1154,7 @@ main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   nav#sidebar { display: none; }
   .two-col { grid-template-columns: 1fr; }
   .three-col { grid-template-columns: 1fr; }
+  .match-grid { grid-template-columns: 1fr; }
   header { padding: 40px 20px; }
   .section { padding: 24px 20px; }
 }
@@ -1098,6 +1236,8 @@ h3.sub { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; }
   <p class="subtitle">Yes I made this just for you.<br> I hope it helps and just remember I love you.</p>
 </header>
 
+<div class="layout">
+
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="nav-section-label">Getting Started</div>
@@ -1130,6 +1270,7 @@ h3.sub { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; }
   <div class="nav-section-label">Practice Tools</div>
   <div class="nav-item" onclick="showSection('troubleshoot')"><span class="nav-icon">🔧</span> Troubleshooting <span class="progress-dot"></span></div>
   <div class="nav-item" onclick="showSection('flashcards')"><span class="nav-icon">🃏</span> Flashcards <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('vocablab')"><span class="nav-icon">🧩</span> Vocab Lab <span class="progress-dot"></span></div>
   <div class="nav-item" onclick="showSection('quiz')"><span class="nav-icon">✏️</span> Practice Quiz <span class="progress-dot"></span></div>
 </nav>
 
@@ -1141,6 +1282,15 @@ h3.sub { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; }
   <div class="section-header">
     <div class="section-tag">// START HERE</div>
     <h2>Welcome to Your Tech+ Study Guide</h2>
+    <p>This guide teaches you — not just tests you. Work through each domain in order, or jump to areas where you need help. Use the Practice Quiz when you're ready to test yourself.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <h4>How to Use This Guide</h4>
+      <p>Read through each domain section to learn the material, then use Flashcards to memorize key terms, and finally take the Practice Quiz to test your knowledge. The quiz pulls from all 225 real practice questions across your 3 exam sets.</p>
+    </div>
   </div>
 
   <div class="section-divider">All Domains</div>
@@ -1272,6 +1422,16 @@ h3.sub { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; }
     </div>
   </div>
 
+  <div class="card">
+    <h3><span class="icon">📅</span>7-Day Final Review Plan</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Days 1-2</h4><p>Hardware, storage, number systems, and operating systems. Build fundamentals first.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Days 3-4</h4><p>Networking, wireless, and cloud/virtualization with emphasis on scenarios.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Day 5</h4><p>Security and databases. Focus on terms that are easy to mix up.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Day 6</h4><p>Programming and AI. Drill pseudocode logic and data-type questions.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Day 7</h4><p>Take a full 75-question quiz, review misses, then only revise weak areas.</p></div></div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════ HARDWARE ═══════════════ -->
@@ -2365,6 +2525,72 @@ tax2 = <span class="fn">calculateTax</span>(<span class="num">250</span>, <span 
   <div style="text-align:center;margin-top:12px;color:var(--text3);font-size:0.8rem;">Click the card to reveal the answer</div>
 </section>
 
+<!-- ═══════════════ VOCAB LAB ═══════════════ -->
+<section id="vocablab" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Interactive Learning</div>
+    <h2>Vocab Lab</h2>
+    <p>Practice vocabulary three ways: learn terms, match definitions, and fill in blanks. Use all three for stronger memory retention.</p>
+  </div>
+
+  <div class="vocab-mode-switch">
+    <button class="btn btn-primary" id="vocab-mode-learn" onclick="setVocabMode('learn')">Learn</button>
+    <button class="btn btn-ghost" id="vocab-mode-match" onclick="setVocabMode('match')">Matching</button>
+    <button class="btn btn-ghost" id="vocab-mode-fib" onclick="setVocabMode('fib')">Fill In The Blank</button>
+  </div>
+
+  <div class="quiz-filter" style="margin-bottom:14px;">
+    <button class="filter-btn active" onclick="setVocabCategory('all', this)">All</button>
+    <button class="filter-btn" onclick="setVocabCategory('hardware', this)">Hardware</button>
+    <button class="filter-btn" onclick="setVocabCategory('networking', this)">Networking</button>
+    <button class="filter-btn" onclick="setVocabCategory('security', this)">Security</button>
+    <button class="filter-btn" onclick="setVocabCategory('programming', this)">Programming</button>
+    <button class="filter-btn" onclick="setVocabCategory('databases', this)">Databases</button>
+    <button class="filter-btn" onclick="setVocabCategory('os', this)">OS & Software</button>
+  </div>
+
+  <div id="vocab-learn-panel" class="vocab-panel">
+    <div class="vocab-status" id="vocab-learn-status">Card 1 of 1</div>
+    <div class="vocab-learn-card">
+      <div class="vocab-term" id="vocab-learn-term">Term</div>
+      <div class="vocab-def" id="vocab-learn-def">Definition</div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-outline btn-sm" onclick="toggleVocabDefinition()">Reveal Definition</button>
+      <button class="btn btn-ghost btn-sm" onclick="prevVocabLearn()">← Prev</button>
+      <button class="btn btn-ghost btn-sm" onclick="nextVocabLearn()">Next →</button>
+      <button class="btn btn-ghost btn-sm" onclick="shuffleVocabLearn()">🔀 Shuffle</button>
+    </div>
+  </div>
+
+  <div id="vocab-match-panel" class="vocab-panel vocab-hidden">
+    <div class="vocab-status" id="vocab-match-status">Matches: 0 / 0</div>
+    <div class="match-grid">
+      <div class="match-col">
+        <h4>Terms</h4>
+        <div class="match-list" id="match-terms"></div>
+      </div>
+      <div class="match-col">
+        <h4>Definitions</h4>
+        <div class="match-list" id="match-defs"></div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-outline btn-sm" onclick="checkMatchSelection()">Check Match</button>
+      <button class="btn btn-ghost btn-sm" onclick="resetMatchingGame()">↺ New Round</button>
+    </div>
+  </div>
+
+  <div id="vocab-fib-panel" class="vocab-panel vocab-hidden">
+    <div class="vocab-status" id="fib-status">Score: 0 / 0</div>
+    <div id="fib-rows"></div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="gradeFillBlanks()">Grade Answers</button>
+      <button class="btn btn-ghost btn-sm" onclick="newFillBlankSet()">↺ New Set</button>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════ QUIZ ═══════════════ -->
 <section id="quiz" class="section">
   <div class="section-header">
@@ -2550,6 +2776,274 @@ function resetFlash() {
 
 // init flashcards
 updateFlash();
+
+// ─── VOCAB LAB ───
+const vocabExtra = [
+  { cat:'hardware', q:'What is POST?', a:'Power-On Self-Test. A startup diagnostic run by BIOS/UEFI to verify essential hardware before loading the operating system.' },
+  { cat:'hardware', q:'What is a NIC?', a:'Network Interface Card. Hardware that provides network connectivity through Ethernet or Wi-Fi and contains a MAC address.' },
+  { cat:'hardware', q:'What is thermal throttling?', a:'Automatic CPU/GPU speed reduction to prevent overheating when temperatures exceed safe thresholds.' },
+  { cat:'networking', q:'What is latency?', a:'The delay between sending and receiving data, usually measured in milliseconds. Lower latency means faster response.' },
+  { cat:'networking', q:'What is bandwidth?', a:'Maximum amount of data that can be transmitted over a connection per second, commonly measured in Mbps or Gbps.' },
+  { cat:'networking', q:'What is DNS?', a:'Domain Name System. It translates human-friendly domain names into IP addresses used by network devices.' },
+  { cat:'networking', q:'What is DHCP?', a:'Dynamic Host Configuration Protocol. It automatically assigns IP configuration (IP, subnet mask, gateway, DNS) to devices.' },
+  { cat:'security', q:'What is hashing?', a:'A one-way process that transforms data into a fixed-length digest, commonly used for secure password storage and integrity checks.' },
+  { cat:'security', q:'What is a zero-day vulnerability?', a:'A security flaw unknown to the vendor at the time of attack, meaning no official patch exists yet.' },
+  { cat:'security', q:'What is patch management?', a:'The process of testing and deploying software updates to fix security vulnerabilities and bugs.' },
+  { cat:'security', q:'What is defense in depth?', a:'Security strategy that layers multiple controls so one failure does not fully expose systems or data.' },
+  { cat:'programming', q:'What is debugging?', a:'The process of finding, isolating, and fixing errors (bugs) in software logic or code.' },
+  { cat:'programming', q:'What is an algorithm?', a:'A step-by-step procedure for solving a problem or performing a task in a finite number of steps.' },
+  { cat:'programming', q:'What is input validation?', a:'Checking user or system input to ensure it is correct, safe, and in the expected format before processing.' },
+  { cat:'programming', q:'What is a syntax error?', a:'A coding mistake that breaks language grammar rules and prevents the program from running.' },
+  { cat:'databases', q:'What is normalization?', a:'Database design method that reduces data redundancy and improves integrity by organizing tables and relationships efficiently.' },
+  { cat:'databases', q:'What is a record?', a:'A single row in a table representing one complete item, object, or entity.' },
+  { cat:'databases', q:'What is a field?', a:'A single column in a table representing one attribute or property of a record.' },
+  { cat:'os', q:'What is the kernel?', a:'Core part of an operating system that manages hardware resources, memory, processes, and system-level operations.' },
+  { cat:'os', q:'What is a file extension?', a:'Suffix at the end of a filename that indicates its format and often the default application used to open it.' },
+  { cat:'os', q:'What is multitasking?', a:'Operating system capability to run multiple processes seemingly at the same time by scheduling CPU time.' }
+];
+
+const vocabSource = [...allFlash, ...vocabExtra];
+const vocabFullPool = vocabSource.map((item, idx) => ({
+  id: idx,
+  cat: item.cat || 'general',
+  term: item.q,
+  definition: item.a
+}));
+
+let vocabMode = 'learn';
+let vocabCategory = 'all';
+let vocabPool = [...vocabFullPool];
+let vocabLearnDeck = [...vocabPool];
+let vocabLearnIndex = 0;
+
+let matchPairs = [];
+let selectedTermId = null;
+let selectedDefId = null;
+let matchedIds = new Set();
+
+let fibSet = [];
+
+function normalizeText(val) {
+  return (val || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function shuffleArr(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function setVocabCategory(cat, btnEl) {
+  vocabCategory = cat;
+  document.querySelectorAll('#vocablab .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  vocabPool = cat === 'all' ? [...vocabFullPool] : vocabFullPool.filter(v => v.cat === cat);
+  vocabLearnDeck = [...vocabPool];
+  vocabLearnIndex = 0;
+  if(vocabMode === 'learn') renderVocabLearn();
+  if(vocabMode === 'match') resetMatchingGame();
+  if(vocabMode === 'fib') newFillBlankSet();
+}
+
+function setVocabMode(mode) {
+  vocabMode = mode;
+  const learnBtn = document.getElementById('vocab-mode-learn');
+  const matchBtn = document.getElementById('vocab-mode-match');
+  const fibBtn = document.getElementById('vocab-mode-fib');
+  [learnBtn, matchBtn, fibBtn].forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
+  document.getElementById('vocab-learn-panel').classList.add('vocab-hidden');
+  document.getElementById('vocab-match-panel').classList.add('vocab-hidden');
+  document.getElementById('vocab-fib-panel').classList.add('vocab-hidden');
+
+  if(mode === 'learn') {
+    learnBtn.classList.remove('btn-ghost');
+    learnBtn.classList.add('btn-primary');
+    document.getElementById('vocab-learn-panel').classList.remove('vocab-hidden');
+    renderVocabLearn();
+  } else if(mode === 'match') {
+    matchBtn.classList.remove('btn-ghost');
+    matchBtn.classList.add('btn-primary');
+    document.getElementById('vocab-match-panel').classList.remove('vocab-hidden');
+    resetMatchingGame();
+  } else {
+    fibBtn.classList.remove('btn-ghost');
+    fibBtn.classList.add('btn-primary');
+    document.getElementById('vocab-fib-panel').classList.remove('vocab-hidden');
+    newFillBlankSet();
+  }
+}
+
+function renderVocabLearn() {
+  if(!vocabLearnDeck.length) {
+    document.getElementById('vocab-learn-term').textContent = 'No terms in this category yet.';
+    document.getElementById('vocab-learn-def').textContent = 'Choose another category or add more terms.';
+    document.getElementById('vocab-learn-status').textContent = 'Card 0 of 0';
+    return;
+  }
+  const card = vocabLearnDeck[vocabLearnIndex];
+  document.getElementById('vocab-learn-term').textContent = card.term;
+  document.getElementById('vocab-learn-def').textContent = card.definition;
+  document.getElementById('vocab-learn-def').classList.remove('show');
+  document.getElementById('vocab-learn-status').textContent = `Card ${vocabLearnIndex + 1} of ${vocabLearnDeck.length}`;
+}
+
+function toggleVocabDefinition() {
+  document.getElementById('vocab-learn-def').classList.toggle('show');
+}
+
+function nextVocabLearn() {
+  if(!vocabLearnDeck.length) return;
+  vocabLearnIndex = (vocabLearnIndex + 1) % vocabLearnDeck.length;
+  renderVocabLearn();
+}
+
+function prevVocabLearn() {
+  if(!vocabLearnDeck.length) return;
+  vocabLearnIndex = (vocabLearnIndex - 1 + vocabLearnDeck.length) % vocabLearnDeck.length;
+  renderVocabLearn();
+}
+
+function shuffleVocabLearn() {
+  if(!vocabLearnDeck.length) return;
+  vocabLearnDeck = shuffleArr(vocabLearnDeck);
+  vocabLearnIndex = 0;
+  renderVocabLearn();
+}
+
+function resetMatchingGame() {
+  if(!vocabPool.length) {
+    matchPairs = [];
+    renderMatchingLists();
+    return;
+  }
+  matchPairs = shuffleArr(vocabPool).slice(0, 6);
+  matchedIds = new Set();
+  selectedTermId = null;
+  selectedDefId = null;
+  renderMatchingLists();
+}
+
+function renderMatchingLists() {
+  const termWrap = document.getElementById('match-terms');
+  const defWrap = document.getElementById('match-defs');
+  termWrap.innerHTML = '';
+  defWrap.innerHTML = '';
+
+  matchPairs.forEach(pair => {
+    const termBtn = document.createElement('button');
+    termBtn.className = 'match-item';
+    termBtn.type = 'button';
+    termBtn.textContent = pair.term;
+    termBtn.dataset.id = String(pair.id);
+    if(matchedIds.has(pair.id)) termBtn.classList.add('correct');
+    termBtn.onclick = () => selectMatchTerm(pair.id);
+    termWrap.appendChild(termBtn);
+  });
+
+  shuffleArr(matchPairs).forEach(pair => {
+    const defBtn = document.createElement('button');
+    defBtn.className = 'match-item';
+    defBtn.type = 'button';
+    defBtn.textContent = pair.definition;
+    defBtn.dataset.id = String(pair.id);
+    if(matchedIds.has(pair.id)) defBtn.classList.add('correct');
+    defBtn.onclick = () => selectMatchDef(pair.id);
+    defWrap.appendChild(defBtn);
+  });
+
+  if(selectedTermId !== null) {
+    const selectedTerm = termWrap.querySelector(`.match-item[data-id="${selectedTermId}"]`);
+    if(selectedTerm && !matchedIds.has(selectedTermId)) selectedTerm.classList.add('selected');
+  }
+  if(selectedDefId !== null) {
+    const selectedDef = defWrap.querySelector(`.match-item[data-id="${selectedDefId}"]`);
+    if(selectedDef && !matchedIds.has(selectedDefId)) selectedDef.classList.add('selected');
+  }
+
+  document.getElementById('vocab-match-status').textContent = `Matches: ${matchedIds.size} / ${matchPairs.length}`;
+}
+
+function selectMatchTerm(id) {
+  if(matchedIds.has(id)) return;
+  selectedTermId = id;
+  renderMatchingLists();
+}
+
+function selectMatchDef(id) {
+  if(matchedIds.has(id)) return;
+  selectedDefId = id;
+  renderMatchingLists();
+}
+
+function markMatchState(id, className) {
+  document.querySelectorAll(`#match-terms .match-item[data-id="${id}"], #match-defs .match-item[data-id="${id}"]`)
+    .forEach(el => el.classList.add(className));
+}
+
+function checkMatchSelection() {
+  if(selectedTermId === null || selectedDefId === null) return;
+  if(selectedTermId === selectedDefId) {
+    matchedIds.add(selectedTermId);
+    selectedTermId = null;
+    selectedDefId = null;
+    renderMatchingLists();
+  } else {
+    markMatchState(selectedTermId, 'wrong');
+    markMatchState(selectedDefId, 'wrong');
+    setTimeout(() => {
+      selectedTermId = null;
+      selectedDefId = null;
+      renderMatchingLists();
+    }, 420);
+  }
+}
+
+function createFibSentence(pair) {
+  const cleanTerm = pair.term.replace(/\?$/, '');
+  return {
+    answer: cleanTerm,
+    prompt: `Complete: ${pair.definition.split('. ')[0]}. This term is ________.`
+  };
+}
+
+function newFillBlankSet() {
+  if(!vocabPool.length) {
+    fibSet = [];
+    document.getElementById('fib-rows').innerHTML = '';
+    document.getElementById('fib-status').textContent = 'Score: 0 / 0';
+    return;
+  }
+  fibSet = shuffleArr(vocabPool).slice(0, 5).map(createFibSentence);
+  const host = document.getElementById('fib-rows');
+  host.innerHTML = fibSet.map((item, idx) => `
+    <div class="fib-row">
+      <p>${item.prompt}</p>
+      <input class="fib-input" id="fib-input-${idx}" type="text" placeholder="Type the term here" />
+      <div class="fib-feedback" id="fib-feedback-${idx}">—</div>
+    </div>
+  `).join('');
+  document.getElementById('fib-status').textContent = `Score: 0 / ${fibSet.length}`;
+}
+
+function gradeFillBlanks() {
+  if(!fibSet.length) return;
+  let correct = 0;
+  fibSet.forEach((item, idx) => {
+    const input = document.getElementById(`fib-input-${idx}`);
+    const feedback = document.getElementById(`fib-feedback-${idx}`);
+    const ok = normalizeText(input.value) === normalizeText(item.answer);
+    if(ok) {
+      correct++;
+      feedback.textContent = '✅ Correct';
+      feedback.style.color = 'var(--accent4)';
+    } else {
+      feedback.textContent = `❌ Correct answer: ${item.answer}`;
+      feedback.style.color = 'var(--accent5)';
+    }
+  });
+  document.getElementById('fib-status').textContent = `Score: ${correct} / ${fibSet.length}`;
+}
+
+setVocabMode('learn');
+setVocabCategory('all', document.querySelector('#vocablab .filter-btn.active'));
 
 // ─── QUIZ DATA ───
 const quizData = [
