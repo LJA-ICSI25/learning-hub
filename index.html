@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/learn-hub-tokens.css?v=lhTokensBlueMatch20260430" />
-  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhTrackPickerOverlay20260430" />
+  <link rel="stylesheet" href="assets/learn-hub-layout.css?v=lhAuthTwoCol20260505" />
   <link rel="stylesheet" href="assets/learn-hub-teach.css?v=lhTechFlashcardsUi20260501b" />
 </head>
 <body class="lh-sidebar-hidden">
@@ -31,41 +31,47 @@
     aria-hidden="true"
   >
     <div class="lh-auth-card">
-      <div class="lh-auth-brand" aria-hidden="true">
-        <span class="lh-auth-brand-mark">LH</span>
-        <div class="lh-auth-brand-copy">
-          <span class="lh-auth-brand-name">Learn Hub</span>
-          <span class="lh-auth-brand-tag">Local profile</span>
+      <div class="lh-auth-shell">
+        <div class="lh-auth-col lh-auth-col--info">
+          <div class="lh-auth-brand" aria-hidden="true">
+            <span class="lh-auth-brand-mark">LH</span>
+            <div class="lh-auth-brand-copy">
+              <span class="lh-auth-brand-name">Learn Hub</span>
+              <span class="lh-auth-brand-tag">Local profile</span>
+            </div>
+          </div>
+          <h2 id="lh-auth-title" class="lh-auth-title">Sign in</h2>
+          <p class="lh-auth-lead">
+            Create an account or sign in. Progress is saved locally for each username.<br>For best experience, view on a desktop computer.<br><br>For Tech+ Study, use the login:<br>Username/Password = Study<br><br>For Tech+ Practice Exams, use the login:<br>Username/Password = TechPlusExam
+          </p>
         </div>
-      </div>
-      <h2 id="lh-auth-title" class="lh-auth-title">Sign in</h2>
-      <p class="lh-auth-lead">
-        Create an account or sign in. Progress is saved locally for each username.<br>For best experience, view on a desktop computer.<br><br>For Tech+ Study, use the login: <br>Username/Password = Study<br><br>For Tech+ Practice Exams, use the login: <br>Username/Password = TechPlusExam
-      </p>
-      <p id="lh-auth-msg" class="lh-auth-msg" role="status" aria-live="polite"></p>
-      <div class="lh-auth-tabs" role="tablist" aria-label="Account">
-        <button type="button" class="lh-auth-tab active" role="tab" id="lh-auth-tab-in" aria-selected="true" aria-controls="lh-auth-panel-in">Sign in</button>
-        <button type="button" class="lh-auth-tab" role="tab" id="lh-auth-tab-up" aria-selected="false" aria-controls="lh-auth-panel-up">Create account</button>
-      </div>
-      <div id="lh-auth-panel-in" class="lh-auth-panel" role="tabpanel" aria-labelledby="lh-auth-tab-in">
-        <form id="lh-auth-form-in" class="lh-auth-form" autocomplete="username">
-          <label class="lh-auth-label" for="lh-auth-in-user">Username</label>
-          <input class="lh-auth-input" id="lh-auth-in-user" name="username" type="text" autocomplete="username" required minlength="2" maxlength="24" pattern="[a-zA-Z0-9_-]+" title="Letters, numbers, underscore, hyphen (2–24 characters)" />
-          <label class="lh-auth-label" for="lh-auth-in-pass">Password</label>
-          <input class="lh-auth-input" id="lh-auth-in-pass" name="password" type="password" autocomplete="current-password" required minlength="4" />
-          <button type="submit" class="tool primary lh-auth-submit">Sign in</button>
-        </form>
-      </div>
-      <div id="lh-auth-panel-up" class="lh-auth-panel lh-auth-panel-hidden" role="tabpanel" aria-labelledby="lh-auth-tab-up">
-        <form id="lh-auth-form-up" class="lh-auth-form" autocomplete="off">
-          <label class="lh-auth-label" for="lh-auth-up-user">Username</label>
-          <input class="lh-auth-input" id="lh-auth-up-user" type="text" autocomplete="off" required minlength="2" maxlength="24" pattern="[a-zA-Z0-9_-]+" title="Letters, numbers, underscore, hyphen (2–24 characters)" />
-          <label class="lh-auth-label" for="lh-auth-up-pass">Password</label>
-          <input class="lh-auth-input" id="lh-auth-up-pass" type="password" autocomplete="new-password" required minlength="4" />
-          <label class="lh-auth-label" for="lh-auth-up-pass2">Confirm password</label>
-          <input class="lh-auth-input" id="lh-auth-up-pass2" type="password" autocomplete="new-password" required minlength="4" />
-          <button type="submit" class="tool primary lh-auth-submit">Create account</button>
-        </form>
+        <div class="lh-auth-col lh-auth-col--form">
+          <p id="lh-auth-msg" class="lh-auth-msg" role="status" aria-live="polite"></p>
+          <div class="lh-auth-tabs" role="tablist" aria-label="Account">
+            <button type="button" class="lh-auth-tab active" role="tab" id="lh-auth-tab-in" aria-selected="true" aria-controls="lh-auth-panel-in">Sign in</button>
+            <button type="button" class="lh-auth-tab" role="tab" id="lh-auth-tab-up" aria-selected="false" aria-controls="lh-auth-panel-up">Create account</button>
+          </div>
+          <div id="lh-auth-panel-in" class="lh-auth-panel" role="tabpanel" aria-labelledby="lh-auth-tab-in">
+            <form id="lh-auth-form-in" class="lh-auth-form" autocomplete="username">
+              <label class="lh-auth-label" for="lh-auth-in-user">Username</label>
+              <input class="lh-auth-input" id="lh-auth-in-user" name="username" type="text" autocomplete="username" required minlength="2" maxlength="24" pattern="[a-zA-Z0-9_-]+" title="Letters, numbers, underscore, hyphen (2–24 characters)" />
+              <label class="lh-auth-label" for="lh-auth-in-pass">Password</label>
+              <input class="lh-auth-input" id="lh-auth-in-pass" name="password" type="password" autocomplete="current-password" required minlength="4" />
+              <button type="submit" class="tool primary lh-auth-submit">Sign in</button>
+            </form>
+          </div>
+          <div id="lh-auth-panel-up" class="lh-auth-panel lh-auth-panel-hidden" role="tabpanel" aria-labelledby="lh-auth-tab-up">
+            <form id="lh-auth-form-up" class="lh-auth-form" autocomplete="off">
+              <label class="lh-auth-label" for="lh-auth-up-user">Username</label>
+              <input class="lh-auth-input" id="lh-auth-up-user" type="text" autocomplete="off" required minlength="2" maxlength="24" pattern="[a-zA-Z0-9_-]+" title="Letters, numbers, underscore, hyphen (2–24 characters)" />
+              <label class="lh-auth-label" for="lh-auth-up-pass">Password</label>
+              <input class="lh-auth-input" id="lh-auth-up-pass" type="password" autocomplete="new-password" required minlength="4" />
+              <label class="lh-auth-label" for="lh-auth-up-pass2">Confirm password</label>
+              <input class="lh-auth-input" id="lh-auth-up-pass2" type="password" autocomplete="new-password" required minlength="4" />
+              <button type="submit" class="tool primary lh-auth-submit">Create account</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -304,16 +310,17 @@
         if (ph)
           ph.insertAdjacentHTML(
             "beforeend",
-            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-voucher02-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-network-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
+            '<p class="msg err"><strong>Could not load a script file.</strong> Keep the <code>assets/</code> folder with <code>learn-hub-courses.js</code>, <code>learn-hub-gimkit-questions.js</code>, <code>learn-hub-voucher01-plan.js</code>, <code>learn-hub-voucher02-plan.js</code>, <code>learn-hub-voucher03-plan.js</code>, <code>learn-hub-tech-weighted-cram.js</code>, <code>learn-hub-depth.js</code>, <code>learn-hub-deep.js</code>, <code>learn-hub-playground.js</code>, <code>learn-hub-techplus.js</code>, <code>learn-hub-techplus-md.js</code>, <code>learn-hub-pentest-md.js</code>, <code>learn-hub-network-md.js</code>, <code>learn-hub-techplus-study-patch.js</code>, <code>learn-hub-security-md.js</code>, <code>learn-hub-kali-md.js</code>, <code>learn-hub-app.js</code>, and <code>learn-hub-tokens.css</code>, <code>learn-hub-layout.css</code>, and <code>learn-hub-teach.css</code> next to this <code>index.html</code>.</p>'
           );
       },
       true
     );
   </script>
   <script src="assets/learn-hub-courses.js?v=lhSecQuizSpliceFix20260412"></script>
-  <script src="assets/learn-hub-gimkit-questions.js?v=lhVoucher02Gimkit20260430"></script>
+  <script src="assets/learn-hub-gimkit-questions.js?v=lhVoucher03Gimkit20260505"></script>
   <script src="assets/learn-hub-voucher01-plan.js?v=lhExamBucketWeights20260423"></script>
   <script src="assets/learn-hub-voucher02-plan.js?v=lhVoucher02Plan20260430"></script>
+  <script src="assets/learn-hub-voucher03-plan.js?v=lhVoucher03Plan20260505"></script>
   <script src="assets/learn-hub-depth.js"></script>
   <script src="assets/learn-hub-techplus.js"></script>
   <script src="assets/learn-hub-techplus-md.js?v=7c70fd6aa52a"></script>
@@ -327,7 +334,7 @@
   <script src="assets/learn-hub-techplus-org.js?v=lhTechplusOrgToggle20260415"></script>
   <script src="assets/learn-hub-tech-weighted-cram.js?v=lhExamScaleFootnote20260423"></script>
   <script src="assets/learn-hub-techplus-flashcards-data.js?v=lhTechFlashcards20260501"></script>
-  <script src="assets/learn-hub-app.js?v=lhTechFlashcardsDeck20260501b"></script>
+  <script src="assets/learn-hub-app.js?v=lhVoucher03Study20260505"></script>
   <script src="assets/learn-hub-techplus-flashcards-boot.js?v=lhTechFlashcardsBoot20260501"></script>
 
 

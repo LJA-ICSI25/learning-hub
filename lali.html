@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompTIA Tech+ Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #030508;
+  --bg2: #07111b;
+  --bg3: #0d1a29;
+  --card: #111d2c;
+  --card2: #162538;
+  --border: #253a52;
+  --accent: #3bbcff;
+  --accent2: #7c3aed;
+  --accent3: #f59e0b;
+  --accent4: #10b981;
+  --accent5: #ef4444;
+  --text: #e7eef8;
+  --text2: #9eb0c5;
+  --text3: #6f849c;
+  --glow: rgba(59,188,255,0.16);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE OVERLAY ─── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ─── HEADER ─── */
+header {
+  position: relative;
+  padding: 60px 40px 40px;
+  background: linear-gradient(140deg, #030508 0%, #07111b 48%, #0c1928 100%);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  z-index: 1;
+}
+
+header::before {
+  content:'';
+  position:absolute;
+  top:-100px; left:-100px;
+  width:500px; height:500px;
+  background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+header::after {
+  content:'';
+  position:absolute;
+  bottom:-150px; right:-50px;
+  width:600px; height:400px;
+  background: radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+.header-badge {
+  display: inline-block;
+  background: rgba(59,188,255,0.1);
+  border: 1px solid rgba(59,188,255,0.3);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+
+header h1 span.c { color: var(--accent); }
+header h1 span.plus { color: var(--accent3); }
+
+header p.subtitle {
+  color: var(--text2);
+  font-size: 1.1rem;
+  font-weight: 400;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+.header-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* ─── LAYOUT ─── */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 200px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── SIDEBAR ─── */
+nav#sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+nav#sidebar::-webkit-scrollbar { width: 4px; }
+nav#sidebar::-webkit-scrollbar-track { background: transparent; }
+nav#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.nav-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 16px 20px 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  color: var(--text2);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.nav-item:hover {
+  background: rgba(0,212,255,0.05);
+  color: var(--text);
+  border-left-color: rgba(0,212,255,0.3);
+}
+
+.nav-item.active {
+  background: rgba(0,212,255,0.08);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.nav-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-item .progress-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.nav-item.done .progress-dot { background: var(--accent4); }
+
+/* ─── MAIN CONTENT ─── */
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* ─── SECTIONS ─── */
+.section {
+  display: none;
+  padding: 40px;
+  max-width: 1000px;
+  animation: fadeUp 0.3s ease;
+}
+
+.section.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── SECTION HEADER ─── */
+.section-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.section-header p {
+  color: var(--text2);
+  margin-top: 10px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+/* ─── CONTENT CARDS ─── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 20px rgba(1, 6, 14, 0.35);
+}
+
+.card:hover { border-color: rgba(59,188,255,0.35); transform: translateY(-1px); box-shadow: 0 12px 26px rgba(1, 8, 18, 0.45); }
+
+.card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0;
+  width:3px; height:100%;
+  background: var(--accent);
+}
+
+.card.purple::before { background: var(--accent2); }
+.card.amber::before { background: var(--accent3); }
+.card.green::before { background: var(--accent4); }
+.card.red::before { background: var(--accent5); }
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card h3 .icon { font-size: 1.3rem; }
+
+.card p, .card li {
+  color: var(--text2);
+  line-height: 1.7;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.card ul { padding-left: 20px; }
+.card li { margin-bottom: 6px; }
+
+.card strong { color: var(--text); font-weight: 700; }
+.card em { color: var(--accent3); font-style: normal; font-weight: 700; }
+
+/* ─── TWO COL ─── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ─── CONCEPT BOX ─── */
+.concept {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.concept h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.concept p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; font-weight: 400; }
+
+/* ─── CODE BLOCK ─── */
+.code-block {
+  background: #060d18;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  color: #a8d8ff;
+  line-height: 1.7;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.code-block .kw { color: #c792ea; }
+.code-block .fn { color: #82aaff; }
+.code-block .str { color: #c3e88d; }
+.code-block .num { color: #f78c6c; }
+.code-block .cm { color: #546e7a; }
+
+/* ─── TABLE ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.85rem;
+}
+
+.data-table th {
+  background: var(--bg);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+
+.data-table td {
+  padding: 10px 14px;
+  color: var(--text2);
+  border-bottom: 1px solid rgba(42,58,88,0.5);
+  font-weight: 400;
+}
+
+.data-table tr:hover td { background: rgba(0,212,255,0.03); }
+
+.data-table td strong { color: var(--text); }
+
+/* ─── CALLOUT ─── */
+.callout {
+  display: flex;
+  gap: 14px;
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 10px;
+  padding: 18px;
+  margin: 20px 0;
+}
+
+.callout.warn {
+  background: rgba(245,158,11,0.06);
+  border-color: rgba(245,158,11,0.25);
+}
+
+.callout.tip {
+  background: rgba(16,185,129,0.06);
+  border-color: rgba(16,185,129,0.25);
+}
+
+.callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+
+.callout-body h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--accent);
+}
+
+.callout.warn .callout-body h4 { color: var(--accent3); }
+.callout.tip .callout-body h4 { color: var(--accent4); }
+
+.callout-body p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; font-weight: 400; }
+
+/* ─── BADGE ─── */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 2px;
+}
+
+.badge.blue { background: rgba(0,212,255,0.15); color: var(--accent); }
+.badge.purple { background: rgba(124,58,237,0.15); color: #a78bfa; }
+.badge.amber { background: rgba(245,158,11,0.15); color: var(--accent3); }
+.badge.green { background: rgba(16,185,129,0.15); color: var(--accent4); }
+.badge.red { background: rgba(239,68,68,0.15); color: #f87171; }
+
+/* ─── QUIZ ─── */
+#quiz-section .section-header { margin-bottom: 24px; }
+
+.quiz-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #52c8ff 0%, var(--accent) 100%);
+  color: #04111e;
+  box-shadow: 0 8px 18px rgba(35, 149, 220, 0.28);
+}
+.btn-primary:hover { background: linear-gradient(180deg, #66d0ff 0%, #45c2ff 100%); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(59,188,255,0.45);
+}
+.btn-outline:hover { background: rgba(59,188,255,0.08); }
+
+.btn-ghost {
+  background: var(--card);
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { color: var(--text); border-color: rgba(0,212,255,0.2); }
+
+.btn-sm { padding: 6px 14px; font-size: 0.78rem; }
+
+.quiz-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: rgba(59,188,255,0.1);
+  border-color: rgba(59,188,255,0.4);
+  color: var(--accent);
+}
+
+.quiz-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s;
+}
+
+.quiz-card.correct { border-color: var(--accent4); background: rgba(16,185,129,0.04); }
+.quiz-card.wrong { border-color: var(--accent5); background: rgba(239,68,68,0.04); }
+
+.quiz-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topic-tag {
+  background: rgba(124,58,237,0.15);
+  color: #a78bfa;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.quiz-question {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.88rem;
+  color: var(--text2);
+  font-weight: 400;
+}
+
+.option:hover:not(.disabled) {
+  border-color: rgba(59,188,255,0.35);
+  background: rgba(59,188,255,0.06);
+  color: var(--text);
+}
+
+.option.selected { border-color: var(--accent); background: rgba(0,212,255,0.08); color: var(--text); }
+.option.correct-ans { border-color: var(--accent4); background: rgba(16,185,129,0.1); color: var(--text); }
+.option.wrong-ans { border-color: var(--accent5); background: rgba(239,68,68,0.1); color: var(--text); }
+.option.disabled { cursor: default; }
+
+.option-letter {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: var(--text3);
+  transition: all 0.2s;
+}
+
+.option.selected .option-letter { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.option.correct-ans .option-letter { background: var(--accent4); border-color: var(--accent4); color: #fff; }
+.option.wrong-ans .option-letter { background: var(--accent5); border-color: var(--accent5); color: #fff; }
+
+.explanation {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(59,188,255,0.06);
+  border: 1px solid rgba(59,188,255,0.2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.explanation.show { display: block; }
+.explanation strong { color: var(--accent); }
+
+.quiz-score {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.score-circle {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) calc(var(--pct) * 3.6deg), var(--bg) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.score-inner {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ─── FLASHCARDS ─── */
+.flashcard-container { perspective: 1000px; margin-bottom: 24px; }
+
+.flashcard {
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flashcard.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 200px;
+}
+
+.card-face.back { transform: rotateY(180deg); background: var(--card2); }
+
+.card-face.front { border-top: 3px solid var(--accent); }
+.card-face.back { border-top: 3px solid var(--accent4); }
+
+.card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+
+.card-content {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.card-face.back .card-content { font-size: 0.95rem; color: var(--text2); font-weight: 400; }
+
+.flashcard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.flash-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text3);
+  min-width: 80px;
+  text-align: center;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar-wrap {
+  background: var(--bg);
+  border-radius: 4px;
+  height: 6px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* ─── ACCORDION ─── */
+.accordion { margin-bottom: 12px; }
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.accordion-header:hover { border-color: rgba(0,212,255,0.2); }
+.accordion-header.open { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-color: rgba(0,212,255,0.3); color: var(--accent); }
+
+.accordion-arrow { transition: transform 0.2s; color: var(--text3); font-size: 0.75rem; }
+.accordion-header.open .accordion-arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  background: var(--card2);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-top: none;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 20px;
+  font-size: 0.88rem;
+  color: var(--text2);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.accordion-body.open { display: block; }
+
+/* ─── BINARY CONVERTER ─── */
+.converter {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.converter h3 { margin-bottom: 16px; font-size: 1rem; }
+
+.input-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.input-row label {
+  font-size: 0.8rem;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.converter input, .converter select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 120px;
+  transition: border-color 0.2s;
+}
+
+.converter input:focus, .converter select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.converter-result {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  color: var(--accent4);
+  padding: 10px;
+  background: var(--bg);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  min-width: 120px;
+  flex: 1;
+}
+
+/* ─── DIAGRAM ─── */
+.diagram {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.osi-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.osi-layer {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.osi-layer:hover { transform: scaleX(1.01); }
+
+.osi-num {
+  width: 44px;
+  padding: 10px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.osi-name {
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.osi-detail {
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  flex: 1;
+}
+
+.osi-example {
+  padding: 10px 16px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  text-align: right;
+}
+
+/* ─── OSI COLORS ─── */
+.osi-7 { background: linear-gradient(90deg, #1a2d4a, #0f1e35); }
+.osi-7 .osi-num { background: #2563eb; color:#fff; }
+.osi-6 { background: linear-gradient(90deg, #1e2b47, #131e30); }
+.osi-6 .osi-num { background: #7c3aed; color:#fff; }
+.osi-5 { background: linear-gradient(90deg, #1c2d42, #111d2e); }
+.osi-5 .osi-num { background: #0891b2; color:#fff; }
+.osi-4 { background: linear-gradient(90deg, #1a3040, #0f202e); }
+.osi-4 .osi-num { background: #0d9488; color:#fff; }
+.osi-3 { background: linear-gradient(90deg, #1a3028, #0f2018); }
+.osi-3 .osi-num { background: #059669; color:#fff; }
+.osi-2 { background: linear-gradient(90deg, #2a2a1e, #1c1c10); }
+.osi-2 .osi-num { background: #b45309; color:#fff; }
+.osi-1 { background: linear-gradient(90deg, #2d1e1e, #1e1010); }
+.osi-1 .osi-num { background: #dc2626; color:#fff; }
+
+/* ─── TROUBLESHOOT STEPS ─── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.steps::before {
+  content:'';
+  position:absolute;
+  left: 20px; top: 28px;
+  width: 2px;
+  height: calc(100% - 56px);
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+}
+
+.step {
+  display: flex;
+  gap: 20px;
+  padding: 16px 0;
+  position: relative;
+}
+
+.step-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.step:nth-child(even) .step-num { background: var(--accent2); }
+
+.step-body { padding-top: 8px; }
+.step-body h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.step-body p { font-size: 0.85rem; color: var(--text2); line-height: 1.5; font-weight: 400; }
+
+/* ─── COMPARISON TABLE ─── */
+.compare-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ─── SEARCH BAR ─── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 28px;
+  transition: border-color 0.2s;
+}
+
+.search-bar:focus-within { border-color: rgba(0,212,255,0.4); }
+
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.search-bar input::placeholder { color: var(--text3); }
+
+.search-icon { color: var(--text3); font-size: 1rem; }
+
+/* ─── SCROLLBAR ─── */
+main::-webkit-scrollbar { width: 6px; }
+main::-webkit-scrollbar-track { background: transparent; }
+main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav#sidebar { display: none; }
+  .two-col { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+  header { padding: 40px 20px; }
+  .section { padding: 24px 20px; }
+}
+
+/* ─── HOME ─── */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.home-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-card::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:3px;
+  background: var(--accent);
+}
+
+.home-card.purple::after { background: var(--accent2); }
+.home-card.amber::after { background: var(--accent3); }
+.home-card.green::after { background: var(--accent4); }
+.home-card.red::after { background: var(--accent5); }
+.home-card.teal::after { background: #0891b2; }
+.home-card.pink::after { background: #ec4899; }
+
+.home-card:hover {
+  border-color: rgba(59,188,255,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.home-card-icon { font-size: 2rem; margin-bottom: 12px; }
+.home-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+.home-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; font-weight: 400; }
+
+.section-divider {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-divider::after {
+  content:'';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+h3.sub { font-size: 1.1rem; font-weight: 700; margin: 24px 0 12px; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">CompTIA Certification Prep</div>
+  <h1><span class="c">Tech</span><span class="plus">+</span> Study Guide</h1>
+  <p class="subtitle">Yes I made this just for you.<br> I hope it helps and just remember I love you.</p>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="nav-section-label">Getting Started</div>
+  <div class="nav-item active" onclick="showSection('home')"><span class="nav-icon">🏠</span> Overview <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 1 — Hardware</div>
+  <div class="nav-item" onclick="showSection('hardware')"><span class="nav-icon">🖥️</span> Computer Hardware <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('numbersystems')"><span class="nav-icon">🔢</span> Number Systems <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('storage')"><span class="nav-icon">💾</span> Storage & Memory <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 2 — Networking</div>
+  <div class="nav-item" onclick="showSection('networking')"><span class="nav-icon">🌐</span> Networking Concepts <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('wireless')"><span class="nav-icon">📡</span> Wireless & Connectivity <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 3 — Software</div>
+  <div class="nav-item" onclick="showSection('os')"><span class="nav-icon">⚙️</span> Operating Systems <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('software')"><span class="nav-icon">📦</span> Software & Apps <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('cloud')"><span class="nav-icon">☁️</span> Cloud & Virtualization <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 4 — Security</div>
+  <div class="nav-item" onclick="showSection('security')"><span class="nav-icon">🔒</span> Cybersecurity <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 5 — Data</div>
+  <div class="nav-item" onclick="showSection('databases')"><span class="nav-icon">🗄️</span> Databases <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Domain 6 — Programming</div>
+  <div class="nav-item" onclick="showSection('programming')"><span class="nav-icon">💻</span> Programming Concepts <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('ai')"><span class="nav-icon">🤖</span> AI & Emerging Tech <span class="progress-dot"></span></div>
+
+  <div class="nav-section-label">Practice Tools</div>
+  <div class="nav-item" onclick="showSection('troubleshoot')"><span class="nav-icon">🔧</span> Troubleshooting <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('flashcards')"><span class="nav-icon">🃏</span> Flashcards <span class="progress-dot"></span></div>
+  <div class="nav-item" onclick="showSection('quiz')"><span class="nav-icon">✏️</span> Practice Quiz <span class="progress-dot"></span></div>
+</nav>
+
+<!-- MAIN -->
+<main id="main-content">
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<section id="home" class="section active">
+  <div class="section-header">
+    <div class="section-tag">// START HERE</div>
+    <h2>Welcome to Your Tech+ Study Guide</h2>
+    <p>This guide teaches you — not just tests you. Work through each domain in order, or jump to areas where you need help. Use the Practice Quiz when you're ready to test yourself.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <h4>How to Use This Guide</h4>
+      <p>Read through each domain section to learn the material, then use Flashcards to memorize key terms, and finally take the Practice Quiz to test your knowledge. The quiz pulls from all 225 real practice questions across your 3 exam sets.</p>
+    </div>
+  </div>
+
+  <div class="section-divider">All Domains</div>
+
+  <div class="home-grid">
+    <div class="home-card" onclick="showSection('hardware')">
+      <div class="home-card-icon">🖥️</div>
+      <h3>Computer Hardware</h3>
+      <p>CPU, RAM, motherboard, GPU, PSU, storage types, connectors, and peripherals.</p>
+    </div>
+    <div class="home-card purple" onclick="showSection('numbersystems')">
+      <div class="home-card-icon">🔢</div>
+      <h3>Number Systems</h3>
+      <p>Binary, decimal, hexadecimal, data units from bits to petabytes.</p>
+    </div>
+    <div class="home-card amber" onclick="showSection('storage')">
+      <div class="home-card-icon">💾</div>
+      <h3>Storage & Memory</h3>
+      <p>HDD, SSD, NVMe, optical, volatile vs non-volatile, BIOS/UEFI.</p>
+    </div>
+    <div class="home-card green" onclick="showSection('networking')">
+      <div class="home-card-icon">🌐</div>
+      <h3>Networking</h3>
+      <p>OSI model, IP addressing, MAC addresses, routers, switches, cables.</p>
+    </div>
+    <div class="home-card teal" onclick="showSection('wireless')">
+      <div class="home-card-icon">📡</div>
+      <h3>Wireless & Connectivity</h3>
+      <p>Wi-Fi standards, Bluetooth, NFC, cellular, satellite, ISP types.</p>
+    </div>
+    <div class="home-card red" onclick="showSection('os')">
+      <div class="home-card-icon">⚙️</div>
+      <h3>Operating Systems</h3>
+      <p>Windows, macOS, Linux, iOS, Android, processes, memory management.</p>
+    </div>
+    <div class="home-card pink" onclick="showSection('software')">
+      <div class="home-card-icon">📦</div>
+      <h3>Software & Applications</h3>
+      <p>Productivity apps, browsers, collaboration tools, drivers, utilities.</p>
+    </div>
+    <div class="home-card" onclick="showSection('cloud')">
+      <div class="home-card-icon">☁️</div>
+      <h3>Cloud & Virtualization</h3>
+      <p>IaaS, SaaS, PaaS, hypervisors, hybrid cloud, VMs.</p>
+    </div>
+    <div class="home-card purple" onclick="showSection('security')">
+      <div class="home-card-icon">🔒</div>
+      <h3>Cybersecurity</h3>
+      <p>CIA Triad, threats, malware, MFA, encryption, firewalls, social engineering.</p>
+    </div>
+    <div class="home-card amber" onclick="showSection('databases')">
+      <div class="home-card-icon">🗄️</div>
+      <h3>Databases</h3>
+      <p>Relational, flat-file, SQL, primary/foreign keys, schemas, queries.</p>
+    </div>
+    <div class="home-card green" onclick="showSection('programming')">
+      <div class="home-card-icon">💻</div>
+      <h3>Programming</h3>
+      <p>Data types, variables, loops, functions, pseudocode, language types.</p>
+    </div>
+    <div class="home-card teal" onclick="showSection('ai')">
+      <div class="home-card-icon">🤖</div>
+      <h3>AI & Emerging Tech</h3>
+      <p>Generative AI, predictive AI, IoT, AR, VR, chatbots.</p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <h4>Exam Tips</h4>
+      <p>The Tech+ exam (FC0-U71) has 75 questions with a 45-minute time limit. Passing score is 650/900. The exam tests both knowledge AND scenario-based application — knowing how to apply concepts is just as important as knowing definitions.</p>
+    </div>
+  </div>
+
+  <div class="section-divider">Quick Help</div>
+
+  <div class="two-col">
+    <div class="card green">
+      <h3><span class="icon">🧭</span>How to Study in 30-45 Minutes</h3>
+      <ul>
+        <li><strong>10 min:</strong> Review one domain section and highlight unfamiliar terms.</li>
+        <li><strong>10 min:</strong> Use Flashcards in that same domain until you can explain terms out loud.</li>
+        <li><strong>10 min:</strong> Take a focused quiz (10-20 questions) on that domain.</li>
+        <li><strong>5 min:</strong> Review missed questions and write 3 "why" notes.</li>
+      </ul>
+      <div class="callout tip" style="margin-top:12px;">
+        <div class="callout-icon">✅</div>
+        <div class="callout-body">
+          <h4>Best Practice</h4>
+          <p>Do short daily sessions instead of one long weekly session. Retention improves when practice is spread out.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <h3><span class="icon">🧪</span>Question Attack Method</h3>
+      <ol style="padding-left:20px;color:var(--text2);line-height:1.7;font-size:0.9rem;">
+        <li>Read the last sentence first (what is it asking?).</li>
+        <li>Identify keywords (best, first, most likely, secure, improve).</li>
+        <li>Eliminate two obviously wrong answers.</li>
+        <li>Compare remaining two and pick the most specific fit.</li>
+      </ol>
+      <div class="callout" style="margin-top:12px;">
+        <div class="callout-icon">🎯</div>
+        <div class="callout-body">
+          <h4>Scenario Questions</h4>
+          <p>CompTIA-style questions often include extra details. Focus on the problem signal, not the story noise.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🧠</span>High-Yield Memory Aids</h3>
+    <div class="three-col">
+      <div class="concept">
+        <h4>CIA Triad</h4>
+        <p><strong>Confidentiality</strong> = only authorized users can read data.<br><strong>Integrity</strong> = data is accurate and unaltered.<br><strong>Availability</strong> = systems/data are accessible when needed.</p>
+      </div>
+      <div class="concept">
+        <h4>Troubleshooting Steps</h4>
+        <p>1) Identify problem<br>2) Theory<br>3) Test theory<br>4) Plan + implement fix<br>5) Verify full functionality<br>6) Document everything</p>
+      </div>
+      <div class="concept">
+        <h4>OSI Reminder</h4>
+        <p>Please Do Not Throw Sausage Pizza Away<br>(Physical, Data Link, Network, Transport, Session, Presentation, Application)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📅</span>7-Day Final Review Plan</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Days 1-2</h4><p>Hardware, storage, number systems, and operating systems. Build fundamentals first.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Days 3-4</h4><p>Networking, wireless, and cloud/virtualization with emphasis on scenarios.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Day 5</h4><p>Security and databases. Focus on terms that are easy to mix up.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Day 6</h4><p>Programming and AI. Drill pseudocode logic and data-type questions.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Day 7</h4><p>Take a full 75-question quiz, review misses, then only revise weak areas.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HARDWARE ═══════════════ -->
+<section id="hardware" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 1.1</div>
+    <h2>Computer Hardware</h2>
+    <p>Every computer is built from the same core components. Understanding what each part does — and how they interact — is fundamental to the Tech+ exam.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⚡</span>The IPO Model — How Computers Work</h3>
+    <p>All computers follow the <strong>Input → Processing → Output</strong> model, with <strong>Storage</strong> as an additional function.</p>
+    <div class="three-col" style="margin-top:16px;">
+      <div class="concept"><h4>Input</h4><p>Data enters the computer. Examples: keyboard, mouse, microphone, barcode scanner, webcam, touchscreen.</p></div>
+      <div class="concept"><h4>Processing</h4><p>The CPU performs calculations. Speed is measured in <strong>GHz</strong> (gigahertz = billions of cycles/second).</p></div>
+      <div class="concept"><h4>Output</h4><p>Results are presented to the user. Examples: monitor, printer, speakers, projector.</p></div>
+    </div>
+    <div class="concept" style="margin-top:12px;"><h4>Storage</h4><p>Data is saved for future use. Can be volatile (RAM — lost when powered off) or non-volatile (HDD, SSD — persistent).</p></div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🧠</span>CPU — Central Processing Unit</h3>
+    <p>The CPU is the <strong>"brain"</strong> of the computer. It executes all instructions and performs calculations. Key specs:</p>
+    <ul style="margin-top:10px;">
+      <li><strong>Clock Speed (GHz)</strong> — How many instruction cycles per second. Higher = faster processing.</li>
+      <li><strong>Cores</strong> — Multiple cores allow parallel processing (dual-core, quad-core, etc.)</li>
+      <li><strong>Cache</strong> — Ultra-fast memory built into the CPU for frequently accessed data.</li>
+      <li><strong>Architecture</strong> — x86 (Intel/AMD desktop), ARM (mobile devices).</li>
+    </ul>
+    <div class="callout" style="margin-top:12px;">
+      <div class="callout-icon">📝</div>
+      <div class="callout-body"><h4>Exam Scenario</h4><p>A video editor's workstation is slow at rendering. To fix this, upgrade the <strong>CPU</strong> (measured in GHz). For graphics-heavy tasks, upgrade the <strong>GPU</strong>.</p></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card green">
+      <h3><span class="icon">🎮</span>GPU — Graphics Processing Unit</h3>
+      <p>Handles <strong>math-heavy parallel calculations</strong> for rendering graphics and video. Modern GPUs are also used for AI/ML workloads. Distinct from CPU which handles general sequential tasks.</p>
+    </div>
+    <div class="card purple">
+      <h3><span class="icon">🔌</span>PSU — Power Supply Unit</h3>
+      <p>Converts AC power from the wall into DC power for internal components. High-end GPUs require PSUs with <strong>adequate wattage</strong>. Failure can damage all components.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🗂️</span>Motherboard — The Central Hub</h3>
+    <p>The motherboard is the large <strong>printed circuit board (PCB)</strong> that everything plugs into. It provides the electrical connections and "bus" lines that allow all components to communicate.</p>
+    <table class="data-table" style="margin-top:14px;">
+      <thead><tr><th>Component</th><th>What It Connects To</th><th>Interface</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CPU</strong></td><td>CPU Socket on motherboard</td><td>LGA / PGA socket</td></tr>
+        <tr><td><strong>RAM</strong></td><td>DIMM slots</td><td>DDR4 / DDR5</td></tr>
+        <tr><td><strong>Storage</strong></td><td>SATA ports or M.2 slot</td><td>SATA / NVMe</td></tr>
+        <tr><td><strong>GPU</strong></td><td>PCIe x16 slot</td><td>PCI Express</td></tr>
+        <tr><td><strong>PSU</strong></td><td>24-pin ATX connector</td><td>ATX</td></tr>
+        <tr><td><strong>BIOS/UEFI</strong></td><td>ROM chip on board</td><td>Firmware (pre-boot)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Connectors & Ports</h3>
+  <div class="card">
+    <h3><span class="icon">🔗</span>Physical Connectors You Must Know</h3>
+    <table class="data-table">
+      <thead><tr><th>Connector</th><th>Used For</th><th>Key Detail</th></tr></thead>
+      <tbody>
+        <tr><td><strong>RJ-45</strong></td><td>Ethernet networking</td><td>8 copper wires, clips into NIC port. Used with crimper tool.</td></tr>
+        <tr><td><strong>RJ-11</strong></td><td>Phone lines / DSL modems</td><td>Smaller than RJ-45, only 4-6 wires</td></tr>
+        <tr><td><strong>HDMI</strong></td><td>Audio + Video output</td><td>Common for monitors, TVs, Blu-ray players</td></tr>
+        <tr><td><strong>DisplayPort</strong></td><td>High-res video</td><td>Supports higher refresh rates than HDMI</td></tr>
+        <tr><td><strong>USB-A</strong></td><td>Standard host port</td><td>Rectangular, on most computers</td></tr>
+        <tr><td><strong>USB-B</strong></td><td>Peripheral devices</td><td>Square shape, used on printers</td></tr>
+        <tr><td><strong>USB-C / Thunderbolt</strong></td><td>Universal / high-speed</td><td>Bidirectional, supports data + power + video</td></tr>
+        <tr><td><strong>Lightning</strong></td><td>Apple devices (legacy)</td><td>Apple proprietary, being replaced by USB-C</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔧</span>Tools Used by Technicians</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Crimper</h4><p>Attaches RJ-45 or RJ-11 connectors to cable ends. The <em>last tool</em> used when making custom cables.</p></div>
+      <div class="concept"><h4>Cable Tester</h4><p>Checks that all 8 wires in an Ethernet cable are connected correctly. Used after crimping.</p></div>
+      <div class="concept"><h4>Wire Stripper</h4><p>Removes insulation from cable before attaching a connector. Used first, before crimper.</p></div>
+      <div class="concept"><h4>Punch Down Tool</h4><p>Inserts wires into patch panels or keystone jacks in walls.</p></div>
+      <div class="concept"><h4>Multimeter</h4><p>Measures voltage, current, resistance. Tests electrical connections.</p></div>
+      <div class="concept"><h4>Spectrum Analyzer</h4><p>Identifies wireless interference and channel usage in RF spectrum.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">💡</span>Input vs Output — Know the Difference</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Input Devices</h4>
+        <p>Keyboard, mouse, microphone, touchscreen, barcode scanner, webcam, scanner, joystick, drawing tablet</p>
+      </div>
+      <div class="concept">
+        <h4>Output Devices</h4>
+        <p>Monitor, printer, speakers, projector, headphones, haptic feedback</p>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:12px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body"><h4>Trick Question Alert</h4><p>A <strong>barcode scanner</strong> is an input device — it sends data into the computer. A <strong>printer</strong> is an output device — it produces physical output from the computer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NUMBER SYSTEMS ═══════════════ -->
+<section id="numbersystems" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 1.2</div>
+    <h2>Number Systems & Data Units</h2>
+    <p>Computers use different number systems to represent data. Understanding how bits and bytes scale up is critical for hardware and networking questions.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔢</span>The Four Number Systems</h3>
+    <table class="data-table">
+      <thead><tr><th>System</th><th>Base</th><th>Digits Used</th><th>Example</th><th>Used For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Binary</strong></td><td>Base-2</td><td>0, 1</td><td>1010</td><td>CPU communication, direct hardware</td></tr>
+        <tr><td><strong>Decimal</strong></td><td>Base-10</td><td>0–9</td><td>42</td><td>Human everyday math</td></tr>
+        <tr><td><strong>Hexadecimal</strong></td><td>Base-16</td><td>0–9, A–F</td><td>A3F5</td><td>MAC addresses, color codes, memory</td></tr>
+        <tr><td><strong>Octal</strong></td><td>Base-8</td><td>0–7</td><td>755</td><td>Linux file permissions</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body"><h4>Quick Trick</h4><p>If you see letters A–F mixed with numbers, it's <strong>hexadecimal</strong>. If it's only 0s and 1s, it's <strong>binary</strong>. MAC addresses like <code>00:25:9C:4D:5A:6B</code> are always hexadecimal.</p></div>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">📊</span>Data Units — Smallest to Largest</h3>
+    <p>Memory and storage are measured in multiples. Memorize this sequence:</p>
+    <div style="margin-top:16px; display:flex; gap:4px; flex-wrap:wrap; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">
+      <span style="background:rgba(239,68,68,0.15);color:#f87171;padding:6px 10px;border-radius:6px;">1 Bit</span>
+      <span style="color:var(--text3)">→ ×8 →</span>
+      <span style="background:rgba(245,158,11,0.15);color:#fbbf24;padding:6px 10px;border-radius:6px;">1 Byte (8 bits)</span>
+      <span style="color:var(--text3)">→ ×1024 →</span>
+      <span style="background:rgba(16,185,129,0.15);color:#34d399;padding:6px 10px;border-radius:6px;">Kilobyte (KB)</span>
+      <span style="color:var(--text3)">→</span>
+      <span style="background:rgba(59,188,255,0.15);color:#7ad7ff;padding:6px 10px;border-radius:6px;">Megabyte (MB)</span>
+      <span style="color:var(--text3)">→</span>
+      <span style="background:rgba(124,58,237,0.15);color:#a78bfa;padding:6px 10px;border-radius:6px;">Gigabyte (GB)</span>
+      <span style="color:var(--text3)">→</span>
+      <span style="background:rgba(236,72,153,0.15);color:#f472b6;padding:6px 10px;border-radius:6px;">Terabyte (TB)</span>
+      <span style="color:var(--text3)">→</span>
+      <span style="background:rgba(99,102,241,0.15);color:#818cf8;padding:6px 10px;border-radius:6px;">Petabyte (PB)</span>
+    </div>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="concept"><h4>Storage Capacity</h4><p>Consumer hard drives are measured in <strong>terabytes (TB)</strong>. Enterprise data centers may use petabytes. Modern HDDs: 1–20 TB. SSDs: 256 GB – 4 TB.</p></div>
+      <div class="concept"><h4>Network Speed</h4><p>Data transfer speeds use <strong>bits</strong> (not bytes): Kbps → Mbps → <strong>Gbps</strong>. Enterprise networks use Gbps. Fiber optic often measured in Gbps.</p></div>
+    </div>
+  </div>
+
+  <div class="converter">
+    <h3>🔄 Interactive Number System Converter</h3>
+    <div class="input-row">
+      <label>Decimal</label>
+      <input type="number" id="dec-input" placeholder="Enter decimal..." oninput="convertNum('dec')" min="0">
+    </div>
+    <div class="input-row">
+      <label>Binary</label>
+      <input type="text" id="bin-input" placeholder="Enter binary..." oninput="convertNum('bin')">
+    </div>
+    <div class="input-row">
+      <label>Hex</label>
+      <input type="text" id="hex-input" placeholder="Enter hex..." oninput="convertNum('hex')">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STORAGE ═══════════════ -->
+<section id="storage" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 1.3</div>
+    <h2>Storage & Memory</h2>
+    <p>Understanding the difference between volatile and non-volatile storage, and the various storage technologies, is essential.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⚡</span>Volatile vs. Non-Volatile Storage</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Volatile (Temporary)</h4>
+        <p><strong>Data is LOST when power is removed.</strong><br><br>Examples: <em>RAM</em> (Random Access Memory). Used for currently running programs. Fast access, temporary. The OS uses RAM to track which applications are using system memory (memory management).</p>
+      </div>
+      <div class="concept">
+        <h4>Non-Volatile (Persistent)</h4>
+        <p><strong>Data is KEPT even without power.</strong><br><br>Examples: <em>HDD, SSD, Flash drives, ROM, optical discs</em>. Used for long-term data storage. Operating systems, files, and programs are stored here.</p>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:12px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body"><h4>Key Exam Fact</h4><p><strong>RAM is volatile.</strong> ROM is non-volatile. NVMe, SSD, HDD, and flash drives are all non-volatile. If a question asks "which storage type is volatile?" — the answer is always <strong>RAM</strong>.</p></div>
+    </div>
+  </div>
+
+  <h3 class="sub">Storage Types Compared</h3>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Type</th><th>How It Works</th><th>Speed</th><th>Durability</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>HDD</strong></td><td>Spinning metal platters + read/write head</td><td>Slow (~100 MB/s)</td><td>Fragile (moving parts)</td><td>High capacity, cheap. IDE or SATA controller.</td></tr>
+        <tr><td><strong>SSD</strong></td><td>Flash memory chips, no moving parts</td><td>Fast (~500 MB/s)</td><td>Very durable</td><td>More expensive per GB than HDD. SATA or NVMe.</td></tr>
+        <tr><td><strong>NVMe</strong></td><td>SSD using PCIe interface via M.2 slot</td><td>Very Fast (~3500 MB/s)</td><td>Very durable</td><td>Fastest consumer storage. Uses PCIe lanes.</td></tr>
+        <tr><td><strong>Optical</strong></td><td>Laser reads/writes data on disc surface</td><td>Slow</td><td>Moderate</td><td>CD, DVD, Blu-ray. Used for backups, media distribution.</td></tr>
+        <tr><td><strong>Flash Drive</strong></td><td>NAND flash memory in USB form factor</td><td>Moderate</td><td>Durable</td><td>Portable, plug-and-play.</td></tr>
+        <tr><td><strong>NAS</strong></td><td>Network Attached Storage</td><td>Network speed</td><td>High (RAID)</td><td>Shared storage over a local network.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">🔑</span>BIOS / UEFI — The First Software to Load</h3>
+    <p>When a computer powers on, the <strong>BIOS</strong> (Basic Input/Output System) or its modern replacement <strong>UEFI</strong> loads first — before the operating system. It is <em>firmware</em> (software embedded in a chip on the motherboard).</p>
+    <ul style="margin-top:10px;">
+      <li><strong>POST</strong> (Power-On Self-Test) — BIOS checks all hardware is functioning. Warning beeps = hardware failure.</li>
+      <li><strong>Boot order</strong> — BIOS/UEFI determines which device to boot from (HDD, SSD, USB, etc.)</li>
+      <li><strong>CMOS Battery</strong> — Keeps BIOS settings and the system clock alive when the computer is unplugged.</li>
+    </ul>
+  </div>
+
+  <div class="card purple">
+    <h3><span class="icon">🛡️</span>Firmware — Embedded Software</h3>
+    <p><strong>Firmware</strong> is software that is <em>permanently embedded into a hardware chip</em> (ROM). It controls low-level device operation. Examples:</p>
+    <ul style="margin-top:8px;">
+      <li>BIOS/UEFI on motherboard</li>
+      <li>Firmware on a GPU (graphics microchip)</li>
+      <li>Embedded OS in smart TVs, gaming consoles, refrigerators</li>
+      <li>Router firmware</li>
+    </ul>
+    <div class="callout" style="margin-top:12px;">
+      <div class="callout-icon">📝</div>
+      <div class="callout-body"><h4>Firmware vs. Drivers vs. Software</h4><p><strong>Firmware</strong> = embedded in chip, controls hardware itself. <strong>Drivers</strong> = OS software that lets the OS talk to hardware. <strong>Software</strong> = applications users run.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NETWORKING ═══════════════ -->
+<section id="networking" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 2.1</div>
+    <h2>Networking Concepts</h2>
+    <p>Networking is one of the heaviest domains on the Tech+ exam. Understand how data travels, what devices do what, and how addresses work.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🏛️</span>The OSI Model — 7 Layers of Networking</h3>
+    <p>The OSI model describes how data travels from one device to another in <strong>7 layers</strong>. Remember with: <em>"Please Do Not Throw Sausage Pizza Away"</em> (bottom to top).</p>
+    <div class="diagram" style="margin-top:16px;">
+      <div class="osi-layers">
+        <div class="osi-layer osi-7"><div class="osi-num">7</div><div class="osi-name">Application</div><div class="osi-detail">User-facing network services</div><div class="osi-example">HTTP, FTP, DNS, SMTP</div></div>
+        <div class="osi-layer osi-6"><div class="osi-num">6</div><div class="osi-name">Presentation</div><div class="osi-detail">Data formatting, encryption</div><div class="osi-example">SSL/TLS, JPEG, MP4</div></div>
+        <div class="osi-layer osi-5"><div class="osi-num">5</div><div class="osi-name">Session</div><div class="osi-detail">Manages connections/sessions</div><div class="osi-example">NetBIOS, RPC</div></div>
+        <div class="osi-layer osi-4"><div class="osi-num">4</div><div class="osi-name">Transport</div><div class="osi-detail">Reliable delivery, ports</div><div class="osi-example">TCP, UDP</div></div>
+        <div class="osi-layer osi-3"><div class="osi-num">3</div><div class="osi-name">Network</div><div class="osi-detail">Logical addressing, routing</div><div class="osi-example">IP, ICMP, Router</div></div>
+        <div class="osi-layer osi-2"><div class="osi-num">2</div><div class="osi-name">Data Link</div><div class="osi-detail">Physical addressing (MAC)</div><div class="osi-example">Ethernet, Switch, MAC</div></div>
+        <div class="osi-layer osi-1"><div class="osi-num">1</div><div class="osi-name">Physical</div><div class="osi-detail">Actual bits on the wire</div><div class="osi-example">Cables, Hubs, NIC</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🔑</span>MAC Address vs. IP Address</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>MAC Address</h4>
+        <p>A <strong>hardware address</strong> burned into the NIC at manufacturing. <em>Cannot be changed</em> (permanent/unique). Used at Layer 2. Format: <code>00:25:9C:4D:5A:6B</code> (hexadecimal). Switches use MAC addresses to direct traffic within a local network.</p>
+      </div>
+      <div class="concept">
+        <h4>IP Address</h4>
+        <p>A <strong>logical address</strong> assigned by the network. <em>Can be changed</em> (dynamic or static). Used at Layer 3. Format: <code>192.168.1.100</code> (IPv4). Routers use IP addresses to route traffic between networks.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Network Devices — What Each One Does</h3>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Device</th><th>Layer</th><th>Function</th><th>Key Detail</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hub</strong></td><td>Layer 1</td><td>Broadcasts data to ALL ports</td><td>Dumb device, creates congestion. Mostly obsolete.</td></tr>
+        <tr><td><strong>Switch</strong></td><td>Layer 2</td><td>Sends data to SPECIFIC device using MAC</td><td>Smarter than hub. Most common LAN device.</td></tr>
+        <tr><td><strong>Router</strong></td><td>Layer 3</td><td>Routes traffic BETWEEN networks using IP</td><td>Required to connect your LAN to the internet.</td></tr>
+        <tr><td><strong>Modem</strong></td><td>Layer 1/2</td><td>Modulates/demodulates signals for ISP connection</td><td>Converts digital ↔ analog for phone/cable lines.</td></tr>
+        <tr><td><strong>Access Point (AP)</strong></td><td>Layer 2</td><td>Provides wireless (Wi-Fi) network access</td><td>Extends wired network wirelessly. Creates SSID.</td></tr>
+        <tr><td><strong>Firewall</strong></td><td>Layer 3/4</td><td>Filters traffic by security rules</td><td>Inspects packets, blocks unauthorized access.</td></tr>
+        <tr><td><strong>Server</strong></td><td>Application</td><td>Provides services to client computers</td><td>Web, email, file, database, authentication servers.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card green">
+      <h3><span class="icon">🏠</span>Network Types</h3>
+      <ul>
+        <li><strong>LAN</strong> (Local Area Network) — Small area: office, home. Devices connected by switch/router.</li>
+        <li><strong>WAN</strong> (Wide Area Network) — Large geographic area. The Internet is the largest WAN.</li>
+        <li><strong>PAN</strong> (Personal Area Network) — Bluetooth, NFC. Very short range.</li>
+        <li><strong>MAN</strong> (Metropolitan Area Network) — City-wide network.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon">🌐</span>Internet Connection Types</h3>
+      <ul>
+        <li><strong>DSL</strong> (Digital Subscriber Line) — Over phone lines. RJ-11 connector.</li>
+        <li><strong>Cable</strong> — Over coaxial cable lines. Fast, shared with neighbors.</li>
+        <li><strong>Fiber Optic</strong> — Light through glass fiber. Fastest. Gbps speeds.</li>
+        <li><strong>Satellite</strong> — Wireless from space. High latency.</li>
+        <li><strong>Cellular</strong> — 4G/5G mobile network.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <h3><span class="icon">🛠️</span>Connectivity Tools & Commands</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Ping</h4><p>Tests basic connectivity between two devices. Sends ICMP packets and waits for a response. Use: <code>ping 192.168.1.1</code></p></div>
+      <div class="concept"><h4>Tracert / Traceroute</h4><p>Traces the path data takes across a network, showing each hop (router) along the way. Identifies where delays occur.</p></div>
+      <div class="concept"><h4>DHCP</h4><p>Dynamic Host Configuration Protocol — automatically assigns IP addresses to devices on the network.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WIRELESS ═══════════════ -->
+<section id="wireless" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 2.2</div>
+    <h2>Wireless & Connectivity</h2>
+    <p>Short-range and long-range wireless technologies appear frequently on the exam. Know the Wi-Fi standards and the purpose of each wireless technology.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📡</span>Wi-Fi Standards (802.11)</h3>
+    <table class="data-table">
+      <thead><tr><th>Standard</th><th>Max Speed</th><th>Frequency Bands</th><th>Key Fact</th></tr></thead>
+      <tbody>
+        <tr><td><strong>802.11b</strong></td><td>11 Mbps</td><td>2.4 GHz</td><td>Oldest, slowest, longest range</td></tr>
+        <tr><td><strong>802.11a</strong></td><td>54 Mbps</td><td>5 GHz</td><td>Less interference, shorter range</td></tr>
+        <tr><td><strong>802.11g</strong></td><td>54 Mbps</td><td>2.4 GHz</td><td>Backward compatible with b</td></tr>
+        <tr><td><strong>802.11n</strong></td><td>600 Mbps</td><td>2.4 GHz & 5 GHz</td><td>Wi-Fi 4, MIMO antennas</td></tr>
+        <tr><td><strong>802.11ac</strong></td><td>~3.5 Gbps</td><td>5 GHz</td><td>Wi-Fi 5, very common today</td></tr>
+        <tr><td><strong>802.11ax</strong></td><td>~9.6 Gbps</td><td>2.4, 5, AND 6 GHz</td><td><em>Wi-Fi 6 — supports all 3 bands, highest throughput</em></td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body"><h4>Key Exam Fact</h4><p><strong>802.11ax</strong> (Wi-Fi 6) is the only standard that supports all three frequency bands: 2.4 GHz, 5 GHz, and 6 GHz. It also has the greatest maximum throughput.</p></div>
+    </div>
+  </div>
+
+  <h3 class="sub">Short-Range Wireless Technologies</h3>
+  <div class="three-col">
+    <div class="card green">
+      <h3><span class="icon">📲</span>Bluetooth</h3>
+      <p>Short-range wireless for device pairing. Range: ~10 meters. Used for: headphones, keyboards, speakers, file transfer between nearby devices.</p>
+    </div>
+    <div class="card amber">
+      <h3><span class="icon">💳</span>NFC</h3>
+      <p><strong>Near Field Communication</strong>. Extremely short range (~4 cm). Used for: contactless payments (tap-to-pay), access cards, pairing. Examples: Apple Pay, Google Pay, credit card tap terminals.</p>
+    </div>
+    <div class="card purple">
+      <h3><span class="icon">⚡</span>Thunderbolt</h3>
+      <p>High-speed wired/port technology (not strictly wireless). Supports data, video, and power over one cable. Bidirectional. Very fast (up to 40 Gbps). Common on MacBooks.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🏠</span>Smart Home & IoT Devices</h3>
+    <p><strong>IoT</strong> (Internet of Things) devices are everyday objects connected to the internet.</p>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Home Assistant</h4><p>Voice-activated smart home control device. Example: Amazon Echo, Google Home. Used for voice commands to control smart devices.</p></div>
+      <div class="concept"><h4>IoT Examples</h4><p>Smart refrigerator, video doorbell, smart thermostat, IP security cameras, smart light bulbs. These all have embedded OSes.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🖥️</span>Display Technologies</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Casting</h4><p>Sends content to a TV/display while the <strong>source device can do other things</strong>. Example: Chromecast, AirPlay. The source offloads video processing to the TV.</p></div>
+      <div class="concept"><h4>Mirroring</h4><p>The display shows an <strong>exact copy</strong> of the source screen. Both devices show the same thing. The source device does all processing.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OPERATING SYSTEMS ═══════════════ -->
+<section id="os" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 3.1</div>
+    <h2>Operating Systems</h2>
+    <p>The OS is the software layer between the hardware and user applications. Understanding OS types, functions, and interfaces is heavily tested.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⚙️</span>What an OS Does — Core Functions</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>User Interface</h4><p>GUI (Graphical User Interface) uses windows and icons. CLI (Command Line Interface) uses text commands — powerful but harder to learn syntax.</p></div>
+      <div class="concept"><h4>Process Management</h4><p>The OS runs, tracks, and schedules all running programs. A <strong>process</strong> = an instance of a running program. <strong>Services</strong> = background programs.</p></div>
+      <div class="concept"><h4>Memory Management</h4><p>The OS tracks which applications are using RAM. When 20 browser tabs open and the system slows — that's memory management struggling.</p></div>
+      <div class="concept"><h4>Disk Management</h4><p>The OS manages reading/writing to storage. The file system (NTFS, FAT32, ext4) organizes data on disk.</p></div>
+      <div class="concept"><h4>Access Control</h4><p>Controls which users can access which files/resources. Managed through user accounts and permissions (ACL — Access Control List).</p></div>
+      <div class="concept"><h4>Driver Management</h4><p>Loads and manages device drivers so hardware can communicate with the OS. <strong>Plug and Play</strong> = OS automatically installs drivers for new hardware.</p></div>
+    </div>
+    <div class="callout warn" style="margin-top:12px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body"><h4>What is NOT an OS Function?</h4><p>"Connecting to the internet" is NOT a core OS function — that's a network service/application layer responsibility. The OS provides the infrastructure but connecting to the internet involves your browser, NIC drivers, and network settings.</p></div>
+    </div>
+  </div>
+
+  <h3 class="sub">Operating System Types</h3>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>OS Type</th><th>Examples</th><th>Used For</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Desktop/Workstation</strong></td><td>Windows, macOS</td><td>Personal computers, professional work</td><td>Full GUI, wide software support</td></tr>
+        <tr><td><strong>Server</strong></td><td>Windows Server, Linux Server</td><td>Hosting services, network management</td><td>Optimized for stability and uptime</td></tr>
+        <tr><td><strong>Mobile</strong></td><td><em>iOS</em>, <em>Android</em></td><td>Smartphones, tablets</td><td>ARM processors, touchscreen optimized</td></tr>
+        <tr><td><strong>Embedded</strong></td><td>RTOS, proprietary firmware</td><td>Smart appliances, cars, kiosks</td><td>Limited resources, specific purpose</td></tr>
+        <tr><td><strong>Chrome OS</strong></td><td>Chrome OS</td><td>Chromebooks (web-focused)</td><td>Based on Linux, primarily cloud-based</td></tr>
+        <tr><td><strong>Linux</strong></td><td>Ubuntu, Fedora, Debian</td><td>Servers, developers, embedded</td><td><em>Open-source</em> — free to use/modify</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🗂️</span>File Management</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Windows: File Explorer</h4><p>The GUI tool for browsing and managing files in Windows. Also useful for copying files to USB drives.</p></div>
+      <div class="concept"><h4>macOS: Finder</h4><p>macOS equivalent of File Explorer. Used to navigate and manage files and folders on Mac.</p></div>
+      <div class="concept"><h4>File Extensions</h4><p>Suffixes like .docx, .html, .mp4 that identify file types. The OS uses these to determine which app opens the file.</p></div>
+    </div>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="concept"><h4>File Attributes</h4><p>Properties including: file name, creation date, size, read-only flag, hidden flag, system file flag, who can access/edit/encrypt the file.</p></div>
+      <div class="concept"><h4>Access Control List (ACL)</h4><p>A list attached to files/folders defining which users can read, write, execute, or delete. This is how the OS enforces file permissions.</p></div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <h3><span class="icon">🌐</span>Browser Features You Need to Know</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Private / Incognito Mode</h4><p>Browsing history, cookies, and temporary files are NOT saved locally after the session. Useful on shared/public computers.</p></div>
+      <div class="concept"><h4>Browser Cache</h4><p>Stores copies of web pages for faster loading. If you see an old version of a site — <strong>clear the cache</strong>.</p></div>
+      <div class="concept"><h4>Profile Synchronization</h4><p>Syncs bookmarks, passwords, history across multiple devices using the same browser account.</p></div>
+      <div class="concept"><h4>SSL/TLS Certificates</h4><p>Validates a website's identity and enables encrypted HTTPS connections. An IT manager checks for <strong>valid certificates</strong> to confirm security.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔄</span>Initial OS Setup — Localization</h3>
+    <p>When first setting up an OS, besides the computer name, you must configure <strong>localization</strong> settings: language, region, date/time format, currency, and keyboard layout. This ensures the OS behaves correctly for your geographic location.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ SOFTWARE ═══════════════ -->
+<section id="software" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 3.2</div>
+    <h2>Software & Applications</h2>
+    <p>The Tech+ exam covers many application categories. Know which type of software matches which task.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📦</span>Application Types — Match the Task to the Tool</h3>
+    <table class="data-table">
+      <thead><tr><th>Software Type</th><th>Used For</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Word Processing</strong></td><td>Creating text documents, reports, letters</td><td>Microsoft Word, Google Docs</td></tr>
+        <tr><td><strong>Spreadsheet</strong></td><td>Data grids, calculations, charts, averages</td><td>Microsoft Excel, Google Sheets</td></tr>
+        <tr><td><strong>Presentation</strong></td><td>Slide-based visual presentations</td><td>PowerPoint, Google Slides</td></tr>
+        <tr><td><strong>Database</strong></td><td>Store, query, and manage structured data</td><td>MySQL, Access, SQL Server</td></tr>
+        <tr><td><strong>Accounting</strong></td><td>Invoicing, payroll, financial reporting</td><td>QuickBooks, Sage</td></tr>
+        <tr><td><strong>Visual Diagramming</strong></td><td>Shapes and connectors for diagrams, flowcharts</td><td>Visio, Lucidchart, draw.io</td></tr>
+        <tr><td><strong>Collaboration / Document Sharing</strong></td><td>Cloud-based file sharing and co-editing</td><td>Google Drive, SharePoint, OneDrive</td></tr>
+        <tr><td><strong>Conferencing</strong></td><td>Video meetings, screen share, real-time audio</td><td>Zoom, Teams, Google Meet</td></tr>
+        <tr><td><strong>Instant Messaging</strong></td><td>Text-based real-time chat</td><td>Slack, Teams chat, iMessage</td></tr>
+        <tr><td><strong>Desktop Sharing / Remote</strong></td><td>IT support accessing another computer remotely</td><td>RDP, TeamViewer, AnyDesk</td></tr>
+        <tr><td><strong>Utility Software</strong></td><td>System maintenance tools</td><td>Disk cleaner, antivirus, backup tools, compression</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <h4>Exam Scenario Practice</h4>
+      <p><strong>Teacher needs to calculate class averages and create a bar chart</strong> → <em>Spreadsheet software</em>. | <strong>Finance team needs invoicing and payroll</strong> → <em>Accounting software</em>. | <strong>Team needs to work together on files in real-time</strong> → <em>Collaboration / Document Sharing software</em>. | <strong>Meeting where people see and talk in real-time</strong> → <em>Conferencing software</em>.</p>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🎬</span>Media File Formats</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Image: .jpg / .png</h4><p>Common image formats. JPG uses lossy compression. PNG supports transparency.</p></div>
+      <div class="concept"><h4>Video: .mp4</h4><p>Common video format for internet publishing. Good compression with quality. Use for streaming and posting online.</p></div>
+      <div class="concept"><h4>Audio: .mp3</h4><p>Common compressed audio format. Reduces file size by removing some audio data.</p></div>
+      <div class="concept"><h4>Archive: .zip</h4><p>Compressed container for multiple files. Reduces file size for transfer.</p></div>
+      <div class="concept"><h4>Document: .docx</h4><p>Microsoft Word format. .pdf for universal read-only documents.</p></div>
+      <div class="concept"><h4>Web: .html</h4><p>HyperText Markup Language. Defines the structure of web pages.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔑</span>Software Licensing</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Open-Source</h4><p>Anyone can use, modify, and distribute for free. Example: Linux. The source code is publicly available.</p></div>
+      <div class="concept"><h4>Proprietary</h4><p>Owned by a company. Must be purchased. Source code is not available. Example: Windows, Microsoft Office.</p></div>
+      <div class="concept"><h4>Product Key / License Key</h4><p>A unique code required to activate software. Ensures each copy is separately purchased and prevents unauthorized use.</p></div>
+      <div class="concept"><h4>SaaS (Subscription)</h4><p>Software accessed via internet on subscription basis. Example: Microsoft 365, Adobe Creative Cloud. No local installation needed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CLOUD ═══════════════ -->
+<section id="cloud" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 3.3</div>
+    <h2>Cloud Computing & Virtualization</h2>
+    <p>Cloud and virtualization are modern infrastructure concepts. Understand the service models and deployment types.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">☁️</span>Cloud Service Models</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>IaaS — Infrastructure as a Service</h4>
+        <p>Cloud provider gives you <strong>raw computing resources</strong>: servers, networking, storage. You manage the OS and software. Most control, most responsibility. Example: AWS EC2, Azure VMs.</p>
+      </div>
+      <div class="concept">
+        <h4>PaaS — Platform as a Service</h4>
+        <p>Cloud provides the <strong>platform and runtime</strong> to deploy applications. You just write and deploy code. Example: Heroku, Google App Engine.</p>
+      </div>
+      <div class="concept">
+        <h4>SaaS — Software as a Service</h4>
+        <p>Fully managed software <strong>accessed via web browser</strong>. Cloud provider handles everything. You just use the app. Examples: Gmail, Salesforce, Microsoft 365, Zoom.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🏗️</span>Cloud Deployment Models</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Public Cloud</h4><p>Infrastructure owned and managed by a third-party provider, shared with other customers. Examples: AWS, Azure, Google Cloud.</p></div>
+      <div class="concept"><h4>Private Cloud</h4><p>Infrastructure dedicated to a single organization. Can be on-premises or hosted. More control and security.</p></div>
+      <div class="concept"><h4>Hybrid Cloud</h4><p><strong>Combines on-premises infrastructure with cloud resources.</strong> Organizations use local servers for sensitive data and cloud for scalable workloads.</p></div>
+      <div class="concept"><h4>Multi-Cloud</h4><p>Using services from <strong>multiple cloud providers</strong> simultaneously (e.g., AWS + Azure). Avoids vendor lock-in.</p></div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">🖥️</span>Virtualization</h3>
+    <p>Virtualization allows multiple <strong>virtual machines (VMs)</strong> to run on one physical computer simultaneously. A <strong>hypervisor</strong> manages the VMs.</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="concept"><h4>Type 1 Hypervisor (Bare Metal)</h4><p>Installed <strong>directly on the physical hardware</strong> — no host OS. Most efficient for enterprise. Examples: VMware ESXi, Microsoft Hyper-V, Citrix XenServer.</p></div>
+      <div class="concept"><h4>Type 2 Hypervisor (Hosted)</h4><p>Runs <strong>on top of an existing OS</strong>. Less efficient but easy to use on personal computers. Examples: VMware Workstation, VirtualBox, Parallels.</p></div>
+    </div>
+    <div class="callout" style="margin-top:12px;">
+      <div class="callout-icon">📝</div>
+      <div class="callout-body"><h4>Exam Scenario</h4><p>Inga wants to run both Windows and Linux on one desktop simultaneously — the technology is <strong>Virtualization</strong>. A Type 2 hypervisor (like VirtualBox) would be installed on her existing OS.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">☁️</span>Cloud Storage & Backup</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>Cloud Advantages</h4><p>Remote access from anywhere, automatic backups, disaster recovery, offsite storage, scalable. Fulfills the "offsite backup" requirement for business continuity.</p></div>
+      <div class="concept"><h4>Cloud Disadvantages</h4><p><strong>Requires reliable internet connection</strong> to access/backup data. Privacy concerns (data on third-party servers). Ongoing subscription cost.</p></div>
+    </div>
+    <div class="callout tip" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body"><h4>Backups — Key Rule</h4><p>Always <strong>verify backups</strong> by testing restoration procedures. A backup that can't be restored is useless. Testing restoration is the most critical step after creating a backup.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ SECURITY ═══════════════ -->
+<section id="security" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 4</div>
+    <h2>Cybersecurity</h2>
+    <p>Security is one of the most heavily weighted domains. Understand the CIA Triad, types of attacks, authentication, and security controls.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔺</span>The CIA Triad — Foundation of Security</h3>
+    <div class="three-col" style="margin-top:12px;">
+      <div class="concept">
+        <h4>C — Confidentiality</h4>
+        <p>Only <strong>authorized people</strong> can access sensitive data. Protected by: encryption, access controls, MFA, password policies. Example: encrypting a hard drive.</p>
+      </div>
+      <div class="concept">
+        <h4>I — Integrity</h4>
+        <p>Data is <strong>accurate and unaltered</strong>. Protected by: hashing, digital signatures, checksums. Ensures data hasn't been tampered with during storage or transmission.</p>
+      </div>
+      <div class="concept">
+        <h4>A — Availability</h4>
+        <p>Systems and data are <strong>accessible when needed</strong>. Protected by: redundancy, backups, UPS, RAID, failover systems. Prevents denial of service.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sub">Types of Threats & Attacks</h3>
+  <div class="card red">
+    <h3><span class="icon">⚠️</span>Malware Types</h3>
+    <table class="data-table">
+      <thead><tr><th>Malware Type</th><th>What It Does</th><th>Key Identifier</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ransomware</strong></td><td>Encrypts user's files, demands payment for decryption key</td><td>"Your files are locked, pay to unlock"</td></tr>
+        <tr><td><strong>Trojan Horse</strong></td><td>Disguises itself as legitimate software to gain access</td><td>Masquerades as benign app</td></tr>
+        <tr><td><strong>Spyware</strong></td><td>Secretly monitors activity and steals data/PII</td><td>Runs silently, sends data to attacker</td></tr>
+        <tr><td><strong>Adware</strong></td><td>Displays unwanted advertisements</td><td>Pop-up ads, browser redirects</td></tr>
+        <tr><td><strong>Virus</strong></td><td>Attaches to files, spreads when file is shared</td><td>Requires user action to spread</td></tr>
+        <tr><td><strong>Worm</strong></td><td>Self-replicates across networks without user action</td><td>Spreads automatically</td></tr>
+        <tr><td><strong>Rootkit</strong></td><td>Hides deeply in OS, provides unauthorized root access</td><td>Very hard to detect and remove</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🎭</span>Social Engineering Attacks</h3>
+    <p><strong>Social engineering</strong> manipulates people (not systems) into revealing confidential information or taking harmful actions. <em>"Hacking humans, not computers."</em></p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="concept"><h4>Phishing</h4><p>Fake email that looks legitimate (bank, employer) asking you to click a link and enter credentials. Most common social engineering attack.</p></div>
+      <div class="concept"><h4>Spear Phishing</h4><p>Targeted phishing aimed at a specific person or organization. More convincing because it's personalized.</p></div>
+      <div class="concept"><h4>Tailgating / Piggybacking</h4><p>Following an authorized person through a secure door without using your own credentials. Physical security threat.</p></div>
+      <div class="concept"><h4>Vishing</h4><p>Voice phishing — using phone calls to trick victims into revealing information. "This is the IRS calling..."</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔐</span>Authentication & Access Control</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>MFA / 2FA</h4><p><strong>Multi-Factor Authentication</strong> requires 2+ forms of evidence: something you <em>know</em> (password), something you <em>have</em> (phone app), something you <em>are</em> (fingerprint/retina).</p></div>
+      <div class="concept"><h4>Principle of Least Privilege</h4><p>Give users <strong>only the access they need</strong> to do their job — nothing more. Limits damage if account is compromised.</p></div>
+      <div class="concept"><h4>Single Sign-On (SSO)</h4><p>One login grants access to multiple systems. Convenient but risky — if compromised, all systems are exposed.</p></div>
+      <div class="concept"><h4>Non-Repudiation</h4><p>Proof that an action occurred and was performed by a specific person. Methods: digital signatures, biometrics, audit logs, surveillance cameras.</p></div>
+      <div class="concept"><h4>Role-Based Access Control</h4><p>Access is based on job role, not individual. Example: "Backup Administrators" can access all servers.</p></div>
+      <div class="concept"><h4>Password Expiration</h4><p>Forces periodic password changes to <strong>limit the time window</strong> a stolen password can be used by an attacker.</p></div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">🛡️</span>Security Controls</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Preventive Controls</h4><p>Stop incidents before they happen. Examples: firewall, MFA, encryption, strong password policy, security awareness training.</p></div>
+      <div class="concept"><h4>Detective Controls</h4><p>Identify incidents while or after they occur. Examples: antivirus (scanning), security cameras, audit logs, intrusion detection systems (IDS).</p></div>
+      <div class="concept"><h4>Corrective Controls</h4><p>Fix damage after an incident. Examples: <em>restoring backups after ransomware</em>, incident response, system reimaging.</p></div>
+    </div>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="concept"><h4>Physical Controls</h4><p>Physical barriers: badge readers, door locks, cable locks, security guards, surveillance cameras. Protect physical access to hardware.</p></div>
+      <div class="concept"><h4>Technical/Logical Controls</h4><p>Software/digital protections: firewalls, antivirus, encryption, ACLs, MFA, VPN. Protect digital access and data.</p></div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <h3><span class="icon">🔒</span>Encryption & Protocols</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept"><h4>HTTPS</h4><p>HTTP secured by SSL/TLS encryption. Protects web traffic in transit. Look for the padlock icon. The certificate validates the site's identity.</p></div>
+      <div class="concept"><h4>VPN</h4><p>Virtual Private Network. Creates encrypted tunnel over the internet. Used for secure remote access and public Wi-Fi protection.</p></div>
+      <div class="concept"><h4>Full Disk Encryption</h4><p>Encrypts entire hard drive. If laptop is stolen, data is unreadable without the encryption key. BitLocker (Windows), FileVault (macOS).</p></div>
+      <div class="concept"><h4>File-Level Encryption</h4><p>Encrypts individual files or folders rather than the entire disk. More granular control.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔥</span>Firewall</h3>
+    <p>A firewall <strong>inspects incoming and outgoing network traffic</strong> against a set of rules, blocking unauthorized access. It's placed at the edge of the network (between internal LAN and the internet).</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Packet filtering</strong> — Examines packet headers (IP, port) and allows/denies based on rules.</li>
+      <li><strong>Stateful inspection</strong> — Tracks connection state, more sophisticated than simple packet filtering.</li>
+      <li><strong>Application-layer firewall</strong> — Inspects actual content of traffic (Layer 7).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📶</span>Wireless Security</h3>
+    <table class="data-table">
+      <thead><tr><th>Protocol</th><th>Security Level</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>WEP</strong></td><td>❌ Very Weak</td><td>Obsolete, easily cracked. Never use.</td></tr>
+        <tr><td><strong>WPA</strong></td><td>⚠️ Weak</td><td>Improvement over WEP but still vulnerable.</td></tr>
+        <tr><td><strong>WPA2</strong></td><td>✅ Strong</td><td>Current standard. AES encryption. Use this.</td></tr>
+        <tr><td><strong>WPA3</strong></td><td>✅✅ Strongest</td><td>Newest standard. Enhanced protection, forward secrecy.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body"><h4>Best Practice for Small Business Wi-Fi</h4><p>Create <strong>separate SSIDs</strong> for internal employees and guest users. This isolates guests from the internal network, protecting business resources.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DATABASES ═══════════════ -->
+<section id="databases" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 5</div>
+    <h2>Databases</h2>
+    <p>Databases organize, store, and retrieve data. Understanding relational database concepts and SQL is key for this domain.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🗂️</span>Database Types</h3>
+    <table class="data-table">
+      <thead><tr><th>Type</th><th>Structure</th><th>Best For</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Flat File</strong></td><td>Single table (like a spreadsheet)</td><td>Simple name/ID lists, no relationships</td><td>CSV file, basic contact list</td></tr>
+        <tr><td><strong>Relational</strong></td><td>Multiple linked tables with keys</td><td>Complex queries, transactions, relationships</td><td>MySQL, SQL Server, PostgreSQL, Access</td></tr>
+        <tr><td><strong>Non-Relational (NoSQL)</strong></td><td>Key-value, document, graph, column</td><td>Unstructured data, wide variety of types</td><td>MongoDB, Cassandra, Redis</td></tr>
+        <tr><td><strong>Object-Oriented</strong></td><td>Objects with attributes and methods</td><td>Programming-heavy environments</td><td>db4o, ObjectDB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🔑</span>Relational Database Key Concepts</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Primary Key</h4>
+        <p>A field that <strong>uniquely identifies each record</strong> in a table. Must be unique, cannot be null. This is the "one" side in one-to-many relationships. Good: Employee ID, auto-increment number. Bad: First name (not unique).</p>
+      </div>
+      <div class="concept">
+        <h4>Foreign Key</h4>
+        <p>A field in one table that <strong>references the primary key of another table</strong>. This creates the relationship (link) between tables. Enables automatic updates across related records.</p>
+      </div>
+      <div class="concept">
+        <h4>Schema</h4>
+        <p>The <strong>blueprint/structure</strong> of the database — defines tables, fields, data types, and relationships. The schema describes the database before data is entered.</p>
+      </div>
+      <div class="concept">
+        <h4>Query</h4>
+        <p>A command to <strong>"ask" the database for specific data</strong>. SQL SELECT statements are queries. Example: "Find all employees who've worked here more than 5 years."</p>
+      </div>
+      <div class="concept">
+        <h4>Constraint</h4>
+        <p>A rule that enforces data integrity. Example: <strong>NOT NULL</strong> constraint prevents fields from being left empty. UNIQUE constraint ensures no duplicate values.</p>
+      </div>
+      <div class="concept">
+        <h4>Tables, Fields, Records</h4>
+        <p>Tables = the data container. <strong>Fields (columns)</strong> = categories of data. Records (rows) = individual entries. The table organizes data in rows and columns.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">💾</span>SQL — Structured Query Language</h3>
+    <p>SQL is the standard language used to communicate with relational databases (MySQL, SQL Server, PostgreSQL, etc.).</p>
+    <div class="code-block">
+<span class="cm">-- Retrieve specific data from a table</span>
+<span class="kw">SELECT</span> first_name, last_name, hire_date
+<span class="kw">FROM</span> employees
+<span class="kw">WHERE</span> years_worked > <span class="num">5</span>
+<span class="kw">ORDER BY</span> last_name;
+
+<span class="cm">-- Link two tables using a JOIN (using foreign key)</span>
+<span class="kw">SELECT</span> orders.order_id, customers.name, orders.amount
+<span class="kw">FROM</span> orders
+<span class="kw">INNER JOIN</span> customers <span class="kw">ON</span> orders.customer_id = customers.id;
+
+<span class="cm">-- Insert a new record</span>
+<span class="kw">INSERT INTO</span> employees (name, department, salary)
+<span class="kw">VALUES</span> (<span class="str">'Jane Smith'</span>, <span class="str">'IT'</span>, <span class="num">75000</span>);
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">📊</span>Data Concepts</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Metadata</h4><p>"Data about data." Describes a file's properties: creation date, file size, author, format. Example: a photo's metadata includes when/where it was taken.</p></div>
+      <div class="concept"><h4>Big Data</h4><p>Characterized by <strong>3 V's: Volume</strong> (extremely large), <strong>Velocity</strong> (fast-moving), <strong>Variety</strong> (complex/varied types). Requires special processing tools.</p></div>
+      <div class="concept"><h4>Data Analytics</h4><p>The process of examining data sets to draw conclusions. Helps organizations understand large amounts of data. Steps: Collect raw data → Analyze → Generate insights → Report.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PROGRAMMING ═══════════════ -->
+<section id="programming" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 6</div>
+    <h2>Programming Concepts</h2>
+    <p>You don't need to be a programmer for Tech+, but you need to understand how programs work — data types, control flow, functions, and language types.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📦</span>Data Types</h3>
+    <table class="data-table">
+      <thead><tr><th>Data Type</th><th>Stores</th><th>Example Values</th><th>Use Case</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Integer (int)</strong></td><td>Whole numbers, no decimals</td><td>42, -7, 0, 100</td><td>Count of guests, number of items</td></tr>
+        <tr><td><strong>Float / Double</strong></td><td>Decimal numbers</td><td>3.14, -2.5, 99.99</td><td>Prices, measurements, averages</td></tr>
+        <tr><td><strong>String</strong></td><td>Text characters</td><td>"Hello World", "Jane"</td><td>Names, messages, addresses</td></tr>
+        <tr><td><strong>Boolean</strong></td><td>True or False only</td><td>True / False</td><td>On/off switches, yes/no flags</td></tr>
+        <tr><td><strong>Char</strong></td><td>Single character</td><td>'A', 'B', 'F'</td><td>Single letter grades (A through F)</td></tr>
+        <tr><td><strong>Array</strong></td><td>List of values of the same type</td><td>[1, 2, 3, 4]</td><td>Order history, list of customers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">📝</span>Variables vs. Constants</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Variable</h4>
+        <p>A <strong>named storage location</strong> whose value <em>can change</em> during program execution. Like a labeled box you can put different things in. Example: <code>score = 0</code>, then later <code>score = 150</code>.</p>
+      </div>
+      <div class="concept">
+        <h4>Constant</h4>
+        <p>A named value that is <strong>set once and never changes</strong> during execution. Example: <code>PI = 3.14159</code>, <code>MAX_USERS = 100</code>. Makes code more readable and prevents accidental changes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔄</span>Control Flow — How Programs Make Decisions & Repeat</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>If-Else (Branching)</h4>
+        <p>Execute <strong>different code based on a condition</strong>. If the condition is true, do one thing. Otherwise (else), do another.</p>
+      </div>
+      <div class="concept">
+        <h4>While Loop</h4>
+        <p>Execute code <strong>as long as a condition remains true</strong>. Condition is checked before each iteration. Can loop zero or more times.</p>
+      </div>
+      <div class="concept">
+        <h4>For Loop</h4>
+        <p>Execute code a <strong>specific number of times</strong>. Iterates through a range or collection. Used when you know the count in advance.</p>
+      </div>
+      <div class="concept">
+        <h4>Switch/Case</h4>
+        <p>Compare a value against multiple cases. Cleaner than many if-else statements when checking one variable. Example: checking primary color input (red, blue, green).</p>
+      </div>
+    </div>
+    <div class="code-block" style="margin-top:16px;">
+<span class="cm">// If-Else (Branching)</span>
+<span class="kw">IF</span> amount < <span class="num">5000</span>
+  <span class="kw">THEN</span> interest = <span class="num">7</span>%
+  <span class="kw">ELSE</span> interest = <span class="num">8</span>%
+<span class="kw">END IF</span>
+
+<span class="cm">// While Loop — "while the condition is true, keep running"</span>
+<span class="kw">WHILE</span> time < <span class="str">"8:00 PM"</span>
+  monitorNetwork()
+<span class="kw">END WHILE</span>
+
+<span class="cm">// For Loop with nested loop (COUNTER = 3 × 2 = 6)</span>
+<span class="kw">SET</span> COUNTER = <span class="num">0</span>
+<span class="kw">FOR EACH</span> i <span class="kw">FROM</span> <span class="num">1</span> <span class="kw">TO</span> <span class="num">3</span>       <span class="cm">// outer: 3 times</span>
+  <span class="kw">FOR EACH</span> j <span class="kw">FROM</span> <span class="num">1</span> <span class="kw">TO</span> <span class="num">2</span>     <span class="cm">// inner: 2 times each</span>
+    COUNTER = COUNTER + <span class="num">1</span>
+  <span class="kw">END FOR</span>
+<span class="kw">END FOR</span>
+<span class="cm">// Result: COUNTER = 6</span>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">📐</span>Functions & Code Reuse</h3>
+    <p>A <strong>function</strong> is a reusable block of code that performs a specific task. You define it once, then call it many times. Functions are the primary tool for code reuse in programming.</p>
+    <div class="code-block">
+<span class="cm">// Defining a function</span>
+<span class="kw">FUNCTION</span> <span class="fn">calculateTax</span>(price, rate)
+  tax = price * rate
+  <span class="kw">RETURN</span> tax
+<span class="kw">END FUNCTION</span>
+
+<span class="cm">// Calling (reusing) the function</span>
+tax1 = <span class="fn">calculateTax</span>(<span class="num">100</span>, <span class="num">0.08</span>)
+tax2 = <span class="fn">calculateTax</span>(<span class="num">250</span>, <span class="num">0.08</span>)
+    </div>
+  </div>
+
+  <div class="card purple">
+    <h3><span class="icon">🗣️</span>Programming Language Types</h3>
+    <table class="data-table">
+      <thead><tr><th>Language Type</th><th>How It Works</th><th>Examples</th><th>Use Case</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Compiled</strong></td><td>Entire program converted to machine code before running. Executable file (.exe).</td><td>C, C++, Go, Rust</td><td>Desktop apps, games, system software</td></tr>
+        <tr><td><strong>Interpreted</strong></td><td>Code is executed line-by-line by an interpreter at runtime.</td><td><em>Python</em>, <em>JavaScript</em>, Ruby</td><td>Scripting, web apps, data science</td></tr>
+        <tr><td><strong>Markup</strong></td><td>Defines structure and presentation, not logic.</td><td><em>HTML</em>, XML, Markdown</td><td>Web page structure, documents</td></tr>
+        <tr><td><strong>Scripting</strong></td><td>Automates tasks, runs in an interpreter/shell.</td><td>JavaScript, Bash, PowerShell</td><td>Web interactivity, automation</td></tr>
+        <tr><td><strong>Query</strong></td><td>Retrieves and manipulates data from databases.</td><td><em>SQL</em></td><td>Database interaction</td></tr>
+        <tr><td><strong>Assembly</strong></td><td>Low-level, human-readable version of machine code. Most difficult.</td><td>x86 Assembly, ARM Assembly</td><td>Device drivers, hardware programming</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body"><h4>Java vs JavaScript</h4><p>Java is a <strong>compiled then interpreted</strong> language (it compiles to bytecode, then JVM interprets it). The Tech+ exam may classify it as compiled. JavaScript is purely <strong>interpreted</strong>. Both are common exam topics.</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📊</span>Flowcharts & Pseudocode</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Flowchart Shapes</h4>
+        <p>• <strong>Oval / Rounded</strong> = Start or End<br>• <strong>Rectangle</strong> = Process or Action<br>• <strong>Diamond ◇</strong> = Decision Point (Yes/No)<br>• <strong>Parallelogram</strong> = Input or Output</p>
+      </div>
+      <div class="concept">
+        <h4>Pseudocode</h4>
+        <p>Plain-language description of program steps. Not actual code, no specific syntax required. Used to <strong>outline logic before coding</strong>. Similar to an algorithm in English.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🌐</span>Web Development Concepts</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept"><h4>Frontend</h4><p>What users see and interact with. Built with <strong>HTML</strong> (structure), <strong>CSS</strong> (styling), and <strong>JavaScript</strong> (interactivity).</p></div>
+      <div class="concept"><h4>Backend</h4><p>Server-side logic, databases, APIs. Hidden from users. Processes requests and returns data.</p></div>
+      <div class="concept"><h4>API</h4><p><strong>Application Programming Interface</strong> — allows two different applications to communicate with each other. Example: weather app using a weather data API.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ AI ═══════════════ -->
+<section id="ai" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 6.2</div>
+    <h2>AI & Emerging Technologies</h2>
+    <p>Artificial Intelligence, IoT, augmented reality, and virtual reality are increasingly tested topics on the Tech+ exam.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🤖</span>Types of AI</h3>
+    <div class="three-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Generative AI</h4>
+        <p>Creates new content (text, images, code, audio, video) based on patterns learned from training data. Examples: ChatGPT generating text, DALL-E creating images, AI writing financial reports from data.</p>
+      </div>
+      <div class="concept">
+        <h4>Predictive AI</h4>
+        <p>Analyzes patterns to <strong>forecast future outcomes</strong>. Examples: identifying unusual spending patterns (fraud detection), recommending products, predicting equipment failure.</p>
+      </div>
+      <div class="concept">
+        <h4>AI Chatbots</h4>
+        <p>Automated conversational agents that answer questions from a knowledge base. Used for customer service, FAQs, helpdesks. Different from general AI — they are task-specific.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:12px;">
+      <div class="callout-icon">📝</div>
+      <div class="callout-body"><h4>AI Application Examples</h4><p><strong>Generative AI</strong> = Producing automated financial reports from data, generating code. | <strong>Predictive AI</strong> = Identifying unusual consumer spending (fraud detection). | <strong>AI Chatbot</strong> = Customer-facing tool answering common questions from a knowledge base.</p></div>
+    </div>
+  </div>
+
+  <div class="card amber">
+    <h3><span class="icon">🌐</span>IoT — Internet of Things</h3>
+    <p>IoT devices are <strong>everyday physical objects with internet connectivity</strong> and an embedded OS, allowing them to collect and exchange data.</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="concept"><h4>Consumer IoT</h4><p>Video doorbells, smart thermostats, smart refrigerators, wearables, home assistant speakers, smart light bulbs, IP security cameras.</p></div>
+      <div class="concept"><h4>Industrial IoT</h4><p>Manufacturing sensors, smart grid systems, agricultural monitoring, medical devices, autonomous vehicles.</p></div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3><span class="icon">🥽</span>AR vs. VR</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="concept">
+        <h4>Augmented Reality (AR)</h4>
+        <p>Overlays <strong>digital content onto the real world</strong>. You still see your real environment with digital additions on top. Example: <em>furniture preview app</em> — see how a couch looks in your living room before buying. Pokémon Go.</p>
+      </div>
+      <div class="concept">
+        <h4>Virtual Reality (VR)</h4>
+        <p>Creates a <strong>completely immersive digital environment</strong>. You're cut off from the real world. Requires a headset. Example: VR gaming, virtual tours, training simulations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TROUBLESHOOTING ═══════════════ -->
+<section id="troubleshoot" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Domain 1.4</div>
+    <h2>Troubleshooting Methodology</h2>
+    <p>The CompTIA troubleshooting methodology is a standard 6-step process. Know each step and what it involves — scenario questions will test specific steps.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔧</span>The 6-Step Troubleshooting Process</h3>
+    <div class="steps" style="margin-top:16px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Identify the Problem</h4>
+          <p>Gather information from the user. Ask questions: "What changed recently? When did it start? Can you reproduce it?" Check for error messages. This is where you gather facts.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Establish a Theory of Probable Cause</h4>
+          <p>Based on evidence, form a hypothesis about the most likely cause. Question the obvious. Don't overthink — start simple. "If I see X symptom, the cause is probably Y."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Test the Theory to Determine the Cause</h4>
+          <p>Try your solution. If the theory is confirmed, move to step 4. If not, form a new theory (go back to step 2) or escalate. Change and test <strong>one thing at a time</strong>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Establish a Plan of Action / Implement the Solution</h4>
+          <p>Plan how to fix the problem, considering the impact on users. Implement the fix. Sometimes these are combined as one step: "establish a plan and implement."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Verify Full System Functionality</h4>
+          <p><strong>After fixing</strong>, confirm the problem is resolved AND that the fix didn't cause new problems. Test the original issue. Get user confirmation. Implement preventive measures.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Document Findings, Lessons Learned, Actions & Outcomes</h4>
+          <p>This is the <strong>FINAL step</strong>. Record what the problem was, what caused it, how it was fixed, and what was learned. Creates a knowledge base for future issues.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <h4>Common Exam Traps</h4>
+      <p><strong>"What is the FINAL step?"</strong> → Document findings. NOT "verify functionality" — that's step 5. | <strong>"Before closing the ticket, what must be done first?"</strong> → Verify functionality (step 5) before documenting (step 6). | <strong>"Asking what recently changed"</strong> → That's step 1 (Identify the Problem).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔍</span>First Step in Identifying Causes</h3>
+    <p>When trying to identify the cause of a problem, the <strong>first action</strong> should be to <em>check for obvious or common issues</em> — the simple stuff first. Don't start with complex diagnostics when the cable might just be unplugged.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FLASHCARDS ═══════════════ -->
+<section id="flashcards" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Study Tool</div>
+    <h2>Flashcards</h2>
+    <p>Click a card to flip it. Use the arrows to navigate. These cover the highest-frequency exam terms.</p>
+  </div>
+
+  <div class="quiz-filter">
+    <button class="filter-btn active" onclick="filterFlash('all', this)">All Topics</button>
+    <button class="filter-btn" onclick="filterFlash('hardware', this)">Hardware</button>
+    <button class="filter-btn" onclick="filterFlash('networking', this)">Networking</button>
+    <button class="filter-btn" onclick="filterFlash('security', this)">Security</button>
+    <button class="filter-btn" onclick="filterFlash('programming', this)">Programming</button>
+    <button class="filter-btn" onclick="filterFlash('os', this)">OS & Software</button>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:0.8rem;color:var(--text3);margin-bottom:4px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;">Progress</div>
+      <div class="progress-bar-wrap" style="width:300px;max-width:100%;">
+        <div class="progress-bar-fill" id="flash-progress" style="width:0%"></div>
+      </div>
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--text3)" id="flash-stats">0 of 0 seen</div>
+    <button class="btn btn-ghost btn-sm" onclick="shuffleFlash()">🔀 Shuffle</button>
+    <button class="btn btn-outline btn-sm" onclick="resetFlash()">↺ Reset</button>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="card-face front">
+        <div class="card-label">Term</div>
+        <div class="card-content" id="flash-front">Click Start to begin</div>
+      </div>
+      <div class="card-face back">
+        <div class="card-label">Definition</div>
+        <div class="card-content" id="flash-back"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-nav">
+    <button class="btn btn-ghost" onclick="prevFlash()">← Prev</button>
+    <span class="flash-counter" id="flash-counter">- / -</span>
+    <button class="btn btn-ghost" onclick="nextFlash()">Next →</button>
+  </div>
+  <div style="text-align:center;margin-top:12px;color:var(--text3);font-size:0.8rem;">Click the card to reveal the answer</div>
+</section>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<section id="quiz" class="section">
+  <div class="section-header">
+    <div class="section-tag">// Practice Test</div>
+    <h2>Practice Quiz</h2>
+    <p>Test your knowledge with questions drawn from your actual exam prep sets. Select a topic and answer all questions to see your score.</p>
+  </div>
+
+  <div id="quiz-setup">
+    <div class="quiz-filter">
+      <button class="filter-btn active" onclick="setQuizFilter('all', this)">All Topics</button>
+      <button class="filter-btn" onclick="setQuizFilter('hardware', this)">Hardware</button>
+      <button class="filter-btn" onclick="setQuizFilter('networking', this)">Networking</button>
+      <button class="filter-btn" onclick="setQuizFilter('security', this)">Security</button>
+      <button class="filter-btn" onclick="setQuizFilter('programming', this)">Programming</button>
+      <button class="filter-btn" onclick="setQuizFilter('databases', this)">Databases</button>
+      <button class="filter-btn" onclick="setQuizFilter('os', this)">OS & Software</button>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:28px;flex-wrap:wrap;">
+      <label style="font-size:0.85rem;color:var(--text2);">Questions:</label>
+      <select id="quiz-count" style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-family:'Space Grotesk',sans-serif;">
+        <option value="10">10 Questions</option>
+        <option value="20" selected>20 Questions</option>
+        <option value="30">30 Questions</option>
+        <option value="75">Full Exam (75)</option>
+      </select>
+      <button class="btn btn-primary" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+
+  <div id="quiz-score-display" style="display:none;"></div>
+  <div id="quiz-questions"></div>
+  <div id="quiz-footer" style="display:none;">
+    <button class="btn btn-primary" onclick="submitQuiz()">Submit Quiz →</button>
+  </div>
+  <div id="quiz-results-footer" style="display:none;margin-top:24px;">
+    <button class="btn btn-outline" onclick="resetQuiz()">↺ Try Again</button>
+    <button class="btn btn-ghost" style="margin-left:12px;" onclick="showSection('flashcards')">Review Flashcards</button>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+// ─── NAVIGATION ───
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').includes("'"+id+"'")) {
+      n.classList.add('active');
+      n.querySelector('.progress-dot').style.background = '#22d3ee';
+    }
+  });
+  document.getElementById('main-content').scrollTo({ top: 0 });
+}
+
+// ─── NUMBER CONVERTER ───
+function convertNum(source) {
+  const dec = document.getElementById('dec-input');
+  const bin = document.getElementById('bin-input');
+  const hex = document.getElementById('hex-input');
+  try {
+    let val;
+    if(source === 'dec') { val = parseInt(dec.value, 10); }
+    else if(source === 'bin') { val = parseInt(bin.value, 2); }
+    else if(source === 'hex') { val = parseInt(hex.value, 16); }
+    if(isNaN(val)) return;
+    if(source !== 'dec') dec.value = val;
+    if(source !== 'bin') bin.value = val.toString(2);
+    if(source !== 'hex') hex.value = val.toString(16).toUpperCase();
+  } catch(e) {}
+}
+
+// ─── FLASHCARD DATA ───
+const allFlash = [
+  { cat:'hardware', q:'What does CPU stand for and what is its primary function?', a:'Central Processing Unit. It executes all program instructions and performs calculations. Speed is measured in GHz.' },
+  { cat:'hardware', q:'What is the difference between RAM and ROM?', a:'RAM (Random Access Memory) is volatile — data is lost when powered off. ROM (Read-Only Memory) is non-volatile — data persists. RAM = temporary working memory; ROM = permanent firmware storage.' },
+  { cat:'hardware', q:'What connector is used to terminate an Ethernet cable?', a:'RJ-45. It has 8 copper wires and clips into the NIC port. Use a crimper tool to attach it to the cable.' },
+  { cat:'hardware', q:'What tool is used LAST when making a custom-length Ethernet cable?', a:'Crimper (or Cable Tester if testing after crimping). The order is: Wire Cutter → Wire Stripper → Arrange Wires → Crimper → Cable Tester.' },
+  { cat:'hardware', q:'What is a GPU and how is it different from a CPU?', a:'GPU (Graphics Processing Unit) handles math-heavy parallel calculations for rendering graphics and video. CPU handles sequential general-purpose tasks. Upgrade GPU for graphics/rendering, CPU for general speed.' },
+  { cat:'hardware', q:'What is the PSU and what component does it need to supply extra power to?', a:'Power Supply Unit. It converts AC wall power to DC. High-end GPU (graphics cards) require PSUs with adequate wattage.' },
+  { cat:'hardware', q:'What is the Motherboard\'s role in a computer?', a:'The large printed circuit board (PCB) that all components physically connect to. It provides electrical connections and bus lines for CPU, RAM, GPU, and storage to communicate.' },
+  { cat:'hardware', q:'What is firmware? Give 3 examples.', a:'Software permanently embedded in a hardware chip. Examples: BIOS/UEFI on motherboard, GPU microchip software, smart TV OS, router firmware, gaming console software.' },
+  { cat:'hardware', q:'What is BIOS/UEFI and when does it run?', a:'Basic Input/Output System / Unified Extensible Firmware Interface. It is the FIRST software to load when a computer powers on — before the OS. It performs POST (Power-On Self-Test) and loads the OS.' },
+  { cat:'networking', q:'What is the difference between a Switch and a Router?', a:'Switch (Layer 2): sends data to specific device using MAC address, operates within a LAN. Router (Layer 3): routes traffic between different networks using IP addresses, connects LAN to internet.' },
+  { cat:'networking', q:'What is a MAC address and what device uses it?', a:'A hardware address burned into the NIC at manufacturing. It is unique and cannot be changed. Switches use MAC addresses to direct traffic within a local network. Format: hexadecimal (e.g., 00:25:9C:4D:5A:6B).' },
+  { cat:'networking', q:'What is the OSI model and what is Layer 3?', a:'7-layer model describing how data travels across a network. Layer 3 = Network Layer: logical addressing (IP addresses) and routing. Routers operate at Layer 3.' },
+  { cat:'networking', q:'What does DSL stand for and what connector does it use?', a:'Digital Subscriber Line. Uses existing telephone lines. Connector: RJ-11 (smaller, 4-6 wire version of RJ-45).' },
+  { cat:'networking', q:'Which internet connection type has the HIGHEST latency?', a:'Satellite internet. Data must travel to a satellite ~22,000 miles in space and back, causing significant delay (latency).' },
+  { cat:'networking', q:'What is the primary role of an Access Point (AP)?', a:'Establishing a wireless (Wi-Fi) network for devices. It extends a wired network wirelessly, creates an SSID, and allows wireless devices to join the network.' },
+  { cat:'networking', q:'Which Wi-Fi standard supports 2.4 GHz, 5 GHz, AND 6 GHz?', a:'802.11ax (Wi-Fi 6). It is also the standard with the greatest maximum throughput (~9.6 Gbps).' },
+  { cat:'networking', q:'What is NFC and what is it used for?', a:'Near Field Communication. Extremely short range (~4 cm). Used for contactless payments (tap-to-pay), access cards, quick pairing. Examples: Apple Pay, Google Pay, tap credit cards.' },
+  { cat:'networking', q:'What is Plug and Play?', a:'Technology where the OS automatically detects new hardware and installs the appropriate driver without manual steps. Example: connecting a new printer via USB and it works immediately.' },
+  { cat:'security', q:'What are the three parts of the CIA Triad?', a:'Confidentiality (only authorized access), Integrity (data is accurate/unaltered), Availability (systems accessible when needed). Foundation of all cybersecurity.' },
+  { cat:'security', q:'What is ransomware?', a:'Malware that encrypts a victim\'s files and demands payment (ransom) in exchange for the decryption key. Corrective response: restore from backup.' },
+  { cat:'security', q:'What is phishing?', a:'A social engineering attack using fake emails (appearing legitimate) to trick victims into clicking links and entering credentials or downloading malware.' },
+  { cat:'security', q:'What is the Principle of Least Privilege?', a:'Giving users ONLY the access permissions they need to perform their job — nothing more. Limits damage if an account is compromised.' },
+  { cat:'security', q:'What is Multi-Factor Authentication (MFA)?', a:'Requiring 2 or more forms of identity verification: something you KNOW (password), something you HAVE (authenticator app/token), something you ARE (biometrics/fingerprint).' },
+  { cat:'security', q:'What is a corrective security control? Give an example.', a:'A control that fixes damage AFTER an incident occurs. Example: Restoring backups after a ransomware attack. (Preventive = stops it. Detective = identifies it. Corrective = fixes it.)' },
+  { cat:'security', q:'What is social engineering?', a:'Manipulating PEOPLE (not systems) into revealing confidential information or taking actions that benefit an attacker. Examples: phishing, tailgating, vishing.' },
+  { cat:'security', q:'What is Single Sign-On (SSO)?', a:'Authentication method where one login grants access to multiple systems/services. User enters credentials once and accesses email, CRM, file server, etc. without logging in again.' },
+  { cat:'security', q:'What is full disk encryption and when is it recommended?', a:'Encrypts the ENTIRE hard drive. All data is unreadable without the encryption key. Recommended when laptops might be stolen (if stolen, data is protected). Example: BitLocker, FileVault.' },
+  { cat:'programming', q:'What is the difference between a Variable and a Constant?', a:'Variable: named storage location whose value CAN CHANGE during execution. Constant: named value that is SET ONCE and NEVER CHANGES. Example Constant: PI = 3.14159' },
+  { cat:'programming', q:'What data type would you use for the number of guests at a restaurant?', a:'Integer (int) — stores whole numbers without decimals. Guest count will never be 2.5 people.' },
+  { cat:'programming', q:'What data type stores True or False?', a:'Boolean. Used for on/off switches, yes/no flags, conditions. Example: isMember = true / false' },
+  { cat:'programming', q:'What is a While Loop?', a:'A loop that executes code AS LONG AS a condition remains true. The condition is checked before each iteration. Example: "While time is earlier than 8pm, monitor network."' },
+  { cat:'programming', q:'What does a diamond shape represent in a flowchart?', a:'A Decision Point. It asks a yes/no question and the flow branches in two directions based on the answer.' },
+  { cat:'programming', q:'What is pseudocode?', a:'Plain-language description of program steps without specific language syntax. Used to outline logic before writing actual code. Similar to an algorithm in plain English.' },
+  { cat:'programming', q:'What is an API?', a:'Application Programming Interface. Allows two different applications to communicate with each other. Example: a weather app using a weather data API to get current conditions.' },
+  { cat:'programming', q:'What type of language is Python? HTML? SQL?', a:'Python = Interpreted. HTML = Markup. SQL = Query language. (Compiled examples: C, C++, Go)' },
+  { cat:'os', q:'What is the difference between a Process and a Service?', a:'Process = an instance of a RUNNING program that a user interacts with. Service = a background program that runs without direct user interaction (also called a daemon in Linux).' },
+  { cat:'os', q:'What is memory management in an OS?', a:'The OS function that tracks which applications are currently using RAM. When too many programs run simultaneously (like 20 browser tabs), memory management becomes a bottleneck.' },
+  { cat:'os', q:'What browser feature prevents cookies/history from being saved?', a:'Private Browsing / Incognito Mode. Browsing history, cookies, and form data are NOT saved locally after the session closes. Useful on public/shared computers.' },
+  { cat:'os', q:'If a user sees an old version of a website, what should they clear?', a:'Browser cache. The cache stores old copies of web pages for faster loading. Clearing it forces the browser to download the latest version.' },
+  { cat:'os', q:'Which OS is open-source?', a:'Linux (Ubuntu, Fedora, Debian, etc.). The source code is publicly available and free to use, modify, and distribute. Windows and macOS are proprietary.' },
+  { cat:'os', q:'What is the purpose of a Driver?', a:'Software that helps the OS communicate with a hardware device. Acts as a translator between the OS and the hardware. Example: printer driver, GPU driver, NIC driver.' },
+  { cat:'os', q:'What type of software are disk cleaners, antivirus, and backup tools?', a:'Utility Software — system maintenance tools that support and optimize the operating system and hardware. They are a subset of system software.' },
+  { cat:'hardware', q:'What is volatile storage? What is non-volatile?', a:'Volatile = data LOST when power removed (RAM). Non-volatile = data KEPT without power (HDD, SSD, Flash, ROM, optical). The exam will ask which type "RAM" is — always volatile.' },
+  { cat:'databases', q:'What is a Primary Key?', a:'A field that UNIQUELY identifies each record in a table. Must be unique and cannot be null. Good: Employee ID. Bad: First name (not unique).' },
+  { cat:'databases', q:'What is a Foreign Key?', a:'A field in one table that references the Primary Key in ANOTHER table. This creates a relationship (link) between tables, enabling relational data consistency.' },
+  { cat:'databases', q:'What is a Schema?', a:'The BLUEPRINT or structure of a database — defines what tables exist, their fields, data types, and relationships. The schema describes the database\'s design before any data is entered.' },
+  { cat:'databases', q:'What is metadata?', a:'"Data about data." Describes a file or record\'s properties: creation date, file size, author, format, camera settings in a photo, etc.' },
+  { cat:'databases', q:'What are the characteristics of Big Data?', a:'The 3 V\'s: Volume (extremely large), Velocity (fast-moving/real-time), Variety (complex, many different types). Requires specialized processing tools.' },
+  { cat:'networking', q:'What is a Type 1 vs Type 2 Hypervisor?', a:'Type 1 (Bare Metal): installed DIRECTLY on hardware, no host OS. Most efficient. Enterprise use (VMware ESXi). Type 2 (Hosted): runs ON TOP of an existing OS. Easier, used on personal computers (VirtualBox).' },
+  { cat:'security', q:'What is Non-Repudiation?', a:'Proof that an action occurred and was performed by a specific person — they cannot deny it. Methods: digital signatures, biometrics, surveillance cameras, audit logs.' },
+];
+
+let flashCards = [...allFlash];
+let flashIndex = 0;
+let seen = new Set();
+
+function filterFlash(cat, btnEl) {
+  document.querySelectorAll('#flashcards .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+  flashCards = cat === 'all' ? [...allFlash] : allFlash.filter(f => f.cat === cat);
+  flashIndex = 0;
+  seen.clear();
+  document.getElementById('flashcard').classList.remove('flipped');
+  updateFlash();
+}
+
+function updateFlash() {
+  if(!flashCards.length) return;
+  seen.add(flashIndex);
+  const card = flashCards[flashIndex];
+  document.getElementById('flash-front').textContent = card.q;
+  document.getElementById('flash-back').textContent = card.a;
+  document.getElementById('flash-counter').textContent = `${flashIndex+1} / ${flashCards.length}`;
+  const pct = Math.round((seen.size / flashCards.length) * 100);
+  document.getElementById('flash-progress').style.width = pct + '%';
+  document.getElementById('flash-stats').textContent = `${seen.size} of ${flashCards.length} seen`;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+
+function nextFlash() {
+  flashIndex = (flashIndex + 1) % flashCards.length;
+  updateFlash();
+}
+
+function prevFlash() {
+  flashIndex = (flashIndex - 1 + flashCards.length) % flashCards.length;
+  updateFlash();
+}
+
+function shuffleFlash() {
+  flashCards = flashCards.sort(() => Math.random() - 0.5);
+  flashIndex = 0;
+  seen.clear();
+  updateFlash();
+}
+
+function resetFlash() {
+  flashIndex = 0;
+  seen.clear();
+  updateFlash();
+}
+
+// init flashcards
+updateFlash();
+
+// ─── QUIZ DATA ───
+const quizData = [
+  { q:'Which notational system is A3F5 a valid representation of?', opts:['Hexadecimal','Binary','Unicode','Decimal'], ans:0, cat:'hardware', exp:'A3F5 contains the letters A and F, which are valid hexadecimal digits (0-9, A-F). Binary only uses 0 and 1. Decimal only uses 0-9. Hexadecimal uses 0-9 and A-F.' },
+  { q:'Which unit is MOST commonly used to describe consumer hard drive storage capacity?', opts:['Gigabyte (GB)','Kilobyte (KB)','Petabyte (PB)','Terabyte (TB)'], ans:3, cat:'hardware', exp:'Modern consumer hard drives are sold in terabytes (TB). GB was common in the early 2000s. Petabytes are used for enterprise data centers. Kilobytes are tiny.' },
+  { q:'What is the final step in the standard troubleshooting methodology?', opts:['Document findings, lessons learned, actions, and outcomes','Test the theory to determine cause','Implement the solution','Establish a plan of action'], ans:0, cat:'hardware', exp:'Documentation is always the FINAL step (Step 6). Verify functionality is Step 5. Never close the ticket without documenting what was found and fixed.' },
+  { q:'A video editor\'s workstation is slow to render. Which component speed (measured in GHz) should be upgraded?', opts:['CPU','RAM','SSD','NIC'], ans:0, cat:'hardware', exp:'GHz measures CPU clock speed. Rendering is a CPU-intensive calculation task. GPU would help with graphics rendering, but the question specifically asks about GHz.' },
+  { q:'A customer can\'t access the company website. You ask "Have you recently installed software or changed settings?" Which step is this?', opts:['Identify the problem','Establish a theory of probable cause','Verify full system functionality','Document findings'], ans:0, cat:'hardware', exp:'Asking questions about recent changes is part of gathering information — Step 1: Identify the Problem. You\'re collecting facts before forming a theory.' },
+  { q:'What unit measures backbone network speed in an enterprise data center?', opts:['Gigabits per second (Gbps)','Megabits per second (Mbps)','Bits per second (bps)','Kilobits per second (Kbps)'], ans:0, cat:'networking', exp:'Enterprise data center backbone networks run at 10/40/100 Gbps. Mbps is typical for home internet. Kbps was used for dial-up modem connections.' },
+  { q:'A warehouse needs to quickly scan barcodes into a database. What type of device is required?', opts:['Input device','Output device','Storage device','Processing device'], ans:0, cat:'hardware', exp:'A barcode scanner is an INPUT device — it sends data INTO the computer. Input devices feed data to the system. Output devices produce results FROM the system.' },
+  { q:'A photographer uses a drive that writes data using a precise laser. Which storage technology is this?', opts:['Optical storage','Solid state drive','Flash drive','NAS'], ans:0, cat:'hardware', exp:'Optical storage (CD, DVD, Blu-ray) uses a laser to read and write data on disc surfaces. SSDs use flash memory chips. Flash drives use NAND flash. NAS is network-attached.' },
+  { q:'Which device uses MAC addresses to direct traffic to specific computers?', opts:['Switch','Router','Modem','Access Point'], ans:0, cat:'networking', exp:'A Switch operates at Layer 2 and uses MAC addresses to forward frames only to the destination device, not broadcast to everyone. Routers use IP addresses.' },
+  { q:'Which identifier is unique to each network device and cannot be changed?', opts:['MAC address','IP address','Network name','Serial number'], ans:0, cat:'networking', exp:'MAC addresses are burned into the NIC hardware at manufacturing. They are unique globally and technically cannot be changed (though some OSes allow spoofing). IP addresses are assigned and can change.' },
+  { q:'Which cloud model combines on-premises infrastructure with cloud resources?', opts:['Hybrid','On-premises','Multi-cloud','Public Cloud'], ans:0, cat:'os', exp:'Hybrid cloud combines local (on-premises) infrastructure with cloud resources. Multi-cloud uses multiple cloud providers. Public cloud is fully third-party managed.' },
+  { q:'Which Wi-Fi standard supports all three frequency bands (2.4 GHz, 5 GHz, and 6 GHz)?', opts:['802.11ax','802.11ac','802.11b','802.11n'], ans:0, cat:'networking', exp:'802.11ax (Wi-Fi 6) supports 2.4, 5, and 6 GHz bands and has the greatest maximum throughput. 802.11ac (Wi-Fi 5) only uses 5 GHz. 802.11b only uses 2.4 GHz.' },
+  { q:'Which device modulates digital signals for transmission over phone lines?', opts:['Modem','Router','Switch','Firewall'], ans:0, cat:'networking', exp:'Modem = MOdulator-DEModulator. It converts digital signals from your computer to analog for phone lines, and vice versa. Required for DSL internet connections.' },
+  { q:'A technician runs an 8-wire copper cable to a wall jack. Which connector must they use?', opts:['RJ-45','RJ-11','HDMI','USB-C'], ans:0, cat:'hardware', exp:'RJ-45 is the standard connector for Ethernet cables. It has 8 copper wires and snaps into network ports. RJ-11 is smaller (4-6 wires) and used for telephone lines.' },
+  { q:'Which storage type is volatile?', opts:['RAM','SSD','HDD','Flash drive'], ans:0, cat:'hardware', exp:'RAM (Random Access Memory) is volatile — all data is lost when power is removed. SSD, HDD, and flash drives are all non-volatile storage that retains data without power.' },
+  { q:'What tool is used to attach an RJ-45 connector to an Ethernet cable?', opts:['Crimper','Cable tester','Wire stripper','Multimeter'], ans:0, cat:'hardware', exp:'A crimper physically attaches (crimps) the RJ-45 connector onto the cable wires. It\'s used after the wire stripper removes insulation. The cable tester is used afterward to verify connectivity.' },
+  { q:'What is the primary role of an Access Point (AP)?', opts:['Establishing a wireless network for devices','Routing traffic between different networks','Providing a security barrier','Sharing a single IP address with many devices'], ans:0, cat:'networking', exp:'Access Points create wireless (Wi-Fi) networks. They extend a wired network wirelessly. Routers route between networks. Firewalls provide security barriers. NAT handles IP sharing.' },
+  { q:'Which technology is commonly used for contactless mobile payments?', opts:['NFC','Bluetooth','Wi-Fi','Thunderbolt'], ans:0, cat:'networking', exp:'NFC (Near Field Communication) works at extremely short range (~4 cm) and is the technology behind tap-to-pay systems like Apple Pay, Google Pay, and credit card terminals.' },
+  { q:'Which component handles math-heavy demands of rendering video and graphics?', opts:['GPU','NIC','CMOS Battery','PSU'], ans:0, cat:'hardware', exp:'GPU (Graphics Processing Unit) is specifically designed for parallel math calculations needed for graphics rendering. NIC = network card. CMOS = keeps BIOS settings. PSU = power supply.' },
+  { q:'After upgrading a graphics card, Windows doesn\'t recognize it. What software is needed?', opts:['Drivers','Firmware','File system','Antivirus'], ans:0, cat:'os', exp:'Drivers allow the OS to communicate with hardware. Without the correct GPU driver, Windows can\'t use the hardware properly. Firmware is embedded in the hardware itself, not installed by the user.' },
+  { q:'What tool allows IT to interact with a user\'s computer remotely?', opts:['Desktop sharing tool','Database management system','Network monitoring software','Content management system'], ans:0, cat:'os', exp:'Remote desktop sharing tools (like TeamViewer, AnyDesk, RDP) allow IT professionals to view and control a user\'s computer from a different location for troubleshooting.' },
+  { q:'What data type represents a single true or false value?', opts:['Boolean','Integer','Float','String'], ans:0, cat:'programming', exp:'Boolean stores only True or False. Named after mathematician George Boole. Used for conditions, flags, on/off states. Example: isMember = true' },
+  { q:'In programming, what is a "variable"?', opts:['A storage location for data that can change during execution','A value that remains the same throughout the program','A specialized software driver','A hardware component'], ans:0, cat:'programming', exp:'Variables are named storage locations whose values can change during program execution. Unlike constants (fixed values), variables are flexible. Example: score starts at 0, increases as game progresses.' },
+  { q:'Which concept involves breaking a complex problem into smaller, manageable parts?', opts:['Deconstruction / Divide and Conquer','Looping','Cable Labeling','Screen Resolution'], ans:0, cat:'programming', exp:'Divide and Conquer (also called decomposition) breaks complex problems into smaller, solvable sub-problems. This is a fundamental programming and problem-solving strategy.' },
+  { q:'An HR manager queries the database for employees with more than 5 years. What is this action?', opts:['Query','Schema update','Data entry','Relational link'], ans:0, cat:'databases', exp:'A Query is a command that asks the database for specific, filtered information. SQL SELECT statements are queries. The schema is the structure, not the request for data.' },
+  { q:'What type of data is characterized by being extremely large, fast-moving, and complex?', opts:['Big data','Flat data','Small data','Metadata'], ans:0, cat:'databases', exp:'Big Data is defined by the 3 V\'s: Volume (massive amounts), Velocity (generated and processed rapidly), Variety (many different formats and types). Traditional databases can\'t handle it.' },
+  { q:'What stores the blueprint or structure of a database?', opts:['Schema','Table','Query','Key'], ans:0, cat:'databases', exp:'A Schema defines the database structure — what tables exist, what fields they have, data types, relationships, and constraints. It\'s the blueprint before any data is entered.' },
+  { q:'In a relational database, what uniquely identifies each record in a table?', opts:['Primary Key','Foreign Key','Schema','Field'], ans:0, cat:'databases', exp:'The Primary Key uniquely identifies each row in a table. It must be unique and cannot be null. Examples: Employee ID, auto-increment ID number. This is the "one" side in relationships.' },
+  { q:'Which of the following is "data about data," such as the date a file was created?', opts:['Metadata','Big data','Raw data','Structured data'], ans:0, cat:'databases', exp:'Metadata describes the properties of data: creation date, file size, author, GPS location in photos, camera settings. It provides context about the actual data content.' },
+  { q:'Which standard language should be used with most relational databases?', opts:['SQL','HTML','JavaScript','Python'], ans:0, cat:'databases', exp:'SQL (Structured Query Language) is the standard language for relational databases. MySQL, SQL Server, PostgreSQL, and Oracle all use SQL. HTML is for web pages, not databases.' },
+  { q:'Why is it recommended to enforce a password expiration policy?', opts:['To limit the time a stolen password can be used','To simplify account management','To increase IT support tickets','To ensure passwords become more complex'], ans:0, cat:'security', exp:'Password expiration limits the window of opportunity for an attacker using a stolen password. If a password is compromised but expires in 90 days, the attack window is bounded.' },
+  { q:'A user clicks a suspicious link and files start disappearing. What should be run immediately?', opts:['Antivirus / Anti-malware','Firewall','Data encryption','Multi-factor authentication'], ans:0, cat:'security', exp:'Antivirus/anti-malware scans the system to identify and quarantine malicious files. Firewall blocks network traffic. Encryption protects data. MFA is authentication, not malware removal.' },
+  { q:'What does the "A" in the CIA triad stand for?', opts:['Availability','Authentication','Authorization','Accounting'], ans:0, cat:'security', exp:'CIA = Confidentiality, Integrity, Availability. Availability means systems and data are accessible when authorized users need them. Downtime and DoS attacks target availability.' },
+  { q:'Which of the following involves manipulating people into giving up confidential information?', opts:['Social Engineering','Wiretapping','Eavesdropping','Snooping'], ans:0, cat:'security', exp:'Social engineering exploits human psychology rather than technical vulnerabilities. Phishing, tailgating, and vishing are all social engineering techniques.' },
+  { q:'What is the purpose of Multi-Factor Authentication (MFA)?', opts:['To require more than one form of evidence to verify identity','To allow users to use many different passwords','To speed up the login process','To bypass the need for a username'], ans:0, cat:'security', exp:'MFA requires 2+ verification factors: something you know (password), something you have (phone/token), something you are (biometric). Makes it much harder for attackers to gain access.' },
+  { q:'Which threat involves encrypting a user\'s files and demanding payment for the key?', opts:['Ransomware','Trojan Horse','Spyware','Adware'], ans:0, cat:'security', exp:'Ransomware encrypts the victim\'s files and demands cryptocurrency payment for the decryption key. The corrective response is to restore from clean backups rather than pay.' },
+  { q:'A small business owner receives a fake bank email asking to verify login credentials. What is this?', opts:['Phishing','Ransomware','Wiretapping','Tailgating'], ans:0, cat:'security', exp:'Phishing uses fake emails impersonating trusted entities (banks, employers, services) to trick users into entering credentials on fake websites or downloading malware.' },
+  { q:'Which of the following is a physical security control?', opts:['A badge reader on a door','An antivirus software program','A firewall configuration','A complex password policy'], ans:0, cat:'security', exp:'Physical security controls protect physical access to facilities and hardware. Badge readers, door locks, security guards, and surveillance cameras are physical controls. Software-based protections are logical/technical controls.' },
+  { q:'What is the "Principle of Least Privilege"?', opts:['Giving users only the access they need to do their job','Giving all users administrative rights','Allowing users to choose their own access levels','Revoking all access after 5:00 PM'], ans:0, cat:'security', exp:'Least Privilege limits access rights to only what is needed for the job. This minimizes damage if an account is compromised — a compromised limited account causes less harm than a compromised admin account.' },
+  { q:'Which protocol is used to secure web traffic with SSL/TLS?', opts:['HTTPS','HTTP','FTP','SMTP'], ans:0, cat:'security', exp:'HTTPS (HTTP Secure) uses SSL/TLS encryption to protect web traffic. The "S" means the connection is encrypted. FTP transfers files. SMTP sends email. HTTP is unencrypted web traffic.' },
+  { q:'A company installs a security barrier that inspects every incoming packet against security rules. What is it?', opts:['Firewall','VPN','Switch','Load Balancer'], ans:0, cat:'security', exp:'A Firewall inspects packets against defined security rules, blocking unauthorized traffic. It sits at the network edge. VPN creates encrypted tunnels. Switches direct LAN traffic. Load balancers distribute traffic.' },
+  { q:'Which logic structure executes code as long as a condition is true?', opts:['While Loop','If-Else Statement','Constant','Function'], ans:0, cat:'programming', exp:'A While Loop checks a condition and continues executing the code block as long as the condition remains true. It can loop zero or more times.' },
+  { q:'What is the purpose of an API?', opts:['To allow two different applications to communicate','To provide a graphical interface for users','To manage hardware resources','To encrypt data'], ans:0, cat:'programming', exp:'API (Application Programming Interface) defines how applications can communicate with each other. Example: a weather app uses a weather service API to retrieve current data.' },
+  { q:'Which of the following is a reusable container for code that performs a specific task?', opts:['Function','Variable','Constant','Boolean'], ans:0, cat:'programming', exp:'Functions are reusable blocks of code. Define once, call many times. Functions are the primary mechanism for code reuse in programming.' },
+  { q:'Which of the following is an example of a String data type?', opts:['"Hello World"','42','3.14','True'], ans:0, cat:'programming', exp:'Strings are text data surrounded by quotes. "Hello World" is text, so it\'s a String. 42 is an Integer. 3.14 is a Float. True is a Boolean.' },
+  { q:'When Bert is playing a game on his tablet, what kind of software is he using?', opts:['Application','CPU','UEFI','Operating system'], ans:0, cat:'os', exp:'Games are application software — programs that users run to accomplish tasks or entertainment. The OS manages the hardware. CPU is hardware. UEFI is firmware.' },
+  { q:'What is the correct order of data units from smallest to largest?', opts:['byte, kilobit, megabyte, terabit','kilobit, byte, terabit, megabyte','byte, megabyte, terabit, kilobit','terabit, megabyte, kilobit, byte'], ans:0, cat:'hardware', exp:'1 bit < 1 byte (8 bits) < 1 kilobit (1000 bits) < 1 megabyte (8 million bits) < 1 terabit. So byte < kilobit < megabyte < terabit is the correct ascending order.' },
+  { q:'Which type of USB port is used on a printer to connect to a computer?', opts:['USB-B','USB-A','USB Micro-B','USB-Mini-B'], ans:0, cat:'hardware', exp:'Printers use USB-B connectors (square shape) on their side of the cable. The computer side uses USB-A (rectangular). USB Micro-B and Mini-B are used for smaller devices like cameras.' },
+  { q:'What kind of storage device uses spinning metal platters and an IDE/SATA controller?', opts:['HDD','SSD','NVMe','Optical disc'], ans:0, cat:'hardware', exp:'HDDs (Hard Disk Drives) use spinning metal platters and read/write heads. They connect via SATA (modern) or IDE (legacy). SSDs and NVMe use flash memory with no moving parts.' },
+  { q:'Which type of hypervisor is installed directly on the physical hardware?', opts:['Type 1','Type 2','Type A','Type B'], ans:0, cat:'os', exp:'Type 1 (Bare Metal) hypervisors install directly on hardware with no host OS. They are most efficient and used in enterprise. Examples: VMware ESXi, Microsoft Hyper-V.' },
+  { q:'Which internet service type has very high latency?', opts:['Satellite','Fiber optic','Cellular','Cable'], ans:0, cat:'networking', exp:'Satellite internet has very high latency because data must travel ~22,000 miles to a geostationary satellite and back. Fiber optic is fastest with lowest latency. Cellular and cable have moderate latency.' },
+  { q:'Which of the following is the best definition of social engineering?', opts:['Attempting to convince a person to take actions that benefit an attacker','Stealing passwords from a database','Eavesdropping on connections','Stealing credit card info'], ans:0, cat:'security', exp:'Social engineering manipulates PEOPLE, not systems. It exploits human psychology — trust, fear, urgency — to trick individuals into revealing information or performing actions that help the attacker.' },
+  { q:'Which OS is open source?', opts:['Linux','Windows','iOS','macOS'], ans:0, cat:'os', exp:'Linux is open-source — the source code is publicly available and free to use, modify, and distribute. Windows and macOS are proprietary commercial operating systems. iOS is Apple proprietary.' },
+  { q:'What software should be used to calculate average grades and create a bar chart from a data grid?', opts:['Spreadsheet software','Word processing software','Conferencing software','Visual diagramming software'], ans:0, cat:'os', exp:'Spreadsheet software (Excel, Google Sheets) is designed for numerical calculations and charting from grid-organized data. Word processing is for text documents. Diagramming is for visual flowcharts.' },
+  { q:'Which application type produces automated financial reports from data? (Generative AI)', opts:['Producing automated financial reports from data','Error detection in software code','Automating data entry','Improving physical robot movement'], ans:0, cat:'programming', exp:'Generative AI creates new content — including generating formatted reports from raw data. This is an example of generative AI producing meaningful output from structured input.' },
+  { q:'What does a diamond shape represent in a flowchart?', opts:['A decision point','Data input or output','A start or end point','A process or action'], ans:0, cat:'programming', exp:'Diamond shapes in flowcharts represent DECISION POINTS — yes/no questions that branch the flow in two directions. Ovals = start/end. Rectangles = process. Parallelograms = input/output.' },
+  { q:'What programming concept best allows code reuse?', opts:['Function','Object','Variable','Loop'], ans:0, cat:'programming', exp:'Functions (also called procedures or methods) are the primary code reuse mechanism. Define once, call many times from different parts of the program.' },
+  { q:'Which type of database is best for simple name/ID lists without complex relationships?', opts:['Flat file','Relational','Object-oriented','Schema-less'], ans:0, cat:'databases', exp:'A Flat file database is a simple single-table structure (like a spreadsheet or CSV). No relationships between tables. Best for simple, non-relational data like contact lists.' },
+  { q:'What is a "Foreign Key"?', opts:['To link two tables together','To uniquely identify a row in its own table','To encrypt the database','To create a new database'], ans:0, cat:'databases', exp:'A Foreign Key in one table references the Primary Key in another table, creating a relationship between them. This enables data to be linked and updated consistently across tables.' },
+  { q:'Which database structure organizes data into rows and columns?', opts:['Relational','Non-relational','Key-value pair','Document-based'], ans:0, cat:'databases', exp:'Relational databases organize data into tables with rows (records) and columns (fields). SQL is used to query them. Examples: MySQL, SQL Server, PostgreSQL, Oracle.' },
+  { q:'What is the purpose of a digital certificate for a website?', opts:['Verifies transmission is from an authentic website and not a fake','Ensures valid encryption','Assures the site has no malware','Assures the site is all-ages'], ans:0, cat:'security', exp:'Digital certificates verify the identity of a website — confirming it is who it claims to be and not a fake/impostor site. They also enable HTTPS encryption. Issued by Certificate Authorities (CAs).' },
+  { q:'Cloud-based backups provide which safety feature?', opts:['Data recovery in case of loss','Full backup of PC data','Automatic updates','Remote access to files'], ans:0, cat:'os', exp:'The primary safety benefit of cloud backups is data recovery in case of loss (hardware failure, theft, ransomware, disaster). They provide offsite backup which is a key requirement for business continuity.' },
+  { q:'What type of malware demands payment to unlock a user\'s system?', opts:['Ransomware','Redirects','Masquerading','Spyware'], ans:0, cat:'security', exp:'Ransomware encrypts the victim\'s system or files and demands payment (ransom) for the decryption key. Spyware silently steals data. Masquerading pretends to be something legitimate.' },
+  { q:'Which of these is a security practice supporting Confidentiality in the CIA Triad?', opts:['Encryption','Data validation','Nonrepudiation','Redundancy'], ans:0, cat:'security', exp:'Encryption directly supports Confidentiality — it ensures only authorized parties can read the data. Data validation supports Integrity. Redundancy supports Availability. Nonrepudiation supports Integrity/Accountability.' },
+  { q:'Which policy best reflects the principle of least privilege?', opts:['Users have the privileges they need and no others','Some users have no privileges','All users have the same privileges','Each user has the most privileges they can legally have'], ans:0, cat:'security', exp:'Least Privilege = exactly the permissions needed to do the job, nothing more. This minimizes the attack surface and limits damage from compromised accounts.' },
+  { q:'What do we call a computer designed to provide services to client computers?', opts:['Server','Desktop','Workstation','Tablet'], ans:0, cat:'hardware', exp:'A Server is built with more robust, powerful components and designed to provide services (web, file, email, database, authentication) to client computers on a network.' },
+  { q:'The basic (smallest) unit of computer information is the bit. What is the first multiple of a bit called?', opts:['Byte','Kbps','Kilobyte','Decimal'], ans:0, cat:'hardware', exp:'A Byte = 8 bits. It is the first multiple of a bit. Memory, file sizes, and storage are measured in bytes and multiples thereof (KB, MB, GB, TB).' },
+  { q:'Which type of language does JavaScript most closely describe for web interactivity?', opts:['Interpreted','Compiled','Assembly','Query'], ans:0, cat:'programming', exp:'JavaScript is an interpreted scripting language — executed line-by-line at runtime by the browser\'s JavaScript engine. It doesn\'t need to be compiled to a separate executable first.' },
+  { q:'What number system is used to communicate directly with a CPU?', opts:['Binary','Decimal','Octal','Hexadecimal'], ans:0, cat:'hardware', exp:'CPUs operate using binary (base-2) — electrical signals that are either ON (1) or OFF (0). All data in a computer is ultimately represented in binary at the hardware level.' },
+  { q:'Which type of connector connects a modem to a standard telephone line?', opts:['RJ-11','RJ-45','F-type','USB-A'], ans:0, cat:'hardware', exp:'RJ-11 is the small telephone connector (4-6 pins). RJ-45 is the larger Ethernet connector (8 pins). F-type is for coaxial cable (cable TV). Modems use RJ-11 for DSL over phone lines.' },
+  { q:'What is the first step of the data analytics process?', opts:['Collecting raw data','Generating information','Creating a data report','Using statistical tools to analyze data'], ans:0, cat:'databases', exp:'The data analytics process: (1) Collect raw data → (2) Process/clean data → (3) Analyze with statistical tools → (4) Generate information/insights → (5) Create reports.' },
+  { q:'Which of these is an Internet of Things (IoT) device?', opts:['Video Doorbell','Tablet','Workstation','Augmented Reality headset'], ans:0, cat:'programming', exp:'A video doorbell is an IoT device — an everyday physical object with internet connectivity that collects and exchanges data. Tablets and workstations are general-purpose computers, not IoT devices.' },
+  { q:'Which of these is an example of predictive AI?', opts:['Identifying unusual consumer spending','Generating a video of a crime','A chatbot resolving a bill','An assistant making a flight reservation'], ans:0, cat:'programming', exp:'Predictive AI analyzes patterns to forecast future outcomes or identify anomalies. Fraud detection (identifying unusual spending) is predictive AI. Generating a video is generative AI.' },
+  { q:'What is the best storage option for someone who wants photos backed up and privacy is secondary?', opts:['Cloud','USB flash drive','SD Card','External HDD'], ans:0, cat:'os', exp:'Cloud storage provides automatic, offsite backup with near-unlimited capacity. Since privacy is secondary, the always-on, automatic nature of cloud backup makes it the best choice for never losing photos.' },
+  { q:'After running this pseudocode, what does COUNTER equal? (3 outer × 2 inner loops)', opts:['6','9','5','3'], ans:0, cat:'programming', exp:'The outer loop runs 3 times (i: 1-3). For each outer iteration, the inner loop runs 2 times (j: 1-2). 3 × 2 = 6. COUNTER starts at 0 and increments once per inner loop execution.' },
+  { q:'Which access control gives only backup administrators access to all servers?', opts:['Role-based','Authorization','Discretionary','Mandatory'], ans:0, cat:'security', exp:'Role-Based Access Control (RBAC) assigns permissions based on job roles. "Backup administrators" is a role — everyone with that role gets the same access. No need to configure per-individual.' },
+  { q:'What is the software embedded in a microchip called?', opts:['Firmware','GUI','Software','Ladder'], ans:0, cat:'hardware', exp:'Firmware is software permanently embedded in a hardware chip (ROM/flash). It controls low-level device operation. Examples: BIOS on motherboard, embedded OS in TVs/appliances, GPU microchip code.' },
+];
+
+let quizFilter = 'all';
+let quizQuestions = [];
+let userAnswers = {};
+let quizSubmitted = false;
+
+function setQuizFilter(cat, btnEl) {
+  quizFilter = cat;
+  document.querySelectorAll('#quiz .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+}
+
+function startQuiz() {
+  const count = parseInt(document.getElementById('quiz-count').value);
+  let pool = quizFilter === 'all' ? [...quizData] : quizData.filter(q => q.cat === quizFilter);
+  pool = pool.sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
+  quizQuestions = pool;
+  userAnswers = {};
+  quizSubmitted = false;
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-questions');
+  const footer = document.getElementById('quiz-footer');
+  const rfooter = document.getElementById('quiz-results-footer');
+  const score = document.getElementById('quiz-score-display');
+  score.style.display = 'none';
+  rfooter.style.display = 'none';
+  footer.style.display = 'block';
+  const letters = ['A','B','C','D'];
+  container.innerHTML = quizQuestions.map((q, i) => `
+    <div class="quiz-card" id="qcard-${i}">
+      <div class="quiz-num">Question ${i+1} of ${quizQuestions.length} <span class="topic-tag">${q.cat}</span></div>
+      <div class="quiz-question">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((opt, j) => `
+          <div class="option" id="opt-${i}-${j}" onclick="selectAnswer(${i}, ${j})">
+            <div class="option-letter">${letters[j]}</div>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="exp-${i}"><strong>Explanation:</strong> ${q.exp}</div>
+    </div>
+  `).join('');
+}
+
+function selectAnswer(qi, oi) {
+  if(quizSubmitted) return;
+  userAnswers[qi] = oi;
+  const q = document.getElementById(`qcard-${qi}`);
+  q.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.getElementById(`opt-${qi}-${oi}`).classList.add('selected');
+}
+
+function submitQuiz() {
+  quizSubmitted = true;
+  let correct = 0;
+  quizQuestions.forEach((q, i) => {
+    const card = document.getElementById(`qcard-${i}`);
+    const ans = userAnswers[i];
+    const exp = document.getElementById(`exp-${i}`);
+    exp.classList.add('show');
+    document.querySelectorAll(`#qcard-${i} .option`).forEach(o => o.classList.add('disabled'));
+    document.getElementById(`opt-${i}-${q.ans}`).classList.add('correct-ans');
+    if(ans !== undefined && ans !== q.ans) {
+      document.getElementById(`opt-${i}-${ans}`).classList.add('wrong-ans');
+      card.classList.add('wrong');
+    } else if(ans === q.ans) {
+      card.classList.add('correct');
+      correct++;
+    }
+  });
+  const pct = Math.round((correct / quizQuestions.length) * 100);
+  const score = document.getElementById('quiz-score-display');
+  score.style.display = 'flex';
+  score.innerHTML = `
+    <div class="score-circle" style="--pct:${pct}"><div class="score-inner">${pct}%</div></div>
+    <div>
+      <div style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">${correct} / ${quizQuestions.length} Correct</div>
+      <div style="color:var(--text2);font-size:0.9rem;">${pct >= 65 ? '✅ Great job! You\'re on track for the exam.' : '📚 Keep studying — aim for 65%+ (exam passing score is 72%).'}</div>
+      <div style="color:var(--text3);font-size:0.8rem;margin-top:4px;">Review the explanations below each question for any you missed.</div>
+    </div>
+  `;
+  document.getElementById('quiz-footer').style.display = 'none';
+  document.getElementById('quiz-results-footer').style.display = 'block';
+  score.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  quizSubmitted = false;
+  document.getElementById('quiz-score-display').style.display = 'none';
+  document.getElementById('quiz-results-footer').style.display = 'none';
+  document.getElementById('quiz-questions').innerHTML = '';
+  document.getElementById('quiz-footer').style.display = 'none';
+}
+
+// keyboard shortcuts for flashcards
+document.addEventListener('keydown', e => {
+  if(document.getElementById('flashcards').classList.contains('active')) {
+    if(e.key === 'ArrowRight') nextFlash();
+    if(e.key === 'ArrowLeft') prevFlash();
+    if(e.key === ' ') { e.preventDefault(); flipCard(); }
+  }
+});
+</script>
+</body>
+</html>
