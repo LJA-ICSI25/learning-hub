@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech+ Interactive Study Guide</title>
+    <meta name="description" content="Interactive study tool for CompTIA Tech+ Exam covering all domains.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <header class="glass-header sticky-header">
+        <div class="container header-content">
+            <div class="header-left">
+                <h1 id="main-title">Tech+ Interactive Study Guide</h1>
+                <div class="nav-dropdown-wrapper">
+                    <select id="domain-selector" class="glass-select">
+                        <option value="" disabled selected>Switch Objective...</option>
+                        <!-- Objectives injected by JS -->
+                    </select>
+                </div>
+            </div>
+            <div class="header-right">
+                <a class="lh-study-back" href="../index.html">← Learn Hub</a>
+                <div class="score-container">
+                    <div class="rank-info">
+                        <span id="user-rank">Novice</span>
+                        <div class="xp-bar-bg">
+                            <div id="xp-bar-fill" class="xp-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="xp-text"><span id="total-xp">0</span> XP</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="xp-toast-container"></div>
+
+    <main class="container">
+        <!-- Dashboard View -->
+        <section id="dashboard-view" class="view-section active-view">
+            <div class="section-header main-hero">
+                <h1>Tech+ Interactive Study Guide</h1>
+                <p>Comprehensive learning platform for the CompTIA Tech+ Exam.</p>
+            </div>
+            <div class="section-header">
+                <h2>Select a Domain</h2>
+                <p>Choose an exam objective to begin your study session.</p>
+            </div>
+            <div id="domain-grid" class="domain-grid">
+                <!-- Domain cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- Activity View -->
+        <section id="activity-view" class="view-section">
+            <button id="back-to-dashboard" class="btn secondary-btn back-btn">&larr; Back to Dashboard</button>
+            
+            <div class="objective-header">
+                <h2 id="objective-title">Objective Title</h2>
+                <p id="objective-desc">Objective Description</p>
+            </div>
+
+            <!-- Dashboard Navigation -->
+            <nav class="activity-nav">
+                <button class="nav-btn active" data-target="flashcards">Flashcards</button>
+                <button class="nav-btn" data-target="interactive-activity">Interactive Activity</button>
+                <button class="nav-btn" data-target="quiz">Knowledge Check</button>
+            </nav>
+
+            <!-- Flashcards Section -->
+            <section id="flashcards" class="activity-section active-section">
+                <div class="section-header">
+                    <h2>Concept Flashcards</h2>
+                    <p>Click a card to reveal the definition of key terms.</p>
+                </div>
+                <div class="card-controls">
+                    <button id="toggle-card-mode" class="btn secondary-btn">Switch to Definition First</button>
+                </div>
+                <div class="flashcard-container" id="flashcard-container">
+                    <!-- Flashcards will be injected here by JS -->
+                </div>
+                <div class="card-navigation">
+                    <button id="prev-card" class="btn secondary-btn">&larr; Previous</button>
+                    <span id="card-counter">0 / 0</span>
+                    <button id="next-card" class="btn secondary-btn">Next &rarr;</button>
+                </div>
+            </section>
+
+            <!-- Interactive Activity Section -->
+            <section id="interactive-activity" class="activity-section">
+                <div class="section-header">
+                    <h2 id="activity-title">Interactive Activity</h2>
+                    <p id="activity-desc">Complete the activity below.</p>
+                </div>
+                <div id="activity-container" class="activity-container">
+                    <!-- Dynamic activity content injected here by JS -->
+                </div>
+                <div class="activity-feedback" id="activity-feedback"></div>
+                <button id="reset-activity" class="btn secondary-btn" style="display: none; margin-top: 20px;">Play Again</button>
+            </section>
+
+            <!-- Quiz Section -->
+            <section id="quiz" class="activity-section">
+                <div class="section-header">
+                    <h2>Knowledge Check Quiz</h2>
+                    <p>Test your understanding of this objective.</p>
+                </div>
+                <div class="quiz-container glass-panel">
+                    <div id="quiz-question-container">
+                        <h3 id="quiz-question" class="quiz-question">Loading question...</h3>
+                        <div id="quiz-options" class="quiz-options">
+                            <!-- Options injected here -->
+                        </div>
+                        <div id="explanation-container" class="explanation-container" style="display: none; margin-top: 20px; padding: 15px; border-radius: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2);">
+                            <p id="quiz-explanation" style="margin-bottom: 15px;"></p>
+                            <button id="next-question" class="btn primary-btn">Next Question</button>
+                        </div>
+                    </div>
+                    <div id="quiz-results" class="quiz-results" style="display: none;">
+                        <h3>Quiz Complete!</h3>
+                        <p class="score-display">Your Score: <span id="score">0</span> / <span id="total-questions">0</span></p>
+                        <button id="restart-quiz" class="btn primary-btn">Restart Quiz</button>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Full Credit to Pedro Saenz for creating this</p>
+        </div>
+    </footer>
+
+    <!-- Load Data First, then Script -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
