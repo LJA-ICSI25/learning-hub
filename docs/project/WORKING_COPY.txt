@@ -2,7 +2,7 @@ Learn Hub working-copy note
 ===========================
 
 Primary working folder (this project):
-  update_v1.0.5 - Copy/
+  update_v1.0.7/
 
 Always edit/run from this same folder unless you intentionally fork a new version.
 

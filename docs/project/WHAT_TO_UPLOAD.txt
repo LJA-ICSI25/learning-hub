@@ -2,7 +2,7 @@ Learn Hub upload checklist (source + release)
 ============================================
 
 Repository root for this checklist:
-  update_v1.0.5 - Copy/
+  update_v1.0.7/
 
 SOURCE REPO (GitHub) — INCLUDE
 ------------------------------
@@ -11,6 +11,7 @@ Core app:
   index.html
   main.js
   study-secret.html
+  network-secret.html
   package.json
   package-lock.json
   README.md
@@ -24,6 +25,8 @@ Folders to commit:
   docs/
   scripts/
   study-space/
+  network-space/
+  network-space/NetworkPlus_SummerLessons.md
   tech-plus-exam/
   chapters/                      (if present in this copy)
 

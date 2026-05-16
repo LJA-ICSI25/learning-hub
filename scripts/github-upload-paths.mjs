@@ -1,6 +1,6 @@
 /**
  * Prints paths that belong in a GitHub source upload (Learn Hub app root).
- * Run from update_v1.0.5 - Copy: node scripts/github-upload-paths.mjs
+ * Run from update_v1.0.7: node scripts/github-upload-paths.mjs
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -15,15 +15,18 @@ const roots = [
   "main.js",
   "index.html",
   "study-secret.html",
+  "network-secret.html",
   "docs/project/WHAT_TO_UPLOAD.txt",
   "assets",
   "build",
   "docs",
   "scripts",
   "study-space",
+  "network-space",
+  "tech-plus-exam",
 ];
 
-console.log("GitHub source upload — include these paths (repo root = update_v1.0.5 - Copy):\n");
+console.log("GitHub source upload — include these paths (repo root = update_v1.0.7):\n");
 let ok = true;
 for (const rel of roots) {
   const p = path.join(root, rel);
