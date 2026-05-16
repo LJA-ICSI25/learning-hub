@@ -458,7 +458,38 @@ function learnHubRunApp() {
     if (add.length) tech.lessons = tech.lessons.concat(add.map(function (x) { return x.lesson; }));
   }
 
+  function injectNetworkQuizLessons() {
+    var data = typeof window !== "undefined" ? window.LEARN_HUB_NETWORK_QUIZZES : null;
+    if (!data || !Array.isArray(data.sets) || !data.sets.length) return;
+    var net = COURSES.find(function (c) {
+      return c && c.id === "networkplus" && Array.isArray(c.lessons);
+    });
+    if (!net) return;
+    var seen = Object.create(null);
+    net.lessons.forEach(function (L) {
+      if (L && L.id) seen[L.id] = true;
+    });
+    var add = [];
+    for (var i = 0; i < data.sets.length; i++) {
+      var set = data.sets[i];
+      if (!set || !Array.isArray(set.questions) || !set.questions.length) continue;
+      var title = set.title || "N10-009 practice " + (i + 1);
+      var id = "network-n10-" + String(i + 1).padStart(2, "0");
+      if (seen[id]) continue;
+      add.push({
+        unit: "N10-009 practice questions",
+        id: id,
+        kind: "quiz",
+        title: title,
+        narrative: "",
+        questions: set.questions,
+      });
+    }
+    if (add.length) net.lessons = net.lessons.concat(add);
+  }
+
   injectGimkitQuizLessons();
+  injectNetworkQuizLessons();
 
   function injectTechStudyCramLesson() {
     var tech = COURSES.find(function (c) {
@@ -3783,7 +3814,7 @@ function learnHubRunApp() {
           "Open <strong>Notes</strong> for PenTest+ lesson content. This track is read-first and broken into short section lessons without objective/review header blocks.";
       } else if (c.id === "networkplus") {
         hint =
-          "Open <strong>Notes</strong> for Network+ lesson content. This track is read-first; expand the reading below, then press <strong>Continue</strong> when you are ready for the next topic.";
+          "Open <strong>Notes</strong> for Network+ summer lesson content (10 weeks × 5 days). After readings, use <strong>N10-009 practice questions</strong> quiz steps in the sidebar — answer in the left column, then <strong>Check answers</strong>. For the full browsable bank, open <strong>Network+ study space</strong> from the hub menu.";
       } else if (c.id === "labs") {
         hint =
           "These steps are a <strong>hands-on lab script</strong> for your <strong>Kali Linux VM</strong>. Nothing in the left column runs on the VM—open a terminal on Kali and follow <strong>Notes</strong> step by step. When you are done with this lab, press <strong>Continue</strong>.";
@@ -4784,6 +4815,11 @@ function learnHubRunApp() {
     /* Tech+ exam space: username TechPlusExam / password TechPlusExam (username normalized to lowercase). */
     if (u === "techplusexam" && String(password) === "TechPlusExam") {
       window.location.replace("tech-plus-exam/index.html");
+      return false;
+    }
+    /* Network+ study space: username Network / password Network (username normalized to lowercase). */
+    if (u === "network" && String(password) === "Network") {
+      window.location.replace("network-space/index.html");
       return false;
     }
     var accounts = readAccounts();

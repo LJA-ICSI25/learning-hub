@@ -1,10 +1,10 @@
-# Learn Hub (v1.0.5)
+# Learn Hub (v1.0.7)
 
-Self-hosted learning app with interactive tracks (web/Python/SQL) and read-first tracks (Tech+, Security, Labs), plus built-in quiz flows and desktop packaging.
+Self-hosted learning app with interactive tracks (web/Python/SQL) and read-first tracks (Tech+, Network+, Security, Labs), plus built-in quiz flows and desktop packaging.
 
 This README is scoped to this folder:
 
-- `update_v1.0.5 - Copy/`
+- `update_v1.0.7/`
 
 ---
 
