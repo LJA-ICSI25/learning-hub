@@ -6,7 +6,7 @@
   if (!BANK || !Array.isArray(BANK.questions)) return;
 
   var PAGE_SIZE = 25;
-  var state = { page: 0, topic: "all", search: "" };
+  var state = { page: 0, search: "" };
 
   function esc(t) {
     var d = document.createElement("div");
@@ -14,32 +14,19 @@
     return d.innerHTML;
   }
 
-  function normTopic(t) {
-    return String(t || "General").trim();
-  }
-
-  function topics() {
-    var set = Object.create(null);
-    BANK.questions.forEach(function (q) {
-      set[normTopic(q.topic)] = true;
-    });
-    return Object.keys(set).sort();
+  function cleanStem(text) {
+    return String(text || "")
+      .replace(/^\*\*Topic:\*\*\s*[^\n]+?\s*/i, "")
+      .replace(/\*\*Topic:\*\*\s*[^\n]+?\s*/gi, "")
+      .trim();
   }
 
   function filtered() {
     var list = BANK.questions;
-    if (state.topic !== "all") {
-      list = list.filter(function (q) {
-        return normTopic(q.topic) === state.topic;
-      });
-    }
     if (state.search) {
       var s = state.search.toLowerCase();
       list = list.filter(function (q) {
-        return (
-          String(q.stem || "").toLowerCase().indexOf(s) >= 0 ||
-          String(q.num).indexOf(s) >= 0
-        );
+        return cleanStem(q.stem).toLowerCase().indexOf(s) >= 0 || String(q.num).indexOf(s) >= 0;
       });
     }
     return list;
@@ -73,13 +60,11 @@
       '">' +
       '<div class="exam-top"><h2>Question ' +
       q.num +
-      '</h2><span class="topic-badge">' +
-      esc(normTopic(q.topic)) +
-      "</span></div>" +
+      "</h2></div>" +
       '<div class="question-content">' +
       imgs +
       "<p>" +
-      esc(q.stem) +
+      esc(cleanStem(q.stem)) +
       '</p><div class="mc-question" data-correct-letter="' +
       esc(q.correct || "") +
       '"><ul class="exam-options">' +
@@ -117,12 +102,7 @@
       "</div>" +
       renderPager(list.length, pageCount);
     if (meta) {
-      meta.textContent =
-        BANK.count +
-        " questions · showing " +
-        slice.length +
-        " on this page" +
-        (state.topic !== "all" ? " · " + state.topic : "");
+      meta.textContent = BANK.count + " questions · showing " + slice.length + " on this page";
     }
     mount.querySelectorAll("[data-page]").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -133,26 +113,7 @@
     });
   }
 
-  function buildFilters() {
-    var bar = document.getElementById("n10-exam-filters");
-    if (!bar) return;
-    var html =
-      '<button type="button" class="filter-btn active" data-topic="all">All topics</button>';
-    topics().forEach(function (t) {
-      html += '<button type="button" class="filter-btn" data-topic="' + esc(t) + '">' + esc(t) + "</button>";
-    });
-    bar.innerHTML = html;
-    bar.querySelectorAll(".filter-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        bar.querySelectorAll(".filter-btn").forEach(function (b) {
-          b.classList.remove("active");
-        });
-        btn.classList.add("active");
-        state.topic = btn.getAttribute("data-topic") || "all";
-        state.page = 0;
-        render();
-      });
-    });
+  function bindSearch() {
     var search = document.getElementById("n10-exam-search");
     if (search) {
       search.addEventListener("input", function () {
@@ -197,6 +158,6 @@
   });
 
   window.N10ExamUI = { render: render, filtered: filtered };
-  buildFilters();
+  bindSearch();
   render();
 })();

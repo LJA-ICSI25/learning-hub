@@ -378,7 +378,7 @@
     const q = QUIZ[quizIdx];
     document.getElementById("quiz-area").innerHTML = `
       <div class="quiz-card">
-        <div class="quiz-num">Question ${quizIdx + 1} of ${QUIZ.length} <span class="topic-tag">${esc(q.topic)}</span></div>
+        <div class="quiz-num">Question ${quizIdx + 1} of ${QUIZ.length}</div>
         <div class="quiz-question">${esc(q.q)}</div>
         <div class="options" id="quiz-options"></div>
         <div class="explanation" id="quiz-explanation"></div>

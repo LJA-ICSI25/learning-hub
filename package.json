@@ -11,7 +11,7 @@
   "scripts": {
     "start": "electron .",
     "icons": "node scripts/generate-build-icons.mjs",
-    "dist": "electron-builder --win nsis",
+    "dist": "npm run icons && electron-builder --win nsis",
     "dist:clean": "electron-builder --win nsis",
     "dist:mac": "npm run icons && electron-builder --mac dmg",
     "upload:list": "node scripts/github-upload-paths.mjs",
@@ -50,8 +50,10 @@
     "files": [
       "index.html",
       "study-secret.html",
+      "network-secret.html",
       "build/**/*",
       "study-space/**/*",
+      "network-space/**/*",
       "tech-plus-exam/**/*",
       "assets/**/*",
       "docs/**/*",
